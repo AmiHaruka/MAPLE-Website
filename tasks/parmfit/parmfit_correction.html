@@ -215,7 +215,7 @@
         <h1>Parmfit Correction</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>Correction refines parameters for a molecule that already has a <code>mol2</code> topology. All atomic charges are taken directly from the user-provided <code>mol2</code>; no RESP fitting is performed. MAPLE starts from GAFF2 parameters, optimizes the structure with the selected calculator, updates bonded terms from a Cartesian Hessian, optionally refits proper torsions, and exports Amber and GROMACS files.</p>
+        <p>Correction refines parameters for a molecule that already has a <code>mol2</code> topology. MAPLE starts from GAFF2 parameters, optionally optimizes the structure and updates bonded terms from a Cartesian Hessian, applies the selected atomic-charge source, optionally refits proper torsions, and exports Amber and GROMACS files. The default <code>chg_fit=none</code> preserves the input mol2 charges; RESP, supported charge-capable MLIPs, and Antechamber charge methods can replace them.</p>
 
         <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
@@ -225,15 +225,16 @@
         <h2 id="workflow">Workflow</h2>
         <ol>
           <li><strong>Initial parameters.</strong> Run <code>parmchk2 -s gaff2 -a Y</code> from the input <code>mol2</code> to build <code>*_original.frcmod</code>.</li>
-          <li><strong>Geometry and Hessian.</strong> Optimize the structure, then compute a Cartesian Hessian from MLIP or optional QM reference settings.</li>
-          <li><strong>Bonded correction.</strong> Use Seminario or modified Seminario to update bond and angle force constants/equilibria.</li>
+          <li><strong>Optimization and reference.</strong> Optimize the structure and prepare the MLIP or optional QM reference geometry required by the enabled refinement stages.</li>
+          <li><strong>Bonded correction or skip.</strong> Use Seminario or modified Seminario to update bond and angle terms, or retain the original terms when <code>bonded=none</code>.</li>
+          <li><strong>Atomic charges.</strong> Preserve the input charges or calculate new charges with RESP, a charge-capable MLIP, or an Antechamber method.</li>
           <li><strong>TorsionFit.</strong> Scan selected proper torsions and fit the relative profile without changing nonbonded, improper, or topology terms.</li>
           <li><strong>Export.</strong> Write refined Amber mol2/frcmod and GROMACS top/gro files.</li>
         </ol>
 
         <div class="admonition note">
-          <p class="admonition-title">When refinement is skipped</p>
-          <p>If <code>bonded=none</code> and <code>torsionfit=false</code>, MAPLE skips geometry optimization, Hessian evaluation, and all parameter refinement. The original <code>mol2</code> and parmchk2-generated frcmod are exported directly.</p>
+          <p class="admonition-title">Charge-only operation</p>
+          <p>If <code>bonded=none</code> and <code>torsionfit=false</code>, MAPLE skips geometry optimization and Hessian evaluation. Charge fitting still runs on the supplied coordinates. <code>chg_fit=none</code> preserves the input mol2 charges and original frcmod; another charge method updates the final mol2 charges while retaining the original atom types and frcmod.</p>
         </div>
 
         <h2 id="parameters">Core Parameters</h2>
@@ -242,8 +243,12 @@
             <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><code>mol2</code></td><td>Required</td><td>Input topology and atom typing for <code>method=correction</code>.</td></tr>
+              <tr><td><code>cmo</code></td><td><code>0 1</code></td><td>Target molecular charge and multiplicity. If omitted, Correction uses charge/multiplicity already attached to the input structure, falling back to <code>0 1</code>.</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Bond/angle update method: <code>mseminario</code>, <code>seminario</code>, or <code>none</code>.</td></tr>
               <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Force constant scaling factor for Seminario/mSeminario Hessian-based fitting</td></tr>
+              <tr><td><code>chg_fit</code></td><td><code>none</code></td><td>Charge source: input mol2 charges, <code>resp</code>, a <a href="parmfit.html#charge-fitting">charge-capable MLIP</a>, or a value passed to <code>antechamber -c</code>.</td></tr>
+              <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code></td><td>Gaussian ESP level used only when <code>chg_fit=resp</code>.</td></tr>
+              <tr><td><code>chg_route</code></td><td>Empty</td><td>Additional Gaussian route text for RESP ESP jobs.</td></tr>
               <tr><td><code>iqm</code></td><td><code>false</code></td><td>Use external QM reference optimization/Hessian and torsion references when enabled. See the <a href="parmfit.html#iqm">main Parmfit page</a> for details.</td></tr>
               <tr><td><code>torsion_bonds</code></td><td>Auto</td><td>Optional explicit center bonds. Otherwise MAPLE selects rotatable single bonds from the mol2 topology.</td></tr>
             </tbody>
@@ -256,18 +261,44 @@
           <p>Bond/angle and torsion refinement are controlled separately. Setting <code>bonded=none</code> preserves the original BOND/ANGLE terms; setting <code>torsionfit=false</code> preserves the original DIHE terms. With both disabled, Correction exports the parmchk2/GAFF2 parameters without refinement. When either refinement is enabled, atom types are automatically reassigned (MAPLE Z0/Z1, etc.).</p>
         </div>
 
+        <h2 id="charge-fitting">Charge Fitting</h2>
+
+        <p><code>chg_fit</code> is independent of <code>iqm</code>. RESP always uses Gaussian and reuses <code>qm_nproc</code> and <code>qm_mem</code>. Correction does not normalize fitted model, RESP, or Antechamber charges; the report prints both the integer target from <code>cmo</code> and the actual sum in the charged mol2 so that any mismatch is visible.</p>
+
+        <p>With <code>iqm=true</code>, <code>qm_compare=true</code>, and parameter refinement enabled, charge fitting follows both branch geometries. The primary result uses <code>chargefit/qm_route_charged.mol2</code>, while the MLIP comparison uses <code>chargefit/mlip_route_charged.mol2</code>. For <code>chg_fit=none</code>, the analogous route-specific charged mol2 files are written directly under <code>&lt;base&gt;_work/</code>, and no <code>chargefit/</code> directory is created.</p>
+
         <h2 id="torsionfit">TorsionFit</h2>
 
         <p>Correction auto-selects center bonds from the mol2 topology: proper-torsion central bonds that are single bonds and not in a ring. Use <code>torsion_bonds</code> to provide explicit overrides (e.g. <code>6-8 12-14</code>). See the <a href="parmfit.html#torsionfit">main Parmfit page</a> for the two-stage fitting architecture and parameter details.</p>
 
-        <h2 id="parmfit-input">Full Parmfit Input</h2>
-        <p>Checked-in Parmfit config: <code>examples/parmfit/Correction.parmfit</code>. Use it from a MAPLE input with <code>#parmfit(method=correction,input=Correction.parmfit)</code>.</p>
+        <h2 id="parmfit-input">Input Files</h2>
+
+        <h3 id="simple-input">Simple Input</h3>
+        <p>A simple Correction job keeps commonly used Parmfit options in the regular MAPLE input. The inline coordinates provide the working geometry, while the mol2 file supplies topology, atom types, and starting charges.</p>
+        <pre><code>#model=uma(size=uma-s-1p1,task=omol)
+#parmfit(method=correction,mol2=toluene_ff.mol2,cmo=0 1,chg_fit=none,bonded=mseminario,torsionfit=true)
+#device=gpu0
+
+C   0.000000  1.520000  0.000000
+...</code></pre>
+
+        <h3 id="full-external-input">Full External Input</h3>
+        <p>For a longer setup, keep the MAPLE launcher short and move Parmfit parameters into an external <code>.parmfit</code> file. The inline method must match <code>method=correction</code> in the external config. File paths such as <code>mol2</code> are resolved relative to the <code>.parmfit</code> file.</p>
+        <pre><code>#model=uma(size=uma-s-1p1,task=omol)
+#parmfit(method=correction,input=Correction.parmfit)
+#device=gpu0
+
+C   0.000000  1.520000  0.000000
+...</code></pre>
+
+        <p><strong>Example external Parmfit config</strong></p>
         <div class="parmfit-inputs">
           <details class="parmfit-input-item">
             <summary>Correction.parmfit</summary>
             <div class="parmfit-input-body">
               <pre><code>method=correction
 mol2=toluene_ff.mol2
+cmo=0 1
 
 # QM reference for correction and TorsionFit
 iqm=false
@@ -280,6 +311,11 @@ qm_mode=1
 qm_compare=false
 qm_nproc=8
 qm_mem=24
+
+# Atomic charges
+chg_fit=none
+chg_level=HF/6-31G(d)
+chg_route=
 
 # Bond/angle correction
 bonded=mseminario
@@ -320,9 +356,12 @@ report_debug=false</code></pre>
         <h2 id="output-files">Output Files</h2>
         <ul>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_original.frcmod</code>: Initial AmberTools/GAFF2 frcmod from <code>parmchk2</code>.</li>
-          <li><code>&lt;base&gt;_work/&lt;base&gt;_maple.mol2</code>: Refined mol2 with MAPLE atom type naming.</li>
+          <li><code>&lt;base&gt;_work/&lt;base&gt;_maple.mol2</code>: Primary final mol2 with the selected charges; refined workflows use MAPLE atom type naming.</li>
+          <li><code>&lt;base&gt;_work/&lt;base&gt;_mlip_maple.mol2</code>: Optional MLIP-comparison mol2 when <code>qm_compare</code> is active.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_maple.frcmod</code>: Refined Amber parameter file.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_maple.top</code> and <code>&lt;base&gt;_work/&lt;base&gt;_maple.gro</code>: GROMACS export for inspection and deployment.</li>
+          <li><code>&lt;base&gt;_work/chargefit/{qm_route|mlip_route}_charged.mol2</code>: Route-specific charged mol2 for RESP, charge-capable MLIP, or Antechamber fitting.</li>
+          <li><code>&lt;base&gt;_work/{qm_route|mlip_route}_charged.mol2</code>: Charge-preserving work mol2 for <code>chg_fit=none</code>; this mode creates no <code>chargefit/</code> directory.</li>
           <li><code>&lt;base&gt;_work/torsionfit/</code>: Torsion scan outputs and fit diagnostics.</li>
         </ul>
 

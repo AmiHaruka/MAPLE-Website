@@ -233,6 +233,10 @@
           </div>
         </div>
 
+        <h2 id="target">Target</h2>
+
+        <p><code>target</code> must identify exactly one ion residue in the input PDB. Use a chain and residue number such as <code>A462</code>, include an insertion code when present (<code>A462A</code>), or use an ion residue name and number such as <code>FE462</code>. The selected residue must contain a single ion atom recognized by MAPLE. It defines the center for donor detection and metal-site construction; <code>add_resid</code> and <code>set_bonded</code> extend that site without changing the target.</p>
+
         <div class="admonition note">
           <p class="admonition-title">Charge convention (cmo)</p>
           <p>The charge in <code>cmo</code> refers to the <strong>metal ion plus any non-protein ligands or cofactors</strong>&mdash;it is not the total system charge. Standard protein residues carry pre-set formal charges that MAPLE automatically adds when inferring the large-model charge:</p>
@@ -244,6 +248,11 @@
           </div>
           <p>The large-model charge is <code>Q_large = cmo_charge + &Sigma; formal_charge(protein residues)</code>. The optional third <code>cmo</code> value (<code>oxy</code>) controls the metal formal charge identity (e.g. Fe<sup>2+</sup> vs Fe<sup>3+</sup>) but does not participate in the total charge.</p>
           <p>Correct protein preprocessing is essential: a deprotonated cysteine must be named <strong>CYM</strong> (charge -1), not CYS (neutral), or the inferred large-model charge will be wrong.</p>
+        </div>
+
+        <div class="admonition note">
+          <p class="admonition-title">MetalAA is RESP-only</p>
+          <p>MetalAA does not expose <code>chg_fit</code>. It always fits large-model charges with Gaussian ESP and RESP. <code>chg_level</code> and <code>chg_route</code> control that calculation, while <code>chgmod</code> and <code>fixchg_resids</code> retain their standard-residue fixed-charge semantics.</p>
         </div>
 
         <h2 id="workflow">Workflow</h2>
@@ -260,7 +269,7 @@
           <table>
             <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>target</code></td><td>Required</td><td>PDB ion residue selector for the metal center.</td></tr>
+              <tr><td><code>target</code></td><td>Required</td><td>Unique PDB selector for the central ion residue; see <a href="#target">Target</a>.</td></tr>
               <tr><td><code>cmo</code></td><td><code>0 1</code></td><td><code>&lt;charge&gt; &lt;multiplicity&gt; [oxidation]</code>. Oxidation is optional and used for metal identity/formal charge handling.</td></tr>
               <tr><td><code>cfmol2</code></td><td>None</td><td>One or more cofactor/ligand mol2 templates for nonprotein residues near the metal site.</td></tr>
               <tr><td><code>add_resid</code></td><td>None</td><td>Additional residues to force into the metal-site core.</td></tr>
@@ -279,7 +288,9 @@
         </div>
         <p>For <code>qm_engine</code>, <code>opt_level</code>, QM job resources, and MLIP optimization controls, see the <a href="parmfit.html#general-settings">General Settings</a> and <a href="parmfit.html#iqm">QM Reference</a> sections of the main Parmfit page.</p>
 
-        <h2 id="chgmod">RESP Fixed Charges (chgmod)</h2>
+        <h2 id="charge-fitting">Charge Fitting</h2>
+
+        <h3 id="chgmod">RESP Fixed Charges (chgmod)</h3>
 
         <p>The <code>chgmod</code> parameter controls which standard backbone atoms are fixed to their Amber reference charges during RESP fitting. Higher values include more atoms in the fixed set:</p>
 
@@ -297,8 +308,25 @@
 
         <p>Use <code>fixchg_resids</code> to lock entire residues to standard Amber reference charges regardless of the <code>chgmod</code> policy. Specifying a non-standard residue that lacks a reference charge entry will cause a startup error.</p>
 
-        <h2 id="parmfit-input">Full Parmfit Input</h2>
-        <p>Checked-in Parmfit config: <code>examples/parmfit/MetalAA.parmfit</code>. Use it from a MAPLE input with <code>#parmfit(method=abinitio,input=MetalAA.parmfit)</code>.</p>
+        <h2 id="parmfit-input">Input Files</h2>
+
+        <h3 id="simple-input">Simple Input</h3>
+        <p>A simple MetalAA job keeps commonly used route options in the regular MAPLE input. The target selects the metal ion, and <code>cmo</code> gives the site charge, multiplicity, and metal oxidation state.</p>
+        <pre><code>#model=uma(size=uma-s-1p1)
+#parmfit(method=abinitio,target=A462,cmo=-1 6 3,cfmol2=HEM_ff.mol2,chgmod=1,bonded=mseminario)
+#device=gpu0
+
+PDB P450.pdb</code></pre>
+
+        <h3 id="full-external-input">Full External Input</h3>
+        <p>For a longer setup, keep the MAPLE launcher short and move Parmfit parameters into an external <code>.parmfit</code> file. The launcher and external config must both use <code>method=abinitio</code>. The PDB remains in the MAPLE input; <code>cfmol2</code> paths are resolved relative to the <code>.parmfit</code> file.</p>
+        <pre><code>#model=uma(size=uma-s-1p1)
+#parmfit(method=abinitio,input=MetalAA.parmfit)
+#device=gpu0
+
+PDB P450.pdb</code></pre>
+
+        <p><strong>Example external Parmfit config</strong></p>
         <div class="parmfit-inputs">
           <details class="parmfit-input-item">
             <summary>MetalAA.parmfit</summary>

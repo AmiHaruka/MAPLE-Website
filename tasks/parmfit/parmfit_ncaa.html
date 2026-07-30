@@ -215,7 +215,7 @@
         <h1>Parmfit NCAA</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>NCAA is the <code>parmfit(method=abinitio)</code> route for a noncanonical amino acid residue classified as a protein residue. It builds a capped <strong>ACE-<em>target</em>-NME</strong> model, where the backbone and caps are frozen during optimization so that only the sidechain R-group relaxes. Two initial backbone conformers (&alpha; and &beta;) are generated, multiconformer RESP charges are fitted, AmberTools prepin/frcmod templates are created, and bond/angle terms plus sidechain torsions are refined. Deployment is validated with <code>tleap</code>.</p>
+        <p>NCAA is the <code>parmfit(method=abinitio)</code> route for a noncanonical amino acid residue classified as a protein residue. It builds capped <strong>ACE-<em>target</em>-NME</strong> models, where the backbone and caps are frozen during optimization so that only the sidechain R-group relaxes. Atomic charges are obtained through RESP, a charge-capable MLIP, or an Antechamber method; AmberTools prepin/frcmod templates are then created, and bond/angle terms plus sidechain torsions are refined. Deployment is validated with <code>tleap</code>.</p>
 
         <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
@@ -232,12 +232,16 @@
           </div>
         </div>
 
+        <h2 id="target">Target</h2>
+
+        <p><code>target</code> must identify exactly one protein residue in the input PDB. Use a chain and residue number such as <code>A123</code>, include an insertion code when present (<code>A123A</code>), or use a residue name and number such as <code>HIF123</code>. A selector without a chain must still be unique. The selected residue must contain the peptide backbone atoms required by NCAA; <code>rn</code> controls only the output residue name and does not affect target selection.</p>
+
         <h2 id="workflow">Workflow</h2>
         <ol>
           <li><strong>Target identity.</strong> Locate the target residue and detect backbone, sidechain anchor, and chirality.</li>
-          <li><strong>Capped model.</strong> Build and optimize an <code>ACE-target-NME</code> representative model.</li>
-          <li><strong>RESP conformers.</strong> Generate alpha and beta capped conformers and run multiconformer RESP.</li>
-          <li><strong>AmberTools template.</strong> Run antechamber, prepgen, and parmchk2 to create initial prepin/frcmod files.</li>
+          <li><strong>Capped models.</strong> Build and optimize &alpha; and &beta; <code>ACE-target-NME</code> conformers.</li>
+          <li><strong>Atomic charges.</strong> Fit the optimized conformers with the configured <code>chg_fit</code> route and prepare the charged capped mol2.</li>
+          <li><strong>AmberTools template.</strong> Use the fitted charges with antechamber, prepgen, and parmchk2 to create the initial prepin/frcmod files.</li>
           <li><strong>Parameter refinement.</strong> Apply Seminario/mSeminario to bond/angle terms and TorsionFit to target-residue sidechain torsions.</li>
           <li><strong>Deployment.</strong> Write refined prepin/frcmod, processed protein PDB, tleap input, and tleap validation outputs.</li>
         </ol>
@@ -247,7 +251,7 @@
           <table>
             <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>target</code></td><td>Required</td><td>PDB residue selector for the residue to parameterize.</td></tr>
+              <tr><td><code>target</code></td><td>Required</td><td>Unique PDB selector for the protein residue to parameterize; see <a href="#target">Target</a>.</td></tr>
               <tr><td><code>cmo</code></td><td><code>0 1</code></td><td>Total charge and multiplicity for the target residue model.</td></tr>
               <tr><td><code>rn</code></td><td><code>MOL</code></td><td>Output residue name used in prepin/frcmod and processed PDB files.</td></tr>
               <tr><td><code>prom</code></td><td><code>ff14SB</code></td><td>Protein force field model, commonly <code>ff14SB</code> or <code>ff19SB</code>.</td></tr>
@@ -255,8 +259,10 @@
               <tr><td><code>ionm</code></td><td><code>12_6</code></td><td>Ion parameter set name passed to tleap deployment; NCAA does not enforce a fixed whitelist.</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Bond/angle refinement: <code>mseminario</code>, <code>seminario</code>, or <code>none</code>.</td></tr>
               <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Force constant scaling factor for Seminario/mSeminario Hessian-based fitting</td></tr>
-              <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code></td><td>Gaussian level for RESP ESP generation. Always active regardless of <code>iqm</code>.</td></tr>
-              <tr><td><code>iqm</code></td><td><code>false</code></td><td>Use external QM reference geometry/Hessian/torsion references beyond the RESP jobs. See the <a href="parmfit.html#iqm">main Parmfit page</a> for details.</td></tr>
+              <tr><td><code>chg_fit</code></td><td><code>resp</code></td><td>Charge source: <code>resp</code>, a <a href="parmfit.html#charge-fitting">charge-capable MLIP</a>, or a value passed to <code>antechamber -c</code>. <code>none</code> is invalid for NCAA.</td></tr>
+              <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code></td><td>Gaussian ESP level used only when <code>chg_fit=resp</code>.</td></tr>
+              <tr><td><code>chg_route</code></td><td>Empty</td><td>Additional Gaussian route text for RESP ESP jobs.</td></tr>
+              <tr><td><code>iqm</code></td><td><code>false</code></td><td>Use external QM reference geometry/Hessian/torsion references. It does not select the charge route. See the <a href="parmfit.html#iqm">main Parmfit page</a> for details.</td></tr>
             </tbody>
           </table>
         </div>
@@ -267,6 +273,14 @@
           <p>Bond/angle and torsion refinement are controlled separately. Setting <code>bonded=none</code> keeps the initial BOND/ANGLE terms; setting <code>torsionfit=false</code> keeps the initial DIHE terms. When either refinement is enabled, atom types are automatically reassigned (MAPLE Z0/Z1, etc.).</p>
         </div>
 
+        <h2 id="charge-fitting">Charge Fitting</h2>
+
+        <p>NCAA fits the optimized &alpha; and &beta; capped conformers. With <code>chg_fit=resp</code>, Gaussian ESP data from both conformers enter one joint two-stage RESP fit. A charge-capable MLIP or Antechamber method evaluates the two conformers separately, after which MAPLE applies their equal-weight per-atom average. For model and Antechamber routes, a final backbone adjustment closes the target-residue charge in the prepin to the <code>cmo</code> value.</p>
+
+        <p><code>chg_fit</code> is independent of <code>iqm</code>. RESP always uses Gaussian with <code>chg_level</code>, <code>chg_route</code>, <code>qm_nproc</code>, and <code>qm_mem</code>. NCAA cannot use <code>chg_fit=none</code> because a PDB input does not supply a reusable set of atomic charges.</p>
+
+        <p>All charge-route files remain under <code>&lt;base&gt;_work/ncaa/</code>. The resulting charged capped mol2 and <code>target.chg</code> feed the prepin/GAFF2 template build; the same charges are carried into the Stage&nbsp;0 parameter set and the TorsionFit baseline.</p>
+
         <h2 id="torsionfit">TorsionFit</h2>
 
         <p>NCAA uses a center-bond filter that restricts torsion fitting to target-residue sidechain torsions only; backbone&ndash;backbone and cap torsion bonds are excluded. For residues with particularly complex sidechains, consider setting <code>torsionfit=false</code> and relying on the original GAFF2 torsion parameters, or use <code>torsion_bonds</code> to refine specific dihedrals selectively. NCAA disables torsion ensemble targets internally; see the <a href="parmfit.html#torsionfit">main Parmfit page</a> for scan and refinement parameter details.</p>
@@ -275,8 +289,25 @@
 
         <p>When the NCAA residue is inserted as a custom template, MAPLE dynamically generates ProteinFF-GAFF2 cross-terms at both peptide boundaries: the head side (<code>prev_C</code>&ndash;<code>target_N</code>) and the tail side (<code>target_C</code>&ndash;<code>next_N</code>). These include exact BOND, ANGLE, and DIHE terms that connect the custom template atom types to the neighbouring standard protein residue atom types.</p>
 
-        <h2 id="parmfit-input">Full Parmfit Input</h2>
-        <p>Checked-in Parmfit config: <code>examples/parmfit/NCAA.parmfit</code>. Use it from a MAPLE input with <code>#parmfit(method=abinitio,input=NCAA.parmfit)</code>.</p>
+        <h2 id="parmfit-input">Input Files</h2>
+
+        <h3 id="simple-input">Simple Input</h3>
+        <p>A simple NCAA job keeps commonly used route options in the regular MAPLE input. The target selects the noncanonical protein residue, and the PDB block supplies the complete structure.</p>
+        <pre><code>#model=uma(size=uma-s-1p1)
+#parmfit(method=abinitio,target=A123,rn=MOL,cmo=0 1,chg_fit=resp,bonded=mseminario,torsionfit=false)
+#device=gpu0
+
+PDB ncaa.pdb</code></pre>
+
+        <h3 id="full-external-input">Full External Input</h3>
+        <p>For a longer setup, keep the MAPLE launcher short and move Parmfit parameters into an external <code>.parmfit</code> file. The launcher and external config must both use <code>method=abinitio</code>. The PDB remains in the MAPLE input; do not place <code>pdb</code>, <code>input</code>, or global MAPLE options in the external config.</p>
+        <pre><code>#model=uma(size=uma-s-1p1)
+#parmfit(method=abinitio,input=NCAA.parmfit)
+#device=gpu0
+
+PDB ncaa.pdb</code></pre>
+
+        <p><strong>Example external Parmfit config</strong></p>
         <div class="parmfit-inputs">
           <details class="parmfit-input-item">
             <summary>NCAA.parmfit</summary>
@@ -297,7 +328,8 @@ qm_compare=false
 qm_nproc=8
 qm_mem=24
 
-# RESP charges
+# Atomic charges
+chg_fit=resp
 resp_backend=gaussian
 chg_level=HF/6-31G(d)
 chg_route=
@@ -310,7 +342,7 @@ ionm=hfe
 bonded=mseminario
 vib_scale=1.0
 
-# NCAA capped/RESP conformer optimization controls
+# NCAA capped-conformer optimization controls
 opt_max_iter=256
 opt_max_step=0.2
 
@@ -338,13 +370,15 @@ report_debug=false</code></pre>
           <li><code>&lt;base&gt;_work/&lt;rn&gt;_maple.prepin</code> and <code>&lt;base&gt;_work/&lt;rn&gt;_maple.frcmod</code>: Refined MAPLE residue template and parameter files.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_ncaa_tleap.pdb</code> and <code>&lt;base&gt;_work/&lt;base&gt;_ncaa_tleap.in</code>: Processed protein PDB and tleap input.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_ncaa.prmtop</code>, <code>&lt;base&gt;_work/&lt;base&gt;_ncaa.inpcrd</code>, and solvated PDB outputs: tleap validation products.</li>
-          <li><code>&lt;base&gt;_work/ncaa/</code>: RESP, conformer, antechamber, prepgen, and torsion-refinement intermediates.</li>
+          <li><code>&lt;base&gt;_work/ncaa/</code>: Optimized conformers, charge-route files, charged capped mol2, <code>target.chg</code>, AmberTools template intermediates, and torsion-refinement data.</li>
         </ul>
 
         <h2 id="requirements">Requirements and Limits</h2>
         <ul>
           <li>The target must be a protein residue with enough backbone and sidechain identity for capping and chirality detection.</li>
-          <li>RESP jobs use the Gaussian backend.</li>
+          <li><code>chg_fit=none</code> is unsupported because NCAA has no input mol2 charges to preserve.</li>
+          <li>When selected, RESP uses the Gaussian backend; model and Antechamber charge routes do not require RESP.</li>
+          <li>The final target-residue charge written for model and Antechamber methods is constrained to the <code>cmo</code> charge.</li>
           <li>TorsionFit is restricted to target-residue sidechain-related center bonds and does not fit peptide backbone torsions.</li>
         </ul>
 
