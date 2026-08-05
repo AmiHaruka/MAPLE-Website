@@ -265,7 +265,7 @@
 
         <p><code>chg_fit</code> is independent of <code>iqm</code>. RESP always uses Gaussian and reuses <code>qm_nproc</code> and <code>qm_mem</code>. Correction does not normalize fitted model, RESP, or Antechamber charges; the report prints both the integer target from <code>cmo</code> and the actual sum in the charged mol2 so that any mismatch is visible.</p>
 
-        <p>With <code>iqm=true</code>, <code>qm_compare=true</code>, and parameter refinement enabled, charge fitting follows both branch geometries. The primary result uses <code>chargefit/qm_route_charged.mol2</code>, while the MLIP comparison uses <code>chargefit/mlip_route_charged.mol2</code>. For <code>chg_fit=none</code>, the analogous route-specific charged mol2 files are written directly under <code>&lt;base&gt;_work/</code>, and no <code>chargefit/</code> directory is created.</p>
+        <p>With <code>iqm=true</code>, <code>qm_compare=true</code>, and parameter refinement enabled, charge fitting follows both branch geometries. The primary result uses <code>chargefit/qm_route_charged.mol2</code>, while the MLIP comparison uses <code>chargefit/mlip_route_charged.mol2</code>. For <code>chg_fit=none</code>, Parmfit uses the charges recorded in the input mol2.</p>
 
         <h2 id="torsionfit">TorsionFit</h2>
 

@@ -331,7 +331,7 @@ C   0.000000  1.520000  0.000000
 ...</code></pre>
 
         <h3>Abinitio</h3>
-        <p>Abinitio routes require exactly one PDB block. The <code>target</code> selects a residue in that PDB; MAPLE classifies it as a protein residue or ion and dispatches to NCAA or MetalAA.</p>
+        <p>Abinitio routes require exactly one explicitly hydrogenated PDB block. Before target selection, MAPLE builds a connectivity graph and matches standard protein residues against the active Amber residue templates, assigning canonical atom names, atom types, partial charges, residue net charges, and Amber connectivity independently of the input atom names. The <code>CYX</code>/<code>CYM</code> state is disambiguated by disulfide-bond detection. The <code>target</code> then selects one residue from this normalized structure and dispatches to NCAA for a peptide-like residue or MetalAA for an ion.</p>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=abinitio,target=HIF89,rn=HF1,cmo=0 1)
 #device=gpu0
@@ -419,6 +419,9 @@ Charge fitting:
 
         <p>The abinitio header identifies the target residue, chirality, charge method, and progress through each stage:</p>
         <pre><code>Target: _89:HIF (protein)
+  PDB residue templates: matched=516, backbone_only=1, unmatched=0
+    non-standard (matched backbone only): _89:HIF (target)
+  PDB target charge: _89:HIF = 0 (from your input)
   [NCAA] MLIP model preparation + reference optimization ...
   NCAA target selector: HIF89
   residue name: HF1

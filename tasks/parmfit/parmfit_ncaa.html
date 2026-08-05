@@ -215,11 +215,12 @@
         <h1>Parmfit NCAA</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>NCAA is the <code>parmfit(method=abinitio)</code> route for a noncanonical amino acid residue classified as a protein residue. It builds capped <strong>ACE-<em>target</em>-NME</strong> models, where the backbone and caps are frozen during optimization so that only the sidechain R-group relaxes. Atomic charges are obtained through RESP, a charge-capable MLIP, or an Antechamber method; AmberTools prepin/frcmod templates are then created, and bond/angle terms plus sidechain torsions are refined. Deployment is validated with <code>tleap</code>.</p>
+        <p>NCAA is the <code>parmfit(method=abinitio)</code> route for a noncanonical amino acid whose peptide backbone is recognized but whose complete residue graph does not match an active standard Amber protein template. It builds capped <strong>ACE-<em>target</em>-NME</strong> models, where the backbone and caps are frozen during optimization so that only the sidechain R-group relaxes. Atomic charges are obtained through RESP, a charge-capable MLIP, or an Antechamber method; AmberTools prepin/frcmod templates are then created, and bond/angle terms plus sidechain torsions are refined. Deployment is validated with <code>tleap</code>.</p>
 
         <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
-          <p>The input PDB should carry reasonable protonation states. The target residue must contain properly named backbone atoms (<strong>C</strong>, <strong>O</strong>, <strong>N</strong>, <strong>H</strong>, <strong>CA</strong>) and at least one sidechain heavy atom bonded to CA. NCAA relies on these standard names for chirality detection, backbone freezing, and mainchain-path inference.</p>
+          <p>Provide a chemically reasonable, explicitly hydrogenated PDB; MAPLE does not add or remove hydrogens. Before target selection, the PDB reader builds a connectivity graph and matches standard amino acids against the active ff14SB/ff19SB Amber residue templates using element composition, topology, explicit hydrogens, and chirality. Successful matches supply canonical atom names, atom types, partial charges, residue total charges, and Amber connectivity, so standard input atom names are not required. Atom names in each graph-matched residue are rewritten to their canonical Amber template names before tleap export. A residue that lacks a complete standard template but has a connected <strong>N-H-CA-C(=O)</strong> peptide backbone and at least one sidechain heavy atom bonded to CA can enter the NCAA route.</p>
+          <p><strong>CYX/CYM:</strong> ParmFit disambiguates this cysteine state by detecting disulfide bonds during graph matching &mdash; a cysteine whose SG forms a disulfide is assigned <code>CYX</code> (charge 0), otherwise <code>CYM</code> (charge -1).</p>
         </div>
 
         <div class="admonition important">
@@ -228,13 +229,14 @@
             Important
           </div>
           <div class="admonition-body">
-            <p>Use <code>method=abinitio</code>, not a separate NCAA method keyword. MAPLE enters this route only when the selected <code>target</code> is recognized as a protein residue in the PDB.</p>
+            <p>Use <code>method=abinitio</code>, not a separate NCAA method keyword. MAPLE enters this route when the selected <code>target</code> is peptide-like and is routed as a protein residue after PDB graph analysis.</p>
           </div>
         </div>
 
         <h2 id="target">Target</h2>
 
-        <p><code>target</code> must identify exactly one protein residue in the input PDB. Use a chain and residue number such as <code>A123</code>, include an insertion code when present (<code>A123A</code>), or use a residue name and number such as <code>HIF123</code>. A selector without a chain must still be unique. The selected residue must contain the peptide backbone atoms required by NCAA; <code>rn</code> controls only the output residue name and does not affect target selection.</p>
+        <p><code>target</code> must identify exactly one protein residue in the input PDB. Use a chain and residue number such as <code>A123</code>, a residue name and number such as <code>HIF123</code>, or append an altloc label when a specific alternate conformation is required, for example <code>A123A</code> for altloc A. A selector without a chain must still be unique. Target selection occurs after standard-residue graph matching and does not control that recognition. The selected residue must contain the peptide backbone required by NCAA; <code>rn</code> controls only its output residue name.</p>
+        <p>The charge in <code>cmo</code> applies only to this exact target residue. Other backbone-only residues in the same PDB do not inherit its charge or generated NCAA template and remain explicitly reported for separate handling.</p>
 
         <h2 id="workflow">Workflow</h2>
         <ol>
@@ -375,7 +377,7 @@ report_debug=false</code></pre>
 
         <h2 id="requirements">Requirements and Limits</h2>
         <ul>
-          <li>The target must be a protein residue with enough backbone and sidechain identity for capping and chirality detection.</li>
+          <li>The target must have a connected peptide backbone and enough sidechain identity for capping and chirality detection; standard atom naming is not required.</li>
           <li><code>chg_fit=none</code> is unsupported because NCAA has no input mol2 charges to preserve.</li>
           <li>When selected, RESP uses the Gaussian backend; model and Antechamber charge routes do not require RESP.</li>
           <li>The final target-residue charge written for model and Antechamber methods is constrained to the <code>cmo</code> charge.</li>

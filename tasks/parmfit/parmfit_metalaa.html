@@ -220,7 +220,8 @@
 
         <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
-          <p>The input PDB should carry reasonable protonation states and residue naming. Incorrect assignments will propagate into the large-model charge inference.</p>
+          <p>Provide a chemically reasonable, explicitly hydrogenated PDB; MAPLE does not add or remove hydrogens. Standard protein residues are recognized by graph matching against the active ff14SB/ff19SB Amber templates, which supply canonical atom names, atom types, partial charges, total charges, and Amber connectivity. Consequently, standard input atom names are not required. Atom names in each graph-matched residue are rewritten to their canonical Amber template names before tleap export. Nonprotein ligands and cofactors near the metal site still require matching <code>cfmol2</code> templates.</p>
+          <p><strong>CYX/CYM:</strong> ParmFit disambiguates this cysteine state by detecting disulfide bonds during graph matching &mdash; a cysteine whose SG forms a disulfide is assigned <code>CYX</code> (charge 0), otherwise <code>CYM</code> (charge -1).</p>
         </div>
 
         <div class="admonition important">
@@ -235,19 +236,12 @@
 
         <h2 id="target">Target</h2>
 
-        <p><code>target</code> must identify exactly one ion residue in the input PDB. Use a chain and residue number such as <code>A462</code>, include an insertion code when present (<code>A462A</code>), or use an ion residue name and number such as <code>FE462</code>. The selected residue must contain a single ion atom recognized by MAPLE. It defines the center for donor detection and metal-site construction; <code>add_resid</code> and <code>set_bonded</code> extend that site without changing the target.</p>
+        <p><code>target</code> must identify exactly one ion residue in the input PDB. Use a chain and residue number such as <code>A462</code>, an ion residue name and number such as <code>FE462</code>, or append an altloc label when needed, for example <code>A462A</code> for altloc A. The selected residue must contain a single ion atom recognized by MAPLE. It defines the center for donor detection and metal-site construction; <code>add_resid</code> and <code>set_bonded</code> extend that site without changing the target.</p>
 
         <div class="admonition note">
           <p class="admonition-title">Charge convention (cmo)</p>
-          <p>The charge in <code>cmo</code> refers to the <strong>metal ion plus any non-protein ligands or cofactors</strong>&mdash;it is not the total system charge. Standard protein residues carry pre-set formal charges that MAPLE automatically adds when inferring the large-model charge:</p>
-          <div class="table-wrapper">
-            <table>
-              <thead><tr><th>Residue</th><th>ASP</th><th>GLU</th><th>LYS</th><th>ARG</th><th>HIP</th><th>CYM</th></tr></thead>
-              <tbody><tr><td>Formal charge</td><td>-1</td><td>-1</td><td>+1</td><td>+1</td><td>+1</td><td>-1</td></tr></tbody>
-            </table>
-          </div>
-          <p>The large-model charge is <code>Q_large = cmo_charge + &Sigma; formal_charge(protein residues)</code>. The optional third <code>cmo</code> value (<code>oxy</code>) controls the metal formal charge identity (e.g. Fe<sup>2+</sup> vs Fe<sup>3+</sup>) but does not participate in the total charge.</p>
-          <p>Correct protein preprocessing is essential: a deprotonated cysteine must be named <strong>CYM</strong> (charge -1), not CYS (neutral), or the inferred large-model charge will be wrong.</p>
+          <p>The charge in <code>cmo</code> refers to the <strong>metal ion plus any non-protein ligands or cofactors</strong>&mdash;it is not the total system charge and is not assigned to a coordinating amino acid. Each matched protein residue contributes the charge of its Amber graph template. The large-model charge is therefore <code>Q_large = cmo_charge + &Sigma; net_charge(matched protein residues)</code>.</p>
+          <p>The optional third <code>cmo</code> value (<code>oxy</code>) controls the metal formal-charge identity (e.g. Fe<sup>2+</sup> vs Fe<sup>3+</sup>) but does not participate in the total charge. A backbone-only nonstandard amino acid has no complete Amber template and must be parameterized separately; its provisional zero must not be treated as an established metal-site charge.</p>
         </div>
 
         <div class="admonition note">
