@@ -220,8 +220,8 @@
 
         <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
-          <p>Provide a chemically reasonable, explicitly hydrogenated PDB; MAPLE does not add or remove hydrogens. Standard protein residues are recognized by graph matching against the active ff14SB/ff19SB Amber templates, which supply canonical atom names, atom types, partial charges, total charges, and Amber connectivity. Consequently, standard input atom names are not required. Atom names in each graph-matched residue are rewritten to their canonical Amber template names before tleap export. Nonprotein ligands and cofactors near the metal site still require matching <code>cfmol2</code> templates.</p>
-          <p><strong>CYX/CYM:</strong> ParmFit disambiguates this cysteine state by detecting disulfide bonds during graph matching &mdash; a cysteine whose SG forms a disulfide is assigned <code>CYX</code> (charge 0), otherwise <code>CYM</code> (charge -1).</p>
+          <p>Provide a chemically reasonable, explicitly hydrogenated PDB; MAPLE does not add or remove hydrogens. Standard protein residues are recognized by graph matching against the active ff14SB/ff19SB Amber templates, which supply canonical atom names, atom types, partial charges, net charges, and Amber connectivity. Consequently, standard input atom names are not required. Atom names in each graph-matched residue are rewritten to their canonical Amber template names before tleap export. Nonprotein ligands and cofactors near the metal site still require matching <code>cfmol2</code> templates.</p>
+          <p><strong>CYX/CYM:</strong> ParmFit disambiguates this cysteine state by detecting disulfide bonds during graph matching &mdash; a cysteine whose SG forms a disulfide is assigned <code>CYX</code> (net charge 0), otherwise <code>CYM</code> (net charge -1).</p>
         </div>
 
         <div class="admonition important">
@@ -240,7 +240,7 @@
 
         <div class="admonition note">
           <p class="admonition-title">Charge convention (cmo)</p>
-          <p>The charge in <code>cmo</code> refers to the <strong>metal ion plus any non-protein ligands or cofactors</strong>&mdash;it is not the total system charge and is not assigned to a coordinating amino acid. Each matched protein residue contributes the charge of its Amber graph template. The large-model charge is therefore <code>Q_large = cmo_charge + &Sigma; net_charge(matched protein residues)</code>.</p>
+          <p>The charge in <code>cmo</code> refers to the <strong>metal ion plus any non-protein ligands or cofactors</strong>&mdash;it is not the total system charge and is not assigned to a coordinating amino acid. Each matched protein residue contributes the net charge of its Amber graph template. The large-model charge is therefore <code>Q_large = cmo_charge + &Sigma; net_charge(matched protein residues)</code>.</p>
           <p>The optional third <code>cmo</code> value (<code>oxy</code>) controls the metal formal-charge identity (e.g. Fe<sup>2+</sup> vs Fe<sup>3+</sup>) but does not participate in the total charge. A backbone-only nonstandard amino acid has no complete Amber template and must be parameterized separately; its provisional zero must not be treated as an established metal-site charge.</p>
         </div>
 
