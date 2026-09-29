@@ -7,7 +7,7 @@
       "page_entry": true,
       "page_role": "content",
       "section_order": 0,
-      "text": "Papers describing the MAPLE framework and its applications. Framework — April 30, 2026 · Chemical Science",
+      "text": "Papers describing the MAPLE framework and its applications. ParmFit — September 14, 2026 · ChemRxiv",
       "title": "Articles & News — MAPLE",
       "trail": [
         "MAPLE",
@@ -17,12 +17,28 @@
       "url": "articles.html#maple-papers"
     },
     {
-      "heading": "MAPLE: A Machine-Learning Force-Field-Native Platform for Automated Reaction Modeling and Enzyme Design",
+      "heading": "Leveraging Machine Learning Interatomic Potentials into Fitting Fast and Accurate AMBER-Compatible Precise Force Field",
       "level": 3,
       "page": "articles.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
+      "text": "Introduces ParmFit, an automated MAPLE framework that uses machine-learning interatomic potentials to construct and refine AMBER/GAFF-compatible parameters for small molecules, modified biomolecular residues, and metal coordination environments. Read on ChemRxiv → Framework — April 30, 2026 · Chemical Science",
+      "title": "Articles & News — MAPLE",
+      "trail": [
+        "MAPLE",
+        "Articles & News"
+      ],
+      "type": "Guide",
+      "url": "articles.html#leveraging-machine-learning-interatomic-potentials-into-fitting-fast-and-accurate-amber-compatible-precise-force-field"
+    },
+    {
+      "heading": "MAPLE: A Machine-Learning Force-Field-Native Platform for Automated Reaction Modeling and Enzyme Design",
+      "level": 3,
+      "page": "articles.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 2,
       "text": "Presents MAPLE as an MLFF-native molecular modeling platform with a tailored software framework and parallelized algorithms for large-scale, versatile reaction modeling and enzyme design. Read in Chemical Science →",
       "title": "Articles & News — MAPLE",
       "trail": [
@@ -38,7 +54,7 @@
       "page": "articles.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 2,
+      "section_order": 3,
       "text": "Release announcements and project updates. See all releases on GitHub . Release — August 10, 2026",
       "title": "Articles & News — MAPLE",
       "trail": [
@@ -54,7 +70,7 @@
       "page": "articles.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 3,
+      "section_order": 4,
       "text": "Added ParmFit workflows for Correction, NCAA, and MetalAA parameterization, native PDB handling, Direct MaxFlux transition-state searches, FeNNol/FeNNix-Bio1 support, and explicit-solvent compatibility updates. Release notes on GitHub → Release — June 4, 2026",
       "title": "Articles & News — MAPLE",
       "trail": [
@@ -70,7 +86,7 @@
       "page": "articles.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 4,
+      "section_order": 5,
       "text": "Standardized optimization workflows, corrected optimization metrics and force handling, expanded SCAN methods, improved UMA and MD restart behavior, and introduced calculator plugins and explicit-solvent cluster generation. Release notes on GitHub → Release — April 1, 2026",
       "title": "Articles & News — MAPLE",
       "trail": [
@@ -86,7 +102,7 @@
       "page": "articles.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 5,
+      "section_order": 6,
       "text": "Expanded MD workflows with NVT/NPT support, GROMACS-style MDP configuration, restart/trajectory improvements, task-aware UMA sizing, MACEPol integration, and IRC/debug cleanup. Release notes on GitHub → Release — February 7, 2026",
       "title": "Articles & News — MAPLE",
       "trail": [
@@ -102,7 +118,7 @@
       "page": "articles.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 6,
+      "section_order": 7,
       "text": "Added AutoNEB with adaptive image insertion, NVE molecular dynamics, SDCG optimizer with GDIIS acceleration, new IRC integrators (EulerPC, HPC, LQA), rigid scan mode, and input/parser improvements. Release notes on GitHub → Release — December 31, 2025",
       "title": "Articles & News — MAPLE",
       "trail": [
@@ -118,7 +134,7 @@
       "page": "articles.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 7,
+      "section_order": 8,
       "text": "First public release with frequency analysis, broad ML potential support (ANI, AIMNet2, MACE-OFF23, UMA), geometry optimization, transition state search, IRC, PES scan, solvation, constraints, GPU acceleration, and D4 dispersion. Release notes on GitHub →",
       "title": "Articles & News — MAPLE",
       "trail": [
@@ -1544,7 +1560,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 15,
-      "text": "Recent publications and release milestones from the MAPLE project. View all news April 30, 2026 · Chemical Science MAPLE published in Chemical Science An MLFF-native platform for automated reaction modeling and enzyme design. August 10, 2026 MAPLE v0.1.5 released ParmFit workflows, Direct MaxFlux transition-state searches, and FeNNol/FeNNix-Bio1 support. June 4, 2026 MAPLE v0.1.4 released Standardized optimization, expanded SCAN methods, calculator plugins, and explicit-solvent tools. April 1, 2026 MAPLE v0.1.3 released Expanded MD workflows, UMA/MACEPol updates, and IRC/debug cleanup.",
+      "text": "Recent publications and release milestones from the MAPLE project. View all news September 14, 2026 · ChemRxiv ParmFit preprint available on ChemRxiv MLIP-driven fitting of fast, accurate AMBER/GAFF-compatible precise force fields. August 10, 2026 MAPLE v0.1.5 released ParmFit workflows, Direct MaxFlux transition-state searches, and FeNNol/FeNNix-Bio1 support. June 4, 2026 MAPLE v0.1.4 released Standardized optimization, expanded SCAN methods, calculator plugins, and explicit-solvent tools. April 30, 2026 · Chemical Science MAPLE published in Chemical Science An MLFF-native platform for automated reaction modeling and enzyme design.",
       "title": "MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE"
