@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solvation - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../index.html"><img src="../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -112,7 +115,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../tasks/parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../tasks/parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -153,6 +156,7 @@
 
         <h2 id="overview">Overview</h2>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -177,6 +181,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <p>Do not combine <code>implicit=&lt;solvent&gt;</code> and <code>explicit=&lt;solvent&gt;</code> in the same <code>#solv</code> line. Explicit-solvent geometry options such as <code>radius</code>, <code>shape</code>, <code>density</code>, <code>number</code>, <code>solvent_pdb</code>, and clash settings are rejected for implicit jobs.</p>
 
@@ -222,15 +227,15 @@
 
         <div class="figure-row">
           <figure class="doc-figure">
-            <img src="../assets/images/opt/exp-solv/solv1_water_sphere.png" alt="Explicit water sphere cluster from solv1_solvated.xyz">
+            <img src="../assets/images/opt/exp-solv/solv1_water_sphere.png" alt="Explicit water sphere cluster from solv1_solvated.xyz" width="900" height="650">
             <figcaption>Example 1 — water sphere cluster from <code>solv1_solvated.xyz</code>.</figcaption>
           </figure>
           <figure class="doc-figure">
-            <img src="../assets/images/opt/exp-solv/solv2_toluene_sphere.png" alt="Explicit toluene sphere cluster from solv2_solvated.xyz">
+            <img src="../assets/images/opt/exp-solv/solv2_toluene_sphere.png" alt="Explicit toluene sphere cluster from solv2_solvated.xyz" width="900" height="650">
             <figcaption>Example 2 — toluene sphere cluster from <code>solv2_solvated.xyz</code>.</figcaption>
           </figure>
           <figure class="doc-figure">
-            <img src="../assets/images/opt/exp-solv/solv1_water_cube.png" alt="Explicit water cube cluster generated from example 1 solute">
+            <img src="../assets/images/opt/exp-solv/solv1_water_cube.png" alt="Explicit water cube cluster generated from example 1 solute" width="900" height="650">
             <figcaption>Example 1 cube variant — same solute, <code>shape=cube</code>, <code>box_size=20.0</code>, default water density.</figcaption>
           </figure>
         </div>
@@ -387,6 +392,7 @@
         <h2 id="parameters">Parameters</h2>
 
         <h3>Mode selection</h3>
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -423,8 +429,10 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h3>Explicit cluster geometry and density</h3>
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -471,8 +479,10 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h3>Explicit clash handling and output controls</h3>
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -529,6 +539,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h2 id="examples">Examples</h2>
 
@@ -617,5 +628,6 @@ XYZ /path/to/solute.xyz</code></pre>
     <p>&copy; 2026, MAPLE development team.</p>
   </footer>
   <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

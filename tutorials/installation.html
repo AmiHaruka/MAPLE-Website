@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Installation Guide - MAPLE</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../assets/css/home-fonts.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../assets/css/search.css">
+    <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
     <header class="top-nav">
         <div class="container">
             <div class="brand">
-                <a href="../index.html"><img src="../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+                <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
                 <a href="../index.html">MAPLE</a>
             </div>
             <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <div class="sidebar-brand">
-                    <img src="../assets/images/logo.jpg" alt="MAPLE">
+                    <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
                     <span>MAPLE Docs</span>
                 </div>
                 <div class="sidebar-tree">
@@ -113,7 +116,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../tasks/parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../tasks/parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -152,6 +155,7 @@
 
                 <p>Before installing MAPLE, ensure your system meets the following minimum requirements:</p>
 
+                <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
@@ -182,6 +186,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
 
                 <div class="admonition tip">
                     <div class="admonition-title">
@@ -219,10 +224,10 @@ pip install -e . -i https://pypi.tuna.tsinghua.edu.cn/simple</code></pre>
 
                         <p>The same <code>-i https://pypi.tuna.tsinghua.edu.cn/simple</code> option can also be appended to later PyPI-based <code>pip install</code> commands on this page, such as the core dependencies or <code>fairchem-core</code>.</p>
 
-                        <p>MAPLE auto-downloads supported MAPLE-hosted model files from <a href="https://huggingface.co/Wayne7815/MAPLE_models" target="_blank">https://huggingface.co/Wayne7815/MAPLE_models</a>. If you download model files manually through a reachable mirror, keep the same filenames and place them in <code>maple/function/calculator/model/</code>.</p>
+                        <p>MAPLE auto-downloads supported MAPLE-hosted model files from <a href="https://huggingface.co/Wayne7815/MAPLE_models" target="_blank" rel="noopener noreferrer">https://huggingface.co/Wayne7815/MAPLE_models</a>. If you download model files manually through a reachable mirror, keep the same filenames and place them in <code>maple/function/calculator/model/</code>.</p>
 
                         <p><strong>Tip:</strong><br>
-- If access to Hugging Face is slow in your region, you can use the mirror <a href="https://hf-mirror.com/Wayne7815/MAPLE_models/tree/main" target="_blank">https://hf-mirror.com/Wayne7815/MAPLE_models/tree/main</a> for manual model file downloads.<br>
+- If access to Hugging Face is slow in your region, you can use the mirror <a href="https://hf-mirror.com/Wayne7815/MAPLE_models/tree/main" target="_blank" rel="noopener noreferrer">https://hf-mirror.com/Wayne7815/MAPLE_models/tree/main</a> for manual model file downloads.<br>
 - If the local model directory does not exist, create <code>maple/function/calculator/model/</code> before placing files there.</p>
                     </div>
                 </div>
@@ -253,7 +258,7 @@ pip install -e . -i https://pypi.tuna.tsinghua.edu.cn/simple</code></pre>
                         Note
                     </div>
                     <div class="admonition-body">
-                        <p>Check your CUDA version with <code>nvidia-smi</code> and choose the matching PyTorch CUDA build (e.g., <code>cu118</code>, <code>cu121</code>). Visit <a href="https://pytorch.org/get-started/locally/" target="_blank">pytorch.org</a> for detailed instructions.</p>
+                        <p>Check your CUDA version with <code>nvidia-smi</code> and choose the matching PyTorch CUDA build (e.g., <code>cu118</code>, <code>cu121</code>). Visit <a href="https://pytorch.org/get-started/locally/" target="_blank" rel="noopener noreferrer">pytorch.org</a> for detailed instructions.</p>
                     </div>
                 </div>
 
@@ -275,7 +280,7 @@ pip install -U "jax[cuda12]" flax</code></pre>
 
                 <ul>
                     <li><strong>Core install:</strong> <code>pip install -e .</code> installs MAPLE plus <code>ase</code>, <code>numpy</code>, and <code>scipy</code>; it does not select a PyTorch/CUDA stack for you.</li>
-                    <li><strong>MAPLE-hosted checkpoints:</strong> ANI, AIMNet2, <code>maceoff23m</code>, and <code>egret</code> can be auto-downloaded from <a href="https://huggingface.co/Wayne7815/MAPLE_models" target="_blank">MAPLE_models</a>.</li>
+                    <li><strong>MAPLE-hosted checkpoints:</strong> ANI, AIMNet2, <code>maceoff23m</code>, and <code>egret</code> can be auto-downloaded from <a href="https://huggingface.co/Wayne7815/MAPLE_models" target="_blank" rel="noopener noreferrer">MAPLE_models</a>.</li>
                     <li><strong>Local checkpoints:</strong> backend-specific files such as <code>maceoff23s</code>, <code>maceoff23l</code>, <code>maceomol</code>, and MACE-Polar checkpoints must be placed in <code>maple/function/calculator/model/</code> or supplied through <code>model_path</code>.</li>
                     <li><strong>FeNNol :</strong> built-in <code>fennix-bio1s</code> and <code>fennix-bio1m</code> resolve shipped <code>.fnx</code> files; generic <code>fennol</code> requires <code>model_path=/path/to/model.fnx</code>.</li>
                     <li><strong>UMA:</strong> UMA checkpoints resolve through <code>checkpoint_path</code>, a local <code>maple/function/calculator/model/uma-*.pt</code> file, or FAIR-Chem's official loading path.</li>
@@ -326,5 +331,6 @@ pip install -U "jax[cuda12]" flax</code></pre>
     </footer>
 
     <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

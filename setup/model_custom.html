@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Custom Model - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../index.html"><img src="../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -113,7 +116,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../tasks/parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../tasks/parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -302,6 +305,7 @@ XYZ /path/to/molecule.xyz</code></pre>
 
         <h2 id="checklist">Capability checklist</h2>
         <p>Set each attribute to what your model actually supports &mdash; MAPLE enforces them so misuse fails loudly instead of producing wrong numbers:</p>
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr><th>Attribute</th><th>Set to</th></tr>
@@ -315,6 +319,7 @@ XYZ /path/to/molecule.xyz</code></pre>
             <tr><td><code>MODEL_PATH_OPTION</code></td><td><code>'model_path'</code> so an explicit checkpoint path is accepted</td></tr>
           </tbody>
         </table>
+        </div>
 
         <div class="admonition note">
           <p class="admonition-title">Numerical Hessian for free</p>
@@ -356,5 +361,6 @@ XYZ /path/to/molecule.xyz</code></pre>
     <p>&copy; 2026, MAPLE development team.</p>
   </footer>
   <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

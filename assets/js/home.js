@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('.site-header');
-  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  const onScroll = () => { if (header) header.classList.toggle('scrolled', window.scrollY > 8); };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
@@ -12,17 +12,36 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach((el) => el.classList.add('in')), 1500);
 
   const navToggle = document.querySelector('.mobile-toggle');
-  if (navToggle && header) {
+  const nav = document.querySelector('.main-nav');
+  const compactNavQuery = window.matchMedia('(max-width: 1248px)');
+  if (navToggle && header && nav) {
+    if (!nav.id) nav.id = 'primary-navigation';
+    navToggle.setAttribute('aria-controls', nav.id);
+
+    const setNavOpen = (open, returnFocus = false) => {
+      header.classList.toggle('nav-open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      if (!open && returnFocus) navToggle.focus({ preventScroll: true });
+    };
     navToggle.addEventListener('click', () => {
-      const isOpen = header.classList.toggle('nav-open');
-      navToggle.setAttribute('aria-expanded', String(isOpen));
+      setNavOpen(!header.classList.contains('nav-open'));
     });
-    document.querySelectorAll('.main-nav a').forEach((link) => {
-      link.addEventListener('click', () => {
-        header.classList.remove('nav-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setNavOpen(false));
     });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !event.isComposing && !event.defaultPrevented && header.classList.contains('nav-open')) {
+        event.preventDefault();
+        setNavOpen(false, true);
+      }
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (!nav.contains(event.target) && !navToggle.contains(event.target)) setNavOpen(false);
+    });
+    nav.addEventListener('focusout', (event) => {
+      if (event.relatedTarget && !nav.contains(event.relatedTarget) && event.relatedTarget !== navToggle) setNavOpen(false);
+    });
+    compactNavQuery.addEventListener('change', () => setNavOpen(false));
   }
 
 });

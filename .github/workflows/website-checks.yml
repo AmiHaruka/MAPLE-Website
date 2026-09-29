@@ -1,0 +1,38 @@
+name: Website checks
+
+on:
+  pull_request:
+    branches: [enhance, main]
+
+permissions:
+  contents: read
+
+jobs:
+  shared-ui:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check generated index and syntax
+        run: |
+          python3 tools/build_search_index.py --check
+          node --check assets/js/main.js
+          node --check assets/js/home.js
+          node --check assets/js/search.js
+          git diff --check HEAD^ HEAD
+      - name: Compare ranking against the PR base
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          node tools/test_search.js --baseline-ref "$BASE_SHA"
+          node tools/test_search.js --fixture --baseline-ref "$BASE_SHA"
+      - name: Install browser test dependencies
+        run: |
+          python3 -m venv /tmp/maple-ui-tests
+          /tmp/maple-ui-tests/bin/pip install playwright==1.57.0
+          /tmp/maple-ui-tests/bin/python -m playwright install --with-deps chromium
+      - name: Test shared interactions over HTTP
+        run: /tmp/maple-ui-tests/bin/python tools/test_ui.py

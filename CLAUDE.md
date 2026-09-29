@@ -1,66 +1,45 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Repository guidance for the MAPLE documentation website.
 
-## Project Overview
+## Project
 
-Static documentation website for MAPLE (Molecular Algorithm for Protein and Ligand Exploration), a computational chemistry software package. Built with plain HTML, CSS, and minimal vanilla JavaScript — no frameworks or build system.
+MAPLE means MAchine-learning Potential for Landscape Exploration. This repository is the static HTML/CSS/JavaScript website at `ClickFF/MAPLE-Website`; it is separate from the MAPLE software repository and its license.
 
-**Repository:** `git@github.com:Carlo8910/MAPLE-Website.git` (branch: `main`)
-
-## Development
-
-No build step. Open `index.html` in a browser or serve locally:
+## Local development
 
 ```bash
 python3 -m http.server 8000
 ```
 
-No tests, linters, or CI/CD pipelines are configured.
+Serve the repository rather than relying on `file://`, because clipboard and search behavior require an HTTP context for representative testing.
 
-## Architecture
+## Shared surfaces
 
-### Directory Layout
+- Homepage: `index.html`, `assets/css/home.css`, `assets/js/home.js`.
+- Documentation: `assets/css/styles.css`, `assets/js/main.js`.
+- Search: `assets/css/search.css`, `assets/js/search.js`, generated `assets/search-index.json` and `assets/search-index.js`.
+- Content: `tutorials/`, `setup/`, `tasks/`, `functions/`.
+- Search generator: `tools/build_search_index.py`.
 
+All page paths are relative. Root pages use `assets/...`, one-level pages use `../assets/...`, and two-level pages use `../../assets/...`.
+
+## Required checks
+
+After changing searchable content, regenerate and check the index:
+
+```bash
+python3 tools/build_search_index.py
+python3 tools/build_search_index.py --check
 ```
-index.html + 7 other root pages   Main site pages (top-nav layout)
-assets/css/styles.css              Single shared stylesheet
-assets/images/                     Logo, platform overview (maple.jpg), news images (image.png)
-tutorials/                         Getting-started flow (installation, quickstart, input_output)
-functions/                         Feature docs (solvent, constrain)
-setup/                             Input file setup docs (settings, coordinates, models)
-tasks/                             Task docs by type:
-  singlepoint.html                   (1 level deep) — also the de-facto tasks hub
-  frequency.html                     (1 level deep)
-  opt/                               Optimization methods (2 levels deep)
-  ts/                                Transition state methods (2 levels deep)
-  scan/                              PES scan methods (2 levels deep)
-  irc/                               IRC methods (2 levels deep)
+
+Before completing a site-wide change:
+
+```bash
+node --check assets/js/main.js
+node --check assets/js/home.js
+node --check assets/js/search.js
+git diff --check
 ```
 
-The top-nav "Documentation" entry points to `tutorials/installation.html` (the tutorial flow); breadcrumb "Tasks" links point to `tasks/singlepoint.html` as the tasks hub.
-
-### Two Navigation Patterns
-
-1. **Top-nav bar** (`header.top-nav`): Root-level pages use a horizontal nav bar with links to all main sections. Includes brand logo + site name.
-2. **Sidebar** (`aside.navigation-section`): Sub-pages in `functions/`, `setup/`, `tasks/` use a left sidebar with logo and nav links.
-
-Some pages (e.g., `tasks/irc/irc.html`) combine top-nav with a doc-tree sidebar.
-
-### Path Conventions
-
-All paths are relative. The depth from root determines the prefix:
-
-| Location | Stylesheet | Logo | Root pages |
-|---|---|---|---|
-| Root | `assets/css/styles.css` | `assets/images/logo.jpg` | `general.html` |
-| 1 level deep | `../assets/css/styles.css` | `../assets/images/logo.jpg` | `../general.html` |
-| 2 levels deep | `../../assets/css/styles.css` | `../../assets/images/logo.jpg` | `../../general.html` |
-
-## Adding New Pages
-
-1. Copy an existing page at the same directory depth
-2. Adjust all `href`/`src` paths for the correct relative depth
-3. Add links from the sidebar tree in sibling pages or from `home1.html` (user guide hub)
-4. Lowercase directory and file names with underscores (e.g., `opt_lbfgs.html`)
-5. Use `.html` extension (not `.htm`)
+Prefer shared CSS/JS and deterministic generated artifacts over page-local duplication. Preserve the distinction between published-release documentation and explicitly marked development behavior.

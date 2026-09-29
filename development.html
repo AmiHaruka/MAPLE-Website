@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Development &amp; Releases — MAPLE</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/home-fonts.css">
   <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="assets/css/search.css">
+  <link rel="icon" href="assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="index.html"><img src="assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -41,6 +44,24 @@
       <h2 id="changelog">Changelog</h2>
       <p>Recent release and development milestones are listed below.</p>
       <p><a href="https://github.com/ClickFF/MAPLE/releases" target="_blank" rel="noopener noreferrer" class="btn btn-primary">All Releases on GitHub &rarr;</a></p>
+
+      <h3 id="v0-1-5">Version 0.1.5 <span class="text-muted">&mdash; August 10, 2026</span></h3>
+      <p>August release expanding force-field parameterization, transition-state search, and model support.</p>
+      <ul>
+        <li><strong>ParmFit workflows</strong> &mdash; Added Correction, NCAA, and MetalAA parameterization routes with structured outputs and reusable work directories.</li>
+        <li><strong>Direct MaxFlux</strong> &mdash; Added a new transition-state search route for supported IPOPT-compatible environments.</li>
+        <li><strong>FeNNol support</strong> &mdash; Added FeNNol and FeNNix-Bio1 calculator configuration and documentation.</li>
+        <li><strong>Input and solvent compatibility</strong> &mdash; Expanded native PDB handling and maintained explicit-solvent workflow compatibility.</li>
+      </ul>
+
+      <h3 id="v0-1-4">Version 0.1.4 <span class="text-muted">&mdash; June 4, 2026</span></h3>
+      <p>June release standardizing optimization and expanding calculator, scan, and explicit-solvent workflows.</p>
+      <ul>
+        <li><strong>Optimization updates</strong> &mdash; Standardized optimization workflows and corrected optimization metrics and force handling.</li>
+        <li><strong>Expanded SCAN methods</strong> &mdash; Added and documented additional scan optimizers and workflow controls.</li>
+        <li><strong>Calculator plugins</strong> &mdash; Introduced calculator registration and plugin support for custom backends.</li>
+        <li><strong>Explicit solvent tools</strong> &mdash; Added explicit-solvent cluster generation and related file-handling improvements.</li>
+      </ul>
 
       <h3 id="v0-1-4-dev">Version 0.1.4 <span class="text-muted">&mdash; May 2026 development</span></h3>
       <p>Development milestone for calculator-layer hardening and documentation. This entry documents in-progress branch behavior and is not a GitHub release claim.</p>
@@ -93,5 +114,6 @@
     <p>&copy; 2026, MAPLE development team.</p>
   </footer>
   <script src="assets/js/main.js"></script>
+<script src="assets/js/search.js"></script>
 </body>
 </html>

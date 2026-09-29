@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IRC: Euler Predictor-Corrector (EulerPC) - MAPLE</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
-  <link rel="icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="icon" href="../../assets/images/home/maple-logo.png" type="image/png">
   <style>
     .irc-result-grid {
       display: grid;
@@ -158,7 +161,7 @@
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html"><img src="../../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -182,7 +185,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -259,7 +262,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -284,7 +287,7 @@
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <ol>
           <li><a href="../../index.html">Home</a></li>
-          <li><a href="../../tasks/singlepoint.html">Tasks</a></li>
+          <li><a href="../../general.html#task-types">Tasks</a></li>
           <li><a href="irc.html">IRC</a></li>
           <li aria-current="page">EulerPC</li>
         </ol>
@@ -425,11 +428,11 @@ XYZ  0  2  /path/to/transition_state.xyz</code></pre>
         <p>After a brief wait for the calculation to complete, we can visualize the reaction path and the energy profile along the reaction coordinate.</p>
         <div class="irc-result-grid">
           <figure class="irc-result-card">
-            <img src="../../assets/images/irc/eulerpc.gif" alt="EulerPC IRC animation">
+            <img src="../../assets/images/irc/eulerpc.gif" alt="EulerPC IRC animation" loading="lazy" decoding="async" width="1810" height="1254">
             <figcaption><strong>Trajectory:</strong> Simplified view of the reaction path</figcaption>
           </figure>
           <figure class="irc-result-card">
-            <img src="../../assets/images/irc/eulerpc.png" alt="EulerPC IRC graph">
+            <img src="../../assets/images/irc/eulerpc.png" alt="EulerPC IRC graph" width="2667" height="1500">
             <figcaption><strong>Graph:</strong> Energy trend along the IRC path</figcaption>
           </figure>
         </div>
@@ -459,6 +462,7 @@ H   1.1873343825 -1.4974192399  1.7123875960</code></pre>
         </div>
 
         <h2 id="comparison-of-irc-methods">Comparison of IRC Methods</h2>
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -495,6 +499,7 @@ H   1.1873343825 -1.4974192399  1.7123875960</code></pre>
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h2 id="when-to-use">When to Use</h2>
         <p>The EulerPC method is recommended as a fallback when other IRC methods have difficulty:</p>
@@ -516,21 +521,6 @@ H   1.1873343825 -1.4974192399  1.7123875960</code></pre>
   <div class="sidebar-overlay"></div>
   <footer><p>&copy; 2026, MAPLE development team.</p></footer>
   <script src="../../assets/js/main.js"></script>
-  <script>
-    document.querySelectorAll('.irc-structure-copy').forEach(function (button) {
-      button.addEventListener('click', function () {
-        var targetId = button.getAttribute('data-copy-target');
-        var target = targetId ? document.getElementById(targetId) : null;
-        if (!target) return;
-
-        navigator.clipboard.writeText(target.textContent).then(function () {
-          button.classList.add('copied');
-          setTimeout(function () {
-            button.classList.remove('copied');
-          }, 1500);
-        });
-      });
-    });
-  </script>
+<script src="../../assets/js/search.js"></script>
 </body>
 </html>

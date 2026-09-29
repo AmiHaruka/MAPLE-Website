@@ -3,8 +3,6 @@
    Inspired by ORCA / Furo / GROMACS documentation themes
    ============================================================ */
 
-@import url("home-fonts.css");
-
 /* ----- 1. Design Tokens (CSS Variables) ----- */
 :root {
   color-scheme: light;
@@ -94,9 +92,28 @@ a {
 a:hover {
   text-decoration: underline;
 }
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 3px;
+}
 a:visited {
   color: var(--color-brand-visited);
 }
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 250;
+  padding: 0.65rem 1rem;
+  border-radius: 6px;
+  background: var(--color-bg-primary);
+  color: var(--color-brand-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: translateY(0); }
 
 img { max-width: 100%; height: auto; display: block; }
 
@@ -301,10 +318,15 @@ img { max-width: 100%; height: auto; display: block; }
 .sidebar-tree .tree-section {
   display: flex;
   align-items: center;
+  width: 100%;
   gap: 0.25rem;
   padding: 0.35rem 0.75rem;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
   font-size: var(--font-size-sm);
   font-weight: 600;
+  text-align: left;
   color: var(--color-text-primary);
   cursor: pointer;
   border-radius: 4px;
@@ -328,6 +350,12 @@ img { max-width: 100%; height: auto; display: block; }
   transition: transform var(--transition-fast);
   font-size: 0.7rem;
   color: var(--color-text-muted);
+}
+.sidebar-tree button.chevron {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 .sidebar-tree .chevron::after { content: "▸"; }
 .sidebar-tree li.open > .tree-section .chevron::after,
@@ -453,6 +481,23 @@ img { max-width: 100%; height: auto; display: block; }
 
 .toc li.toc-h3 a { padding-left: 1.5rem; }
 
+/* Compact TOC uses the same links without another floating control. */
+.mobile-toc { display: none; }
+.mobile-toc summary {
+  padding: 0.65rem 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.mobile-toc summary:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 3px;
+}
+.mobile-toc ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.mobile-toc li a { display: block; padding: 0.25rem 0; font-size: var(--font-size-sm); }
+.mobile-toc .toc-h3 a { padding-left: 1rem; }
+
 /* ----- 5. Breadcrumbs ----- */
 .breadcrumb {
   display: flex;
@@ -571,6 +616,12 @@ code {
   font-size: 0.85em;
 }
 
+/* Long paths and option values may wrap; block code keeps its own scroller. */
+article :not(pre) > code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* Block code */
 pre {
   position: relative;
@@ -622,7 +673,11 @@ pre code {
   color: var(--color-text-muted);
   z-index: 2;
 }
-.code-wrapper:hover .copy-btn { opacity: 1; }
+.code-wrapper:hover .copy-btn,
+.code-wrapper:focus-within .copy-btn { opacity: 1; }
+@media (hover: none) {
+  .copy-btn { opacity: 1; }
+}
 .copy-btn:hover {
   background: var(--color-bg-hover);
   color: var(--color-text-primary);
@@ -631,7 +686,37 @@ pre code {
   color: var(--color-tip);
   border-color: var(--color-tip);
 }
+.copy-btn.copy-failed,
+.irc-structure-copy.copy-failed {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
 .copy-btn svg { width: 14px; height: 14px; }
+
+.copy-status {
+  position: absolute;
+  top: 0.55rem;
+  right: 3rem;
+  z-index: 3;
+  max-width: min(24rem, calc(100% - 4rem));
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-bg-border);
+  border-radius: 6px;
+  background: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--font-size-xs);
+  line-height: 1.35;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.copy-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.copy-status.error { color: var(--color-danger); }
 
 /* MAPLE input syntax highlighting */
 pre .comment { color: #6a9955; font-style: italic; }
@@ -1270,10 +1355,31 @@ a.news-item:hover p {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.3);
-  z-index: 9;
+  z-index: 110;
 }
 .sidebar-overlay.active { display: block; }
-.sidebar-fab { display: none; }
+.sidebar-fab,
+.sidebar-close { display: none; }
+
+.sidebar-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-brand-primary);
+  cursor: pointer;
+}
+.sidebar-close svg { width: 20px; height: 20px; }
+.sidebar-close:hover { background: var(--color-bg-hover); }
+.sidebar[aria-modal="true"] .sidebar-close { display: flex; }
+.sidebar[aria-modal="true"] .sidebar-brand { padding-right: 3.5rem; }
 
 @media (max-width: 67em) {
   .sidebar-fab {
@@ -1298,13 +1404,13 @@ a.news-item:hover p {
     transition: opacity var(--transition-fast), background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
   }
   .sidebar-fab:hover,
-  .sidebar-fab.active {
+  .sidebar-fab:focus-visible {
     opacity: 1;
     background: var(--color-bg-primary);
     color: var(--color-brand-primary);
     border-color: rgba(37,99,235,.35);
   }
-  .sidebar-fab.active { transform: translate(calc(var(--sidebar-width) - 1px), -50%); }
+  .sidebar-fab.active { visibility: hidden; }
   .sidebar-fab svg { width: 15px; height: 15px; }
 }
 
@@ -1319,6 +1425,7 @@ a.news-item:hover p {
 /* Medium screens: hide TOC, adjust content */
 @media (max-width: 82em) {
   .toc { display: none; }
+  .mobile-toc { display: block; }
   .content { max-width: none; padding: 2rem 2rem; }
 }
 
@@ -1329,9 +1436,11 @@ a.news-item:hover p {
     top: 0;
     left: 0;
     height: 100vh;
+    height: 100dvh;
+    overscroll-behavior: contain;
     transform: translateX(-100%);
     transition: transform var(--transition-normal);
-    z-index: 50;
+    z-index: 120;
     box-shadow: var(--shadow-lg);
   }
   .sidebar.open {
@@ -1388,6 +1497,7 @@ a.news-item:hover p {
 
   .features { grid-template-columns: 1fr; }
   .card-grid { grid-template-columns: 1fr; }
+  .capability-grid { grid-template-columns: minmax(0, 1fr); }
   .tutorial-categories { grid-template-columns: 1fr; }
 
   .page-nav { flex-direction: column; }
@@ -1686,7 +1796,7 @@ footer {
   color: var(--color-brand-primary);
 }
 
-@media (max-width: 68.75em) {
+@media (max-width: 78em) {
   :root { --nav-height: 70px; }
 
   .top-nav {
@@ -1770,7 +1880,7 @@ footer {
 
 /* ----- 21. Print Styles ----- */
 @media print {
-  .top-nav, .sidebar, .toc, .page-nav, .copy-btn, .mobile-toggle { display: none !important; }
+  .top-nav, .sidebar, .toc, .mobile-toc, .skip-link, .sidebar-fab, .page-nav, .copy-btn, .mobile-toggle { display: none !important; }
   .content { max-width: 100%; padding: 0; }
   .page-layout { display: block; }
   body { font-size: 12pt; }
@@ -1835,3 +1945,13 @@ figure.doc-figure figcaption {
 .mb-1 { margin-bottom: 0.5rem; }
 .mb-2 { margin-bottom: 1rem; }
 .mb-3 { margin-bottom: 1.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

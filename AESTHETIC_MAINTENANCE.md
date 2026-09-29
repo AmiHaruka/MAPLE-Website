@@ -55,7 +55,11 @@ The homepage sets the canonical mood: red/black/warm-white palette, editorial ti
 
 - `assets/css/styles.css` — shared docs/content design system.
 - `assets/js/main.js` — shared documentation interactions: sidebar, copy buttons, generated TOC, mobile sidebar handle, MAPLE input highlighting.
+- `assets/css/search.css`, `assets/js/search.js` — shared site-search presentation, keyboard behavior, and results UI.
+- `assets/search-index.json`, `assets/search-index.js` — generated search data for HTTP and direct-file previews; rebuild with `tools/build_search_index.py` after searchable content changes.
 - `tutorials/`, `setup/`, `tasks/`, `functions/` — content pages. Treat these primarily as scientific documentation, not style entry points.
+
+Search results preserve the information hierarchy (`category › family › page`) and use one generic ranking pipeline. Prefer exact headings, complete scientific-token matches, and page candidates within the same relevance tier. Cap repeated results from one page rather than adding query-specific ranking overrides.
 
 If visual consistency breaks on several pages, fix `styles.css` or `main.js`, not the individual HTML pages.
 
@@ -126,6 +130,7 @@ Current taxonomy:
 | UMA | UMA | `#uma-family` | `setup/model_uma.html` |
 | ANI | ANI-2x, ANI-1x, ANI-1ccx, ANI-1xnr | `#ani-family` | `setup/model_ani.html` |
 | AIMNet | AIMNet2, AIMNet2-NSE | `#aimnet-family` | `setup/model_aimnet.html` |
+| FeNNol | FeNNix-Bio1 | `#fennol-family` | `setup/model_fennol.html` |
 | MACE | MACE-OFF23, MACE-OMol, EGRET | `#mace-family` | `setup/model_mace.html` |
 
 UMA is presented first as the broadest universal potential. EGRET sits inside MACE because its architecture derives from MACE.

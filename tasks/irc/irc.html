@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intrinsic Reaction Coordinate (IRC) - MAPLE</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
-  <link rel="icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="icon" href="../../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html"><img src="../../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -112,7 +115,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -137,7 +140,7 @@
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <ol>
           <li><a href="../../index.html">Home</a></li>
-          <li><a href="../../tasks/singlepoint.html">Tasks</a></li>
+          <li><a href="../../general.html#task-types">Tasks</a></li>
           <li aria-current="page">IRC</li>
         </ol>
       </nav>
@@ -151,6 +154,7 @@
 
         <h2 id="available-methods">Available Methods</h2>
         <p>MAPLE supports four IRC integration algorithms:</p>
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -182,6 +186,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h2 id="general-usage">General Usage</h2>
         <p>The IRC task is invoked with the <code>#irc</code> keyword, specifying the desired method:</p>
@@ -287,5 +292,6 @@ Total wall time: 8.504 s</code></pre>
   <div class="sidebar-overlay"></div>
   <footer><p>&copy; 2026, MAPLE development team.</p></footer>
   <script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/search.js"></script>
 </body>
 </html>

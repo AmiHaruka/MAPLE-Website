@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../index.html"><img src="../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -112,7 +115,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../tasks/parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../tasks/parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -202,6 +205,7 @@
 
         <p>The table below summarizes all supported job types, their command syntax, and default methods.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -250,6 +254,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <div class="admonition tip">
           <p class="admonition-title">Tip</p>
@@ -260,6 +265,7 @@
 
         <p>MAPLE can run on CPUs or NVIDIA GPUs. Use the <code>#device</code> command to select the target hardware. When multiple GPUs are available, you can target a specific one by index.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -291,11 +297,13 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h2 id="convergence-levels">Convergence Levels</h2>
 
         <p>MAPLE provides several predefined convergence levels for geometry optimizations and transition state searches. These control the thresholds for maximum force (<code>f_max</code>), RMS force (<code>f_rms</code>), maximum displacement (<code>dp_max</code>), and RMS displacement (<code>dp_rms</code>). Force thresholds are in Hartree/Angstrom and displacement thresholds are in Angstrom.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -351,6 +359,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <p>Set the convergence level inside the task command parentheses:</p>
         <pre><code>#opt(method=lbfgs, level=tight)
@@ -386,5 +395,6 @@
     <p>&copy; 2026, MAPLE development team.</p>
   </footer>
   <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

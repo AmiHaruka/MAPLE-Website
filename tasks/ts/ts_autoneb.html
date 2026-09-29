@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoNEB (Automated NEB) - MAPLE</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
-  <link rel="icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="icon" href="../../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html"><img src="../../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -113,7 +116,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -138,7 +141,7 @@
       <nav class="breadcrumb">
         <a href="../../index.html">Home</a>
         <span class="separator">/</span>
-        <a href="../../tasks/singlepoint.html">Tasks</a>
+        <a href="../../general.html#task-types">Tasks</a>
         <span class="separator">/</span>
         <a href="ts.html">Transition State</a>
         <span class="separator">/</span>
@@ -343,11 +346,11 @@ XYZ 0 1 examples/ts/autoneb/gauopt2_opt.xyz</code></pre>
         <h2 id="visualization">Visualization</h2>
         <p>The AutoNEB visualizations summarize the global path from <code>*_autoneb_global_mep.xyz</code> and the collected saddle candidates from <code>*_autoneb_ts_list.xyz</code>.</p>
         <figure class="doc-figure" style="max-width:760px;margin:1.75rem auto;">
-          <img src="../../assets/images/ts/autoneb_global_mep_traj_energy.gif" alt="AutoNEB global minimum energy path animation with energy profile">
+          <img src="../../assets/images/ts/autoneb_global_mep_traj_energy.gif" alt="AutoNEB global minimum energy path animation with energy profile" loading="lazy" decoding="async" width="1200" height="600">
           <figcaption>Fig. 1 — AutoNEB global path with energy trace.</figcaption>
         </figure>
         <figure class="doc-figure" style="max-width:760px;margin:1.75rem auto;">
-          <img src="../../assets/images/ts/autoneb_ts_list_traj_energy.gif" alt="AutoNEB transition state list animation with energy profile">
+          <img src="../../assets/images/ts/autoneb_ts_list_traj_energy.gif" alt="AutoNEB transition state list animation with energy profile" loading="lazy" decoding="async" width="1200" height="600">
           <figcaption>Fig. 2 — AutoNEB collected TS list with energy trace.</figcaption>
         </figure>
 
@@ -383,5 +386,6 @@ XYZ 0 1 examples/ts/autoneb/gauopt2_opt.xyz</code></pre>
   <div class="sidebar-overlay"></div>
   <footer><p>&copy; 2026, MAPLE development team.</p></footer>
   <script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/search.js"></script>
 </body>
 </html>

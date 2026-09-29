@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Constraints - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../index.html"><img src="../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -112,7 +115,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../tasks/parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../tasks/parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -150,6 +153,7 @@
 
         <p>The <code>C</code> command freezes an atom at its current position. The atom will not move during optimization or dynamics. This is useful for anchoring specific parts of a molecular system, such as fixing a metal center or holding boundary atoms in place.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -164,6 +168,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <pre><code>C 3</code></pre>
         <p>This freezes atom 3 at its initial Cartesian coordinates. All three spatial components (x, y, z) are held fixed.</p>
@@ -177,6 +182,7 @@ C 12</code></pre>
 
         <p>The <code>B</code> command fixes the distance between two atoms at its initial value. During optimization, the bond length will remain constant while the rest of the system relaxes.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -191,6 +197,7 @@ C 12</code></pre>
             </tr>
           </tbody>
         </table>
+        </div>
 
         <pre><code>B 1 5</code></pre>
         <p>This constrains the distance between atoms 1 and 5 at whatever value it has in the input geometry.</p>
@@ -199,6 +206,7 @@ C 12</code></pre>
 
         <p>The <code>A</code> command fixes the bond angle formed by three atoms. The angle i-j-k (with j as the vertex atom) is held constant during the calculation.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -213,6 +221,7 @@ C 12</code></pre>
             </tr>
           </tbody>
         </table>
+        </div>
 
         <pre><code>A 2 1 4</code></pre>
         <p>This constrains the angle formed by atoms 2-1-4 at its initial value.</p>
@@ -221,6 +230,7 @@ C 12</code></pre>
 
         <p>The <code>D</code> command fixes the dihedral (torsion) angle formed by four atoms. The torsion angle defined by the i-j-k-l atom sequence is held constant throughout the simulation.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -235,6 +245,7 @@ C 12</code></pre>
             </tr>
           </tbody>
         </table>
+        </div>
 
         <pre><code>D 1 2 3 6</code></pre>
         <p>This constrains the torsion angle along the 1-2-3-6 atom chain at its initial value.</p>
@@ -243,6 +254,7 @@ C 12</code></pre>
 
         <p>The <code>S</code> command defines an internal coordinate to be scanned over a range of values. It is used exclusively with <code>#scan</code> tasks. The scan systematically varies the specified coordinate from its initial value, stepping by a fixed increment for the requested number of steps. Relaxed scans optimize the remaining degrees of freedom at each scan point; rigid scans move the detected connected fragment to satisfy the target coordinate without optimization.</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -269,6 +281,7 @@ C 12</code></pre>
             </tr>
           </tbody>
         </table>
+        </div>
 
         <p>The <code>step</code> parameter specifies the increment per step (in Angstroms for bond lengths, degrees for angles and dihedrals). MAPLE writes the initial point plus each requested step, so one <code>S</code> line produces <code>nsteps + 1</code> scan points.</p>
 
@@ -400,5 +413,6 @@ POST /path/to/constraints.txt</code></pre>
     <p>&copy; 2026, MAPLE development team.</p>
   </footer>
   <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

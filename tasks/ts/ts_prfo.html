@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>P-RFO (Partitioned Rational Function Optimization) - MAPLE</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
-  <link rel="icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../assets/css/search.css">
+  <link rel="icon" href="../../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html"><img src="../../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -113,7 +116,7 @@
                   </ul>
                 </li>
                 <li>
-                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">Parmfit</a></span>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../parmfit/parmfit.html">ParmFit</a></span>
                   <ul class="children">
                     <li><a href="../parmfit/parmfit_correction.html">Correction</a></li>
                     <li><a href="../parmfit/parmfit_ncaa.html">NCAA</a></li>
@@ -138,7 +141,7 @@
       <nav class="breadcrumb">
         <a href="../../index.html">Home</a>
         <span class="separator">/</span>
-        <a href="../../tasks/singlepoint.html">Tasks</a>
+        <a href="../../general.html#task-types">Tasks</a>
         <span class="separator">/</span>
         <a href="ts.html">Transition State</a>
         <span class="separator">/</span>
@@ -297,11 +300,11 @@ H     2.7050   -0.3554   -1.4408</code></pre>
         <h2 id="visualization">Visualization</h2>
         <p>The P-RFO trajectory visualization uses <code>*_prfo_traj.xyz</code>, while the final TS panel uses <code>*_prfo_ts.xyz</code>. The trajectory is the local saddle-point search history, not a full reaction path.</p>
         <figure class="doc-figure" style="max-width:760px;margin:1.75rem auto;">
-          <img src="../../assets/images/ts/prfo_search_traj_energy.gif" alt="P-RFO transition state search trajectory with energy trace">
+          <img src="../../assets/images/ts/prfo_search_traj_energy.gif" alt="P-RFO transition state search trajectory with energy trace" loading="lazy" decoding="async" width="1200" height="600">
           <figcaption>Fig. 1 — P-RFO local TS search trajectory with energy trace.</figcaption>
         </figure>
         <figure class="doc-figure" style="max-width:760px;margin:1.75rem auto;">
-          <img src="../../assets/images/ts/prfo_final_ts.png" alt="P-RFO final transition state geometry">
+          <img src="../../assets/images/ts/prfo_final_ts.png" alt="P-RFO final transition state geometry" width="600" height="600">
           <figcaption>Fig. 2 — P-RFO final optimized TS geometry.</figcaption>
         </figure>
 
@@ -325,5 +328,6 @@ H     2.7050   -0.3554   -1.4408</code></pre>
   <div class="sidebar-overlay"></div>
   <footer><p>&copy; 2026, MAPLE development team.</p></footer>
   <script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/search.js"></script>
 </body>
 </html>
