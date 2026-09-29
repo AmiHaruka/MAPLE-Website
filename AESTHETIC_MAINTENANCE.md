@@ -86,6 +86,8 @@ Use semantic variables rather than hard-coded colors.
 
 The red is not a background paint bucket. It is reserved for location and action: active navigation/sidebar/TOC, links, primary-action hover, kickers, H1 rules, MAPLE directives, icon strokes, and rare action-card borders. Dates, card tags, search paths, ordinary inline code, ordinary Note boxes, and MAPLE values are neutral or semantic instead. Keep the inline SVG hero's one red radial glow; do not add CSS red radial glows elsewhere. Legacy secondary-red presentation attributes inside that fixed SVG artwork are normalized by `home.css` to the canonical brand token without rewriting the asset markup.
 
+Visited documentation links intentionally retain the same brand red as unvisited links. Do not introduce a second red solely for browsing history; active navigation and page hierarchy provide location context.
+
 ### Typography vocabulary
 
 Current direction:
@@ -184,7 +186,7 @@ Cards should look elevated but not flashy:
 - White or warm-white background.
 - Thin neutral border.
 - Soft shadow.
-- Red border/hover only as a hint.
+- Red border/hover only as a hint. Shared card, chip, and news-card hover borders use `--brand-red-tint-3`, never the full brand red.
 - Slight upward hover is acceptable on desktop; keep mobile calm.
 
 Cards may be wholly clickable as `<a class="card" href="...">`. In that case:
@@ -254,6 +256,7 @@ Rules:
 - Tables should be card-like and readable.
 - Parameter values use the same neutral inline-code treatment as prose.
 - On mobile, tables may scroll horizontally if necessary; the page itself must not.
+- Capability badges are state labels, not alerts: `yes` uses Tip green, `partial` uses Warning amber, and `no` uses neutral metadata ink on the inline-code surface. All three use the neutral line color; unsupported capability must never borrow Danger red.
 
 ### Icons and generated images
 

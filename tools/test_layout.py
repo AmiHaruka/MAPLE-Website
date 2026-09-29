@@ -24,13 +24,14 @@ from test_ui import Handler, ROOT
 
 PAGES = ['index.html', 'general.html', 'articles.html', 'tutorials/installation.html',
          'tutorials/input_output.html', 'tasks/opt/optimization.html',
-         'tasks/opt/opt_rfo.html', 'tasks/scan/scan.html']
+         'tasks/opt/opt_rfo.html', 'tasks/scan/scan.html', 'setup/calculators.html']
 WIDTHS = [320, 390, 800, 1248, 1249, 1280, 1350, 1366, 1440, 1920]
 COLOR_TARGETS = {
     'index.html': ['.news-grid', '.feature-grid'],
     'general.html': ['.card-grid'],
     'tutorials/installation.html': ['.admonition.tip', '.admonition.note', '.admonition.warning'],
     'tutorials/input_output.html': ['.admonition.important', 'pre.maple-code'],
+    'setup/calculators.html': ['.capability-badges'],
 }
 EXPECTED_COLORS = {
     'brand': 'rgb(211, 32, 33)',
@@ -51,6 +52,7 @@ EXPECTED_COLORS = {
     'line': 'rgb(229, 230, 234)',
     'white': 'rgb(255, 255, 255)',
     'transparent': 'rgba(0, 0, 0, 0)',
+    'hover-border': 'rgba(211, 32, 33, 0.14)',
 }
 
 
@@ -141,6 +143,9 @@ MEASURE = """() => {
       heroStroke: svgStyles('.science-bg [stroke="#e23a2e"], .science-bg [stroke="#d32021"]'),
       heroFill: svgStyles('.science-bg [fill="#e23a2e"], .science-bg [fill="#d32021"]'),
       heroStop: svgStyles('.science-bg [stop-color="#e23a2e"], .science-bg [stop-color="#d32021"]'),
+      badgeYes: paint(document.querySelector('.badge-yes')),
+      badgeNo: paint(document.querySelector('.badge-no')),
+      badgePartial: paint(document.querySelector('.badge-partial')),
     },
     sidebarVisible: docs && rect(document.querySelector('.sidebar')).left >= 0,
     fontFaces: [...document.fonts].filter(f => f.status === 'loaded').map(f => f.family + ':' + f.weight)
@@ -211,6 +216,16 @@ def failures(m):
                 failed.append(name + ' does not fully normalize the hero artwork')
         if [state['stopOpacity'] for state in colors['heroStop']] != ['0.08', '0.05', '0']:
             failed.append('hero glow bypasses the three permitted tint strengths')
+    badge_expectations = {
+        'badgeYes': (EXPECTED_COLORS['tip'], EXPECTED_COLORS['tip-soft']),
+        'badgeNo': (EXPECTED_COLORS['meta'], EXPECTED_COLORS['inline']),
+        'badgePartial': (EXPECTED_COLORS['warning'], EXPECTED_COLORS['warning-soft']),
+    }
+    for name, (foreground, background) in badge_expectations.items():
+        state = colors[name]
+        if state and not (state['color'] == foreground and state['background'] == background and
+                          state['border'] == EXPECTED_COLORS['line']):
+            failed.append(name + ' lacks restrained capability semantics')
     return failed
 
 
@@ -401,6 +416,13 @@ def main():
                             if page.locator('.sidebar').get_attribute('aria-modal') == 'true':
                                 m['failures'].append('sidebar drawer did not close')
                     if name == 'index.html' and width == 1440:
+                        for selector in ('.chip', '.news-card', '.feature-card:not(.primary)'):
+                            target = page.locator(selector).first
+                            target.hover()
+                            page.wait_for_timeout(300)
+                            border = target.evaluate('(el) => getComputedStyle(el).borderTopColor')
+                            if border != EXPECTED_COLORS['hover-border']:
+                                m['failures'].append(selector + ' hover border is too strong')
                         search = page.locator('#site-search-input')
                         search.fill('optimization')
                         meta = page.locator('.site-search-result-meta').first
@@ -410,6 +432,13 @@ def main():
                         if args.output:
                             screenshot(page, args.output / 'index.html-1440-search.png')
                         page.keyboard.press('Escape')
+                    if name == 'general.html' and width == 1440:
+                        target = page.locator('.card').first
+                        target.hover()
+                        page.wait_for_timeout(300)
+                        border = target.evaluate('(el) => getComputedStyle(el).borderTopColor')
+                        if border != EXPECTED_COLORS['hover-border']:
+                            m['failures'].append('.card hover border is too strong')
                     if name == 'tutorials/installation.html' and width == 1440:
                         danger = page.evaluate("""() => {
                           const box = document.createElement('div');

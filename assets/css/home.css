@@ -470,7 +470,7 @@ button, input { font: inherit; }
   transition: border-color .2s var(--ease), transform .25s var(--ease-spring), box-shadow .25s var(--ease), background .25s var(--ease), color .2s var(--ease);
 }
 .chip:hover {
-  border-color: var(--red);
+  border-color: var(--brand-red-tint-3);
   color: var(--red);
   transform: translateY(-2px);
   box-shadow: 0 10px 26px rgba(12,12,16,.08);
@@ -488,7 +488,7 @@ button, input { font: inherit; }
 .chip:hover .chip-ico {
   background: #fff;
   color: var(--red);
-  border-color: var(--red);
+  border-color: var(--brand-red-tint-3);
   transform: scale(1.04) rotate(-3deg);
 }
 .chip .chip-ico img {
@@ -693,7 +693,7 @@ button, input { font: inherit; }
   box-shadow: var(--shadow-sm);
   transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
 }
-.news-card:hover { transform: translateY(-4px); border-color: var(--red); box-shadow: var(--shadow); }
+.news-card:hover { transform: translateY(-4px); border-color: var(--brand-red-tint-3); box-shadow: var(--shadow); }
 .news-card .date {
   color: var(--semantic-meta);
   font-family: var(--mono);
@@ -836,7 +836,7 @@ button, input { font: inherit; }
 }
 .feature-card:hover {
   transform: translateY(-5px);
-  border-color: var(--red);
+  border-color: var(--brand-red-tint-3);
   box-shadow: 0 20px 54px rgba(12,12,16,.09);
   text-decoration: none;
 }
@@ -865,7 +865,7 @@ button, input { font: inherit; }
 .feature-card:hover .feature-icon {
   transform: translateY(-2px) scale(1.04);
   background: #fff;
-  border-color: var(--red);
+  border-color: var(--brand-red-tint-3);
   box-shadow: var(--shadow);
 }
 .feature-icon img {

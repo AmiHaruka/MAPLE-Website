@@ -960,19 +960,19 @@ article tbody tr:hover { background: var(--color-bg-hover); }
 .badge-yes {
   color: var(--color-tip);
   background: var(--color-tip-soft);
-  border-color: var(--color-tip);
+  border-color: var(--color-bg-border);
 }
 
 .badge-no {
-  color: var(--color-danger);
-  background: var(--color-danger-soft);
-  border-color: var(--color-danger);
+  color: var(--semantic-meta);
+  background: var(--color-code-inline-bg);
+  border-color: var(--color-bg-border);
 }
 
 .badge-partial {
   color: var(--color-warning);
   background: var(--color-warning-soft);
-  border-color: var(--color-warning);
+  border-color: var(--color-bg-border);
 }
 
 .capability-list {
@@ -1733,7 +1733,7 @@ article tbody tr:hover { background: var(--color-bg-hover); }
 
 .card:hover,
 .feature-card:hover {
-  border-color: var(--color-brand-primary);
+  border-color: var(--brand-red-tint-3);
   box-shadow: var(--shadow-md);
   transform: translateY(-3px);
 }
