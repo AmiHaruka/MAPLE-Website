@@ -61,9 +61,10 @@ This harness uses the existing Playwright development dependency and supports
 `--chromium` like the shared interaction harness. It tests 320–1920px, including
 both sides of the compact-header breakpoint. Checks cover page overflow, brand/nav
 overlap, active Documentation navigation, breadcrumb position, code width and
-preserved example text, reading measure, method labels, mobile chips, and actual
-mobile menu/drawer opening and closing. These are bounded layout acceptance
-criteria, not a complete accessibility or design audit.
+preserved example text, reading measure, method labels, mobile chips, semantic
+color roles, shared palette-token drift, and actual mobile menu/drawer opening
+and closing. These are bounded layout acceptance criteria, not a complete
+accessibility or design audit.
 
 Declared fonts must load; missing fonts fail the check rather than silently
 qualifying fallback-font screenshots. Where only Chromium's access to the font

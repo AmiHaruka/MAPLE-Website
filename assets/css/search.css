@@ -4,7 +4,10 @@
   --search-border: var(--color-bg-border, var(--line, #e5e6ea));
   --search-surface: var(--color-bg-primary, #fff);
   --search-soft: var(--color-bg-secondary, var(--paper-2, #fafaf8));
-  --search-brand: var(--color-brand-primary, var(--red, #d32021));
+  --search-brand: var(--color-brand-primary, var(--red, var(--brand-red)));
+  --search-tint-1: var(--brand-red-tint-1);
+  --search-tint-3: var(--brand-red-tint-3);
+  --search-meta: var(--semantic-meta);
   position: relative;
   flex: 0 1 230px;
   min-width: 180px;
@@ -76,7 +79,7 @@
 .site-search-input:focus {
   border-color: var(--search-brand);
   background: var(--search-surface);
-  box-shadow: 0 0 0 3px rgba(211, 32, 33, 0.12);
+  box-shadow: 0 0 0 3px var(--search-tint-3);
 }
 
 .site-search-shortcut {
@@ -139,7 +142,7 @@
 
 .site-search-result:hover,
 .site-search-result.active {
-  background: rgba(211, 32, 33, 0.07);
+  background: var(--search-tint-1);
   color: var(--search-text);
   text-decoration: none;
 }
@@ -152,14 +155,14 @@
 .site-search-result mark {
   padding: 0;
   border-radius: 2px;
-  background: rgba(211, 32, 33, 0.12);
+  background: var(--search-tint-3);
   color: inherit;
   font-weight: 600;
 }
 
 .site-search-result-meta {
   overflow: hidden;
-  color: var(--search-brand);
+  color: var(--search-meta);
   font: 700 0.68rem/1.35 var(--font-mono, var(--mono, monospace));
   letter-spacing: 0.03em;
   text-overflow: ellipsis;
