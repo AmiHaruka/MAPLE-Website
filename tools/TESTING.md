@@ -46,3 +46,30 @@ It has read-only permissions and does not publish, deploy, merge or rewrite comm
 Real Safari/Android keyboard behavior, full-page screenshots and resource loading
 still require device/site-level testing; synthetic composition events do not
 certify every native input method.
+
+## Real-page layout checks
+
+```sh
+.venv/bin/python tools/test_layout.py --output /tmp/maple-layout-after
+# Optional: all indexed content pages rather than eight representative pages.
+.venv/bin/python tools/test_layout.py --all-pages --output /tmp/maple-layout-all
+# Compare exactly the same checks against a commit without resetting the worktree.
+.venv/bin/python tools/test_layout.py --baseline-ref <commit> --record-only --output /tmp/maple-layout-before
+```
+
+This harness uses the existing Playwright development dependency and supports
+`--chromium` like the shared interaction harness. It tests 320–1920px, including
+both sides of the compact-header breakpoint. Checks cover page overflow, brand/nav
+overlap, active Documentation navigation, breadcrumb position, code width and
+preserved example text, reading measure, method labels, mobile chips, and actual
+mobile menu/drawer opening and closing. These are bounded layout acceptance
+criteria, not a complete accessibility or design audit.
+
+Declared fonts must load; missing fonts fail the check rather than silently
+qualifying fallback-font screenshots. Where only Chromium's access to the font
+host is blocked, `--font-cache /tmp/maple-layout-fonts` explicitly fetches the same
+font URLs with `curl` and serves those bytes to the test browser. This does not
+change production font delivery or establish that it works on visitors' networks.
+Screenshots wait for visible lazy-loaded images to decode. Keep screenshots,
+metrics, font caches, and baseline logs out of commits. `--record-only` records
+failures but exits successfully for baseline collection; do not use it as a gate.

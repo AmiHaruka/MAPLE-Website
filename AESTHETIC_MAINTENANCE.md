@@ -161,6 +161,9 @@ Docs should feel like a lab notebook wrapped in the homepage design system:
 - At tablet/mobile widths, switch to the hamburger menu early enough to avoid clipping.
 - The active nav underline is red on desktop and hidden in stacked mobile nav.
 - Keep the brand mark large enough to match homepage identity, but avoid pushing nav off-screen.
+- The brand must not flex-shrink into navigation. Check both sides of the 1248px compact-header breakpoint, including 1249px, 1280px, and 1366px with the declared fonts loaded.
+- Compact headers keep search visible on its own row without inheriting desktop row gaps.
+- Documentation pages identify the Documentation section with an active link and `aria-current="location"`. The shared script places their breadcrumb before the reading card.
 
 ### Sidebar and mobile docs handle
 
@@ -212,6 +215,8 @@ Critical rule: **text must never sit close to the colored left stripe.** Maintai
 ### Code blocks and MAPLE input examples
 
 Generic shell/code blocks should remain clean and neutral.
+
+Code blocks and their copy-button wrappers fill the available reading width; short commands should not look like small action buttons. Overflow remains inside the code block, never on the page. Top-level prose uses a 70ch maximum measure while tables and card grids can use the wider surface.
 
 MAPLE input blocks should be recognized automatically in `assets/js/main.js` and styled through `pre.maple-code` in `assets/css/styles.css`.
 

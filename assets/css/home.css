@@ -61,8 +61,9 @@ button, input { font: inherit; }
 .header-inner {
   height: 84px;
   display: flex; align-items: center; justify-content: space-between;
+  column-gap: 12px;
 }
-.brand { display: inline-flex; align-items: center; gap: 14px; color: var(--ink); }
+.brand { display: inline-flex; flex-shrink: 0; align-items: center; gap: 14px; color: var(--ink); }
 .brand img { width: 50px; height: auto; transition: transform .5s var(--ease-spring); }
 .brand:hover img { transform: rotate(-8deg) scale(1.06); }
 .brand span {
@@ -74,7 +75,7 @@ button, input { font: inherit; }
 .main-nav ul { list-style: none; display: flex; gap: 6px; padding: 0; margin: 0; align-items: center; }
 .main-nav a {
   display: inline-flex; align-items: center;
-  height: 38px; padding: 0 16px;
+  height: 38px; padding: 0 10px;
   border-radius: 8px;
   font-size: 15.5px; font-weight: 500;
   color: var(--ink-2);
@@ -84,7 +85,7 @@ button, input { font: inherit; }
 .main-nav a.active { color: var(--red); font-weight: 700; }
 .main-nav a.active::after {
   content: ""; position: absolute;
-  left: 16px; right: 16px; bottom: -22px;
+  left: 10px; right: 10px; bottom: -22px;
   height: 3px; border-radius: 2px;
   background: var(--red);
 }
@@ -598,6 +599,7 @@ button, input { font: inherit; }
 }
 @media (max-width: 760px) {
   .container { padding: 0 22px; }
+  .ml-family-group .chip { flex: 1 1 160px; min-width: 0; }
   .header-inner { height: 70px; }
   .main-nav { display: none; }
   .hero { padding: 40px 0 40px; }

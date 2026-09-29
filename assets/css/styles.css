@@ -626,7 +626,7 @@ article :not(pre) > code {
 pre {
   position: relative;
   display: block;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
   background: var(--color-bg-code);
   border-radius: 0.5rem;
@@ -648,7 +648,7 @@ pre code {
 .code-wrapper {
   position: relative;
   display: block;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
   margin: 1rem 0;
 }
@@ -848,6 +848,8 @@ article tbody td {
   color: var(--color-text-primary);
   vertical-align: top;
 }
+/* Method links are labels; keep their hyphens intact without widening prose cells. */
+article td > a > strong { white-space: nowrap; }
 article tbody tr:last-child td { border-bottom: none; }
 article tbody tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 article tbody tr:hover { background: var(--color-bg-hover); }
@@ -1533,6 +1535,11 @@ a.news-item:hover p {
   padding: 2.6rem;
 }
 
+.page-body article > :first-child { margin-top: 0; }
+.page-body article > p,
+.page-body article > ul,
+.page-body article > ol { max-width: 70ch; }
+
 .content article > :last-child,
 .page-body article > :last-child,
 .main-content > :last-child { margin-bottom: 0; }
@@ -1811,6 +1818,7 @@ footer {
     align-content: center;
     padding: 0 22px;
     column-gap: .8rem;
+    row-gap: 0;
   }
 
   .top-nav .brand img {

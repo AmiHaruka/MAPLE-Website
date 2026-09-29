@@ -4,6 +4,22 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  // Normalize the documentation shell without changing page text or examples.
+  var docArticle = document.querySelector('.page-layout .content > article');
+  if (docArticle) {
+    var breadcrumb = docArticle.querySelector(':scope > .breadcrumb');
+    if (breadcrumb) docArticle.before(breadcrumb);
+
+    var documentationLink = document.querySelector('.top-nav nav a[href$="tutorials/installation.html"]');
+    if (documentationLink) {
+      document.querySelectorAll('.top-nav nav a').forEach(function (link) {
+        link.classList.toggle('active', link === documentationLink);
+        link.removeAttribute('aria-current');
+      });
+      documentationLink.setAttribute('aria-current', 'location');
+    }
+  }
+
   var mainContent = document.querySelector('main');
   if (mainContent && !document.querySelector('.skip-link')) {
     if (!mainContent.id) {
