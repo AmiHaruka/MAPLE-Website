@@ -8,19 +8,25 @@
   color-scheme: light;
 
   /* Brand */
-  --color-brand-primary: #d32021;
-  --color-brand-content: #d32021;
-  --color-brand-visited: #8f1b16;
-  --color-brand-soft: #fde8e6;
-  --color-brand-glow: rgba(226,58,46,.18);
+  --brand-red: #d32021;
+  --brand-red-tint-1: rgba(211,32,33,.05);
+  --brand-red-tint-2: rgba(211,32,33,.08);
+  --brand-red-tint-3: rgba(211,32,33,.14);
+  --semantic-meta: #6c707a;
+  --color-brand-primary: var(--brand-red);
+  --color-brand-content: var(--brand-red);
+  --color-brand-visited: var(--brand-red);
 
   /* Backgrounds */
   --color-bg-primary: #ffffff;
   --color-bg-secondary: #fafaf8;
-  --color-bg-hover: #fde8e6;
+  --color-bg-hover: #f3f2ef;
   --color-bg-code: #f7f4ee;
   --color-bg-border: #e5e6ea;
-  --color-bg-soft: #fff7f6;
+  --color-bg-soft: #f3f2ef;
+  --color-code-inline: #1d1f25;
+  --color-code-inline-bg: #f3f2ef;
+  --color-code-inline-border: #e8e6e1;
 
   /* Text */
   --color-text-primary: #0c0c10;
@@ -44,11 +50,15 @@
   --font-size-code: 0.8125rem;
 
   /* Admonitions */
-  --color-note: #00b0ff;
-  --color-tip: #00c852;
-  --color-warning: #ff9100;
-  --color-danger: #ff5252;
-  --color-important: #00bfa5;
+  --color-note: #3d5a80;
+  --color-note-soft: rgba(61,90,128,.08);
+  --color-tip: #2e7d4f;
+  --color-tip-soft: rgba(46,125,79,.08);
+  --color-warning: #a15c07;
+  --color-warning-soft: rgba(161,92,7,.08);
+  --color-danger: #b42318;
+  --color-danger-soft: rgba(180,35,24,.08);
+  --color-important: var(--brand-red);
 
   /* Transitions */
   --transition-fast: 0.15s ease;
@@ -75,9 +85,7 @@ html {
 
 body {
   font-family: var(--font-stack);
-  background:
-    radial-gradient(ellipse 56rem 30rem at 92% 0%, rgba(226,58,46,.055), transparent 72%),
-    linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+  background: linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
   color: var(--color-text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -382,7 +390,7 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: 600;
   color: var(--color-brand-primary);
   border-left-color: var(--color-brand-primary);
-  background: linear-gradient(90deg, rgba(41,98,255,0.06) 0%, rgba(41,98,255,0.03) 100%);
+  background: linear-gradient(90deg, var(--brand-red-tint-2), var(--brand-red-tint-1));
 }
 
 /* Nested levels */
@@ -609,10 +617,11 @@ code, kbd, samp {
 
 /* Inline code */
 code {
-  background: var(--color-bg-secondary);
+  background: var(--color-code-inline-bg);
+  border: 1px solid var(--color-code-inline-border);
   padding: 0.15em 0.35em;
   border-radius: 4px;
-  color: var(--color-text-primary);
+  color: var(--color-code-inline);
   font-size: 0.85em;
 }
 
@@ -626,7 +635,7 @@ article :not(pre) > code {
 pre {
   position: relative;
   display: block;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
   background: var(--color-bg-code);
   border-radius: 0.5rem;
@@ -638,6 +647,7 @@ pre {
 }
 pre code {
   background: none;
+  border: 0;
   padding: 0;
   border-radius: 0;
   font-size: var(--font-size-code);
@@ -648,7 +658,7 @@ pre code {
 .code-wrapper {
   position: relative;
   display: block;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
   margin: 1rem 0;
 }
@@ -721,12 +731,12 @@ pre code {
 /* MAPLE input syntax highlighting */
 pre .comment { color: #6a9955; font-style: italic; }
 pre .keyword { color: #0070c1; font-weight: 600; }
-pre .value { color: #a31515; }
+pre .value { color: var(--color-code-inline); }
 pre .param { color: #795e26; }
 pre .section { color: #267f99; font-weight: 600; }
 
 pre.maple-code {
-  border-left: 4px solid var(--color-brand-primary);
+  border-left: 3px solid var(--color-brand-primary);
 }
 
 pre.maple-code code {
@@ -749,10 +759,7 @@ pre.maple-code .param {
 }
 
 pre.maple-code .value {
-  color: #8f1b16;
-  background: rgba(211,32,33,.08);
-  border-radius: 4px;
-  padding: 0 .18em;
+  color: var(--color-code-inline);
 }
 
 pre.maple-code .atom {
@@ -794,7 +801,8 @@ pre.maple-code .n-steps   { color: #3d4858; font-weight: 600; }
   padding: 0.5rem 1rem;
   font-size: var(--font-size-xs);
   font-weight: 600;
-  background: rgba(0, 176, 255, 0.08);
+  background: var(--color-note-soft);
+  color: var(--color-note);
 }
 .admonition-title svg { width: 16px; height: 16px; flex-shrink: 0; }
 .admonition-body {
@@ -807,19 +815,19 @@ pre.maple-code .n-steps   { color: #3d4858; font-weight: 600; }
 
 /* Variants */
 .admonition.note { border-left-color: var(--color-note); }
-.admonition.note .admonition-title { background: rgba(0, 176, 255, 0.08); color: #0077b3; }
+.admonition.note .admonition-title { background: var(--color-note-soft); color: var(--color-note); }
 
 .admonition.tip { border-left-color: var(--color-tip); }
-.admonition.tip .admonition-title { background: rgba(0, 200, 82, 0.08); color: #007a38; }
+.admonition.tip .admonition-title { background: var(--color-tip-soft); color: var(--color-tip); }
 
 .admonition.warning { border-left-color: var(--color-warning); }
-.admonition.warning .admonition-title { background: rgba(255, 145, 0, 0.08); color: #b36500; }
+.admonition.warning .admonition-title { background: var(--color-warning-soft); color: var(--color-warning); }
 
 .admonition.danger { border-left-color: var(--color-danger); }
-.admonition.danger .admonition-title { background: rgba(255, 82, 82, 0.08); color: #c62828; }
+.admonition.danger .admonition-title { background: var(--color-danger-soft); color: var(--color-danger); }
 
 .admonition.important { border-left-color: var(--color-important); }
-.admonition.important .admonition-title { background: rgba(0, 191, 165, 0.08); color: #00796b; }
+.admonition.important .admonition-title { background: var(--brand-red-tint-2); color: var(--color-important); }
 
 /* ----- 9. Tables ----- */
 article table {
@@ -848,6 +856,8 @@ article tbody td {
   color: var(--color-text-primary);
   vertical-align: top;
 }
+/* Method links are labels; keep their hyphens intact without widening prose cells. */
+article td > a > strong { white-space: nowrap; }
 article tbody tr:last-child td { border-bottom: none; }
 article tbody tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 article tbody tr:hover { background: var(--color-bg-hover); }
@@ -948,21 +958,21 @@ article tbody tr:hover { background: var(--color-bg-hover); }
 }
 
 .badge-yes {
-  color: #087a3a;
-  background: rgba(0, 200, 82, 0.09);
-  border-color: rgba(0, 200, 82, 0.22);
+  color: var(--color-tip);
+  background: var(--color-tip-soft);
+  border-color: var(--color-bg-border);
 }
 
 .badge-no {
-  color: #a52a24;
-  background: rgba(226, 58, 46, 0.08);
-  border-color: rgba(226, 58, 46, 0.2);
+  color: var(--semantic-meta);
+  background: var(--color-code-inline-bg);
+  border-color: var(--color-bg-border);
 }
 
 .badge-partial {
-  color: #8a5200;
-  background: rgba(255, 145, 0, 0.1);
-  border-color: rgba(255, 145, 0, 0.24);
+  color: var(--color-warning);
+  background: var(--color-warning-soft);
+  border-color: var(--color-bg-border);
 }
 
 .capability-list {
@@ -1034,7 +1044,7 @@ a.card:hover .card-cta { text-decoration: underline; }
 .page-nav a:visited { color: var(--color-brand-content); }
 .page-nav a:hover {
   border-color: var(--color-brand-content);
-  background: rgba(42, 90, 223, 0.04);
+  background: var(--brand-red-tint-1);
   text-decoration: none;
 }
 .page-nav .next { margin-left: auto; }
@@ -1096,8 +1106,8 @@ footer {
 }
 .btn-primary:visited { color: #fff; }
 .btn-primary:hover {
-  background: #1e4fd6;
-  border-color: #1e4fd6;
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
   text-decoration: none;
 }
 .btn-secondary {
@@ -1408,7 +1418,7 @@ a.news-item:hover p {
     opacity: 1;
     background: var(--color-bg-primary);
     color: var(--color-brand-primary);
-    border-color: rgba(37,99,235,.35);
+    border-color: var(--color-brand-primary);
   }
   .sidebar-fab.active { visibility: hidden; }
   .sidebar-fab svg { width: 15px; height: 15px; }
@@ -1510,9 +1520,7 @@ a.news-item:hover p {
 /* ----- 20. Homepage-aligned Aesthetic Pass ----- */
 /* Aesthetic direction: Jiahao Xie. Preserve content; tune only the shared visual system. */
 .page-layout {
-  background:
-    radial-gradient(ellipse 42rem 24rem at 95% 2%, rgba(226,58,46,.055), transparent 72%),
-    linear-gradient(180deg, #fff 0%, var(--color-bg-secondary) 100%);
+  background: linear-gradient(180deg, #fff 0%, var(--color-bg-secondary) 100%);
 }
 
 .content article,
@@ -1532,6 +1540,11 @@ a.news-item:hover p {
 .main-content {
   padding: 2.6rem;
 }
+
+.page-body article > :first-child { margin-top: 0; }
+.page-body article > p,
+.page-body article > ul,
+.page-body article > ol { max-width: 70ch; }
 
 .content article > :last-child,
 .page-body article > :last-child,
@@ -1567,7 +1580,7 @@ article h1::after,
   height: 3px;
   margin-top: .85rem;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--color-brand-primary), rgba(226,58,46,.26));
+  background: linear-gradient(90deg, var(--color-brand-primary), var(--brand-red-tint-3));
 }
 
 article h2 {
@@ -1589,9 +1602,7 @@ article li {
 }
 
 .sidebar {
-  background:
-    radial-gradient(ellipse 18rem 18rem at 88% 0%, rgba(226,58,46,.08), transparent 74%),
-    rgba(250,250,248,.95);
+  background: rgba(250,250,248,.95);
 }
 
 .sidebar-brand {
@@ -1617,7 +1628,7 @@ article li {
 
 .sidebar-tree .tree-section:hover,
 .sidebar-tree .tree-label:hover {
-  background: rgba(211,32,33,.07);
+  background: var(--brand-red-tint-1);
 }
 
 .sidebar-tree a,
@@ -1626,14 +1637,14 @@ article li {
 }
 
 .sidebar-tree a:hover {
-  background: rgba(211,32,33,.06);
+  background: var(--brand-red-tint-1);
   color: var(--color-brand-primary);
 }
 
 .sidebar-tree a.active {
   color: var(--color-brand-primary);
   border-left-color: var(--color-brand-primary);
-  background: linear-gradient(90deg, rgba(211,32,33,.12), rgba(211,32,33,.035));
+  background: linear-gradient(90deg, var(--brand-red-tint-3), var(--brand-red-tint-1));
 }
 
 .breadcrumb a:hover,
@@ -1645,11 +1656,6 @@ a.news-item:hover p {
   color: var(--color-brand-primary);
 }
 
-code {
-  background: var(--color-brand-soft);
-  color: #7a1712;
-}
-
 pre {
   background:
     linear-gradient(180deg, rgba(255,255,255,.72), rgba(247,244,238,.95)),
@@ -1659,15 +1665,14 @@ pre {
 }
 
 pre.maple-code {
-  background:
-    radial-gradient(ellipse 34rem 18rem at 12% 0%, rgba(226,58,46,.08), transparent 68%),
-    linear-gradient(180deg, rgba(255,255,255,.9), rgba(247,244,238,.98));
-  border-color: rgba(211,32,33,.22);
+  background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(247,244,238,.98));
+  border-color: var(--color-bg-border);
+  border-left-color: var(--color-brand-primary);
   box-shadow: 0 10px 28px rgba(12,12,16,.08);
 }
 
 pre .keyword { color: var(--color-brand-primary); }
-pre .section { color: #b02121; }
+pre .section { color: var(--color-brand-primary); }
 
 .admonition {
   border-radius: 16px;
@@ -1702,14 +1707,6 @@ pre .section { color: #b02121; }
   padding-top: 0;
 }
 
-.admonition.note,
-.admonition.important { border-left-color: var(--color-brand-primary); }
-.admonition.note .admonition-title,
-.admonition.important .admonition-title {
-  background: rgba(211,32,33,.08);
-  color: var(--color-brand-primary);
-}
-
 article table,
 .card,
 .category-card,
@@ -1724,11 +1721,11 @@ article table,
 
 article thead th,
 .param-table th {
-  background: linear-gradient(180deg, #fff7f6, var(--color-bg-secondary));
+  background: linear-gradient(180deg, #fff, var(--color-code-inline-bg));
 }
 
-article tbody tr:nth-child(even) { background: rgba(211,32,33,.018); }
-article tbody tr:hover { background: rgba(211,32,33,.055); }
+article tbody tr:nth-child(even) { background: rgba(12,12,16,.018); }
+article tbody tr:hover { background: var(--color-bg-hover); }
 
 .card {
   transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
@@ -1736,13 +1733,13 @@ article tbody tr:hover { background: rgba(211,32,33,.055); }
 
 .card:hover,
 .feature-card:hover {
-  border-color: rgba(211,32,33,.34);
+  border-color: var(--brand-red-tint-3);
   box-shadow: var(--shadow-md);
   transform: translateY(-3px);
 }
 
 .card .card-tag {
-  color: var(--color-brand-primary);
+  color: var(--semantic-meta);
   font-family: var(--font-mono);
   font-size: .68rem;
   letter-spacing: .08em;
@@ -1762,13 +1759,13 @@ article tbody tr:hover { background: rgba(211,32,33,.055); }
 .btn-primary:hover {
   background: var(--color-brand-primary);
   border-color: var(--color-brand-primary);
-  box-shadow: 0 14px 32px rgba(226,58,46,.28);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-secondary:hover,
 .page-nav a:hover {
-  background: rgba(211,32,33,.05);
-  border-color: rgba(211,32,33,.34);
+  background: var(--brand-red-tint-1);
+  border-color: var(--color-brand-primary);
   color: var(--color-brand-primary);
 }
 
@@ -1787,9 +1784,7 @@ article tbody tr:hover { background: rgba(211,32,33,.055); }
 }
 
 footer {
-  background:
-    radial-gradient(ellipse 28rem 12rem at 50% -10%, rgba(226,58,46,.08), transparent 70%),
-    var(--color-bg-secondary);
+  background: var(--color-bg-secondary);
 }
 
 .sidebar-fab {
@@ -1811,6 +1806,7 @@ footer {
     align-content: center;
     padding: 0 22px;
     column-gap: .8rem;
+    row-gap: 0;
   }
 
   .top-nav .brand img {

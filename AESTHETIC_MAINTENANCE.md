@@ -65,21 +65,28 @@ If visual consistency breaks on several pages, fix `styles.css` or `main.js`, no
 
 ## 4. Design tokens
 
-Keep homepage and docs tokens aligned. If fonts or palette change, update both `home.css` and `styles.css` together.
+Keep homepage and docs tokens aligned. They are independent CSS entrypoints, so both mirror the canonical `--brand-red`, three `--brand-red-tint-*`, and `--semantic-meta` tokens. `tools/test_layout.py` fails if those values drift. If fonts or palette change, update both entrypoints together.
 
 ### Color vocabulary
 
-Use variables rather than hard-coded colors where possible.
+Use semantic variables rather than hard-coded colors.
 
-- Primary red: `#d32021`
-- Active/secondary red: `#e23a2e`, `#f15a4f`
-- Soft red background: `#fde8e6`, `#fff7f6`
+- Brand red: `--brand-red: #d32021`. There is no secondary brand red.
+- Brand tints: `--brand-red-tint-1/2/3`, derived from the brand red at `.05`, `.08`, and `.14` opacity. Do not introduce another pink family or inline `rgba(211,32,33,...)` outside these token declarations.
 - Ink: `#0c0c10`, `#1d1f25`, `#3b3e47`
-- Muted text: `#6c707a`, `#9aa0aa`
+- Muted text and metadata: `--semantic-meta: #6c707a`, plus `#9aa0aa` for quieter text
 - Lines: `#e5e6ea`, `#eef0f3`
 - Paper: `#ffffff`, `#fafaf8`, `#f7f4ee`
+- Inline code: ink `#1d1f25`, surface `#f3f2ef`, line `#e8e6e1`
+- Note: low-saturation blue `#3d5a80`
+- Tip: low-saturation green `#2e7d4f`
+- Warning: amber `#a15c07`
+- Important: brand red `#d32021`
+- Danger: deep semantic red `#b42318`; keep reserved for actual danger/error states
 
-The red is not a background paint bucket. It is a signal: active nav, small rule accents, code directives, icon accents, and rare hover states.
+The red is not a background paint bucket. It is reserved for location and action: active navigation/sidebar/TOC, links, primary-action hover, kickers, H1 rules, MAPLE directives, icon strokes, and rare action-card borders. Dates, card tags, search paths, ordinary inline code, ordinary Note boxes, and MAPLE values are neutral or semantic instead. Keep the inline SVG hero's one red radial glow; do not add CSS red radial glows elsewhere. Legacy secondary-red presentation attributes inside that fixed SVG artwork are normalized by `home.css` to the canonical brand token without rewriting the asset markup.
+
+Visited documentation links intentionally retain the same brand red as unvisited links. Do not introduce a second red solely for browsing history; active navigation and page hierarchy provide location context.
 
 ### Typography vocabulary
 
@@ -161,6 +168,9 @@ Docs should feel like a lab notebook wrapped in the homepage design system:
 - At tablet/mobile widths, switch to the hamburger menu early enough to avoid clipping.
 - The active nav underline is red on desktop and hidden in stacked mobile nav.
 - Keep the brand mark large enough to match homepage identity, but avoid pushing nav off-screen.
+- The brand must not flex-shrink into navigation. Check both sides of the 1248px compact-header breakpoint, including 1249px, 1280px, and 1366px with the declared fonts loaded.
+- Compact headers keep search visible on its own row without inheriting desktop row gaps.
+- Documentation pages identify the Documentation section with an active link and `aria-current="location"`. The shared script places their breadcrumb before the reading card.
 
 ### Sidebar and mobile docs handle
 
@@ -176,7 +186,7 @@ Cards should look elevated but not flashy:
 - White or warm-white background.
 - Thin neutral border.
 - Soft shadow.
-- Red border/hover only as a hint.
+- Red border/hover only as a hint. Shared card, chip, and news-card hover borders use `--brand-red-tint-3`, never the full brand red.
 - Slight upward hover is acceptable on desktop; keep mobile calm.
 
 Cards may be wholly clickable as `<a class="card" href="...">`. In that case:
@@ -209,9 +219,15 @@ Therefore spacing rules must cover both `.admonition-body` and direct child para
 
 Critical rule: **text must never sit close to the colored left stripe.** Maintain generous left padding for title and body content.
 
+Color is semantic: Note is muted blue, Tip muted green, Warning amber, Important brand red, and Danger deep red. Do not map ordinary Note to the brand red or reuse these colors decoratively.
+
 ### Code blocks and MAPLE input examples
 
 Generic shell/code blocks should remain clean and neutral.
+
+Inline code is neutral ink on a warm-gray surface with a thin neutral border. It must remain visually distinct from clickable red links.
+
+Code blocks and their copy-button wrappers fill the available reading width; short commands should not look like small action buttons. Overflow remains inside the code block, never on the page. Top-level prose uses a 70ch maximum measure while tables and card grids can use the wider surface.
 
 MAPLE input blocks should be recognized automatically in `assets/js/main.js` and styled through `pre.maple-code` in `assets/css/styles.css`.
 
@@ -232,17 +248,19 @@ Rules:
 - Do not manually wrap example text with spans in HTML.
 - If a new MAPLE directive is added, update the detector/highlighter in `main.js` and styling in `styles.css`.
 - Do not make shell install commands look like MAPLE input. Installation commands should remain neutral code blocks.
+- In MAPLE inputs, directives and the restrained 3px left rail carry the red signal. Values use ink without a red background, so the directive structure remains scannable.
 - Copy buttons must copy original text, not the visual markup. The current implementation uses `textContent`, so keep that behavior.
 
 ### Tables
 
 - Tables should be card-like and readable.
-- Parameter values may use inline code with soft red background.
+- Parameter values use the same neutral inline-code treatment as prose.
 - On mobile, tables may scroll horizontally if necessary; the page itself must not.
+- Capability badges are state labels, not alerts: `yes` uses Tip green, `partial` uses Warning amber, and `no` uses neutral metadata ink on the inline-code surface. All three use the neutral line color; unsupported capability must never borrow Danger red.
 
 ### Icons and generated images
 
-- Icons should use the red/ink/paper palette.
+- Icons may retain red strokes, but their containers use white/paper surfaces and neutral borders rather than pink gradient tiles.
 - Avoid emoji-like or toy-like icons on serious scientific cards.
 - If generated raster icons are used, keep them in a clear asset folder and commit the source intent in the commit message.
 - Prefer CSS/SVG/vector when the icon is structural; use generated bitmap only for genuinely illustrative assets.
