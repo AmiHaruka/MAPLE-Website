@@ -321,7 +321,7 @@
             <li>Derive bonded terms with Seminario / mSeminario. <span class="cmt">&#9657; <code>mseminario</code>, <code>seminario</code>, <code>none</code></span></li>
             <li>Optional charge fitting. <span class="cmt">&#9657; <code>resp</code>, MLIP models, <code>abcg2</code>, &hellip;</span></li>
             <li>Optional torsion fitting: constrained MLIP scans per rotatable bond, QM references per qm_mode, then TorsionFit.</li>
-            <li>If qm_compare: repeat the charge and torsion branches against QM references.</li>
+            <li>If qm_compare: run the parallel MLIP-reference charge and torsion branches.</li>
             <li>Export .mol2/.frcmod and .top/.gro.</li>
           </ol>
         </figure>
@@ -459,8 +459,7 @@ torsion_refine_max_iter=256
 torsion_refine_tol=1.0e-6
 torsion_ensemble=false
 torsion_ensemble_ratio=0.3
-torsion_ensemble_weight=0.5
-report_debug=false</code></pre>
+torsion_ensemble_weight=0.5</code></pre>
             </div>
           </details>
         </div>
