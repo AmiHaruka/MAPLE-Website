@@ -18,3 +18,7 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Agent session artifacts
+.zcode/
+.zcodeignore
