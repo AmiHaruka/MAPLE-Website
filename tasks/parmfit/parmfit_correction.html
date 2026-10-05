@@ -366,7 +366,7 @@
 
         <p><code>chg_fit</code> is independent of <code>iqm</code>. RESP derivation always runs Gaussian for the ESP and AmberTools for the RESP stages, reusing <code>qm_nproc</code> and <code>qm_mem</code>. CORR reads the target charge and multiplicity from the input structure (inline <code>charge mult</code> line, e.g. <code>charge 0 1</code>, or <code>XYZ &lt;charge&gt; &lt;mult&gt; &lt;path&gt;</code> block); the report prints both the integer target from the input structure and the actual sum in the charged mol2 so that any mismatch is visible.</p>
 
-        <p>With <code>iqm=true</code>, <code>qm_compare=true</code>, and parameter refinement enabled, charge fitting follows both branch geometries. The primary result uses <code>chargefit/qm_route_charged.mol2</code>, while the MLIP comparison uses <code>chargefit/mlip_route_charged.mol2</code>. For <code>chg_fit=none</code>, ParmFit uses the charges recorded in the input mol2.</p>
+        <p><code>qm_compare</code> (default <code>false</code>, CORR only) repeats the charge and torsion branches against MLIP references: with <code>iqm=true</code>, <code>qm_compare=true</code>, and parameter refinement enabled, charge fitting follows both branch geometries. The primary result uses <code>chargefit/qm_route_charged.mol2</code>, while the MLIP comparison uses <code>chargefit/mlip_route_charged.mol2</code>. For <code>chg_fit=none</code>, ParmFit uses the charges recorded in the input mol2.</p>
 
         <h2 id="torsionfit">TorsionFit</h2>
 

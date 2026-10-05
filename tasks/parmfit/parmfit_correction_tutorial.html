@@ -438,7 +438,7 @@ opt_level=B3LYP/def2SVP</code></pre>
 ... (molecule specification)
 
 I 1.875</code></pre>
-        <p>Gaussian's built-in Merz&ndash;Kollman radius table stops well before the fifth row, and l602 aborts with <code>GetVDW: no radius for atomic number 53</code> otherwise. ParmFit therefore writes <code>Pop(MK,ReadRadii)</code> and appends one radius line per element the built-in table lacks &mdash; here the UFF van der Waals radius of iodine divided by 1.2 (2.25/1.2&nbsp;=&nbsp;1.875), the same fallback convention used by Multiwfn and MRCC. Light molecules never see this; molecules containing iodine cannot run without it.</p>
+        <p>Gaussian's built-in Merz&ndash;Kollman radius table stops well before the fifth row, and l602 aborts with <code>GetVDW: no radius for atomic number 53</code> otherwise. ParmFit therefore writes <code>Pop(MK,ReadRadii)</code> and appends a radius line for every element the built-in table lacks &mdash; here 1.875&nbsp;&Aring; for iodine. Light molecules never see this; molecules containing iodine cannot run without it.</p>
         <p>The setup header and stage trace show both additions:</p>
         <pre><code>QM reference:     enabled, mode=1, engine=g16, opt=B3LYP/def2SVP, sp=B3LYP/def2SVP
 ...
@@ -511,7 +511,7 @@ opt_level=B3LYP/def2SVP</code></pre>
         </div>
         <p><strong>CORR4 header.</strong> The convergence tier lives in the inline header:</p>
         <pre><code>#model=uma(size=uma-s-1p1,task=omol)
-<strong>#parmfit(method=correction,input=CORR4.in,level=tight)</strong>
+<strong>#parmfit(method=correction,input=CORR4.in,,level=tight)</strong>
 #device=gpu0</code></pre>
         <p><strong>What happens.</strong> The charge and reference setup is identical to Case 2; only the way QM data enters TorsionFit changes. In mode 2, each scan frame is a QM constrained optimization of the torsion; in mode 3, the QM engine evaluates energies and forces directly and MAPLE's own optimizer drives the scan &mdash; see the <a href="parmfit.html#qm-mode">hub's qm_mode table</a> for the full semantics. The header and stage line always report the active mode:</p>
         <pre><code>QM reference:     enabled, mode=2, engine=g16, opt=B3LYP/def2SVP, sp=B3LYP/def2SVP

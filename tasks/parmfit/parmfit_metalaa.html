@@ -361,11 +361,12 @@
               <tr><td><code>ion_mults</code></td><td><code>1</code></td><td>Spin multiplicity of the QM cluster (large model).</td></tr>
               <tr><td><code>lig_resids</code>, <code>lig_charges</code>, <code>lig_mults</code></td><td>None</td><td>Coordinating ligand/cofactor residue selectors, their 1:1 formal charges, and their spin multiplicities (default 1); ligands are parameterized as small molecules in <code>lig/&lt;tag&gt;/</code>.</td></tr>
               <tr><td><code>lig_chgfit</code></td><td><code>abcg2</code></td><td>Charge method for declared ligands (<code>lig_chglevel</code>/<code>lig_chgroute</code> control RESP-style settings).</td></tr>
-              <tr><td><code>ncaa_resids</code>, <code>ncaa_charges</code></td><td>None</td><td>Noncanonical residues &mdash; or standard residues deliberately rebuilt &mdash; in the site, built through the native NCAA flow; pair <code>ncaa_charges</code> 1:1, optionally <code>ncaa_resnames</code>/<code>ncaa_mults</code>. Their charges are frozen into the site RESP (<code>ncaa_chgfit</code> defaults to <code>resp</code>).</td></tr>
+              <tr><td><code>ncaa_resids</code>, <code>ncaa_charges</code></td><td>None</td><td>Noncanonical residues &mdash; or standard residues deliberately rebuilt &mdash; in the site, built through the native NCAA flow; pair <code>ncaa_charges</code> 1:1, optionally <code>ncaa_resnames</code>/<code>ncaa_mults</code>. Their charges are frozen into the site RESP.</td></tr>
+              <tr><td><code>ncaa_chgfit</code>, <code>ncaa_chglevel</code>, <code>ncaa_chgroute</code></td><td><code>resp</code>, <code>HF/6-31G(d)</code>, empty</td><td>Charge route for NCAA-built residues and its Gaussian level/route; the fitted charges are frozen into the site RESP.</td></tr>
               <tr><td><code>add_resid</code></td><td>None</td><td>Additional residues to force into the metal-site core; core membership puts a residue into the RESP charge fit, the Hessian-bonded fitting, and the deployed site model.</td></tr>
               <tr><td><code>set_bonded</code></td><td>Auto</td><td>Explicit metal-donor serial pairs, written as <code>SERIAL-SERIAL</code> tokens.</td></tr>
               <tr><td><code>keep</code></td><td>None</td><td>Chooses which alternate conformation to build when the PDB lists several for a residue: append the altloc letter to the selector (<code>A181B</code>) to build that residue from its altloc-B atoms; an entry without a letter keeps the default resolution (altloc A, else the highest-occupancy set).</td></tr>
-              <tr><td><code>cluster_cutoff</code></td><td><code>3.0</code></td><td>Cutoff in Angstrom for collecting large-model environment residues; environment residues join the large-model stages (MLIP optimization, RESP, Hessian) as fixed-charge context and never reach the deployed site model.</td></tr>
+              <tr><td><code>cluster_cutoff</code></td><td><code>3.0</code></td><td>Cutoff in Angstrom for collecting large-model environment residues. Environment residues participate in large-model optimization, RESP, and Hessian evaluation; during RESP each non-core residue is constrained to its reference net charge, and these residues are excluded from the deployed site model.</td></tr>
               <tr><td><code>donor_cutoff</code></td><td><code>2.7</code></td><td>Cutoff in Angstrom for automatic metal-donor detection.</td></tr>
               <tr><td><code>chgmod</code></td><td><code>1</code></td><td>RESP fixed-charge policy for standard backbone atoms.</td></tr>
               <tr><td><code>fixchg_resids</code></td><td>None</td><td>Residues whose charges should be fixed to standard Amber references during RESP.</td></tr>
@@ -487,7 +488,10 @@ lig_chgroute=
 ncaa_resids=
 ncaa_charges=
 ncaa_resnames=
-ncaa_mults=</code></pre>
+ncaa_mults=
+ncaa_chgfit=resp
+ncaa_chglevel=HF/6-31G(d)
+ncaa_chgroute=</code></pre>
             </div>
           </details>
         </div>
