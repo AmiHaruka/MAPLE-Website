@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AIMNet2 - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../index.html"><img src="../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -162,6 +165,7 @@
 
         <h2 id="variants">Variants</h2>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -182,10 +186,11 @@
               <td>AIMNet2-NSE</td>
               <td><code>aimnet2nse</code></td>
               <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
-              <td>Variant including nuclear spin-orbit effects for heavy elements</td>
+              <td>Open-shell variant using neural spin-charge equilibration for systems with arbitrary charge and spin multiplicity, including radicals.</td>
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h2 id="charge-spin">Charge and Spin Support</h2>
 
@@ -236,7 +241,7 @@ H   -0.390000    0.000000    1.028000
 H   -0.390000    0.890000   -0.514000
 H   -0.390000   -0.890000   -0.514000</code></pre>
 
-        <h3>NSE variant for systems with heavy-element spin-orbit effects</h3>
+        <h3>NSE variant using neural spin-charge equilibration</h3>
         <pre><code><span class="keyword">#model</span>=<span class="value">aimnet2nse</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>)
@@ -282,5 +287,6 @@ H   -0.390000   -0.890000   -0.514000</code></pre>
     <p>&copy; 2026, MAPLE development team.</p>
   </footer>
   <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

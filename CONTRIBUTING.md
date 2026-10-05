@@ -1,46 +1,51 @@
 # Contributing to the MAPLE Website
 
-Thank you for your interest in contributing to the MAPLE documentation website.
+Thank you for improving the MAPLE documentation website.
 
-## Project Structure
+## Architecture
 
+The deployed output remains static HTML. Shared behavior and presentation belong in these files rather than page-local copies:
+
+- `assets/css/home.css`, `assets/js/home.js` — homepage.
+- `assets/css/styles.css`, `assets/js/main.js` — documentation pages.
+- `assets/css/search.css`, `assets/js/search.js` — site search UI and behavior.
+- `assets/search-index.json`, `assets/search-index.js` — generated searchable sections and direct-file fallback.
+- `tools/build_search_index.py` — search-index generator.
+
+Documentation is organized under `tutorials/`, `setup/`, `tasks/`, and `functions/`.
+
+## Adding or editing a page
+
+1. Copy a maintained page at the same directory depth.
+2. Keep stylesheet, script, image, navigation, and favicon paths relative to that depth.
+3. Use lowercase filenames with underscores.
+4. Give durable IDs to important headings that are linked externally.
+5. Update all affected static navigation copies until navigation generation is centralized.
+6. Rebuild the search index.
+
+```bash
+python3 tools/build_search_index.py
 ```
-index.html                Root-level main pages (top-nav layout)
-assets/css/styles.css     Shared stylesheet
-assets/images/            Logo and news images
-functions/                Feature documentation (solvent, constrain)
-setup/                    Input file setup documentation (settings, coordinates)
-tasks/                    Task documentation, organized by type:
-  singlepoint.html
-  opt/                    Geometry optimization methods
-  ts/                     Transition state search methods
-  scan/                   PES scan methods
-  irc/                    IRC methods
+
+Do not add page-local CSS or duplicate interaction scripts when a shared component can express the behavior.
+
+Search hierarchy is derived centrally by `navigation_trail()` in the index generator. Do not add keyword-specific ranking exceptions for individual queries; improve the shared taxonomy, headings, or generic ranking rules instead.
+
+## Validation
+
+Run the available static checks before submitting:
+
+```bash
+python3 tools/build_search_index.py --check
+node --check assets/js/main.js
+node --check assets/js/home.js
+node --check assets/js/search.js
+git diff --check
 ```
 
-## Navigation Patterns
+## Content boundaries
 
-The site uses two navigation patterns:
-
-- **Top navigation bar** (`header.top-nav`): Used by all root-level main pages
-- **Sidebar navigation** (`aside.navigation-section`): Used by sub-pages in `functions/`, `setup/`, `tasks/`
-
-## Adding a New Page
-
-1. Copy the HTML skeleton from an existing page at the same directory depth.
-2. Update the `<link rel="stylesheet" href="...">` path relative to the new file's location:
-   - Root level: `assets/css/styles.css`
-   - 1 level deep (e.g., `functions/`, `tasks/`): `../assets/css/styles.css`
-   - 2 levels deep (e.g., `tasks/opt/`): `../../assets/css/styles.css`
-3. Update all navigation `href` and logo `src` paths using the same relative depth pattern.
-4. Add a link to the new page from the sidebar tree on sibling pages and (for major additions) from `home1.html`.
-
-## Naming Conventions
-
-- Directory names: lowercase (`tasks/`, not `Tasks/`)
-- File names: lowercase with underscores (`opt_lbfgs.html`, not `opt_LBFGS.html`)
-- Use `.html` extension (not `.htm`)
-
-## Styling
-
-All pages share `assets/css/styles.css`. Do not add per-page stylesheets. If a new CSS class is needed, add it to the shared stylesheet.
+- Bind capability and parameter claims to an identified MAPLE release or development source.
+- Do not turn “callable” or “energy available” into a claim that an entire optimization, frequency, solvent, or MD workflow is supported.
+- Mark unverified combinations as unverified.
+- Keep website-source licensing separate from MAPLE software and model/checkpoint terms.

@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FeNNol - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
 </head>
 <body>
   <header class="top-nav">
     <div class="container">
       <div class="brand">
-        <a href="../index.html"><img src="../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
         <a href="../index.html">MAPLE</a>
       </div>
       <button class="mobile-toggle" aria-label="Toggle menu">
@@ -35,7 +38,7 @@
     <aside class="sidebar">
       <nav class="sidebar-nav">
         <div class="sidebar-brand">
-          <img src="../assets/images/logo.jpg" alt="MAPLE">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
           <span>MAPLE Docs</span>
         </div>
         <div class="sidebar-tree">
@@ -169,6 +172,7 @@
 
         <p>FeNNix-Bio1 is a family of scalable foundation models for reactive condensed-phase molecular dynamics, built on the FeNNol library within the Jax framework. Two sizes are available with different accuracy and throughput trade-offs:</p>
 
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -190,6 +194,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <div class="admonition important">
           <p class="admonition-title">Important</p>
@@ -216,6 +221,7 @@ XYZ /path/to/structure.xyz</code></pre>
         <p>The generic <code>fennol</code> keyword requires an explicit <code>model_path</code> pointing to a valid <code>.fnx</code> file.</p>
 
         <h2 id="parameters">Model Options</h2>
+        <div class="table-wrapper">
         <table>
           <thead>
             <tr>
@@ -237,6 +243,7 @@ XYZ /path/to/structure.xyz</code></pre>
             </tr>
           </tbody>
         </table>
+        </div>
 
         <h2 id="charge-spin">Charge and Multiplicity</h2>
 
@@ -320,5 +327,6 @@ XYZ /path/to/structure.xyz</code></pre>
     <p>&copy; 2026, MAPLE development team.</p>
   </footer>
   <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>
