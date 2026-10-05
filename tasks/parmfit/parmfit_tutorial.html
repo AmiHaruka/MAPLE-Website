@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ParmFit Tutorials - MAPLE</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <link rel="icon" href="../../favicon.ico">
+
+  <style>
+    .tut-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin: 1.75rem 0;
+    }
+
+    .tut-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e6e8ee;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .tut-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.13);
+    }
+
+    .tut-card-img {
+      position: relative;
+      aspect-ratio: 8 / 7;
+      border-bottom: 1px solid #eef1f5;
+      overflow: hidden;
+      /* opaque renders on white; letterboxing against the same white stays invisible */
+      background: #fff;
+    }
+
+    .tut-card-img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .tut-card-route {
+      position: absolute;
+      top: 0.7rem;
+      left: 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #e2e6ee;
+      border-radius: 999px;
+      padding: 0.18rem 0.6rem;
+    }
+
+    .card-corr .tut-card-route,
+    .card-corr .tut-card-cta { color: #2563eb; }
+    .card-ncaa .tut-card-route,
+    .card-ncaa .tut-card-cta { color: #15803d; }
+    .card-metal .tut-card-route,
+    .card-metal .tut-card-cta { color: #b45309; }
+
+    .tut-card-body {
+      padding: 0.95rem 1.15rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .tut-card-body h3 {
+      margin: 0;
+      font-size: 1.08rem;
+      color: #1a1a2e;
+    }
+
+    .tut-card-body p {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #4b5563;
+      flex: 1;
+    }
+
+    .tut-card-cta {
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 52em) {
+      .tut-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../general.html">About</a></li>
+          <li><a href="../../tutorials/installation.html">Documentation</a></li>
+          <li><a href="../../articles.html">Articles &amp; News</a></li>
+          <li><a href="../../downloads.html">Downloads</a></li>
+          <li><a href="../../development.html">Development</a></li>
+          <li><a href="../../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <span>MAPLE Docs</span>
+        </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../../tutorials/installation.html">Installation</a></li>
+                <li><a href="../../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../../setup/settings.html">Settings</a></li>
+                <li><a href="../../setup/coordinates.html">Coordinates</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> ML Models</span>
+              <ul class="children">
+                <li><a href="../../setup/models.html">Overview</a></li>
+                <li><a href="../../setup/model_uma.html">UMA</a></li>
+                <li><a href="../../setup/model_ani.html">ANI</a></li>
+                <li><a href="../../setup/model_aimnet.html">AIMNet2</a></li>
+                <li><a href="../../setup/model_fennol.html">FeNNol</a></li>
+                <li><a href="../../setup/model_mace.html">MACE</a></li>
+                <li><a href="../../setup/model_custom.html">Custom Model</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../opt/opt_sd.html">SD</a></li>
+                    <li><a href="../opt/opt_cg.html">CG</a></li>
+                    <li><a href="../opt/opt_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../ts/ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="../ts/ts_prfo.html">P-RFO</a></li>
+                    <li><a href="../ts/ts_neb.html">NEB</a></li>
+                    <li><a href="../ts/ts_dimmer.html">Dimer</a></li>
+                    <li><a href="../ts/ts_string.html">String/GSM</a></li>
+                    <li><a href="../ts/ts_dmf.html">DMF</a></li>
+                    <li><a href="../ts/ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../scan/scan_rfo.html">RFO</a></li>
+                    <li><a href="../scan/scan_sd.html">SD</a></li>
+                    <li><a href="../scan/scan_cg.html">CG</a></li>
+                    <li><a href="../scan/scan_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../irc/irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="../irc/irc_gs.html">GS</a></li>
+                    <li><a href="../irc/irc_lqa.html">LQA</a></li>
+                    <li><a href="../irc/irc_hpc.html">HPC</a></li>
+                    <li><a href="../irc/irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="parmfit.html">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="parmfit_correction.html">CORR</a></li>
+                    <li><a href="parmfit_ncaa.html">NCAA</a></li>
+                    <li><a href="parmfit_metalaa.html">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tutorials</span>
+              <ul class="children">
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="parmfit_tutorial.html" class="active">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="parmfit_correction_tutorial.html">CORR</a></li>
+                    <li><a href="parmfit_ncaa_tutorial.html">NCAA</a></li>
+                    <li><a href="parmfit_metalaa_tutorial.html">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../../functions/solvent.html">Solvation</a></li>
+                <li><a href="../../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../../tasks/singlepoint.html">Tasks</a>
+        <span class="separator">/</span>
+        <a href="parmfit.html">ParmFit</a>
+        <span class="separator">/</span>
+        <span class="current">Tutorials</span>
+      </nav>
+
+      <article>
+        <h1>ParmFit Tutorials</h1>
+
+        <p>Get to know ParmFit&rsquo;s parameterization workflow by solving a few simple examples.</p>
+
+        <h2 id="systems">The Systems</h2>
+        <div class="tut-cards">
+          <a class="tut-card card-corr" href="parmfit_correction_tutorial.html">
+            <div class="tut-card-img">
+              <span class="tut-card-route">CORR</span>
+              <img src="../../assets/images/parmfit/correction/choi001.png" alt="Ball-and-stick render of o-iodophenol: a benzene ring bearing a large iodine ball and a hydroxyl group">
+            </div>
+            <div class="tut-card-body">
+              <h3>o-Iodophenol</h3>
+              <p>A phenol with an iodine beside its hydroxyl.</p>
+              <span class="tut-card-cta">Start the tutorial &rarr;</span>
+            </div>
+          </a>
+          <a class="tut-card card-ncaa" href="parmfit_ncaa_tutorial.html">
+            <div class="tut-card-img">
+              <span class="tut-card-route">NCAA</span>
+              <img src="../../assets/images/parmfit/ncaa/ncaa_card.png" alt="Ball-and-stick render of the capped HF1 residue running diagonally across the frame: backbone caps and the large histidine-FAD sidechain">
+            </div>
+            <div class="tut-card-body">
+              <h3>FAD in 6JQH</h3>
+              <p>A histidine residue carrying a covalent FAD cofactor.</p>
+              <span class="tut-card-cta">Start the tutorial &rarr;</span>
+            </div>
+          </a>
+          <a class="tut-card card-metal" href="parmfit_metalaa_tutorial.html">
+            <div class="tut-card-img">
+              <span class="tut-card-route">MetalAA</span>
+              <img src="../../assets/images/parmfit/metalaa/metalaa_card.png" alt="Ball-and-stick render of the 4ZF6 iron site: heme and cysteine donors with slate balls on the five donor atoms around the red iron sphere">
+            </div>
+            <div class="tut-card-body">
+              <h3>HEME in 4ZF6</h3>
+              <p>A cysteine-ligated heme iron site.</p>
+              <span class="tut-card-cta">Start the tutorial &rarr;</span>
+            </div>
+          </a>
+        </div>
+
+        <h2 id="before">Before You Start</h2>
+        <ul>
+          <li><strong>Requirements.</strong> Software and input needs are summarized in the <a href="parmfit.html#requirements">ParmFit hub&rsquo;s Requirements section</a>.</li>
+          <li><strong>Model.</strong> Every run in these tutorials uses the same checkpoint &mdash; UMA-S-1.1, selected with <code>#model=uma(size=uma-s-1p1)</code>.</li>
+          <li><strong>Hardware.</strong> Every excerpt and timing in these tutorials comes from runs on an RTX 3060 Laptop GPU and an 8-core AMD CPU &mdash; sufficient for every run shown here.</li>
+          <li><strong>Run archives.</strong> Each tutorial links its complete Zenodo run archive at the bottom of the page.</li>
+        </ul>
+
+        <nav class="page-nav">
+          <a href="parmfit.html">&larr; Previous: ParmFit</a>
+          <a class="next" href="parmfit_correction_tutorial.html">Next: CORR Tutorial &rarr;</a>
+        </nav>
+      </article>
+    </main>
+
+    <aside class="toc"><div class="toc-sticky"><h3>On this page</h3><ul></ul></div></aside>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <footer><p>&copy; 2026, MAPLE development team.</p></footer>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetalAA Tutorial - MAPLE</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <link rel="icon" href="../../favicon.ico">
+
+  <style>
+    .parmfit-inputs {
+      margin: 1.5rem 0;
+    }
+
+    .parmfit-input-item {
+      border: 1px solid #e6e8ee;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+    }
+
+    .parmfit-input-item summary {
+      position: relative;
+      list-style: none;
+      cursor: pointer;
+      padding: 1.25rem 3.75rem 1.25rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      user-select: none;
+    }
+
+    .parmfit-input-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .parmfit-input-item summary::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 1.4rem;
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid #7b8190;
+      border-bottom: 2px solid #7b8190;
+      transform: translateY(-65%) rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+
+    .parmfit-input-item[open] summary::after {
+      transform: translateY(-35%) rotate(-135deg);
+    }
+
+    .parmfit-input-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+      border-top: 1px solid #eef1f5;
+    }
+
+    .parmfit-input-body pre {
+      margin: 0;
+    }
+
+    @media (max-width: 52em) {
+      .parmfit-input-item summary {
+        padding-left: 1rem;
+        padding-right: 3.25rem;
+      }
+
+      .parmfit-input-body {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../general.html">About</a></li>
+          <li><a href="../../tutorials/installation.html">Documentation</a></li>
+          <li><a href="../../articles.html">Articles &amp; News</a></li>
+          <li><a href="../../downloads.html">Downloads</a></li>
+          <li><a href="../../development.html">Development</a></li>
+          <li><a href="../../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <span>MAPLE Docs</span>
+        </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../../tutorials/installation.html">Installation</a></li>
+                <li><a href="../../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../../setup/settings.html">Settings</a></li>
+                <li><a href="../../setup/coordinates.html">Coordinates</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> ML Models</span>
+              <ul class="children">
+                <li><a href="../../setup/models.html">Overview</a></li>
+                <li><a href="../../setup/model_uma.html">UMA</a></li>
+                <li><a href="../../setup/model_ani.html">ANI</a></li>
+                <li><a href="../../setup/model_aimnet.html">AIMNet2</a></li>
+                <li><a href="../../setup/model_fennol.html">FeNNol</a></li>
+                <li><a href="../../setup/model_mace.html">MACE</a></li>
+                <li><a href="../../setup/model_custom.html">Custom Model</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../opt/opt_sd.html">SD</a></li>
+                    <li><a href="../opt/opt_cg.html">CG</a></li>
+                    <li><a href="../opt/opt_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../ts/ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="../ts/ts_prfo.html">P-RFO</a></li>
+                    <li><a href="../ts/ts_neb.html">NEB</a></li>
+                    <li><a href="../ts/ts_dimmer.html">Dimer</a></li>
+                    <li><a href="../ts/ts_string.html">String/GSM</a></li>
+                    <li><a href="../ts/ts_dmf.html">DMF</a></li>
+                    <li><a href="../ts/ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../scan/scan_rfo.html">RFO</a></li>
+                    <li><a href="../scan/scan_sd.html">SD</a></li>
+                    <li><a href="../scan/scan_cg.html">CG</a></li>
+                    <li><a href="../scan/scan_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../irc/irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="../irc/irc_gs.html">GS</a></li>
+                    <li><a href="../irc/irc_lqa.html">LQA</a></li>
+                    <li><a href="../irc/irc_hpc.html">HPC</a></li>
+                    <li><a href="../irc/irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="parmfit.html">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="parmfit_correction.html">CORR</a></li>
+                    <li><a href="parmfit_ncaa.html">NCAA</a></li>
+                    <li><a href="parmfit_metalaa.html">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tutorials</span>
+              <ul class="children">
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="parmfit_tutorial.html" class="active">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="parmfit_correction_tutorial.html">CORR</a></li>
+                    <li><a href="parmfit_ncaa_tutorial.html">NCAA</a></li>
+                    <li><a href="parmfit_metalaa_tutorial.html" class="active">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../../functions/solvent.html">Solvation</a></li>
+                <li><a href="../../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../../tasks/singlepoint.html">Tasks</a>
+        <span class="separator">/</span>
+        <a href="parmfit.html">ParmFit</a>
+        <span class="separator">/</span>
+        <a href="parmfit_metalaa.html">MetalAA</a>
+        <span class="separator">/</span>
+        <span class="current">Tutorial</span>
+      </nav>
+
+      <article>
+        <h1>MetalAA Tutorial</h1>
+
+        <h2 id="overview">Overview</h2>
+        <p>This tutorial walks through the MetalAA route of <code>parmfit(method=metalaa)</code> in three cases on a cytochrome P450 BM3 pentamutant (Protein Data Bank ID 4ZF6), in which the heme iron is coordinated by four porphyrin nitrogen atoms and the thiolate sulfur of a proximal cysteine. The input structure <code>4ZF6.pdb</code> places the Fe ion at <code>A462</code>, the heme cofactor at <code>A461</code>, and the coordinating cysteine at <code>_400</code>. Case 1 declares the site and builds it with default cutoffs; Case 2 widens the environment around the unchanged site; Case 3 declares a standard amino acid for deliberate rebuilding and folds the resulting template through the NCAA (noncanonical amino acid) flow into the deployment. Every excerpt below is taken from verified runs of the inputs shown here (<code>MetalAA1&ndash;3.inp</code> plus their sidecar configs).</p>
+        <figure class="doc-figure" style="max-width:540px;">
+          <img src="../../assets/images/parmfit/metalaa/metalaa_overview.png">
+          <figcaption>Fig. 1 &mdash; Overall structure of 4ZF6 showing the heme site.</figcaption>
+        </figure>
+        <p>Every run writes a <code>&lt;base&gt;.parmfitrun.in</code> file next to the output that echoes your configuration with defaults filled in; watch the log for <code>Unknown left-hand</code> warnings, which flag keys no builder consumed. The reference definition of every key lives in the <a href="parmfit_metalaa.html">MetalAA manual page</a> and the shared sections of the <a href="parmfit.html">ParmFit hub</a>; software and input requirements are summarized in the hub's <a href="parmfit.html#requirements">Requirements</a> section.</p>
+
+        <h2 id="case-1">Case 1 &mdash; Declaring the first metal site</h2>
+        <p><strong>Goal.</strong> Parameterize the Fe site with the metal ion and its heme cofactor declared explicitly and every cutoff left at its default: donor detection at 2.7&nbsp;&Aring;, environment at 3.0&nbsp;&Aring;. Charges come from RESP (restrained electrostatic potential) at <code>PBE1PBE/def2SV</code> with the default <code>chgmod=1</code>, and bonded terms from <code>seminario</code> rather than the default <code>mseminario</code>. The split-valence <code>def2-SV</code> basis is a deliberate step down from the manual's <code>PBE1PBE/def2SVP</code> default &mdash; it keeps the RESP job on the 95-atom large model affordable.</p>
+        <p><strong>Input.</strong> MetalAA configs grow quickly, so the example uses a sidecar config file referenced with <code>input=</code> from the very first case; the method itself stays in the inline <code>#parmfit(...)</code> header. <code>ion_resids</code> selects the central ion, and <code>lig_resids</code>/<code>lig_charges</code> declare the heme as a cofactor built as a small molecule.</p>
+        <pre><code>#model=uma(size=uma-s-1p1)
+#parmfit(method=metalaa,input=MetalAA1.in)
+#device=gpu0
+
+PDB 4ZF6.pdb</code></pre>
+        <div class="parmfit-inputs">
+          <details class="parmfit-input-item">
+            <summary>MetalAA1.in</summary>
+            <div class="parmfit-input-body">
+              <pre><code>ion_resids=A462
+ion_charges=3
+ion_mults=6
+lig_resids=A461
+lig_charges=-4
+bonded=seminario
+chg_level=PBE1PBE/def2SV</code></pre>
+            </div>
+          </details>
+        </div>
+        <p><strong>What happens.</strong></p>
+        <ol>
+          <li><strong>Site recognition.</strong> Template graph-matching flags the heme as the one unmatched residue &mdash; <em>seemingly not protein</em>, with a hint to declare it, which the <code>lig_resids</code> declaration above already handles. Donor atoms are detected among N, O, S, P, Se, and halogens within <code>donor_cutoff</code>: the cysteine SG and the four heme nitrogens. The ion plus donor residues form the core.</li>
+          <li><strong>Large model.</strong> Environment residues within <code>cluster_cutoff</code> are collected into a 95-atom model; broken peptide boundaries are sealed with ACE/NME (acetyl/N-methylamide) caps and sequence gaps with Gly bridges.</li>
+          <li><strong>Ligand build.</strong> The declared heme is typed and charged in <code>lig/HEM461/</code> through antechamber (default <code>lig_chgfit=abcg2</code>, which runs an internal sqm job) and parmchk2, producing <code>HEM461.mol2</code> and <code>HEM461.frcmod</code>.</li>
+          <li><strong>MLIP optimization.</strong> The large model relaxes with the MLIP (machine-learned interatomic potential); its net charge is computed as <code>Q_large = ion_charges + &Sigma; net charges of all other residues</code> &mdash; here <code>-2</code>, with multiplicity 6.</li>
+          <li><strong>RESP.</strong> Gaussian evaluates the large-model ESP (electrostatic potential); AmberTools performs the two-stage RESP fitting, with backbone heavy atoms fixed to Amber references (<code>chgmod=1</code>).</li>
+          <li><strong>Site model.</strong> The core-only model receives the projected charges; residues are renamed to export codes (CYM&rarr;CM1, HEM&rarr;HM1, FE&rarr;FE1) and coordinating atoms are retyped: donors receive <code>Z1</code>/<code>Z2</code>/..., the metal <code>M1</code>.</li>
+          <li><strong>Bonded fit and deployment.</strong> An MLIP Hessian + Seminario fit the metal-related bond/angle terms; the final frcmod and tleap files are written and validated.</li>
+        </ol>
+        <p>The run also prints the signal that Case&nbsp;2 acts on:</p>
+        <pre><code>Warnings:
+  Environment contains potentially charged standard residues outside the site core: _1:THR, _3:LYS, _4:GLU, _9:LYS, _13:GLU, _15:LYS, _23:ASP, _24:LYS</code></pre>
+        <p><strong>The resolved configuration.</strong> Next to <code>MetalAA1.out</code>, MAPLE writes <code>MetalAA1.parmfitrun.in</code>:</p>
+        <pre><code># parmfitrun.in - resolved parmfit configuration for method=metalaa
+# Generated by MAPLE parmfit; values are the user config entries with defaults filled in.
+# This file is itself a valid parmfit config and can be referenced via input=.
+
+# metal ion residue selector (chain+resseq or resname+resseq)
+ion_resids               = A462
+# coordinating ligand residue selectors
+lig_resids               = A461
+# (ff14SB, ff19SB)
+pro_ff                   = ff14SB
+# (mseminario, seminario, none)
+bonded                   = seminario
+# (0-3)
+chgmod                   = 1
+# charge level METHOD/BASIS (engine syntax)
+chg_level                = PBE1PBE/def2SV
+... (open the real file after a run to see every resolved key)</code></pre>
+        <p><strong>Reading the output.</strong> The header prints the full site configuration &mdash; verify the cutoffs, the ion charge, and the computed large-model charge before anything else:</p>
+        <pre><code>======================================================================
+                          Parmfit MetalAA
+======================================================================
+Target: A462:FE (ion)
+  PDB residue templates: matched=460, backbone_only=0, unmatched=1
+    not matched (seemingly not protein): A461:HEM
+    declare them via lig_resids (or ncaa_resids) to build parameters as small molecules
+  ion_resids: A462
+  add_resid: []
+  cluster_cutoff: 3.00 A
+  donor_cutoff: 2.70 A
+  water ff: tip3p
+  protein ff: ff14SB
+  ion ff: 12_6
+  ion_charges: 3
+  ion_mults: 6
+  ncaa_resids: []
+  large model charge/mult: -2 6
+  chgmod: 1
+  fixchg_resids: []
+  QM method: PBE1PBE/def2SV
+  [MetalAA] large-model input written.
+  [MetalAA] MLIP large-model optimization ...
+  [MetalAA] large-model RESP ...
+  [MetalAA] site files written.
+  [MetalAA] MLIP Hessian + Seminario + final frcmod ...
+  [MetalAA] final parameter files written.
+  [MetalAA] running tleap validation ...
+  [MetalAA] route completed; final summary follows.</code></pre>
+        <p>The result block lists the site products, the renamed atom types, the timings, and the deployment command:</p>
+        <pre><code>======================================================================
+                     PARMFIT METALAA RESULT
+======================================================================
+Status: completed
+Route: MetalAA
+Target: A462:FE
+Protein ff: ff14SB
+Ions charge: 3
+Large model charge/mult: -2 6
+Core residues: _400:CYM, A461:HEM, A462:FE
+
+Main products:
+  final frcmod: MetalAA1_work/MetalAA1_metal.frcmod
+  tleap input:  MetalAA1_work/MetalAA1_metal_tleap.in
+  tleap PDB:    MetalAA1_work/MetalAA1_metal_tleap.pdb
+  mol2 files:   MetalAA1_work/CM1.mol2, MetalAA1_work/HM1.mol2, MetalAA1_work/FE1.mol2
+
+Renamed atom types:
+  residue      atom  old   new   charge
+  _400:CYM     SG    SH    Z1    -0.329172
+  A461:HEM     NA    nc    Z2    -0.129187
+  A461:HEM     NB    nd    Z3    -0.181075
+  A461:HEM     ND    nc    Z4    -0.152740
+  A461:HEM     NC    nd    Z5    -0.118203
+  A462:FE      FE    FE    M1     0.439642
+
+Stage timing:
+  RESP fitting           27m 22s
+  ligand building         3m 29s
+  Hessian + Seminario       59s
+  model optimization        29s
+  tleap validation           5s
+
+Next step:
+  cd MetalAA1_work
+  tleap -s -f MetalAA1_metal_tleap.in |tee MetalAA1_metal_tleap.out
+
+Tleap status:
+  Errors: 0
+  Warnings: 8
+  Notes: 1</code></pre>
+        <figure class="doc-figure" style="max-width:440px;">
+          <img src="../../assets/images/parmfit/metalaa/metalaa_site_closeup.png" alt="Render of the MetalAA1 site: the heme and cysteine stick model with pill labels and arrows marking the five donor atoms Z1 through Z5 around the iron sphere">
+          <figcaption>Fig. 2 &mdash; The Case-1 site in the processed tleap PDB: the five donors typed <code>Z1</code>&ndash;<code>Z5</code> coordinate the Fe (<code>M1</code>).</figcaption>
+        </figure>
+        <div class="admonition tip">
+          <p class="admonition-title">Checkpoint</p>
+          <p>Before moving on, confirm: the renamed atom types table lists exactly the intended coordination &mdash; here five donors (thiolate SG + four heme nitrogens as <code>Z1</code>&ndash;<code>Z5</code>) plus <code>M1</code>; <code>large model charge/mult: -2 6</code> matches your residue composition; <code>Core residues</code> contains exactly CYM, HEM, and FE; <code>lig/HEM461/</code> holds the cofactor build and <code>metalaa/</code> the RESP intermediates. The 8 tleap warnings only name charged residues outside the site core &mdash; they describe the environment, not a defect.</p>
+        </div>
+
+        <h2 id="case-2">Case 2 &mdash; Widening the environment</h2>
+        <p><strong>What changed.</strong> Exactly one key: <code>cluster_cutoff</code> rises from the default 3.0&nbsp;&Aring; to 5.0&nbsp;&Aring;. Charge fitting should see the environment the site lives in. The large model used for the RESP stage keeps every non-water residue within <code>cluster_cutoff</code> of the metal, so the fitted site charges account for the electrostatic influence of those neighbors. Case&nbsp;1's warning (<code>Environment contains potentially charged standard residues outside the site core</code>) points at the residues that widening would bring into the fit.</p>
+        <p>The two cutoffs answer different questions. <code>donor_cutoff</code> shapes the site: which atoms count as donors, which residues enter the core, which <code>Z</code> types are assigned &mdash; a chemistry fact of the coordination sphere. <code>cluster_cutoff</code> only extends the model beyond that core for the charge-fitting and relaxation stages. Case&nbsp;2 moves only the second dial.</p>
+        <p><strong>Input.</strong> Key added lines in <code>MetalAA2.in</code> (everything else is byte-identical to Case 1):</p>
+        <pre><code># Wider automatic environment: residues with any atom within 5.0 A of the metal
+# join the large model as RESP/MLIP context; core and site model stay unchanged
+cluster_cutoff=5.0</code></pre>
+        <p><strong>What happens.</strong> The header now reads <code>cluster_cutoff: 5.00 A</code> and the large model grows from 95 to 175 atoms; the core, the site model, and the product list are untouched. The site model is just the core with the caps removed &mdash; it exists for export and deployment, while every fitting stage runs in the large model. The cost concentrates in the RESP stage:</p>
+        <pre><code>MetalAA1 (3.0 A)                    MetalAA2 (5.0 A)
+---------------------------------------------------------------------
+large model:  95 atoms               large model:  175 atoms
+Z1 charge:         -0.329172         Z1 charge:         -0.332890
+Z2 charge:         -0.129187         Z2 charge:         -0.069716
+Z3 charge:         -0.181075         Z3 charge:         -0.124553
+Z4 charge:         -0.152740         Z4 charge:         -0.115343
+Z5 charge:         -0.118203         Z5 charge:         -0.068541
+M1 charge:          0.439642         M1 charge:          0.369515
+RESP fitting       27m 22s           RESP fitting       1h 44m 56s
+ligand building     3m 29s           ligand building     10m 17s
+Hessian + Seminario   59s            Hessian + Seminario   4m 14s
+whole run          32m 37s           whole run          2h 00m 59s
+Core residues: CYM, HEM, FE          Core residues: CYM, HEM, FE   (unchanged)</code></pre>
+        <figure class="doc-figure" style="max-width:560px;">
+          <img src="../../assets/images/parmfit/metalaa/metalaa_large_models.png" alt="Four-panel render of the large model at cluster_cutoff 3 versus 5, top-down and flipped side views.">
+          <figcaption>Fig. 3 &mdash; The large model at <code>cluster_cutoff</code> 3.0&nbsp;&Aring; (95 atoms) versus 5.0&nbsp;&Aring; (175 atoms), viewed from above and flipped; widening adds the surrounding environment to the model while the core stays unchanged.</figcaption>
+        </figure>
+        <p>Widening <code>cluster_cutoff</code> &mdash; or pulling specific residues in with <code>add_resid</code> &mdash; brings the broader environment into the RESP fit of the metal-coordination residues.</p>
+        <div class="admonition tip">
+          <p class="admonition-title">Checkpoint</p>
+          <p><code>cluster_cutoff</code> controls context only: if a new residue appears in the core, it donated an atom within <code>donor_cutoff</code> &mdash; that is coordination chemistry, not something the cluster cutoff controls. Weigh the near-quadrupled RESP cost against how much the donor charges actually moved: widening may pay when the run warns about charged residues just outside the core, and buys little when the added environment is neutral.</p>
+        </div>
+
+        <h2 id="case-3">Case 3 &mdash; Rebuilding a standard residue into the deployment</h2>
+        <p><strong>What changed.</strong> The addition on top of Case 2 is an NCAA declaration: <code>ncaa_resids=ILE401</code> declares a standard amino acid &mdash; ILE, renamed ILE&rarr;<code>ILM</code> on export &mdash; to be rebuilt through the native NCAA flow; its fitted charges freeze into the site RESP. <strong>Bold</strong> lines are new in this case.</p>
+        <p><strong>Input.</strong> Key added lines in <code>MetalAA3.in</code>:</p>
+        <pre><code># ILE401 (axial-loop heme-pocket neighbor) built through the native NCAA flow and renamed ILE-&gt;ILM;
+# its charges are frozen into the site RESP
+<strong>ncaa_resids=ILE401
+ncaa_charges=0
+ncaa_resnames=ILM
+ncaa_mults=1</strong></code></pre>
+        <p><strong>What happens.</strong> The NCAA declaration tells MetalAA to build a fresh reference template for a site-adjacent residue: a capped model of ILE401 is optimized, Gaussian evaluates its ESP, AmberTools runs the two-stage RESP, and the fitted charges are frozen into the site charge problem. The intermediates land in <code>MetalAA3_work/ncaa/ILE401/</code> (<code>MetalAA3_capped.mol2</code>, the ESP job, <code>resp1/resp2</code> outputs, <code>ILM.mol2</code>, <code>ILM.frcmod</code>), and the banner gains the declaration: <code>ncaa_resids: ['ILE401']</code>. Because ILE401 does not coordinate the metal, it does <em>not</em> enter the core &mdash; the result block still reports <code>Core residues: _400:CYM, A461:HEM, A462:FE</code>. The template surfaces in the deployment instead: the tleap input now loads <code>ILM.mol2</code> and <code>ILM.frcmod</code> alongside the site files, and the processed PDB carries <code>ILM</code> at residue 401.</p>
+        <p>The banner registers the declaration, the stage timing gives the build its own entry, and the tleap status comes back clean:</p>
+        <pre><code>  ncaa_resids: ['ILE401']
+  ...
+  ncaa building               7s
+  ...
+  Errors: 0</code></pre>
+        <pre><code>MetalAA3_work/MetalAA3_metal_tleap.in          MetalAA3_work/MetalAA3_metal_tleap.pdb
+---------------------------------------       ---------------------------------------
+addAtomTypes {                                 ATOM   6405    N ILM A 401
+    { "Z1" "S"  "sp3" }                        ATOM   6406   CA ILM A 401
+    { "Z2" "N"  "sp3" }                        ATOM   6407    C ILM A 401
+    { "Z3" "N"  "sp3" }                        ATOM   6408    O ILM A 401
+    { "Z4" "N"  "sp3" }                        ATOM   6409   CB ILM A 401
+    { "Z5" "N"  "sp3" }                        ATOM   6410  CG1 ILM A 401
+    { "M1" "Fe" "sp3" }                             ...
+}                                                   ...
+ILM = loadmol2 ILM.mol2
+CM1 = loadmol2 CM1.mol2
+HM1 = loadmol2 HM1.mol2
+FE1 = loadmol2 FE1.mol2
+loadamberparams frcmod.ions234lm_126_tip3p
+loadamberparams .../ncaa/ILE401/ILM.frcmod
+loadamberparams MetalAA3_metal.frcmod
+mol = loadpdb MetalAA3_metal_tleap.pdb
+bond mol.461.NA mol.462.FE
+    ... (4 more coordination bonds)
+bond mol.399.C mol.400.N      # backbone repair
+bond mol.400.C mol.401.N      # backbone repair
+savepdb mol MetalAA3_metal_tleap_dry.pdb
+solvatebox mol TIP3PBOX 10.0
+    ...</code></pre>
+        <div class="admonition tip">
+          <p class="admonition-title">Checkpoint</p>
+          <p>ILE401 is absent from <code>Core residues</code> yet appears as <code>ILM</code> at residue 401 in the tleap PDB; <code>ILM = loadmol2 ILM.mol2</code> and the ILM and metal-site <code>loadamberparams</code> lines are both present in the tleap input; tleap reports <code>Errors: 0</code>. Use NCAA declarations only for residues you genuinely want rebuilt &mdash; coordinating non-protein species belong in <code>lig_resids</code>, and plain standard residues never need declaring unless you deliberately want them rebuilt, as ILE401 is here.</p>
+        </div>
+
+        <h2 id="where-next">Where to Go Next</h2>
+        <ul>
+          <li><a href="parmfit_metalaa.html">MetalAA manual</a> &mdash; parameter reference, charge convention, <code>chgmod</code> table, and limits.</li>
+          <li><a href="parmfit.html#chargefit">ChargeFit</a> and the <a href="parmfit.html#iqm">QM (quantum-mechanical) reference</a> on the ParmFit hub &mdash; the stages these routes share, documented once on the hub.</li>
+          <li><a href="parmfit_ncaa_tutorial.html">NCAA tutorial</a> &mdash; the standalone NCAA route; this tutorial&rsquo;s Case 3 rebuilds ILE401 into ILM through the same NCAA flow, embedded in MetalAA. <a href="parmfit_correction_tutorial.html">CORR tutorial</a> &mdash; the small-molecule route.</li>
+          <li><strong>Run archive.</strong> All inputs, configs, logs, and work-directory products behind every excerpt on this page are deposited at Zenodo: <a href="https://zenodo.org/records/23126309" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126309</a>.</li>
+        </ul>
+
+        <nav class="page-nav">
+          <a href="parmfit_metalaa.html">&larr; Previous: MetalAA</a>
+          <a class="next" href="../../functions/solvent.html">Next: Solvation &rarr;</a>
+        </nav>
+      </article>
+    </main>
+
+    <aside class="toc"><div class="toc-sticky"><h3>On this page</h3><ul></ul></div></aside>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <footer><p>&copy; 2026, MAPLE development team.</p></footer>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>
