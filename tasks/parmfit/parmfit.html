@@ -206,11 +206,13 @@
           </table>
         </div>
 
-        <p><code>correction</code> is accepted as a synonym of the <code>corr</code> keyword. The input for each route &mdash; its header keys and the required structure block (a coordinate block for CORR, a PDB block for NCAA and MetalAA) &mdash; is specified in that route&rsquo;s manual.</p>
+        <p><code>correction</code> is accepted as a synonym of the <code>corr</code> keyword. The input for each route &mdash; its header keys and the required structure block (a coordinate block for CORR, a PDB block for NCAA and MetalAA) &mdash; is specified in that route&rsquo;s manual. The <a href="parmfit_tutorial.html">ParmFit Tutorials</a> work through each route on a real system.</p>
 
         <h2 id="requirements">Requirements</h2>
 
         <p>All routes need a working MAPLE installation and AmberTools on <code>PATH</code> &mdash; a run invokes whichever utilities it needs: <code>parmchk2</code>, <code>antechamber</code>, <code>prepgen</code>, <code>espgen</code>, <code>resp</code>, and <code>tleap</code>. CORR additionally requires an input <code>mol2</code> that already carries GAFF2 atom types &mdash; pre-generate it with <code>antechamber -at gaff2 ...</code> &mdash; and lists its atoms in the same order as the coordinate block, hydrogens included: MAPLE checks only that the atom counts match and then pairs atoms by position. NCAA and MetalAA read exactly one PDB block. NCAA and MetalAA do not require a separate atomic-charge input. CORR may preserve the charges already stored in the input mol2 when <code>chg_fit=none</code>; the other charge routes derive charges at runtime (see <a href="#chargefit">ChargeFit</a> below).</p>
+
+        <p><strong>When Gaussian is needed.</strong> RESP always takes its ESP from Gaussian, so <code>g16</code> or <code>g09</code> must be on <code>PATH</code> for CORR and NCAA with <code>chg_fit=resp</code> &mdash; the NCAA default &mdash; and for every MetalAA run. QM reference jobs (<code>iqm=true</code>) run on <code>qm_engine</code>, which defaults to <code>g16</code>; <code>qm_engine=orca</code> runs them with ORCA instead. A CORR or NCAA run needs no Gaussian when it uses a non-RESP <code>chg_fit</code> and either keeps <code>iqm=false</code> or sets <code>qm_engine=orca</code>; MetalAA always needs it.</p>
 
         <p><strong>How MAPLE reads PDB structures.</strong> The PDB must be explicitly hydrogenated; MAPLE neither adds nor removes hydrogens. During reading, MAPLE builds a connectivity graph and matches standard protein residues against the active <code>pro_ff</code> Amber templates using element composition, topology, explicit hydrogens, and chirality. Matched residues receive canonical atom names, atom types, partial charges, residue net charges, and Amber connectivity, so standard input atom names are not required; atom names are rewritten to the canonical template names before tleap export. Cysteine states are resolved in two steps: explicit SG&ndash;H connectivity distinguishes protonated <code>CYS</code> from the deprotonated <code>CYM</code>/<code>CYX</code> candidates, and for the graph-equivalent <code>CYM</code>/<code>CYX</code> pair disulfide-bond detection decides &mdash; a cysteine participating in an S&ndash;S bond is assigned <code>CYX</code> (net charge 0), otherwise <code>CYM</code> (net charge &minus;1). Alternate conformations resolve by default to the altloc&nbsp;A set, or to the highest-occupancy set when A is absent; <code>keep</code> chooses among them when a listed residue carries several &mdash; append the altloc letter (<code>A181B</code>) to build that residue from its altloc-B atoms, while a letterless entry (<code>A181</code>) keeps the default choice. Residues without a complete standard template are reported instead of guessed: backbone-only matches (NCAA candidates) and unmatched nonprotein residues, which should be declared via <code>lig_resids</code>/<code>ncaa_resids</code> in MetalAA or parameterized in separate NCAA runs.</p>
 
@@ -296,6 +298,9 @@
             </tbody>
           </table>
         </div>
+
+        <h3 id="scan-reuse">Scan Reuse</h3>
+        <p>Before each scan, TorsionFit looks under <code>&lt;base&gt;_work/torsionfit/</code> for the scan file that an earlier run wrote for the same target. If that file has the expected number of frames, the same elements, and the scan angles that the current starting geometry gives, TorsionFit reads it instead of scanning, and the log does not report the reuse. The check ignores the model, <code>level</code>, the scan <code>backend</code>, and the QM level of theory, so delete <code>&lt;base&gt;_work/torsionfit/</code> before you rerun with any of them changed.</p>
 
         <h2 id="iqm">QM Reference (iqm)</h2>
 
@@ -570,6 +575,20 @@ Warnings:
           <p>Topologies with MAPLE atom types are not always complete. In the tutorials, tleap (AmberTools&nbsp;26) writes <code>NBONH = 0</code> for the CORR molecule loaded from its mol2, which is what the reminder at the end of every CORR log warns about; the NCAA and MetalAA validation topologies (tleap of AMBER24) list every bond to hydrogen. If the number is short, rebuild the topology with ParmEd, which sorts the bonds by element &mdash; it reads <code>ATOMIC_NUMBER</code> and falls back to atomic masses only when that section is missing:</p>
           <pre><code>parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple_gas_parmed.prmtop\nquit'</code></pre>
           <p>For the CORR tutorial molecule this restores <code>NBONH = 5</code>.</p>
+        </div>
+
+        <h2 id="troubleshooting">Troubleshooting</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr><td><code>Gaussian executable &hellip; was not found</code></td><td>The run derives RESP charges or runs a QM reference job, and MAPLE cannot find the Gaussian executable (<code>g16</code> or <code>g09</code>) on <code>PATH</code>.</td><td>Put Gaussian on <code>PATH</code>, or run without it as described in <a href="#requirements">Requirements</a>.</td></tr>
+              <tr><td>The first Gaussian job stops with a route syntax error.</td><td>A hyphenated level such as <code>B3LYP/def2-SVP</code> reached Gaussian; the built-in <code>opt_level</code> default is written this way.</td><td>Write <code>B3LYP/def2SVP</code> for Gaussian; see <a href="#levels-of-theory">Levels of Theory</a>.</td></tr>
+              <tr><td><code>Duplicate parmfit config key '&lt;key&gt;' at &lt;file&gt;:&lt;line&gt;.</code></td><td>The sidecar config sets one key twice, for example after lines were appended to a copied config.</td><td>Keep one line per key: edit the existing line instead of adding another.</td></tr>
+              <tr><td><code>Unknown left-hand '&lt;key&gt;' in parmfit config</code> (warning)</td><td>No builder used the key: a misspelling, a key of another route, or <code>level</code> placed in the sidecar. The run continues without it.</td><td>Correct the key; <code>level</code> belongs in the <code>#parmfit(...)</code> header.</td></tr>
+              <tr><td><code>Invalid residue selector '&hellip;'</code> or <code>Selector &hellip; matched multiple residues</code></td><td>The selector is malformed, or a residue name and number fit several residues.</td><td>Use a chain and number (<code>A462</code>) or a name and number (<code>HIF89</code>); when a name and number fit several residues, switch to the chain form. See Target in the <a href="parmfit_ncaa.html#target">NCAA</a> and <a href="parmfit_metalaa.html#target">MetalAA</a> manuals.</td></tr>
+            </tbody>
+          </table>
         </div>
 
         <nav class="page-nav">

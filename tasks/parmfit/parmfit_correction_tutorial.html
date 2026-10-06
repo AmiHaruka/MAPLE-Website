@@ -182,7 +182,7 @@
           <li><strong>Case 3:</strong> <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.inp" download><code>CORR3.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.in" download><code>CORR3.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.inp" download><code>CORR4.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.in" download><code>CORR4.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.out" download><code>CORR3.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.parmfitrun.in" download><code>CORR3.parmfitrun.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.out" download><code>CORR4.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.parmfitrun.in" download><code>CORR4.parmfitrun.in</code></a>.</li>
         </ul>
         <p><strong>Software.</strong> Every case needs AmberTools on <code>PATH</code>. Case&nbsp;1 needs nothing else; Cases&nbsp;2 and&nbsp;3 also need Gaussian&nbsp;16, which evaluates the ESP for the RESP charges and runs the QM reference &mdash; see the hub's <a href="parmfit.html#requirements">Requirements</a> and <a href="parmfit.html#iqm">QM Reference</a> sections.</p>
-        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126271" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126271</a>. It has one zip per case &mdash; <code>Case1.zip</code> (30&nbsp;KB), <code>Case2.zip</code> (62&nbsp;MB), and <code>Case3.zip</code> (1.7&nbsp;GB; CORR3 and CORR4) &mdash; and each unpacks to a folder of the same name. The NCAA and MetalAA archives use the same zip names, so keep each tutorial in its own folder.</p>
+        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126271" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126271</a>. It has one zip per case &mdash; <code>Case1.zip</code> (30&nbsp;KB), <code>Case2.zip</code> (62&nbsp;MB), and <code>Case3.zip</code> (1.7&nbsp;GB; CORR3 and CORR4) &mdash; and each unpacks to a folder of the same name. The NCAA and MetalAA archives use the same zip names, so keep each tutorial in its own folder. To rerun a case, start from its input files in a new folder: inside an unpacked archive folder, TorsionFit would read the archived scans instead of scanning (see the hub&rsquo;s <a href="parmfit.html#scan-reuse">Scan Reuse</a>).</p>
 
         <h2 id="case-1">Case 1 &mdash; Everything by default</h2>
         <p><strong>Goal.</strong> Refine the bonded terms and torsions of a small molecule that already has a GAFF2 mol2, keeping its original charges. This is entirely default behavior: <code>chg_fit=none</code>, <code>bonded=mseminario</code>, <code>torsionfit=true</code>.</p>
@@ -347,6 +347,7 @@ TorsionFit:
 
 Warnings:
   none</code></pre>
+        <p><code>TorsionFit 0s</code> is not the cost of the scan: this run found the scan file that an earlier run had left in <code>CORR1_work/torsionfit/</code> and read it instead of scanning (see the hub&rsquo;s <a href="parmfit.html#scan-reuse">Scan Reuse</a>). A run from an empty folder performs the 37-point scan.</p>
         <p>The log closes with MAPLE&rsquo;s reminder about the hydrogen-bond list of the Amber topology. MAPLE prints it on every CORR run; whether a topology is affected is checkable, and for this molecule it is: running <code>CORR1_maple_tleap.in</code> through tleap (AmberTools&nbsp;26) writes <code>NBONH = 0</code>, with all 13 bonds in the without-hydrogen list, and the ParmEd pass below restores the 5 bonds to hydrogen. The check and the steps after tleap are in the hub&rsquo;s <a href="parmfit.html#using-results">Using the Results</a> section:</p>
         <pre><code>======================================================================
                               IMPORTANT
@@ -579,7 +580,7 @@ TOTAL RUN TIME:               7m 11s              27m 50s             1h 36m 13s
         </ul>
 
         <nav class="page-nav">
-          <a href="parmfit_correction.html">&larr; Previous: CORR</a>
+          <a href="parmfit_tutorial.html">&larr; Previous: ParmFit Tutorials</a>
           <a class="next" href="parmfit_ncaa_tutorial.html">Next: NCAA Tutorial &rarr;</a>
         </nav>
       </article>

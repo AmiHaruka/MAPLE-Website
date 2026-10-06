@@ -181,7 +181,7 @@
           <li><strong>Case 2:</strong> <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.inp" download><code>NCAA2.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.in" download><code>NCAA2.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.out" download><code>NCAA2.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.parmfitrun.in" download><code>NCAA2.parmfitrun.in</code></a>.</li>
           <li><strong>Case 3:</strong> <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.inp" download><code>NCAA3.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.in" download><code>NCAA3.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.out" download><code>NCAA3.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.parmfitrun.in" download><code>NCAA3.parmfitrun.in</code></a>.</li>
         </ul>
-        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126301" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126301</a>. It has one zip per case &mdash; <code>Case1.zip</code> (138&nbsp;MB), <code>Case2.zip</code> (139&nbsp;MB), and <code>Case3.zip</code> (151&nbsp;MB) &mdash; and each unpacks to a folder of the same name. The CORR and MetalAA archives use the same zip names, so keep each tutorial in its own folder.</p>
+        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126301" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126301</a>. It has one zip per case &mdash; <code>Case1.zip</code> (138&nbsp;MB), <code>Case2.zip</code> (139&nbsp;MB), and <code>Case3.zip</code> (151&nbsp;MB) &mdash; and each unpacks to a folder of the same name. The CORR and MetalAA archives use the same zip names, so keep each tutorial in its own folder. To rerun a case, start from its input files in a new folder: inside an unpacked archive folder, TorsionFit would read the archived scans instead of scanning (see the hub&rsquo;s <a href="parmfit.html#scan-reuse">Scan Reuse</a>).</p>
         <p><strong>Software.</strong> Every case needs AmberTools and Gaussian&nbsp;16 on <code>PATH</code>: the default <code>chg_fit=resp</code> derives the charges from a Gaussian ESP even though these inputs keep <code>iqm=false</code> &mdash; see the hub's <a href="parmfit.html#requirements">Requirements</a> and <a href="parmfit.html#iqm">QM Reference</a> sections.</p>
         <h3 id="prepared-structure">Prepared Structure</h3>
         <!-- To be written by the preparer of MaDA.pdb: how the file was built from PDB 6JQH (programs and versions,
@@ -477,7 +477,7 @@ Main products:
         </ul>
 
         <nav class="page-nav">
-          <a href="parmfit_ncaa.html">&larr; Previous: NCAA</a>
+          <a href="parmfit_correction_tutorial.html">&larr; Previous: CORR Tutorial</a>
           <a class="next" href="parmfit_metalaa_tutorial.html">Next: MetalAA Tutorial &rarr;</a>
         </nav>
       </article>
