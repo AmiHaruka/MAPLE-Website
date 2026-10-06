@@ -9,140 +9,6 @@
   <link rel="stylesheet" href="../../assets/css/styles.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="icon" href="../../assets/images/home/maple-logo.png" type="image/png">
-
-  <style>
-    .parmfit-inputs {
-      margin: 1.5rem 0;
-    }
-
-    .parmfit-input-item {
-      border: 1px solid #e6e8ee;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-    }
-
-    .parmfit-input-item summary {
-      position: relative;
-      list-style: none;
-      cursor: pointer;
-      padding: 1.25rem 3.75rem 1.25rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      user-select: none;
-    }
-
-    .parmfit-input-item summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .parmfit-input-item summary::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 1.4rem;
-      width: 12px;
-      height: 12px;
-      border-right: 2px solid #7b8190;
-      border-bottom: 2px solid #7b8190;
-      transform: translateY(-65%) rotate(45deg);
-      transition: transform 0.2s ease;
-    }
-
-    .parmfit-input-item[open] summary::after {
-      transform: translateY(-35%) rotate(-135deg);
-    }
-
-    .parmfit-input-body {
-      padding: 1.25rem 1.5rem 1.5rem;
-      border-top: 1px solid #eef1f5;
-    }
-
-    .parmfit-input-body pre {
-      margin: 0;
-    }
-
-    @media (max-width: 52em) {
-      .parmfit-input-item summary {
-        padding-left: 1rem;
-        padding-right: 3.25rem;
-      }
-
-      .parmfit-input-body {
-        padding: 1rem;
-      }
-    }
-
-    /* Algorithm pseudocode block (mirrors the paper's algorithmicx layout) */
-    .pseudo {
-      margin: 1.5rem 0;
-      border: 1px solid #e6e8ee;
-      border-radius: 8px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-      font-size: 0.92rem;
-    }
-
-    .pseudo figcaption {
-      padding: 0.65rem 1.4rem;
-      border-bottom: 1px solid #eef1f5;
-      font-weight: 600;
-      color: #1a1a2e;
-      line-height: 1.45;
-    }
-
-    .pseudo-body {
-      margin: 0;
-      padding: 0.9rem 1.4rem 1rem;
-      list-style: none;
-      counter-reset: pseudoline;
-      line-height: 1.6;
-    }
-
-    .pseudo-body li {
-      position: relative;
-      padding-left: 2.5rem;
-      counter-increment: pseudoline;
-    }
-
-    .pseudo-body li::before {
-      content: counter(pseudoline);
-      position: absolute;
-      left: 0;
-      width: 1.9rem;
-      text-align: right;
-      color: #7b8190;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .pseudo-body li.req {
-      counter-increment: none;
-      padding-left: 0;
-    }
-
-    .pseudo-body li.req::before {
-      content: none;
-    }
-
-    .pseudo-body li.ind {
-      padding-left: 4.1rem;
-    }
-
-    .pseudo-body li.ind::before {
-      left: 1.6rem;
-    }
-
-    .pseudo-body .cmt {
-      float: right;
-      margin-left: 1.25rem;
-      color: #7b8190;
-      font-style: italic;
-      font-size: 0.85em;
-    }
-  </style>
 </head>
 <body>
   <header class="top-nav">
@@ -345,11 +211,11 @@
               <tr><td><code>ncaa_charges</code></td><td><code>0</code></td><td>Per-residue net charges, pairing 1:1 with <code>ncaa_resids</code>.</td></tr>
               <tr><td><code>ncaa_mults</code></td><td><code>1</code></td><td>Per-residue spin multiplicities, pairing 1:1 with <code>ncaa_resids</code>.</td></tr>
               <tr><td><code>ncaa_resnames</code></td><td><code>&lt;RESNAME&gt;</code></td><td>Output residue names used in prepin/frcmod and processed PDB files, pairing 1:1 with <code>ncaa_resids</code>. When omitted, each residue falls back to its source residue name.</td></tr>
-              <tr><td><code>pro_ff</code></td><td><code>ff14SB</code></td><td>Protein force field model, <code>ff14SB</code> or <code>ff19SB</code>.</td></tr>
+              <tr><td><code>pro_ff</code></td><td><code>ff14SB</code></td><td>Protein force field model, <code>ff14SB</code> or <code>ff19SB</code>. With <code>ff19SB</code>, no CMAP terms are generated for the NCAA residue (see <a href="#requirements">Requirements and Limits</a>).</td></tr>
               <tr><td><code>wat_ff</code></td><td><code>tip3p</code></td><td>Water model for tleap deployment and RESP radii context: <code>tip3p</code>, <code>spce</code>, <code>tip4pew</code>, <code>opc3</code>, <code>opc</code>, <code>fb3</code>, or <code>fb4</code>.</td></tr>
               <tr><td><code>keep</code></td><td>None</td><td>Chooses which alternate conformation to build when the PDB lists several for a residue: append the altloc letter to the selector (<code>A181B</code>) to build that residue from its altloc-B atoms; an entry without a letter keeps the default resolution (altloc A, else the highest-occupancy set).</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Bond/angle refinement: <code>mseminario</code>, <code>seminario</code>, or <code>none</code>.</td></tr>
-              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Force constant scaling factor for Seminario/mSeminario Hessian-based fitting.</td></tr>
+              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor <em>s</em> for Seminario/mSeminario Hessian-based fitting: the fitted bond and angle force constants are multiplied by <em>s</em><sup>2</sup> (0.95 gives &times;0.9025).</td></tr>
               <tr><td><code>chg_fit</code></td><td><code>resp</code></td><td>Charge source: <code>resp</code>, a <a href="parmfit.html#chargefit">charge-capable MLIP</a>, or a value passed to <code>antechamber -c</code>. <code>none</code> is invalid for NCAA.</td></tr>
               <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code></td><td>Gaussian ESP level used only when <code>chg_fit=resp</code>.</td></tr>
               <tr><td><code>chg_route</code></td><td>Empty</td><td>Additional Gaussian route text for RESP ESP jobs.</td></tr>
@@ -420,8 +286,8 @@ PDB ncaa.pdb</code></pre>
               <pre><code># QM reference
 iqm=false
 qm_engine=g16
-opt_level=B3LYP/def2-SVP
-sp_level=B3LYP/def2-SVP
+opt_level=B3LYP/def2SVP
+sp_level=B3LYP/def2SVP
 opt_route=
 sp_route=
 qm_mode=1
@@ -476,7 +342,8 @@ torsion_ensemble_weight=0.5</code></pre>
           <li><code>&lt;base&gt;_work/&lt;rn&gt;_maple.prepin</code> and <code>&lt;base&gt;_work/&lt;rn&gt;_maple.frcmod</code>: Refined MAPLE residue template and parameter files.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_ncaa_tleap.pdb</code> and <code>&lt;base&gt;_work/&lt;base&gt;_ncaa_tleap.in</code>: Processed protein PDB and tleap input.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_ncaa.prmtop</code>, <code>&lt;base&gt;_work/&lt;base&gt;_ncaa.inpcrd</code>, and solvated PDB outputs: tleap validation products.</li>
-          <li><code>&lt;base&gt;_work/ncaa/&lt;RESNAME&gt;&lt;RESSEQ&gt;/</code>: Per-residue optimized conformers, charge-route files, charged capped mol2, <code>target.chg</code>, AmberTools template intermediates, and torsion-refinement data.</li>
+          <li><code>&lt;base&gt;_work/ncaa/&lt;RESNAME&gt;&lt;RESSEQ&gt;/</code>: Per-residue optimized conformers, charge-route files, charged capped mol2, <code>target.chg</code>, and AmberTools template intermediates.</li>
+          <li><code>&lt;base&gt;_work/torsionfit/&lt;RESNAME&gt;&lt;RESSEQ&gt;/</code>: TorsionFit scans of the declared torsion bonds and of the improper refits (scan xyz files and per-bond logs), named with capped-model atom serials.</li>
         </ul>
 
         <h2 id="requirements">Requirements and Limits</h2>
@@ -486,6 +353,7 @@ torsion_ensemble_weight=0.5</code></pre>
           <li>When selected, RESP uses the Gaussian backend; model and Antechamber charge routes do not require RESP.</li>
           <li>The final target-residue charge written for model and Antechamber methods is constrained to the <code>ncaa_charges</code> value.</li>
           <li>TorsionFit is restricted to rotatable dihedrals in the target residue's sidechain and does not fit peptide backbone torsions.</li>
+          <li>With <code>pro_ff=ff19SB</code>, CMAP terms are not generated for the NCAA residue, so its backbone lacks the ff19SB CMAP correction. The log prints an <code>ff19SB note</code> to the same effect; inspect the tleap output before production MD.</li>
         </ul>
 
         <nav class="page-nav">

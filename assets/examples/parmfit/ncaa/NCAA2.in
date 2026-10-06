@@ -1,0 +1,12 @@
+# NCAA route settings; declare method=ncaa in #parmfit(...) and reference this file via input=
+# Only non-default entries are listed; the generated parmfitrun.in shows every resolved value.
+
+ncaa_resids=HIF89
+ncaa_charges=0
+ncaa_resnames=HF1
+chg_level=HF/6-31G(d)
+
+# Sidechain torsion fitting on four representative residue-local bonds:
+# 3-8 chi1 (CA-CB), 8-11 chi2 (CB-imidazole C4), 6-60 covalent His-FAD link (N2-CH2), 22-25 ribityl (C8-C9)
+torsionfit=true
+torsion_bonds=3-8,8-11,6-60,22-25

@@ -9,72 +9,6 @@
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
   <link rel="icon" href="../../favicon.ico">
-
-  <style>
-    .parmfit-inputs {
-      margin: 1.5rem 0;
-    }
-
-    .parmfit-input-item {
-      border: 1px solid #e6e8ee;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-    }
-
-    .parmfit-input-item summary {
-      position: relative;
-      list-style: none;
-      cursor: pointer;
-      padding: 1.25rem 3.75rem 1.25rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      user-select: none;
-    }
-
-    .parmfit-input-item summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .parmfit-input-item summary::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 1.4rem;
-      width: 12px;
-      height: 12px;
-      border-right: 2px solid #7b8190;
-      border-bottom: 2px solid #7b8190;
-      transform: translateY(-65%) rotate(45deg);
-      transition: transform 0.2s ease;
-    }
-
-    .parmfit-input-item[open] summary::after {
-      transform: translateY(-35%) rotate(-135deg);
-    }
-
-    .parmfit-input-body {
-      padding: 1.25rem 1.5rem 1.5rem;
-      border-top: 1px solid #eef1f5;
-    }
-
-    .parmfit-input-body pre {
-      margin: 0;
-    }
-
-    @media (max-width: 52em) {
-      .parmfit-input-item summary {
-        padding-left: 1rem;
-        padding-right: 3.25rem;
-      }
-
-      .parmfit-input-body {
-        padding: 1rem;
-      }
-    }
-  </style>
 </head>
 <body>
   <header class="top-nav">
@@ -233,24 +167,47 @@
         <h1>CORR Tutorial</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>This tutorial walks through the CORR route of <code>parmfit(method=corr)</code> in four runs on o-iodophenol (<code>choi001</code>), a FreeSolv hydration-benchmark solute, supplied as the GAFF2 (General AMBER Force Field)-typed <code>choi001_gaff2.mol2</code>. Case 1 refines bonded terms and torsions with every default; Case 2 derives RESP (restrained electrostatic potential) charges and adds a Gaussian reference; Case 3 walks the TorsionFit QM (quantum-mechanical) modes 2 and 3 (<code>CORR3</code>, <code>CORR4</code>). The iodine also exercises a detail that light molecules never hit: Gaussian's built-in Merz&ndash;Kollman radius table has no fifth-row entries, and you will see exactly how ParmFit supplies them. Every excerpt below is taken from verified runs of the inputs shown here (<code>CORR1&ndash;4.inp</code> plus their sidecar configs).</p>
+        <p>This tutorial walks through the CORR route of <code>parmfit(method=corr)</code> in four runs on o-iodophenol (<code>choi001</code>), a FreeSolv hydration-benchmark solute, supplied as the GAFF2 (General AMBER Force Field)-typed <a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a>. Case 1 refines bonded terms and torsions with every default; Case 2 derives RESP (restrained electrostatic potential) charges and adds a Gaussian reference; Case 3 walks the TorsionFit QM (quantum-mechanical) modes 2 and 3 (<code>CORR3</code>, <code>CORR4</code>). The iodine also exercises a detail that light molecules never hit: Gaussian's built-in Merz&ndash;Kollman radius table has no fifth-row entries, and you will see exactly how ParmFit supplies them. Every excerpt below is taken from verified runs of the inputs shown here (<code>CORR1&ndash;4.inp</code> plus their sidecar configs).</p>
         <figure class="doc-figure" style="max-width:440px;">
           <img src="../../assets/images/parmfit/correction/corr_overview.png" alt="Structure of o-iodophenol (choi001), the small-molecule system refined in this tutorial">
           <figcaption>Fig. 1 &mdash; Structure of o-iodophenol (choi001).</figcaption>
         </figure>
         <p>Every run writes a <code>&lt;base&gt;.parmfitrun.in</code> file next to the output that echoes your configuration with defaults filled in; use it to confirm what ParmFit actually consumed, and watch the log for <code>Unknown left-hand</code> warnings, which flag keys no builder consumed. The reference definition of every key lives in the <a href="parmfit_correction.html">CORR manual page</a> and the shared sections of the <a href="parmfit.html">ParmFit hub</a>; software and input requirements are summarized in the hub's <a href="parmfit.html#requirements">Requirements</a> section.</p>
 
+        <h2 id="example-files">Example Files</h2>
+        <p>A linked file name on this page downloads the original file from the verified runs. Save the input files of one case into one folder; Case&nbsp;1 starts from <code>CORR1.inp</code>. The outputs are the reference results behind the excerpts.</p>
+        <ul>
+          <li><strong>Case 1:</strong> <a class="file-link" href="../../assets/examples/parmfit/corr/CORR1.inp" download><code>CORR1.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR1.in" download><code>CORR1.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/corr/CORR1.out" download><code>CORR1.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR1.parmfitrun.in" download><code>CORR1.parmfitrun.in</code></a>.</li>
+          <li><strong>Case 2:</strong> <a class="file-link" href="../../assets/examples/parmfit/corr/CORR2.inp" download><code>CORR2.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR2.in" download><code>CORR2.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/corr/CORR2.out" download><code>CORR2.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR2.parmfitrun.in" download><code>CORR2.parmfitrun.in</code></a>.</li>
+          <li><strong>Case 3:</strong> <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.inp" download><code>CORR3.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.in" download><code>CORR3.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.inp" download><code>CORR4.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.in" download><code>CORR4.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.out" download><code>CORR3.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.parmfitrun.in" download><code>CORR3.parmfitrun.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.out" download><code>CORR4.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.parmfitrun.in" download><code>CORR4.parmfitrun.in</code></a>.</li>
+        </ul>
+        <p><strong>Software.</strong> Every case needs AmberTools on <code>PATH</code>. Case&nbsp;1 needs nothing else; Cases&nbsp;2 and&nbsp;3 also need Gaussian&nbsp;16, which evaluates the ESP for the RESP charges and runs the QM reference &mdash; see the hub's <a href="parmfit.html#requirements">Requirements</a> and <a href="parmfit.html#iqm">QM Reference</a> sections.</p>
+        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126271" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126271</a>. It has one zip per case &mdash; <code>Case1.zip</code> (30&nbsp;KB), <code>Case2.zip</code> (62&nbsp;MB), and <code>Case3.zip</code> (1.7&nbsp;GB; CORR3 and CORR4) &mdash; and each unpacks to a folder of the same name. The NCAA and MetalAA archives use the same zip names, so keep each tutorial in its own folder.</p>
+
         <h2 id="case-1">Case 1 &mdash; Everything by default</h2>
         <p><strong>Goal.</strong> Refine the bonded terms and torsions of a small molecule that already has a GAFF2 mol2, keeping its original charges. This is entirely default behavior: <code>chg_fit=none</code>, <code>bonded=mseminario</code>, <code>torsionfit=true</code>.</p>
-        <p><strong>Input.</strong> The inline coordinates are the working geometry; the mol2 file supplies topology, atom types, and charges, and the single key lives in the sidecar:</p>
+        <p><strong>Input.</strong> The inline coordinates are the working geometry; the mol2 file supplies topology, atom types, and charges, and the single key lives in the sidecar. The coordinate block and the mol2 must list the same atoms in the same order, hydrogens included: MAPLE checks only that the atom counts match and then pairs atoms by position, so it cannot repair two files ordered independently. The coordinate values themselves need not match the mol2. The header writes the route as <code>method=correction</code>, which selects the same route as <code>method=corr</code>:</p>
+        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/corr/CORR1.inp" download><code>CORR1.inp</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1,task=omol)
 #parmfit(method=correction,input=CORR1.in)
 #device=gpu0
 
-I   3.540000  1.420000  0.000000
-C   3.556000  1.479000 -2.088000
-...</code></pre>
+I     3.54000000    1.42000000    0.00000000
+C     3.55600000    1.47900000   -2.08800000
+C     4.63400000    0.90600000   -2.76200000
+H     5.45500000    0.43700000   -2.22200000
+C     4.67700000    0.92700000   -4.15700000
+H     5.51600000    0.48000000   -4.68200000
+C     3.64100000    1.52200000   -4.87700000
+H     3.67400000    1.53800000   -5.96300000
+C     2.56300000    2.09500000   -4.20400000
+H     1.76000000    2.55700000   -4.77200000
+C     2.52000000    2.07400000   -2.80900000
+O     1.44800000    2.64500000   -2.18900000
+H     1.53600000    2.56400000   -1.22800000</code></pre>
+        <div class="code-file"><code>CORR1.in</code><span class="code-file-note">reads the molecule from</span><a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a></div>
         <div class="parmfit-inputs">
+          <a class="file-dl" href="../../assets/examples/parmfit/corr/CORR1.in" download aria-label="Download CORR1.in" title="Download CORR1.in"></a>
           <details class="parmfit-input-item">
             <summary>CORR1.in</summary>
             <div class="parmfit-input-body">
@@ -261,6 +218,9 @@ mol2=choi001_gaff2.mol2</code></pre>
             </div>
           </details>
         </div>
+        <p><strong>Run.</strong> In the folder that holds <code>CORR1.inp</code>, <code>CORR1.in</code>, and <code>choi001_gaff2.mol2</code>:</p>
+        <pre><code>maple CORR1.inp CORR1.out    # or simply: maple CORR1.inp</code></pre>
+        <p>The second argument names the log; without it, MAPLE names the log after the input, so both forms write <code>CORR1.out</code>. The run also writes the resolved configuration <code>CORR1.parmfitrun.in</code> and the work directory <code>CORR1_work/</code>. A run has finished normally when the result block reads <code>Status: completed</code> and the log ends with a <code>TOTAL RUN TIME</code> line; on the tutorial hardware Case&nbsp;1 takes about 22&nbsp;s.</p>
         <p><strong>What happens.</strong></p>
         <ol>
           <li><strong>Initial parameters.</strong> <code>parmchk2 -s gaff2 -a Y</code> builds <code>CORR1_work/CORR1_original.frcmod</code> from the input mol2.</li>
@@ -270,7 +230,7 @@ mol2=choi001_gaff2.mol2</code></pre>
           <li><strong>TorsionFit.</strong> Auto-selection finds exactly one rotatable torsion &mdash; the exocyclic phenol C&ndash;O bond <code>(11, 12)</code>, whose rotation swings the hydroxyl over the ortho-iodine; ring torsions are excluded. It is scanned at 10&deg;&times;36 points and fitted in two stages. The parmchk2 impropers pass the default penalty gate (<code>p_thresh=30</code>), so no improper refit runs.</li>
           <li><strong>Export.</strong> Amber mol2/frcmod/tleap input and GROMACS top/gro files are written.</li>
         </ol>
-        <p><strong>The resolved configuration.</strong> Next to <code>CORR1.out</code>, MAPLE writes <code>CORR1.parmfitrun.in</code>. For this case almost every entry is a filled-in default:</p>
+        <p><strong>The resolved configuration.</strong> Next to <a class="file-link" href="../../assets/examples/parmfit/corr/CORR1.out" download><code>CORR1.out</code></a>, MAPLE writes <a class="file-link" href="../../assets/examples/parmfit/corr/CORR1.parmfitrun.in" download><code>CORR1.parmfitrun.in</code></a>. For this case almost every entry is a filled-in default:</p>
         <pre><code># parmfitrun.in - resolved parmfit configuration for method=correction
 # Generated by MAPLE parmfit; values are the user config entries with defaults filled in.
 # This file is itself a valid parmfit config and can be referenced via input=.
@@ -343,7 +303,7 @@ torsion bond (11, 12):
     MLIP_ref vs stage2_final: MAE = 0.016114 kcal/mol, RMSE = 0.019326 kcal/mol</code></pre>
         <figure class="doc-figure" style="max-width:640px;">
           <img src="../../assets/images/parmfit/correction/corr1_torsion_profile.png" alt="Two-panel figure for the Case-1 torsion scan: the o-iodophenol skeleton with labeled atoms and the scanned dihedral Phi1 = H5-O1-C5-C4 highlighted as a thick bond, beside the energy profile where the GAFF2 (revUMA) curve tracks the Reference and the original GAFF2 curve overshoots both barriers">
-          <figcaption>Fig. 2 &mdash; Case 1: the GAFF2 (revUMA) profile tracks the Reference across both barriers; the original GAFF2 profile overshoots both.</figcaption>
+          <figcaption>Fig. 2 &mdash; Case 1: the GAFF2 (revUMA) profile tracks the Reference across both barriers; the original GAFF2 profile overshoots both. GAFF2 (revUMA) labels the GAFF2 parameter set after ParmFit&rsquo;s refit in this run; in Case&nbsp;1 the Reference is the UMA scan (<code>MLIP_ref</code>).</figcaption>
         </figure>
         <p>Finally, the result block lists the products and the parameter-change counts:</p>
         <pre><code>======================================================================
@@ -387,7 +347,7 @@ TorsionFit:
 
 Warnings:
   none</code></pre>
-        <p>The log closes with a reminder that topologies built from custom atom types need a <strong>parmed</strong> pass before SHAKE can work &mdash; the exact commands are in the <a href="parmfit.html#parmed-note">hub's parmed note</a>:</p>
+        <p>The log closes with MAPLE&rsquo;s reminder about the hydrogen-bond list of the Amber topology. MAPLE prints it on every CORR run; whether a topology is affected is checkable, and for this molecule it is: running <code>CORR1_maple_tleap.in</code> through tleap (AmberTools&nbsp;26) writes <code>NBONH = 0</code>, with all 13 bonds in the without-hydrogen list, and the ParmEd pass below restores the 5 bonds to hydrogen. The check and the steps after tleap are in the hub&rsquo;s <a href="parmfit.html#using-results">Using the Results</a> section:</p>
         <pre><code>======================================================================
                               IMPORTANT
 ======================================================================
@@ -404,13 +364,27 @@ ATOMIC_NUMBER, e.g.:
         <h2 id="case-2">Case 2 &mdash; Adding RESP charges and a QM reference</h2>
         <p><strong>What changed.</strong> Four keys join the sidecar: <code>chg_fit=resp</code> derives charges at runtime &mdash; Gaussian evaluates the ESP (electrostatic potential), then AmberTools performs the two-stage RESP fit &mdash; and <code>iqm=true</code> with <code>opt_level=B3LYP/def2SVP</code> moves the geometry and Hessian references to Gaussian. The default <code>qm_mode=1</code> keeps the MLIP-driven torsion scan with QM single points at each frame.</p>
         <p>One level choice is iodine-specific: the classic RESP basis <code>HF/6-31G(d)</code> does not exist for iodine, so <code>chg_level</code> moves to <code>HF/def2SVP</code> &mdash; the def2 family carries iodine with its effective core potential. Note also the level spelling: <code>qm_engine=g16</code> wants <code>B3LYP/def2SVP</code> without the hyphen &mdash; the engine-spelling rule is documented in the <a href="parmfit.html#levels-of-theory">hub's Levels of Theory</a>.</p>
+        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/corr/CORR2.inp" download><code>CORR2.inp</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1,task=omol)
 #parmfit(method=correction,input=CORR2.in)
 #device=gpu0
 
-I   3.540000  1.420000  0.000000
-...</code></pre>
+I     3.54000000    1.42000000    0.00000000
+C     3.55600000    1.47900000   -2.08800000
+C     4.63400000    0.90600000   -2.76200000
+H     5.45500000    0.43700000   -2.22200000
+C     4.67700000    0.92700000   -4.15700000
+H     5.51600000    0.48000000   -4.68200000
+C     3.64100000    1.52200000   -4.87700000
+H     3.67400000    1.53800000   -5.96300000
+C     2.56300000    2.09500000   -4.20400000
+H     1.76000000    2.55700000   -4.77200000
+C     2.52000000    2.07400000   -2.80900000
+O     1.44800000    2.64500000   -2.18900000
+H     1.53600000    2.56400000   -1.22800000</code></pre>
+        <div class="code-file"><code>CORR2.in</code><span class="code-file-note">reads the molecule from</span><a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a></div>
         <div class="parmfit-inputs">
+          <a class="file-dl" href="../../assets/examples/parmfit/corr/CORR2.in" download aria-label="Download CORR2.in" title="Download CORR2.in"></a>
           <details class="parmfit-input-item">
             <summary>CORR2.in</summary>
             <div class="parmfit-input-body">
@@ -431,6 +405,7 @@ opt_level=B3LYP/def2SVP</code></pre>
             </div>
           </details>
         </div>
+        <p><strong>Run.</strong> <code>maple CORR2.inp CORR2.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 7&nbsp;min.</p>
         <p><strong>What happens.</strong> The MLIP pre-optimization still runs, then a QM opt+frequency job supersedes it as the reference geometry and Hessian source for mSeminario. Charge derivation runs regardless of <code>iqm</code> &mdash; Gaussian supplies the ESP, AmberTools performs the RESP stages; the Gaussian jobs run with the configured <code>qm_nproc</code>/<code>qm_mem</code>.</p>
         <p><strong>The iodine radius detail.</strong> Open <code>CORR2_work/chargefit/resp.gjf</code> and the route line is not the plain <code>Pop=MK</code> you may know from light molecules:</p>
         <pre><code>#P HF/def2SVP Pop(MK,ReadRadii) IOp(6/33=2) SCF=Tight
@@ -439,7 +414,7 @@ opt_level=B3LYP/def2SVP</code></pre>
 
 I 1.875</code></pre>
         <p>Gaussian's built-in Merz&ndash;Kollman radius table stops well before the fifth row, and l602 aborts with <code>GetVDW: no radius for atomic number 53</code> otherwise. ParmFit therefore writes <code>Pop(MK,ReadRadii)</code> and appends a radius line for every element the built-in table lacks &mdash; here 1.875&nbsp;&Aring; for iodine. Light molecules never see this; molecules containing iodine cannot run without it.</p>
-        <p>The setup header and stage trace show both additions:</p>
+        <p>The setup header and stage trace in <a class="file-link" href="../../assets/examples/parmfit/corr/CORR2.out" download><code>CORR2.out</code></a> show both additions:</p>
         <pre><code>QM reference:     enabled, mode=1, engine=g16, opt=B3LYP/def2SVP, sp=B3LYP/def2SVP
 ...
 [Correction] initial parameter assignment ...
@@ -483,18 +458,35 @@ Stage timing:
         <h2 id="case-3">Case 3 &mdash; Choosing the scan's QM reference</h2>
         <p><strong>What changed.</strong> The configuration lives in the external sidecar files referenced with <code>input=</code> &mdash; the method itself stays in the inline <code>#parmfit(...)</code> header. Case 2 kept the default <code>qm_mode=1</code>, in which QM single-points score the MLIP scan&rsquo;s frames; this case makes the choice explicit, running CORR with <code>qm_mode=2</code> and <code>qm_mode=3</code>. The CORR4 header declares <code>level=tight</code>: mode 3 hands the frame relaxation to ParmFit&rsquo;s own optimizer, and <code>level</code> is <a href="../opt/optimization.html">MAPLE&rsquo;s global convergence tier</a>, so the run raises that optimizer&rsquo;s stopping criteria from the default <code>medium</code> tier to <code>tight</code> &mdash; the same depth g16&rsquo;s own optimizer stops at.</p>
         <p><strong>Input.</strong></p>
+        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.inp" download><code>CORR3.inp</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1,task=omol)
 #parmfit(method=correction,input=CORR3.in)
 #device=gpu0
 
-I   3.540000  1.420000  0.000000
-...</code></pre>
+I     3.54000000    1.42000000    0.00000000
+C     3.55600000    1.47900000   -2.08800000
+C     4.63400000    0.90600000   -2.76200000
+H     5.45500000    0.43700000   -2.22200000
+C     4.67700000    0.92700000   -4.15700000
+H     5.51600000    0.48000000   -4.68200000
+C     3.64100000    1.52200000   -4.87700000
+H     3.67400000    1.53800000   -5.96300000
+C     2.56300000    2.09500000   -4.20400000
+H     1.76000000    2.55700000   -4.77200000
+C     2.52000000    2.07400000   -2.80900000
+O     1.44800000    2.64500000   -2.18900000
+H     1.53600000    2.56400000   -1.22800000</code></pre>
         <p><strong>External config.</strong> Paths such as <code>mol2</code> are resolved relative to this file.</p>
+        <div class="code-file"><code>CORR3.in</code><span class="code-file-note">reads the molecule from</span><a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a></div>
         <div class="parmfit-inputs">
+          <a class="file-dl" href="../../assets/examples/parmfit/corr/CORR3.in" download aria-label="Download CORR3.in" title="Download CORR3.in"></a>
           <details class="parmfit-input-item">
             <summary>CORR3.in</summary>
             <div class="parmfit-input-body">
-              <pre><code>mol2=choi001_gaff2.mol2
+              <pre><code># Correction route settings; declare method=correction in #parmfit(...) and reference this file via input=
+# Only non-default entries are listed; the generated parmfitrun.in shows every resolved value.
+
+mol2=choi001_gaff2.mol2
 
 # Runtime charge derivation: Gaussian ESP + AmberTools two-stage RESP
 # (def2SVP instead of the classic HF/6-31G(d): iodine has no 6-31G basis;
@@ -509,11 +501,53 @@ opt_level=B3LYP/def2SVP</code></pre>
             </div>
           </details>
         </div>
-        <p><strong>CORR4 header.</strong> The convergence tier lives in the inline header:</p>
+        <p><strong>CORR4 input.</strong> The convergence tier lives in the inline header:</p>
+        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.inp" download><code>CORR4.inp</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1,task=omol)
-<strong>#parmfit(method=correction,input=CORR4.in,,level=tight)</strong>
-#device=gpu0</code></pre>
-        <p><strong>What happens.</strong> The charge and reference setup is identical to Case 2; only the way QM data enters TorsionFit changes. In mode 2, each scan frame is a QM constrained optimization of the torsion; in mode 3, the QM engine evaluates energies and forces directly and MAPLE's own optimizer drives the scan &mdash; see the <a href="parmfit.html#qm-mode">hub's qm_mode table</a> for the full semantics. The header and stage line always report the active mode:</p>
+<strong>#parmfit(method=correction,input=CORR4.in,level=tight)</strong>
+#device=gpu0
+
+I     3.54000000    1.42000000    0.00000000
+C     3.55600000    1.47900000   -2.08800000
+C     4.63400000    0.90600000   -2.76200000
+H     5.45500000    0.43700000   -2.22200000
+C     4.67700000    0.92700000   -4.15700000
+H     5.51600000    0.48000000   -4.68200000
+C     3.64100000    1.52200000   -4.87700000
+H     3.67400000    1.53800000   -5.96300000
+C     2.56300000    2.09500000   -4.20400000
+H     1.76000000    2.55700000   -4.77200000
+C     2.52000000    2.07400000   -2.80900000
+O     1.44800000    2.64500000   -2.18900000
+H     1.53600000    2.56400000   -1.22800000</code></pre>
+        <p>Keep <code>method</code>, <code>input</code>, and <code>level</code> in this header: the sidecar rejects <code>method=</code> and <code>input=</code>, and a <code>level=</code> written there is not applied &mdash; the log reports it only as an <code>Unknown left-hand</code> key. The reference run&rsquo;s input, as archived on Zenodo, had a stray comma (<code>input=CORR4.in,,level=tight</code>); the copy here has it removed. MAPLE ignored that comma: it left only an unnamed <code>: True</code> line under <code>Parsed configuration</code> in <a class="file-link" href="../../assets/examples/parmfit/corr/CORR4.out" download><code>CORR4.out</code></a>.</p>
+        <p>The sidecar <code>CORR4.in</code> sets the same keys as <code>CORR3.in</code> except <code>qm_mode=3</code>:</p>
+        <div class="code-file"><code>CORR4.in</code><span class="code-file-note">reads the molecule from</span><a class="file-link" href="../../assets/examples/parmfit/corr/choi001_gaff2.mol2" download><code>choi001_gaff2.mol2</code></a></div>
+        <div class="parmfit-inputs">
+          <a class="file-dl" href="../../assets/examples/parmfit/corr/CORR4.in" download aria-label="Download CORR4.in" title="Download CORR4.in"></a>
+          <details class="parmfit-input-item">
+            <summary>CORR4.in</summary>
+            <div class="parmfit-input-body">
+              <pre><code># Correction route settings; declare method=correction in #parmfit(...) and reference this file via input=
+# Only non-default entries are listed; the generated parmfitrun.in shows every resolved value.
+
+mol2=choi001_gaff2.mol2
+
+# Runtime charge derivation: Gaussian ESP + AmberTools two-stage RESP
+# (def2SVP instead of the classic HF/6-31G(d): iodine has no 6-31G basis;
+#  the def2 family carries iodine with its ECP)
+chg_fit=resp
+chg_level=HF/def2SVP
+
+# QM reference, qm_mode 3: QM energy/forces with the ParmFit optimizer driving the scan
+iqm=true
+<strong>qm_mode=3</strong>
+opt_level=B3LYP/def2SVP</code></pre>
+            </div>
+          </details>
+        </div>
+        <p><strong>Run.</strong> <code>maple CORR3.inp CORR3.out</code> and <code>maple CORR4.inp CORR4.out</code>, as in Case&nbsp;1; on the tutorial hardware they take about 28&nbsp;min and 1&nbsp;h&nbsp;36&nbsp;min.</p>
+        <p><strong>What happens.</strong> The charge and reference setup is identical to Case 2; only the way QM data enters TorsionFit changes. In mode 2, each scan frame is a QM constrained optimization of the torsion; in mode 3, the QM engine evaluates energies and forces directly and MAPLE's own optimizer drives the scan &mdash; see the <a href="parmfit.html#qm-mode">hub's qm_mode table</a> for the full semantics. The header and stage line always report the active mode &mdash; here from <a class="file-link" href="../../assets/examples/parmfit/corr/CORR3.out" download><code>CORR3.out</code></a>:</p>
         <pre><code>QM reference:     enabled, mode=2, engine=g16, opt=B3LYP/def2SVP, sp=B3LYP/def2SVP
 [Correction] Using QM reference data for TorsionFit (mode=2) ...</code></pre>
         <p>The three verified runs of this molecule compare like this:</p>
@@ -527,7 +561,7 @@ torsion MAE (kcal/mol):       0.018492            0.010873            0.025352
 TOTAL RUN TIME:               7m 11s              27m 50s             1h 36m 13s</code></pre>
         <figure class="doc-figure" style="max-width:880px;">
           <img src="../../assets/images/parmfit/correction/qm_modes_torsion_profile.png" alt="Three side-by-side line charts, one per qm_mode, each showing the original GAFF2 profile as a slate-blue curve with round markers, the QM reference in near-black ink, and the GAFF2 (revUMA) curve in a distinct color per mode closely tracking the reference; all three profiles show twin barriers of nearly 6 kcal/mol flanking a shallower well at 180 degrees">
-          <figcaption>Fig. 3 &mdash; Case 3: GAFF2 (revUMA) profiles for qm_mode=1&ndash;3, each fitted against its own Reference; the references are not meant to overlay.</figcaption>
+          <figcaption>Fig. 3 &mdash; Case 3: GAFF2 (revUMA) profiles for qm_mode=1&ndash;3, each fitted against its own Reference; the references are not meant to overlay. Here every Reference is a B3LYP/def2SVP scan (<code>QM_ref</code>), not UMA; GAFF2 (revUMA) still names the refitted GAFF2 set.</figcaption>
         </figure>
         <p>The same B3LYP potential-energy surface and the same frozen dihedral underlie all three references &mdash; what differs is <em>who relaxes each frame and where the relaxation stops</em>. The rotor couples to the framework &mdash; the C&ndash;O bond breathes with conjugation, and the framework angles and the I&middot;&middot;&middot;O contact absorb the steric load of the hydroxyl swinging past the iodine &mdash; so relaxed and unrelaxed frames are genuinely different geometries. Mode 1 scores the MLIP scan&rsquo;s geometries as they are; modes 2 and 3 relax every frame on the QM surface, and with mode 3&rsquo;s depth set by <code>level=tight</code> the two relaxed scans stop at the same depth. That is why the three profiles in Fig.&nbsp;3 differ, and depth is what separates the run times in the table above.</p>
         <p>The Gaussian-output totals in the table are job counts, not gradient-evaluation counts: mode 2 submits one <code>Opt=ModRedundant</code> constrained optimization per frame, while mode 3 submits single <code>Force</code> evaluations as ParmFit&rsquo;s optimizer walks each frame &mdash; the tighter the <code>level</code>, the more of them.</p>
@@ -541,7 +575,7 @@ TOTAL RUN TIME:               7m 11s              27m 50s             1h 36m 13s
           <li><a href="parmfit_correction.html">CORR manual</a> &mdash; parameter reference, output files, and limits.</li>
           <li><a href="parmfit.html#chargefit">ChargeFit</a>, <a href="parmfit.html#iqm">QM reference</a>, and <a href="parmfit.html#torsionfit">TorsionFit</a> on the ParmFit hub &mdash; the stages these routes share, documented once on the hub.</li>
           <li><a href="parmfit_ncaa_tutorial.html">NCAA (noncanonical amino acid) tutorial</a> and <a href="parmfit_metalaa_tutorial.html">MetalAA tutorial</a> &mdash; simple worked examples for the PDB (Protein Data Bank) routes.</li>
-          <li><strong>Run archive.</strong> All inputs, configs, logs, and work-directory products behind every excerpt on this page are deposited at Zenodo: <a href="https://zenodo.org/records/23126271" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126271</a>.</li>
+          <li><strong>Example files and run archive.</strong> Download links for every input and output, and the Zenodo archive, are under <a href="#example-files">Example Files</a>.</li>
         </ul>
 
         <nav class="page-nav">

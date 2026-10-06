@@ -9,140 +9,6 @@
   <link rel="stylesheet" href="../../assets/css/styles.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="icon" href="../../assets/images/home/maple-logo.png" type="image/png">
-
-  <style>
-    .parmfit-inputs {
-      margin: 1.5rem 0;
-    }
-
-    .parmfit-input-item {
-      border: 1px solid #e6e8ee;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-    }
-
-    .parmfit-input-item summary {
-      position: relative;
-      list-style: none;
-      cursor: pointer;
-      padding: 1.25rem 3.75rem 1.25rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      user-select: none;
-    }
-
-    .parmfit-input-item summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .parmfit-input-item summary::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 1.4rem;
-      width: 12px;
-      height: 12px;
-      border-right: 2px solid #7b8190;
-      border-bottom: 2px solid #7b8190;
-      transform: translateY(-65%) rotate(45deg);
-      transition: transform 0.2s ease;
-    }
-
-    .parmfit-input-item[open] summary::after {
-      transform: translateY(-35%) rotate(-135deg);
-    }
-
-    .parmfit-input-body {
-      padding: 1.25rem 1.5rem 1.5rem;
-      border-top: 1px solid #eef1f5;
-    }
-
-    .parmfit-input-body pre {
-      margin: 0;
-    }
-
-    @media (max-width: 52em) {
-      .parmfit-input-item summary {
-        padding-left: 1rem;
-        padding-right: 3.25rem;
-      }
-
-      .parmfit-input-body {
-        padding: 1rem;
-      }
-    }
-
-    /* Algorithm pseudocode block (mirrors the paper's algorithmicx layout) */
-    .pseudo {
-      margin: 1.5rem 0;
-      border: 1px solid #e6e8ee;
-      border-radius: 8px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-      font-size: 0.92rem;
-    }
-
-    .pseudo figcaption {
-      padding: 0.65rem 1.4rem;
-      border-bottom: 1px solid #eef1f5;
-      font-weight: 600;
-      color: #1a1a2e;
-      line-height: 1.45;
-    }
-
-    .pseudo-body {
-      margin: 0;
-      padding: 0.9rem 1.4rem 1rem;
-      list-style: none;
-      counter-reset: pseudoline;
-      line-height: 1.6;
-    }
-
-    .pseudo-body li {
-      position: relative;
-      padding-left: 2.5rem;
-      counter-increment: pseudoline;
-    }
-
-    .pseudo-body li::before {
-      content: counter(pseudoline);
-      position: absolute;
-      left: 0;
-      width: 1.9rem;
-      text-align: right;
-      color: #7b8190;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .pseudo-body li.req {
-      counter-increment: none;
-      padding-left: 0;
-    }
-
-    .pseudo-body li.req::before {
-      content: none;
-    }
-
-    .pseudo-body li.ind {
-      padding-left: 4.1rem;
-    }
-
-    .pseudo-body li.ind::before {
-      left: 1.6rem;
-    }
-
-    .pseudo-body .cmt {
-      float: right;
-      margin-left: 1.25rem;
-      color: #7b8190;
-      font-style: italic;
-      font-size: 0.85em;
-    }
-  </style>
 </head>
 <body>
   <header class="top-nav">
@@ -346,7 +212,7 @@
             <tbody>
               <tr><td><code>mol2</code></td><td>Required</td><td>Input topology and atom typing for <code>method=corr</code>.</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Bond/angle update method: <code>mseminario</code>, <code>seminario</code>, or <code>none</code>.</td></tr>
-              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Force constant scaling factor for Seminario/mSeminario Hessian-based fitting.</td></tr>
+              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor <em>s</em> for Seminario/mSeminario Hessian-based fitting: the fitted bond and angle force constants are multiplied by <em>s</em><sup>2</sup> (0.95 gives &times;0.9025).</td></tr>
               <tr><td><code>chg_fit</code></td><td><code>none</code></td><td>Charge source: input mol2 charges, <code>resp</code>, a <a href="parmfit.html#chargefit">charge-capable MLIP</a>, or a value passed to <code>antechamber -c</code>.</td></tr>
               <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code></td><td>Gaussian ESP level used only when <code>chg_fit=resp</code>.</td></tr>
               <tr><td><code>chg_route</code></td><td>Empty</td><td>Additional Gaussian route text for RESP ESP jobs.</td></tr>
@@ -413,8 +279,8 @@ C   0.000000  1.520000  0.000000
 # QM reference for correction and TorsionFit
 iqm=false
 qm_engine=g16
-opt_level=B3LYP/def2-SVP
-sp_level=B3LYP/def2-SVP
+opt_level=B3LYP/def2SVP
+sp_level=B3LYP/def2SVP
 opt_route=
 sp_route=
 qm_mode=1
@@ -482,6 +348,7 @@ torsion_ensemble_weight=0.5</code></pre>
           <li>mSeminario and Seminario update BOND and ANGLE terms only.</li>
           <li>TorsionFit refits selected proper torsions and parmchk2-flagged impropers; it does not rewrite topology or nonbonded terms.</li>
           <li>Automatic rotatable-bond selection follows the input mol2 bond typing. Fix incorrect aromatic, amide, or double-bond labels in the mol2 before fitting.</li>
+          <li>The inline coordinates and the mol2 must list the same atoms in the same order, hydrogens included. MAPLE checks only that the atom counts match and then pairs atoms by position; it does not remap two files that were ordered independently. The coordinate values themselves need not match the mol2.</li>
         </ul>
 
         <nav class="page-nav">

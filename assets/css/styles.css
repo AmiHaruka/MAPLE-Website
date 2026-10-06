@@ -781,6 +781,85 @@ pre.maple-code .atom-idx  { color: #7b3f00; font-weight: 700; }
 pre.maple-code .step-size { color: #267f99; font-weight: 700; }
 pre.maple-code .n-steps   { color: #3d4858; font-weight: 600; }
 
+/* Downloadable example files: a linked file name, a caption above a file's
+   code block, and an icon-only link on a config box title row. */
+.file-link,
+.file-dl {
+  --icon-download: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
+}
+.file-link {
+  white-space: nowrap; /* keep the icon on the file name's line */
+}
+.file-link code {
+  color: var(--color-brand-content);
+}
+.file-link::after,
+.file-dl::after {
+  content: "";
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.2em;
+  vertical-align: -0.12em;
+  background-color: currentColor;
+  -webkit-mask: var(--icon-download) center / contain no-repeat;
+          mask: var(--icon-download) center / contain no-repeat;
+}
+
+.code-file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  margin: 1.25rem 0 0.4rem;
+}
+.code-file + pre,
+.code-file + .code-wrapper,
+.code-file + .parmfit-inputs {
+  margin-top: 0;
+}
+.code-file-note {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.file-dl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+}
+.file-dl:hover,
+.file-dl:focus-visible {
+  background: var(--color-bg-hover);
+  color: var(--color-brand-content);
+  text-decoration: none;
+}
+.file-dl::after {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0;
+  vertical-align: 0;
+}
+
+/* The icon sits on the title row of a ParmFit config box, left of the chevron.
+   It stays outside <summary>, so the title remains a plain disclosure button. */
+.parmfit-inputs {
+  position: relative;
+}
+.parmfit-inputs > .file-dl {
+  position: absolute;
+  top: 1.05rem;
+  right: 3.1rem;
+  z-index: 1;
+}
+.parmfit-inputs > .file-dl + details > summary {
+  padding-right: 5.5rem;
+}
+
 /* ML family sections on About page */
 .ml-family-section { margin: 1.5rem 0 2rem; scroll-margin-top: 96px; }
 .ml-family-section + .ml-family-section { margin-top: 2.25rem; }
@@ -1950,4 +2029,138 @@ figure.doc-figure figcaption {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ----- ParmFit config boxes and algorithm pseudocode -----
+   Shared by the ParmFit manuals and tutorials. */
+.parmfit-inputs {
+  margin: 1.5rem 0;
+}
+
+.parmfit-input-item {
+  border: 1px solid #e6e8ee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+.parmfit-input-item summary {
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+  padding: 1.25rem 3.75rem 1.25rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  user-select: none;
+}
+
+.parmfit-input-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.parmfit-input-item summary::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 1.4rem;
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid #7b8190;
+  border-bottom: 2px solid #7b8190;
+  transform: translateY(-65%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.parmfit-input-item[open] summary::after {
+  transform: translateY(-35%) rotate(-135deg);
+}
+
+.parmfit-input-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-top: 1px solid #eef1f5;
+}
+
+.parmfit-input-body pre {
+  margin: 0;
+}
+
+@media (max-width: 52em) {
+  .parmfit-input-item summary {
+    padding-left: 1rem;
+    padding-right: 3.25rem;
+  }
+
+  .parmfit-input-body {
+    padding: 1rem;
+  }
+}
+
+/* Algorithm pseudocode block (mirrors the paper's algorithmicx layout) */
+.pseudo {
+  margin: 1.5rem 0;
+  border: 1px solid #e6e8ee;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  font-size: 0.92rem;
+}
+
+.pseudo figcaption {
+  padding: 0.65rem 1.4rem;
+  border-bottom: 1px solid #eef1f5;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.45;
+}
+
+.pseudo-body {
+  margin: 0;
+  padding: 0.9rem 1.4rem 1rem;
+  list-style: none;
+  counter-reset: pseudoline;
+  line-height: 1.6;
+}
+
+.pseudo-body li {
+  position: relative;
+  padding-left: 2.5rem;
+  counter-increment: pseudoline;
+}
+
+.pseudo-body li::before {
+  content: counter(pseudoline);
+  position: absolute;
+  left: 0;
+  width: 1.9rem;
+  text-align: right;
+  color: #7b8190;
+  font-variant-numeric: tabular-nums;
+}
+
+.pseudo-body li.req {
+  counter-increment: none;
+  padding-left: 0;
+}
+
+.pseudo-body li.req::before {
+  content: none;
+}
+
+.pseudo-body li.ind {
+  padding-left: 4.1rem;
+}
+
+.pseudo-body li.ind::before {
+  left: 1.6rem;
+}
+
+.pseudo-body .cmt {
+  float: right;
+  margin-left: 1.25rem;
+  color: #7b8190;
+  font-style: italic;
+  font-size: 0.85em;
 }

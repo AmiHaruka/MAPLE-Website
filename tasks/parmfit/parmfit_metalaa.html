@@ -9,140 +9,6 @@
   <link rel="stylesheet" href="../../assets/css/styles.css">
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="icon" href="../../assets/images/home/maple-logo.png" type="image/png">
-
-  <style>
-    .parmfit-inputs {
-      margin: 1.5rem 0;
-    }
-
-    .parmfit-input-item {
-      border: 1px solid #e6e8ee;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-    }
-
-    .parmfit-input-item summary {
-      position: relative;
-      list-style: none;
-      cursor: pointer;
-      padding: 1.25rem 3.75rem 1.25rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      user-select: none;
-    }
-
-    .parmfit-input-item summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .parmfit-input-item summary::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 1.4rem;
-      width: 12px;
-      height: 12px;
-      border-right: 2px solid #7b8190;
-      border-bottom: 2px solid #7b8190;
-      transform: translateY(-65%) rotate(45deg);
-      transition: transform 0.2s ease;
-    }
-
-    .parmfit-input-item[open] summary::after {
-      transform: translateY(-35%) rotate(-135deg);
-    }
-
-    .parmfit-input-body {
-      padding: 1.25rem 1.5rem 1.5rem;
-      border-top: 1px solid #eef1f5;
-    }
-
-    .parmfit-input-body pre {
-      margin: 0;
-    }
-
-    @media (max-width: 52em) {
-      .parmfit-input-item summary {
-        padding-left: 1rem;
-        padding-right: 3.25rem;
-      }
-
-      .parmfit-input-body {
-        padding: 1rem;
-      }
-    }
-
-    /* Algorithm pseudocode block (mirrors the paper's algorithmicx layout) */
-    .pseudo {
-      margin: 1.5rem 0;
-      border: 1px solid #e6e8ee;
-      border-radius: 8px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-      font-size: 0.92rem;
-    }
-
-    .pseudo figcaption {
-      padding: 0.65rem 1.4rem;
-      border-bottom: 1px solid #eef1f5;
-      font-weight: 600;
-      color: #1a1a2e;
-      line-height: 1.45;
-    }
-
-    .pseudo-body {
-      margin: 0;
-      padding: 0.9rem 1.4rem 1rem;
-      list-style: none;
-      counter-reset: pseudoline;
-      line-height: 1.6;
-    }
-
-    .pseudo-body li {
-      position: relative;
-      padding-left: 2.5rem;
-      counter-increment: pseudoline;
-    }
-
-    .pseudo-body li::before {
-      content: counter(pseudoline);
-      position: absolute;
-      left: 0;
-      width: 1.9rem;
-      text-align: right;
-      color: #7b8190;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .pseudo-body li.req {
-      counter-increment: none;
-      padding-left: 0;
-    }
-
-    .pseudo-body li.req::before {
-      content: none;
-    }
-
-    .pseudo-body li.ind {
-      padding-left: 4.1rem;
-    }
-
-    .pseudo-body li.ind::before {
-      left: 1.6rem;
-    }
-
-    .pseudo-body .cmt {
-      float: right;
-      margin-left: 1.25rem;
-      color: #7b8190;
-      font-style: italic;
-      font-size: 0.85em;
-    }
-  </style>
 </head>
 <body>
   <header class="top-nav">
@@ -306,7 +172,7 @@
 
 <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
-          <p>How MAPLE reads PDB structures is described once in the <a href="parmfit.html#requirements">Requirements</a> section of the ParmFit hub. What is route-specific here: nonprotein ligands and cofactors near the metal site have no protein template; declare them via <code>lig_resids</code> (small-molecule build) or <code>ncaa_resids</code> (NCAA flow).</p>
+          <p>How MAPLE reads PDB structures is described once in the <a href="parmfit.html#requirements">Requirements</a> section of the ParmFit hub. What is route-specific here: nonprotein ligands and cofactors near the metal site have no protein template; declare them via <code>lig_resids</code> (small-molecule build) or <code>ncaa_resids</code> (NCAA residue build).</p>
         </div>
 
         <h2 id="target">Target</h2>
@@ -333,7 +199,7 @@
             <li class="req"><b>Ensure:</b> site frcmod, per-residue mol2; validated tleap topology</li>
             <li>Read the PDB with template matching; locate the metal ion.</li>
             <li>Ligand building: copy each declared ligand, fit charges, type with AmberTools, register the cofactor frcmod. <span class="cmt">&#9657; chgfit: <code>abcg2</code>, <code>resp</code>, &hellip;</span></li>
-            <li>NCAA building for declared residues. <span class="cmt">&#9657; <a href="parmfit_ncaa.html">Algorithm 2</a> as a service; standard residues may be deliberately rebuilt</span></li>
+            <li>NCAA building for declared residues. <span class="cmt">&#9657; reuses the residue-build components of <a href="parmfit_ncaa.html">Algorithm 2</a>: one optimized capped conformer, RESP on that conformer, antechamber/parmchk2 template; unlike standalone NCAA, no &alpha;/&beta; pair, no Hessian refinement, no TorsionFit. Standard residues may be deliberately rebuilt</span></li>
             <li>Construct the cluster: metal, coordinating donors, environment.</li>
             <li>Optimize the cluster with the MLIP. <span class="cmt">&#9657; optionally QM</span></li>
             <li>Fit charges with RESP on the cluster; project onto the site model.</li>
@@ -344,7 +210,7 @@
         <ol>
           <li><strong>Metal-site recognition.</strong> Locate the target ion, donor atoms, core residues, and optional user-added residues.</li>
           <li><strong>Ligand building.</strong> For each declared ligand (<code>lig_resids</code>): copy the residue, fit its charges, type it with AmberTools, and register the cofactor frcmod.</li>
-          <li><strong>NCAA building.</strong> Declared residues (<code>ncaa_resids</code>) are built through the native NCAA flow; their fitted charges are frozen into the site RESP.</li>
+          <li><strong>NCAA building.</strong> Declared residues (<code>ncaa_resids</code>) are built with the residue-build components of the NCAA route: one optimized capped conformer, RESP on that conformer, and an antechamber/parmchk2 template &mdash; without the &alpha;/&beta; pair, Hessian refinement, or TorsionFit of the standalone NCAA route. Their fitted charges are frozen into the site RESP.</li>
           <li><strong>Large model.</strong> Build and optimize a large metal-site model for RESP, Hessian, and parameter fitting.</li>
           <li><strong>RESP charges.</strong> Gaussian evaluates the ESP of the optimized large model and AmberTools performs the two-stage RESP fit; the charges are then projected onto the deployable site model.</li>
           <li><strong>Bonded fitting.</strong> Use Seminario or modified Seminario to fit metal-related bond and angle terms.</li>
@@ -361,7 +227,7 @@
               <tr><td><code>ion_mults</code></td><td><code>1</code></td><td>Spin multiplicity of the QM cluster (large model).</td></tr>
               <tr><td><code>lig_resids</code>, <code>lig_charges</code>, <code>lig_mults</code></td><td>None</td><td>Coordinating ligand/cofactor residue selectors, their 1:1 formal charges, and their spin multiplicities (default 1); ligands are parameterized as small molecules in <code>lig/&lt;tag&gt;/</code>.</td></tr>
               <tr><td><code>lig_chgfit</code></td><td><code>abcg2</code></td><td>Charge method for declared ligands (<code>lig_chglevel</code>/<code>lig_chgroute</code> control RESP-style settings).</td></tr>
-              <tr><td><code>ncaa_resids</code>, <code>ncaa_charges</code></td><td>None</td><td>Noncanonical residues &mdash; or standard residues deliberately rebuilt &mdash; in the site, built through the native NCAA flow; pair <code>ncaa_charges</code> 1:1, optionally <code>ncaa_resnames</code>/<code>ncaa_mults</code>. Their charges are frozen into the site RESP.</td></tr>
+              <tr><td><code>ncaa_resids</code>, <code>ncaa_charges</code></td><td>None</td><td>Noncanonical residues &mdash; or standard residues deliberately rebuilt &mdash; in the site, built with the NCAA residue-build components; pair <code>ncaa_charges</code> 1:1, optionally <code>ncaa_resnames</code>/<code>ncaa_mults</code>. Their charges are frozen into the site RESP.</td></tr>
               <tr><td><code>ncaa_chgfit</code>, <code>ncaa_chglevel</code>, <code>ncaa_chgroute</code></td><td><code>resp</code>, <code>HF/6-31G(d)</code>, empty</td><td>Charge route for NCAA-built residues and its Gaussian level/route; the fitted charges are frozen into the site RESP.</td></tr>
               <tr><td><code>add_resid</code></td><td>None</td><td>Additional residues to force into the metal-site core; core membership puts a residue into the RESP charge fit, the Hessian-bonded fitting, and the deployed site model.</td></tr>
               <tr><td><code>set_bonded</code></td><td>Auto</td><td>Explicit metal-donor serial pairs, written as <code>SERIAL-SERIAL</code> tokens.</td></tr>
@@ -374,7 +240,7 @@
               <tr><td><code>chg_level</code></td><td><code>PBE1PBE/def2SVP</code></td><td>Gaussian level for RESP ESP generation. Always active regardless of <code>iqm</code>.</td></tr>
               <tr><td><code>pro_ff</code>, <code>wat_ff</code>, <code>ion_ff</code></td><td><code>ff14SB</code>, <code>tip3p</code>, <code>12_6</code></td><td>Protein, water, and ion parameter models for tleap deployment. MetalAA validates <code>ion_ff</code> against <code>hfe</code>, <code>cm</code>, <code>iod</code>, <code>12_6</code>, and <code>12_6_4</code>.</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Metal-related bond/angle fitting: <code>mseminario</code> or <code>seminario</code>.</td></tr>
-              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Force constant scaling factor for Seminario/mSeminario Hessian-based fitting.</td></tr>
+              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor <em>s</em> for Seminario/mSeminario Hessian-based fitting: the fitted bond and angle force constants are multiplied by <em>s</em><sup>2</sup> (0.95 gives &times;0.9025).</td></tr>
             </tbody>
           </table>
         </div>
@@ -403,23 +269,26 @@
         <h2 id="parmfit-input">Input Files</h2>
 
         <h3 id="simple-input">Simple Input</h3>
-        <p>A simple MetalAA job declares <code>method=metalaa</code> inline and keeps its commonly used ParmFit options in a sidecar config. The target selects the metal ion; <code>ion_charges</code>/<code>ion_mults</code> give the metal formal charge and the cluster multiplicity, and <code>lig_resids</code>/<code>lig_charges</code> declare the cofactor.</p>
+        <p>A simple MetalAA job declares <code>method=metalaa</code> inline and keeps its commonly used ParmFit options in a sidecar config. The target selects the metal ion; <code>ion_charges</code>/<code>ion_mults</code> give the metal formal charge and the cluster multiplicity, and <code>lig_resids</code>/<code>lig_charges</code> declare the cofactor. The example is Case&nbsp;1 of the <a href="parmfit_metalaa_tutorial.html">MetalAA tutorial</a>, which provides both files and <code>4ZF6.pdb</code>. There the heme carries &minus;4 &mdash; the porphyrin dianion (&minus;2) plus two deprotonated propionates &mdash; and Fe(III) +3 with the thiolate &minus;1 gives the large-model charge &minus;2; use the charge that matches the protonation state of your own cofactor.</p>
         <pre><code>#model=uma(size=uma-s-1p1)
-#parmfit(method=metalaa,input=MetalAA.in)
+#parmfit(method=metalaa,input=MetalAA1.in)
 #device=gpu0
 
-PDB P450.pdb</code></pre>
+PDB 4ZF6.pdb</code></pre>
         <div class="parmfit-inputs">
           <details class="parmfit-input-item">
-            <summary>Example simple ParmFit config</summary>
+            <summary>MetalAA1.in</summary>
             <div class="parmfit-input-body">
-              <pre><code>ion_resids=A462
+              <pre><code># MetalAA route settings; declare method=metalaa in #parmfit(...) and reference this file via input=
+# Only non-default entries are listed; the generated parmfitrun.in shows every resolved value.
+
+ion_resids=A462
 ion_charges=3
 ion_mults=6
 lig_resids=A461
-lig_charges=-2
-chgmod=1
-bonded=mseminario</code></pre>
+lig_charges=-4
+bonded=seminario
+chg_level=PBE1PBE/def2SV</code></pre>
             </div>
           </details>
         </div>
@@ -430,7 +299,7 @@ bonded=mseminario</code></pre>
 #parmfit(method=metalaa,input=MetalAA.parmfit)
 #device=gpu0
 
-PDB P450.pdb</code></pre>
+PDB 4ZF6.pdb</code></pre>
 
         <p><strong>Full ParmFit config</strong></p>
         <div class="parmfit-inputs">
@@ -440,7 +309,7 @@ PDB P450.pdb</code></pre>
               <pre><code># QM reference
 iqm=false
 qm_engine=g16
-opt_level=B3LYP/def2-SVP
+opt_level=B3LYP/def2SVP
 opt_route=
 qm_nproc=8
 qm_mem=24
@@ -475,13 +344,13 @@ keep=
 
 # Coordinating ligands, built as small molecules
 lig_resids=A461
-lig_charges=-2
+lig_charges=-4
 lig_mults=1
 lig_chgfit=abcg2
 lig_chglevel=HF/6-31G(d)
 lig_chgroute=
 
-# Noncanonical residues in the site, built through the NCAA flow
+# Noncanonical residues in the site, built with the NCAA residue-build components
 ncaa_resids=
 ncaa_charges=
 ncaa_resnames=
@@ -508,7 +377,7 @@ ncaa_chgroute=</code></pre>
         <h2 id="requirements">Requirements and Limits</h2>
         <ul>
           <li>Current MetalAA is intended for a single metal center. Another ion inside the donor cutoff is treated as an unsupported case.</li>
-          <li>Ligand or cofactor residues without reliable atom types should be declared through <code>lig_resids</code> (small-molecule build) or <code>ncaa_resids</code> (NCAA flow).</li>
+          <li>Ligand or cofactor residues without reliable atom types should be declared through <code>lig_resids</code> (small-molecule build) or <code>ncaa_resids</code> (NCAA residue build: one conformer, RESP, AmberTools template).</li>
           <li>When automatic donor detection is not sufficient, use <code>set_bonded</code> to provide explicit metal-donor serial pairs.</li>
         </ul>
 

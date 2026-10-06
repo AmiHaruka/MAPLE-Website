@@ -1,0 +1,283 @@
+
+**********************************************************************
+*                                                                    *
+*                        M   A   P   L   E                           *
+*                                                                    *
+*      MAchine-learning Potential for Landscape Exploration          *
+*                                                                    *
+*                                                                    *
+*      © 2025 University of Pittsburgh. All rights reserved.         *
+*      Licensed under CC BY 4.0 for academic use.                    *
+*                                                                    *
+*      Principal Developer:  Xujian Wang                             *
+*                                                                    *
+**********************************************************************
+
+
+Parsing # commands...
+Global parameter: model = uma with options {'size': 'uma-s-1p1', 'task': 'omol'}
+Task set to 'parmfit'
+Global parameter: device = gpu0
+Parsed configuration:
+----------------------------------------
+Task: parmfit
+model          : uma(size=uma-s-1p1,task=omol)
+method         : correction
+input          : CORR2.in
+device         : gpu0
+
+                             Coordinates                              
+**********************************************************************
+
+Group 1 (inline)
+--------------------
+1    I              3.540000             1.420000             0.000000
+2    C              3.556000             1.479000            -2.088000
+3    C              4.634000             0.906000            -2.762000
+4    H              5.455000             0.437000            -2.222000
+5    C              4.677000             0.927000            -4.157000
+6    H              5.516000             0.480000            -4.682000
+7    C              3.641000             1.522000            -4.877000
+8    H              3.674000             1.538000            -5.963000
+9    C              2.563000             2.095000            -4.204000
+10   H              1.760000             2.557000            -4.772000
+11   C              2.520000             2.074000            -2.809000
+12   O              1.448000             2.645000            -2.189000
+13   H              1.536000             2.564000            -1.228000
+
+[Correction] initial parameter assignment ...
+
+======================================================================
+                       Parmfit Correction Setup                       
+======================================================================
+Input mol2:        choi001_gaff2.mol2
+Initial frcmod:    CORR2_work/CORR2_original.frcmod
+Topology atoms:    13
+Topology bonds:    13
+Bonded refinement: mSeminario
+QM reference:     enabled, mode=1, engine=g16, opt=B3LYP/def2SVP, sp=B3LYP/def2SVP
+QM compare:       disabled
+TorsionFit:        enabled
+Torsion backend:   cgbs
+Torsion constraint:projected
+Torsion ensemble:false
+Scan grid:         10.0000 deg x 36 steps
+Stage2 refine:     max_fast_cycles=3, max_iter_per_cycle=256, tol=1e-06
+Torsion bonds:      auto-select non-ring torsion bonds with proper torsions
+
+Assigned terms:
+  bonds:      13 (unmatched: 0)
+  angles:     19 (unmatched: 0)
+  dihedrals:  26 (unmatched: 0)
+  impropers:  6 (unmatched: 0)
+  nonbonds:   13 (unmatched: 0)
+======================================================================
+
+[Correction] MLIP geometry optimization ...
+[Correction] QM reference optimization ...
+[Correction] QM Hessian + mSeminario ...
+
+============================================================================================================
+                                       mSeminario bond/angle changes                                        
+============================================================================================================
+Display convention: left = before this stage | right = after this stage
+Only changed force-field items are shown below.
+
+
+------------------------------------------------------------------------------------------------------------
+                                                   BONDS                                                    
+------------------------------------------------------------------------------------------------------------
+(1,2)            i-ca              k=107.060000  r=2.157000           | 	 k=104.642308  r=2.133670          
+(2,3)            ca-ca             k=354.250000  r=1.399000           | 	 k=385.263234  r=1.397583          
+(2,11)           ca-ca             k=354.250000  r=1.399000           | 	 k=345.546300  r=1.407974          
+(3,4)            ca-ha             k=360.690000  r=1.086000           | 	 k=384.753278  r=1.091535          
+(3,5)            ca-ca             k=354.250000  r=1.399000           | 	 k=400.494741  r=1.396059          
+(5,6)            ca-ha             k=360.690000  r=1.086000           | 	 k=382.550486  r=1.092128          
+(5,7)            ca-ca             k=354.250000  r=1.399000           | 	 k=395.215958  r=1.399901          
+(7,8)            ca-ha             k=360.690000  r=1.086000           | 	 k=381.098334  r=1.092785          
+(7,9)            ca-ca             k=354.250000  r=1.399000           | 	 k=421.051929  r=1.392170          
+(9,10)           ca-ha             k=360.690000  r=1.086000           | 	 k=383.800091  r=1.092050          
+(9,11)           ca-ca             k=354.250000  r=1.399000           | 	 k=361.976614  r=1.406146          
+(11,12)          ca-oh             k=348.550000  r=1.364000           | 	 k=386.754755  r=1.347493          
+(12,13)          oh-ho             k=535.510000  r=0.973000           | 	 k=533.717737  r=0.972078          
+
+------------------------------------------------------------------------------------------------------------
+                                                   ANGLES                                                   
+------------------------------------------------------------------------------------------------------------
+(1,2,3)          i-ca-ca                 k=58.260000  theta=119.1700          | 	 k=43.566640  theta=119.9258         
+(1,2,11)         i-ca-ca                 k=58.260000  theta=119.1700          | 	 k=43.550471  theta=118.7861         
+(3,2,11)         ca-ca-ca                k=63.670000  theta=120.0200          | 	 k=88.465813  theta=121.2881         
+(2,3,4)          ca-ca-ha                k=44.900000  theta=119.8800          | 	 k=29.181827  theta=119.8704         
+(2,3,5)          ca-ca-ca                k=63.670000  theta=120.0200          | 	 k=81.273692  theta=119.8219         
+(4,3,5)          ha-ca-ca                k=44.900000  theta=119.8800          | 	 k=31.026334  theta=120.3076         
+(3,5,6)          ca-ca-ha                k=44.900000  theta=119.8800          | 	 k=32.060643  theta=119.7623         
+(3,5,7)          ca-ca-ca                k=63.670000  theta=120.0200          | 	 k=98.589117  theta=119.5270         
+(6,5,7)          ha-ca-ca                k=44.900000  theta=119.8800          | 	 k=31.974069  theta=120.7107         
+(5,7,8)          ca-ca-ha                k=44.900000  theta=119.8800          | 	 k=32.787127  theta=120.0844         
+(5,7,9)          ca-ca-ca                k=63.670000  theta=120.0200          | 	 k=97.439177  theta=120.5350         
+(8,7,9)          ha-ca-ca                k=44.900000  theta=119.8800          | 	 k=32.675914  theta=119.3806         
+(7,9,10)         ca-ca-ha                k=44.900000  theta=119.8800          | 	 k=32.619506  theta=121.6141         
+(7,9,11)         ca-ca-ca                k=63.670000  theta=120.0200          | 	 k=91.229140  theta=120.7841         
+(10,9,11)        ha-ca-ca                k=44.900000  theta=119.8800          | 	 k=32.070756  theta=117.6018         
+(2,11,9)         ca-ca-ca                k=63.670000  theta=120.0200          | 	 k=103.816018  theta=118.0438        
+(2,11,12)        ca-ca-oh                k=78.860000  theta=119.9000          | 	 k=77.994570  theta=124.2001         
+(9,11,12)        ca-ca-oh                k=78.860000  theta=119.9000          | 	 k=86.504942  theta=117.7561         
+(11,12,13)       ca-oh-ho                k=67.410000  theta=108.5800          | 	 k=69.115392  theta=109.4735         
+
+[Correction] atomic charge fitting ...
+
+[Correction] TorsionFit ...
+[Correction] Using QM reference data for TorsionFit (mode=1) ...
+
+============================================================================================================
+                                         TorsionFit torsion changes                                         
+============================================================================================================
+Display convention: left = before this stage | right = after this stage
+Only changed force-field items are shown below.
+
+
+------------------------------------------------------------------------------------------------------------
+                                                 DIHEDRALS                                                  
+------------------------------------------------------------------------------------------------------------
+(2,11,12,13)       ca-ca-oh-ho                term=1 k=0.855000  n=2.000  phase=180.0000 |  k=1.103279  n=2.000  phase=-179.6053
+(2,11,12,13)       ca-ca-oh-ho                term=2 k=NA  n=NA  phase=NA               |  k=0.177444  n=1.000  phase=8.4237 
+(2,11,12,13)       ca-ca-oh-ho                term=3 k=NA  n=NA  phase=NA               |  k=0.004840  n=3.000  phase=-117.3981
+(2,11,12,13)       ca-ca-oh-ho                term=4 k=NA  n=NA  phase=NA               |  k=0.035436  n=4.000  phase=-174.8265
+(9,11,12,13)       ca-ca-oh-ho                term=1 k=0.855000  n=2.000  phase=180.0000 |  k=1.101867  n=2.000  phase=-179.7300
+(9,11,12,13)       ca-ca-oh-ho                term=2 k=NA  n=NA  phase=NA               |  k=0.177649  n=1.000  phase=-171.5662
+(9,11,12,13)       ca-ca-oh-ho                term=3 k=NA  n=NA  phase=NA               |  k=0.004091  n=3.000  phase=62.9473
+(9,11,12,13)       ca-ca-oh-ho                term=4 k=NA  n=NA  phase=NA               |  k=0.034934  n=4.000  phase=-175.1832
+
+[Correction] export GROMACS ...
+[Correction] export Amber ...
+
+======================================================================
+                      PARMFIT CORRECTION RESULT                       
+======================================================================
+Status: completed
+Input mol2: choi001_gaff2.mol2
+
+Main products:
+  Amber mol2:   CORR2_work/CORR2_maple.mol2
+  Amber frcmod: CORR2_work/CORR2_maple.frcmod
+  GROMACS top:  CORR2_work/CORR2_maple.top
+  GROMACS gro:  CORR2_work/CORR2_maple.gro
+  Amber tleap:  CORR2_work/CORR2_maple_tleap.in
+
+Charge fitting:
+  method:        resp
+  RESP level:    HF/def2SVP
+  target charge: 0
+  actual charge: -0.00000000
+  work MOL2:     CORR2_work/chargefit/qm_route_charged.mol2
+  final MOL2:    CORR2_work/CORR2_maple.mol2
+
+Stage timing:
+  TorsionFit                        5m 23s
+  Hessian + mSeminario              1m 29s
+  charge fitting                        4s
+  geometry optimization                 2s
+  initial parameter assignment          0s
+  export Amber                          0s
+  export GROMACS                        0s
+
+Parameter changes:
+  bonded refinement:              mSeminario
+  bonds changed by bonded refine:  13
+  angles changed by bonded refine: 19
+  dihedrals changed by TorsionFit: 2
+  other changes:                   none
+
+Torsion energy trace:
+  
+torsion bond (11, 12):
+    scan xyz: CORR2_work/torsionfit/CORR2_qm_torsionfit_11-12_scan_final.xyz
+    angle_deg    QM_ref       orig_ref    stage0_ref    stage1_ref    stage2_ref
+     359.9837    0.000000    0.000000    0.000000    0.000000    0.000000
+     369.9837    0.208213    0.148268    0.159940    0.197624    0.197976
+     379.9837    0.773613    0.549843    0.599973    0.750227    0.750787
+     389.9837    1.623683    1.167627    1.280879    1.590847    1.591518
+     399.9837    2.676070    1.958648    2.173365    2.652391    2.653102
+     409.9837    3.758558    2.814591    3.102093    3.725003    3.725625
+     419.9837    4.814268    3.689148    4.081832    4.800522    4.800737
+     429.9837    5.712598    4.471635    4.942360    5.702491    5.701691
+     439.9837    6.382778    5.081806    5.595642    6.349123    6.346372
+     449.9837    6.797966    5.510018    6.071056    6.780848    6.774974
+     459.9837    6.924858    5.703398    6.272680    6.909315    6.899083
+     469.9837    6.783636    5.690196    6.252329    6.786152    6.770499
+     479.9837    6.418118    5.498156    6.032260    6.427735    6.405982
+     489.9837    5.885994    5.182918    5.677908    5.894883    5.866851
+     499.9837    5.266240    4.816676    5.276891    5.280560    5.246586
+     509.9837    4.647613    4.467243    4.897647    4.673710    4.634559
+     519.9837    4.120151    4.186091    4.589618    4.157361    4.114081
+     529.9837    3.761179    4.004898    4.397576    3.814261    3.768054
+     539.9837    3.637952    3.943321    4.334225    3.687777    3.639927
+     549.9837    3.759507    4.003591    4.408983    3.800102    3.751953
+     559.9837    4.109704    4.179572    4.619954    4.139610    4.092571
+     569.9837    4.632877    4.452651    4.945617    4.655894    4.611406
+     579.9837    5.248548    4.788967    5.345487    5.270368    5.229815
+     589.9837    5.871572    5.141468    5.784566    5.912980    5.877536
+     599.9837    6.405850    5.439962    6.131613    6.430286    6.400736
+     609.9837    6.786682    5.630317    6.376997    6.806138    6.782732
+     619.9837    6.946920    5.647555    6.412335    6.937460    6.919869
+     629.9837    6.845170    5.459432    6.225452    6.820834    6.808236
+     639.9837    6.445528    5.044603    5.777436    6.420989    6.412275
+     649.9837    5.797704    4.437839    5.126940    5.791047    5.785056
+     659.9837    4.929086    3.669183    4.289860    4.935138    4.930897
+     669.9837    3.885367    2.797473    3.297735    3.874427    3.871278
+     679.9837    2.800828    1.936223    2.322681    2.781573    2.779181
+     689.9837    1.777433    1.163988    1.442447    1.751236    1.749494
+     699.9837    0.951914    0.553694    0.764204    0.922349    0.921245
+     709.9837    0.369465    0.171150    0.289380    0.334082    0.333583
+     719.9837    0.177670    0.039683    0.138105    0.138087    0.138091
+    QM_ref vs stage2_final: MAE = 0.018492 kcal/mol, RMSE = 0.021605 kcal/mol
+
+TorsionFit:
+  state: enabled
+  torsion bonds: (11, 12)
+  scan files:
+    (11, 12): CORR2_work/torsionfit/CORR2_qm_torsionfit_11-12_scan_final.xyz
+  stage1: completed
+  stage2: enabled, max_fast_cycles=3
+  fast cycles: executed=2, accepted=1, rejected=1
+  final parameters: Stage2 fast cycle 1
+
+Warnings:
+  none
+======================================================================
+
+======================================================================
+                              IMPORTANT                               
+======================================================================
+Due to the limitations of custom atom types, the exported topology
+must be normalized with ParmEd before use. tleap identifies hydrogens
+by the leading character of the atom type, which MAPLE types do not
+carry, so it writes an empty BONDS_INC_HYDROGEN section and SHAKE
+(ntc=2) would constrain nothing. ParmEd rebuilds that section from
+ATOMIC_NUMBER, e.g.:
+  tleap -f CORR2_maple_tleap.in
+  parmed -p CORR2_maple_gas.prmtop <<< $'outparm CORR2_maple_gas_parmed.prmtop\nquit'
+======================================================================
+
+
+
+Program started: 2026-10-02 23:58:38
+
+======================================================================
+                      TIMING SUMMARY
+======================================================================
+Input Reading.......................................   0.020 s  (   0.0 %)
+  Settings Parsing....................................   0.018 s  (  89.8 %)
+  Coordinate Section Parsing..........................   0.000 s  (   2.2 %)
+  Post-Processing Expansion...........................   0.000 s  (   0.0 %)
+MLP Initialization..................................  12.868 s  (   3.0 %)
+Job Dispatching..................................... 418.121 s  (  97.0 %)
+  Parmfit optimization................................ 418.119 s  ( 100.0 %)
+    Parmfit correction.................................. 418.060 s  ( 100.0 %)
+======================================================================
+Total wall time: 431.009 s
+Total CPU time: 37.983 s
+======================================================================
+
+Program ended: 2026-10-03 00:05:49
+TOTAL RUN TIME: 0 days 0 hours 7 minutes 11 seconds 9 msec
