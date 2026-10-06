@@ -301,14 +301,14 @@
 
         <h2 id="before">Before You Start</h2>
         <ul>
-          <li><strong>Requirements.</strong> Software and input needs are summarized in the <a href="parmfit.html#requirements">ParmFit hub&rsquo;s Requirements section</a>.</li>
+          <li><strong>Requirements.</strong> Software and input needs are summarized in the <a href="parmfit.html#requirements">ParmFit hub&rsquo;s Requirements section</a>. Only CORR Case&nbsp;1 runs without Gaussian; every other case needs it for its RESP charges.</li>
           <li><strong>Model.</strong> Every run in these tutorials uses the same checkpoint &mdash; UMA-S-1.1, selected with <code>#model=uma(size=uma-s-1p1)</code>.</li>
-          <li><strong>Hardware.</strong> Every excerpt and timing in these tutorials comes from runs on an RTX 3060 Laptop GPU and an 8-core AMD CPU &mdash; sufficient for every run shown here.</li>
-          <li><strong>Run archives.</strong> Each tutorial links its complete Zenodo run archive at the bottom of the page.</li>
+          <li><strong>Hardware.</strong> Every excerpt and timing in these tutorials comes from runs on an RTX 3060 Laptop GPU and an 8-core AMD CPU &mdash; sufficient for every run shown here. Every Gaussian job used the defaults <code>qm_nproc=8</code> and <code>qm_mem=24</code>&nbsp;(GB); set lower values in the sidecar config on a smaller machine (see <a href="parmfit.html#general-settings">General Settings</a>).</li>
+          <li><strong>Example files.</strong> Right after its Overview, each tutorial lists every input and output file as a download link, followed by its complete Zenodo run archive.</li>
         </ul>
 
         <nav class="page-nav">
-          <a href="parmfit.html">&larr; Previous: ParmFit</a>
+          <a href="parmfit_metalaa.html">&larr; Previous: MetalAA</a>
           <a class="next" href="parmfit_correction_tutorial.html">Next: CORR Tutorial &rarr;</a>
         </nav>
       </article>

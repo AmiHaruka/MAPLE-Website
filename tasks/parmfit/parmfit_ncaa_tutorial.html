@@ -9,72 +9,6 @@
   <link rel="stylesheet" href="../../assets/css/search.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
   <link rel="icon" href="../../favicon.ico">
-
-  <style>
-    .parmfit-inputs {
-      margin: 1.5rem 0;
-    }
-
-    .parmfit-input-item {
-      border: 1px solid #e6e8ee;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-      overflow: hidden;
-    }
-
-    .parmfit-input-item summary {
-      position: relative;
-      list-style: none;
-      cursor: pointer;
-      padding: 1.25rem 3.75rem 1.25rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      user-select: none;
-    }
-
-    .parmfit-input-item summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .parmfit-input-item summary::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 1.4rem;
-      width: 12px;
-      height: 12px;
-      border-right: 2px solid #7b8190;
-      border-bottom: 2px solid #7b8190;
-      transform: translateY(-65%) rotate(45deg);
-      transition: transform 0.2s ease;
-    }
-
-    .parmfit-input-item[open] summary::after {
-      transform: translateY(-35%) rotate(-135deg);
-    }
-
-    .parmfit-input-body {
-      padding: 1.25rem 1.5rem 1.5rem;
-      border-top: 1px solid #eef1f5;
-    }
-
-    .parmfit-input-body pre {
-      margin: 0;
-    }
-
-    @media (max-width: 52em) {
-      .parmfit-input-item summary {
-        padding-left: 1rem;
-        padding-right: 3.25rem;
-      }
-
-      .parmfit-input-body {
-        padding: 1rem;
-      }
-    }
-  </style>
 </head>
 <body>
   <header class="top-nav">
@@ -233,22 +167,41 @@
         <h1>NCAA Tutorial</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>This tutorial walks through the NCAA route of <code>parmfit(method=ncaa)</code> in three cases on <em>Morus alba</em> Diels&ndash;Alderase (MaDA; Protein Data Bank ID 6JQH), a flavin adenine dinucleotide (FAD)-dependent enzyme whose FAD cofactor is covalently linked to a histidine residue. The input structure <code>MaDA.pdb</code> carries that residue as <code>_89:HIF</code>; it has no force-field template and becomes the exported residue <code>HF1</code>. Case 1 builds the template with torsion fitting off; Case 2 switches torsion fitting on with explicit bonds; Case 3 declares a second residue alongside the first. Every excerpt below is taken from verified runs of the inputs shown here.</p>
+        <p>This tutorial walks through the NCAA route of <code>parmfit(method=ncaa)</code> in three cases on <em>Morus alba</em> Diels&ndash;Alderase (MaDA; Protein Data Bank ID 6JQH), a flavin adenine dinucleotide (FAD)-dependent enzyme whose FAD cofactor is covalently linked to a histidine residue. The input structure <a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a> carries that residue as <code>_89:HIF</code>; it has no force-field template and becomes the exported residue <code>HF1</code>. Case 1 builds the template with torsion fitting off; Case 2 switches torsion fitting on with explicit bonds; Case 3 declares a second residue alongside the first. Every excerpt below is taken from verified runs of the inputs shown here.</p>
         <figure class="doc-figure" style="max-width:660px;">
           <img src="../../assets/images/parmfit/ncaa/ncaa_overview.png" alt="Overall structure of MaDA (PDB ID 6JQH) showing the covalent linkage between the histidine residue and the FAD cofactor">
           <figcaption>Fig. 1 &mdash; Overall structure of MaDA showing the covalent linkage between the histidine residue and the FAD.</figcaption>
         </figure>
         <p>Every run writes a <code>&lt;base&gt;.parmfitrun.in</code> file next to the output that echoes your configuration with defaults filled in; watch the log for <code>Unknown left-hand</code> warnings, which flag keys no builder consumed. The reference definition of every key lives in the <a href="parmfit_ncaa.html">NCAA manual page</a> and the shared sections of the <a href="parmfit.html">ParmFit hub</a>; software and input requirements are summarized in the hub's <a href="parmfit.html#requirements">Requirements</a> section.</p>
 
+        <h2 id="example-files">Example Files</h2>
+        <p>A linked file name on this page downloads the original file from the verified runs. Save the input files of one case into one folder; Case&nbsp;1 starts from <code>NCAA1.inp</code>. The outputs are the reference results behind the excerpts.</p>
+        <ul>
+          <li><strong>Case 1:</strong> <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1.inp" download><code>NCAA1.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1.in" download><code>NCAA1.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1.out" download><code>NCAA1.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1.parmfitrun.in" download><code>NCAA1.parmfitrun.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1_ncaa_tleap.out" download><code>NCAA1_ncaa_tleap.out</code></a>.</li>
+          <li><strong>Case 2:</strong> <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.inp" download><code>NCAA2.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.in" download><code>NCAA2.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.out" download><code>NCAA2.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.parmfitrun.in" download><code>NCAA2.parmfitrun.in</code></a>.</li>
+          <li><strong>Case 3:</strong> <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.inp" download><code>NCAA3.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.in" download><code>NCAA3.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.out" download><code>NCAA3.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.parmfitrun.in" download><code>NCAA3.parmfitrun.in</code></a>.</li>
+        </ul>
+        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126301" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126301</a>. It has one zip per case &mdash; <code>Case1.zip</code> (138&nbsp;MB), <code>Case2.zip</code> (139&nbsp;MB), and <code>Case3.zip</code> (151&nbsp;MB) &mdash; and each unpacks to a folder of the same name. The CORR and MetalAA archives use the same zip names, so keep each tutorial in its own folder. To rerun a case, start from its input files in a new folder: inside an unpacked archive folder, TorsionFit would read the archived scans instead of scanning (see the hub&rsquo;s <a href="parmfit.html#scan-reuse">Scan Reuse</a>).</p>
+        <p><strong>Software.</strong> Every case needs AmberTools and Gaussian&nbsp;16 on <code>PATH</code>: the default <code>chg_fit=resp</code> derives the charges from a Gaussian ESP even though these inputs keep <code>iqm=false</code> &mdash; see the hub's <a href="parmfit.html#requirements">Requirements</a> and <a href="parmfit.html#iqm">QM Reference</a> sections.</p>
+        <h3 id="prepared-structure">Prepared Structure</h3>
+        <!-- To be written by the preparer of MaDA.pdb: how the file was built from PDB 6JQH (programs and versions,
+             protonation choices, merged or renamed residues, chain and numbering edits) and why the selector reads HIF89.
+             Facts read from the file on 2026-10-06: no REMARK records; every residue carries hydrogens (4085 H atoms);
+             no chain IDs or altlocs; residues THR3-LEU519; HIF89 is one 99-atom residue that merges His89 with the FAD
+             cofactor; Cys10 and Cys74 are labelled CYX, but their SG atoms are 3.33 A apart, beyond MAPLE's 2.3 A
+             disulfide cutoff, so MAPLE deploys both as CYM (-1 each), which is the whole -2 unit charge in the tleap check. -->
+
         <h2 id="case-1">Case 1 &mdash; Building the first residue template</h2>
         <p><strong>Goal.</strong> Build a deployable Amber template for one noncanonical residue (here <code>HIF89</code>, exported as <code>HF1</code>) with default fitting: <code>chg_fit=resp</code>, <code>bonded=mseminario</code>, <code>pro_ff=ff14SB</code>. Torsion fitting &mdash; on by default &mdash; is explicitly switched off here so the first run isolates the charge and template pipeline.</p>
         <p><strong>Input.</strong> The selector picks the residue; <code>ncaa_resnames</code> renames it for export; charge pairs with the declared residue. The route keys live in the sidecar:</p>
+        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1.inp" download><code>NCAA1.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=ncaa,input=NCAA1.in)
 #device=gpu0
 
 PDB MaDA.pdb</code></pre>
         <div class="parmfit-inputs">
+          <a class="file-dl" href="../../assets/examples/parmfit/ncaa/NCAA1.in" download aria-label="Download NCAA1.in" title="Download NCAA1.in"></a>
           <details class="parmfit-input-item">
             <summary>NCAA1.in</summary>
             <div class="parmfit-input-body">
@@ -263,6 +216,9 @@ torsionfit=false</code></pre>
             </div>
           </details>
         </div>
+        <p><strong>Run.</strong> In the folder that holds <code>NCAA1.inp</code>, <code>NCAA1.in</code>, and <code>MaDA.pdb</code>:</p>
+        <pre><code>maple NCAA1.inp NCAA1.out    # or simply: maple NCAA1.inp</code></pre>
+        <p>The second argument names the log; without it, MAPLE names the log after the input, so both forms write <code>NCAA1.out</code>. The run also writes the resolved configuration <code>NCAA1.parmfitrun.in</code> and the work directory <code>NCAA1_work/</code>. A run has finished normally when the result block reads <code>Status: completed</code> and the log ends with a <code>TOTAL RUN TIME</code> line; on the tutorial hardware Case&nbsp;1 takes about 12&nbsp;min.</p>
         <p><strong>What happens.</strong></p>
         <ol>
           <li><strong>Graph matching.</strong> Standard residues are matched against the active <code>ff14SB</code> templates, receiving canonical atom names, types, and net charges; <code>CYX</code>/<code>CYM</code> is decided by disulfide detection.</li>
@@ -276,7 +232,7 @@ torsionfit=false</code></pre>
           <img src="../../assets/images/parmfit/ncaa/ncaa_conformers.png" alt="Three-panel render of a simplified ACE-HIS-NME capped model: the initial sidechain conformation at top with rotation arrows at the sidechain anchor, a flipping arrow in the middle, and the optimized alpha and beta conformers below">
           <figcaption>Fig. 2 &mdash; The conformer build, demonstrated on a simplified ACE&ndash;HIS&ndash;NME capped model (the covalently linked FAD cofactor is omitted purely to display the conformations): the initial sidechain conformation flips into the &alpha; and &beta; conformers, whose joint ESP feeds the two-stage RESP fit.</figcaption>
         </figure>
-        <p><strong>The resolved configuration.</strong> Next to <code>NCAA1.out</code>, MAPLE writes <code>NCAA1.parmfitrun.in</code>:</p>
+        <p><strong>The resolved configuration.</strong> Next to <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1.out" download><code>NCAA1.out</code></a>, MAPLE writes <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1.parmfitrun.in" download><code>NCAA1.parmfitrun.in</code></a>:</p>
         <pre><code># parmfitrun.in - resolved parmfit configuration for method=ncaa
 # Generated by MAPLE parmfit; values are the user config entries with defaults filled in.
 # This file is itself a valid parmfit config and can be referenced via input=.
@@ -360,18 +316,59 @@ Tleap status:
   Errors: 0
   Warnings: 4
   Notes: 0</code></pre>
+        <p><strong>The tleap warnings.</strong> <code>Tleap status</code> counts the warnings of the validation run, logged in <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA1_ncaa_tleap.out" download><code>NCAA1_ncaa_tleap.out</code></a>. In this run none of the four concerns the new template:</p>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>tleap message</th><th>Cause</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><code>The unperturbed charge of the unit (-2.000002) is not zero.</code></td><td>Net charge of the protein before ions are added. All of it comes from Cys10 and Cys74, which the run deploys as <code>CYM</code> (&minus;1 each; see <code>template overrides</code> above). The other charged residues cancel.</td><td>None for tleap, which adds 2&nbsp;Na<sup>+</sup> next. Check that the CYM assignment is what you intend.</td></tr>
+              <tr><td><code>addIons: 1st Ion &amp; target unit have charges of the same sign</code></td><td>The script also requests Cl<sup>&minus;</sup> after the Na<sup>+</sup> ions have neutralized the unit.</td><td>None.</td></tr>
+              <tr><td><code>Converting N-terminal residue name to PDB format: NTHR -&gt; THR</code></td><td>Saving a PDB writes the standard name of the terminal residue.</td><td>None.</td></tr>
+              <tr><td><code>Converting C-terminal residue name to PDB format: CLEU -&gt; LEU</code></td><td>The same for the C terminus.</td><td>None.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The <code>leap.log</code> in <code>NCAA1_work/</code> (Zenodo archive) also records two lines that the count leaves out: <code>No sp2 improper torsion term for Z2-Z6-Z4-N</code> (atoms CA O C N) and <code>&hellip; for JS-Z2-Z3-C</code> (atoms H CA N C). The backbone of <code>HF1</code> carries MAPLE atom types, and no improper parameters exist for these quartets, so the template has no improper terms centered on the backbone C and N of residue&nbsp;89. This is a limitation of this MAPLE version; the impropers on the neighboring residues&rsquo; side of each peptide bond are unaffected.</p>
         <div class="admonition tip">
           <p class="admonition-title">Checkpoint</p>
-          <p>Before moving on, confirm: the target residue appears in the diagnostics as <code>backbone_only</code>; tleap reports <code>Errors: 0</code>; the processed PDB carries the exported name <code>HF1</code> at position 89; the per-residue work directory <code>NCAA1_work/ncaa/HIF89/</code> holds the conformers and charge files. Read the remaining tleap <code>Warnings</code> &mdash; they usually concern the new template's atom types.</p>
+          <p>Before moving on, confirm: the target residue appears in the diagnostics as <code>backbone_only</code>; tleap reports <code>Errors: 0</code>; the processed PDB carries the exported name <code>HF1</code> at position 89; the per-residue work directory <code>NCAA1_work/ncaa/HIF89/</code> holds the conformers and charge files. Read the tleap warnings of your own run against the table above.</p>
         </div>
 
         <h2 id="case-2">Case 2 &mdash; Fitting torsions over explicit bonds</h2>
         <p><strong>What changed.</strong> One switch and one list: <code>torsionfit=true</code> (back to the default) and <code>torsion_bonds</code> naming the four residue-local bonds to refit &mdash; here the two sidechain chi angles, the covalent His&ndash;FAD link, and the ribityl chain of the cofactor.</p>
-        <p><strong>Input.</strong> The added lines in <code>NCAA2.in</code>:</p>
+        <p><strong>Input.</strong> <code>NCAA2.inp</code> differs from <code>NCAA1.inp</code> only in <code>input=NCAA2.in</code>:</p>
+        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.inp" download><code>NCAA2.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a></div>
+        <pre><code>#model=uma(size=uma-s-1p1)
+#parmfit(method=ncaa,input=NCAA2.in)
+#device=gpu0
+
+PDB MaDA.pdb</code></pre>
+        <p>In <code>NCAA2.in</code>, the Case&nbsp;1 line <code>torsionfit=false</code> is <em>replaced</em> by <code>torsionfit=true</code>, and <code>torsion_bonds</code> is new. Edit the existing line rather than appending a second one: a key that appears twice stops the run with a <code>Duplicate parmfit config key</code> error. The changed lines:</p>
         <pre><code># Sidechain torsion fitting on four representative residue-local bonds:
 # 3-8 chi1 (CA-CB), 8-11 chi2 (CB-imidazole C4), 6-60 covalent His-FAD link (N2-CH2), 22-25 ribityl (C8-C9)
 <strong>torsionfit=true
 torsion_bonds=3-8,8-11,6-60,22-25</strong></code></pre>
+        <div class="parmfit-inputs">
+          <a class="file-dl" href="../../assets/examples/parmfit/ncaa/NCAA2.in" download aria-label="Download NCAA2.in" title="Download NCAA2.in"></a>
+          <details class="parmfit-input-item">
+            <summary>NCAA2.in</summary>
+            <div class="parmfit-input-body">
+              <pre><code># NCAA route settings; declare method=ncaa in #parmfit(...) and reference this file via input=
+# Only non-default entries are listed; the generated parmfitrun.in shows every resolved value.
+
+ncaa_resids=HIF89
+ncaa_charges=0
+ncaa_resnames=HF1
+chg_level=HF/6-31G(d)
+
+# Sidechain torsion fitting on four representative residue-local bonds:
+# 3-8 chi1 (CA-CB), 8-11 chi2 (CB-imidazole C4), 6-60 covalent His-FAD link (N2-CH2), 22-25 ribityl (C8-C9)
+<strong>torsionfit=true
+torsion_bonds=3-8,8-11,6-60,22-25</strong></code></pre>
+            </div>
+          </details>
+        </div>
+        <p><strong>Run.</strong> <code>maple NCAA2.inp NCAA2.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 1&nbsp;h&nbsp;50&nbsp;min.</p>
         <p><strong>What happens.</strong> Each listed bond is scanned and refitted, and the improper-refit candidates that Case 1 merely reported are now actually refitted. All of this lands in <code>NCAA2_work/torsionfit/HIF89/</code>:</p>
         <pre><code>NCAA2_work/torsionfit/HIF89/
   NCAA2_torsionfit_9-14_scan_final.xyz      # 3-8   chi1
@@ -382,7 +379,7 @@ torsion_bonds=3-8,8-11,6-60,22-25</strong></code></pre>
   NCAA2_torsionfit_46-46_scan_final.xyz     # each scanned in pos and neg directions
   ... (per-bond .out logs, pos/neg trajectory and optimized xyz variants)</code></pre>
         <p>Watch the index space: <code>torsion_bonds</code> uses <strong>residue-local 1-based indices</strong> (ACE/NME caps not counted), but the scan files are named with the capped-model serials &mdash; the ACE cap contributes 6 atoms, so residue-local <code>3-8</code> appears as <code>9-14</code>, <code>6-60</code> as <code>12-66</code>, and so on. The self-referential pairs (<code>17-17</code>, <code>46-46</code>) are the improper refits. Each <code>i-j</code> entry names the central bond of the scanned dihedral &mdash; the order within a pair is free (<code>6-10</code> and <code>10-6</code> are the same bond; scan files use the ascending form) &mdash; and the scanned dihedral is the proper-dihedral term the topology already defines over that bond.</p>
-        <p>The stage timing shows what the switch costs &mdash; TorsionFit balloons from nothing to the dominant stage:</p>
+        <p>The stage timing in <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA2.out" download><code>NCAA2.out</code></a> shows what the switch costs &mdash; TorsionFit balloons from nothing to the dominant stage:</p>
         <pre><code>Stage timing:
   TorsionFit                      1h 34m 19s
   charge fitting                   13m 31s
@@ -398,9 +395,11 @@ torsion_bonds=3-8,8-11,6-60,22-25</strong></code></pre>
           <p>Confirm every declared bond has a scan file (translate residue-local to capped serials with the +6 offset of this ACE cap); confirm the improper self-pairs were refitted, not just reported. Keep the explicit list short and meaningful &mdash; each bond costs a full constrained scan.</p>
         </div>
 
-        <h2 id="case-3">Case 3 &mdash; Two residues and a sidecar config</h2>
+        <h2 id="case-3">Case 3 &mdash; Two residues and a sidecar config (advanced, optional)</h2>
+        <p>This case is optional. TRP482 is a standard residue; it is declared here only to demonstrate a two-residue run, and real inputs normally declare only residues that have no Amber template.</p>
         <p><strong>What changed.</strong> A second residue &mdash; <code>TRP482</code>, exported as <code>WF1</code> &mdash; is declared alongside the first, each with its own charge and exported name. <code>;</code> now separates per-residue torsion-bond groups. <strong>Bold</strong> lines are new or have changed in this case.</p>
         <p><strong>Input.</strong></p>
+        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.inp" download><code>NCAA3.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="../../assets/examples/parmfit/ncaa/MaDA.pdb" download><code>MaDA.pdb</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=ncaa,input=NCAA3.in)
 #device=gpu0
@@ -408,10 +407,14 @@ torsion_bonds=3-8,8-11,6-60,22-25</strong></code></pre>
 PDB MaDA.pdb</code></pre>
         <p><strong>External config.</strong></p>
         <div class="parmfit-inputs">
+          <a class="file-dl" href="../../assets/examples/parmfit/ncaa/NCAA3.in" download aria-label="Download NCAA3.in" title="Download NCAA3.in"></a>
           <details class="parmfit-input-item">
             <summary>NCAA3.in</summary>
             <div class="parmfit-input-body">
-              <pre><code># Two residues declared together; charges/names pair 1:1 with ncaa_resids
+              <pre><code># NCAA route settings; declare method=ncaa in #parmfit(...) and reference this file via input=
+# Only non-default entries are listed; the generated parmfitrun.in shows every resolved value.
+
+# Two residues declared together; charges/names pair 1:1 with ncaa_resids
 <strong>ncaa_resids=HIF89,TRP482
 ncaa_charges=0,0
 ncaa_resnames=HF1,WF1</strong>
@@ -425,7 +428,8 @@ torsion_bonds=3-8,8-11,6-60,22-25;5-6</strong></code></pre>
             </div>
           </details>
         </div>
-        <p><strong>What happens.</strong> Each declared residue runs the full Case-1/Case-2 pipeline independently &mdash; its own capped conformers, charge fit, template build, and torsion fitting &mdash; and the log shows two complete stage blocks, one per selector:</p>
+        <p><strong>Run.</strong> <code>maple NCAA3.inp NCAA3.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 1&nbsp;h&nbsp;38&nbsp;min.</p>
+        <p><strong>What happens.</strong> Each declared residue runs the full Case-1/Case-2 pipeline independently &mdash; its own capped conformers, charge fit, template build, and torsion fitting &mdash; and the log, <a class="file-link" href="../../assets/examples/parmfit/ncaa/NCAA3.out" download><code>NCAA3.out</code></a>, shows two complete stage blocks, one per selector:</p>
         <pre><code>Target: _89:HIF, _482:TRP (protein)
   PDB residue templates: matched=516, backbone_only=1, unmatched=0
     non-standard (matched backbone only): _89:HIF (also note)
@@ -461,7 +465,7 @@ Main products:
   NCAA residues built: _89:HIF -&gt; HF1, _482:TRP -&gt; WF1</code></pre>
         <div class="admonition tip">
           <p class="admonition-title">Checkpoint</p>
-          <p>Each residue's <code>Actual charge</code> must close to its own <code>ncaa_charges</code> value &mdash; the residue's atoms form one charge group constrained to that value. Verify both template pairs exist in the work root and that the combined tleap input loads both (<code>HF1</code> and <code>WF1</code>). If a selector is not unique in the PDB, the run stops with an error before any QM (quantum-mechanical) work starts; add a chain id to disambiguate. Declaring a standard residue like TRP is legitimate when you deliberately want it rebuilt through the NCAA flow &mdash; residues that already have an <code>$AMBERHOME</code> template normally never need declaring.</p>
+          <p>The result block reports <code>Actual charge</code> only for the last residue, so check every residue from its deployed template: the charges in <code>HF1_maple.prepin</code> and <code>WF1_maple.prepin</code> sum to &minus;0.000002 and 0.000000 here, matching <code>ncaa_charges=0,0</code> &mdash; each residue's atoms form one charge group constrained to its own value. Verify both template pairs exist in the work root and that the combined tleap input loads both (<code>HF1</code> and <code>WF1</code>). If a selector is not unique in the PDB, the run stops with an error before any QM (quantum-mechanical) work starts; add a chain id to disambiguate. Declaring a standard residue like TRP is legitimate when you deliberately want it rebuilt through the NCAA flow &mdash; residues that already have an <code>$AMBERHOME</code> template normally never need declaring.</p>
         </div>
 
         <h2 id="where-next">Where to Go Next</h2>
@@ -469,11 +473,11 @@ Main products:
           <li><a href="parmfit_ncaa.html">NCAA manual</a> &mdash; parameter reference, charge-fitting details, peptide boundary terms, and limits.</li>
           <li><a href="parmfit.html#chargefit">ChargeFit</a>, <a href="parmfit.html#iqm">QM reference</a>, and <a href="parmfit.html#torsionfit">TorsionFit</a> on the ParmFit hub &mdash; the stages these routes share, documented once on the hub.</li>
           <li><a href="parmfit_correction_tutorial.html">CORR tutorial</a> and <a href="parmfit_metalaa_tutorial.html">MetalAA tutorial</a> &mdash; simple worked examples for the other routes.</li>
-          <li><strong>Run archive.</strong> All inputs, configs, logs, and work-directory products behind every excerpt on this page are deposited at Zenodo: <a href="https://zenodo.org/records/23126301" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126301</a>.</li>
+          <li><strong>Example files and run archive.</strong> Download links for every input and output, and the Zenodo archive, are under <a href="#example-files">Example Files</a>.</li>
         </ul>
 
         <nav class="page-nav">
-          <a href="parmfit_ncaa.html">&larr; Previous: NCAA</a>
+          <a href="parmfit_correction_tutorial.html">&larr; Previous: CORR Tutorial</a>
           <a class="next" href="parmfit_metalaa_tutorial.html">Next: MetalAA Tutorial &rarr;</a>
         </nav>
       </article>

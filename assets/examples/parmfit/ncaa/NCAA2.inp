@@ -1,0 +1,5 @@
+#model=uma(size=uma-s-1p1)
+#parmfit(method=ncaa,input=NCAA2.in)
+#device=gpu0
+
+PDB MaDA.pdb
