@@ -118,7 +118,7 @@
                 <li class="open">
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit.html">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction.html">CORR</a></li>
+                    <li><a href="parmfit_refinement.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa.html">MetalAA</a></li>
                   </ul>
@@ -131,7 +131,7 @@
                 <li class="open">
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit_tutorial.html" class="active">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction_tutorial.html">CORR</a></li>
+                    <li><a href="parmfit_refinement_tutorial.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa_tutorial.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa_tutorial.html" class="active">MetalAA</a></li>
                   </ul>
@@ -167,23 +167,17 @@
         <h1>MetalAA Tutorial</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>This tutorial walks through the MetalAA route of <code>parmfit(method=metalaa)</code> in three cases on a cytochrome P450 BM3 pentamutant (Protein Data Bank ID 4ZF6), in which the heme iron is coordinated by four porphyrin nitrogen atoms and the thiolate sulfur of a proximal cysteine. The input structure <a class="file-link" href="../../assets/examples/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a> places the Fe ion at <code>A462</code>, the heme cofactor at <code>A461</code>, and the coordinating cysteine at <code>_400</code>. Case 1 declares the site and builds it with default cutoffs; Case 2 widens the environment around the unchanged site; Case 3 declares a standard amino acid for deliberate rebuilding, builds its template with the residue-build components of the NCAA (noncanonical amino acid) route, and folds it into the deployment. Every excerpt below is taken from verified runs of the inputs shown here (<code>MetalAA1&ndash;3.inp</code> plus their sidecar configs).</p>
+        <p>This tutorial walks through the MetalAA route of <code>parmfit(method=metalaa)</code> in three cases on a cytochrome P450 BM3 pentamutant (Protein Data Bank ID 4ZF6), in which the heme iron is coordinated by four porphyrin nitrogen atoms and the thiolate sulfur of a proximal cysteine. The input structure <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a> places the Fe ion at <code>A462</code>, the heme cofactor at <code>A461</code>, and the coordinating cysteine at <code>_400</code>. Case 1 declares the site and builds it with default cutoffs; Case 2 widens the environment around the unchanged site; Case 3 declares a standard amino acid for deliberate rebuilding, builds its template with the residue-build components of the NCAA (noncanonical amino acid) route, and carries the result into the deployment. Every excerpt below is taken from verified runs of the inputs shown here (<code>MetalAA1&ndash;3.inp</code> plus their sidecar configs).</p>
         <figure class="doc-figure" style="max-width:540px;">
           <img src="../../assets/images/parmfit/metalaa/metalaa_overview.png" alt="Overall structure of 4ZF6 showing the heme site: the Fe ion coordinated by four porphyrin nitrogen atoms and the proximal cysteine">
           <figcaption>Fig. 1 &mdash; Overall structure of 4ZF6 showing the heme site.</figcaption>
         </figure>
-        <p>Every run writes a <code>&lt;base&gt;.parmfitrun.in</code> file next to the output that echoes your configuration with defaults filled in; watch the log for <code>Unknown left-hand</code> warnings, which flag keys no builder consumed. The reference definition of every key lives in the <a href="parmfit_metalaa.html">MetalAA manual page</a> and the shared sections of the <a href="parmfit.html">ParmFit hub</a>; software and input requirements are summarized in the hub's <a href="parmfit.html#requirements">Requirements</a> section.</p>
+        <p>Every run writes a <code>&lt;base&gt;.parmfitrun.in</code> file next to the output that echoes your configuration with defaults filled in; watch the log for <code>Unknown left-hand</code> warnings, which flag keys that no builder consumed. The reference definition of every key lives in the <a href="parmfit_metalaa.html">MetalAA manual page</a> and the shared sections of the <a href="parmfit.html">ParmFit hub</a>; software and input requirements are summarized in the hub's <a href="parmfit.html#requirements">Requirements</a> section.</p>
 
         <h2 id="example-files">Example Files</h2>
-        <p>A linked file name on this page downloads the original file from the verified runs. Save the input files of one case into one folder; Case&nbsp;1 starts from <code>MetalAA1.inp</code>. The outputs are the reference results behind the excerpts.</p>
-        <ul>
-          <li><strong>Case 1:</strong> <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1.inp" download><code>MetalAA1.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1.in" download><code>MetalAA1.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1.out" download><code>MetalAA1.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1.parmfitrun.in" download><code>MetalAA1.parmfitrun.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1_metal.frcmod" download><code>MetalAA1_metal.frcmod</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1_metal_tleap.out" download><code>MetalAA1_metal_tleap.out</code></a>.</li>
-          <li><strong>Case 2:</strong> <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA2.inp" download><code>MetalAA2.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA2.in" download><code>MetalAA2.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA2.out" download><code>MetalAA2.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA2.parmfitrun.in" download><code>MetalAA2.parmfitrun.in</code></a>.</li>
-          <li><strong>Case 3:</strong> <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA3.inp" download><code>MetalAA3.inp</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA3.in" download><code>MetalAA3.in</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a>; outputs <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA3.out" download><code>MetalAA3.out</code></a>, <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA3.parmfitrun.in" download><code>MetalAA3.parmfitrun.in</code></a>.</li>
-        </ul>
-        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126309" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126309</a>. It has one zip per case &mdash; <code>Case1.zip</code> (54&nbsp;MB), <code>Case2.zip</code> (153&nbsp;MB), and <code>Case3.zip</code> (156&nbsp;MB) &mdash; and each unpacks to a folder of the same name. The CORR and NCAA archives use the same zip names, so keep each tutorial in its own folder.</p>
-        <p><strong>Software.</strong> Every case needs AmberTools and Gaussian&nbsp;16 on <code>PATH</code>: MetalAA always derives the site charges by RESP, whose ESP Gaussian evaluates, even with <code>iqm=false</code> &mdash; see the hub's <a href="parmfit.html#requirements">Requirements</a> and <a href="parmfit.html#iqm">QM Reference</a> sections.</p>
-        <h3 id="prepared-structure">Prepared Structure</h3>
+        <p>A linked file name on this page opens the original file from the verified runs, hosted in the <a href="https://github.com/AmiHaruka/MAPLE-Tutorial">MAPLE-Tutorial</a> repository; every input and output file is linked where it is used in the cases below. Save the input files of one case into one folder; Case&nbsp;1 starts from <code>MetalAA1.inp</code>.</p>
+        <p>The complete run archive, including every <code>_work/</code> directory, is on Zenodo: <a href="https://zenodo.org/records/23126309" target="_blank" rel="noopener noreferrer">10.5281/zenodo.23126309</a>. It has one zip per case &mdash; <code>Case1.zip</code> (54&nbsp;MB), <code>Case2.zip</code> (153&nbsp;MB), and <code>Case3.zip</code> (156&nbsp;MB) &mdash; and each unpacks to a folder of the same name. The Refinement and NCAA archives use the same zip names, so keep each tutorial in its own folder.</p>
+        <p><strong>Software.</strong> Every case needs AmberTools and Gaussian&nbsp;16 on <code>PATH</code>: MetalAA always derives the site charges by RESP &mdash; Gaussian evaluates the ESP &mdash; even with <code>iqm=false</code> &mdash; see the hub's <a href="parmfit.html#requirements">Requirements</a> and <a href="parmfit.html#iqm">QM Reference</a> sections.</p>
         <!-- To be written by the preparer of 4ZF6.pdb: how the file was built from PDB 4ZF6 (programs and versions,
              protonation choices, heme and iron handling, chain and numbering edits) and why the selectors read A461, A462 and _400.
              Facts read from the file on 2026-10-06: no REMARK records; every residue carries hydrogens (3708 H atoms);
@@ -192,17 +186,17 @@
              HEM has 30 H and 4 O, so both propionates are deprotonated (lig_charges=-4); CYM400 SG is 2.30 A from Fe;
              the tleap logs show AMBER24. -->
 
-        <h2 id="case-1">Case 1 &mdash; Declaring the first metal site</h2>
-        <p><strong>Goal.</strong> Parameterize the Fe site with the metal ion and its heme cofactor declared explicitly and every cutoff left at its default: donor detection at 2.7&nbsp;&Aring;, environment at 3.0&nbsp;&Aring;. Charges come from RESP (restrained electrostatic potential) at <code>PBE1PBE/def2SV</code> with the default <code>chgmod=1</code>, and bonded terms from <code>seminario</code> rather than the default <code>mseminario</code>. The split-valence <code>def2-SV</code> basis is a deliberate step down from the manual's <code>PBE1PBE/def2SVP</code> default &mdash; it keeps the RESP job on the 95-atom large model affordable.</p>
-        <p><strong>Input.</strong> MetalAA configs grow quickly, so the example uses a sidecar config file referenced with <code>input=</code> from the very first case; the method itself stays in the inline <code>#parmfit(...)</code> header. <code>ion_resids</code> selects the central ion, and <code>lig_resids</code>/<code>lig_charges</code> declare the heme as a cofactor built as a small molecule.</p>
-        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1.inp" download><code>MetalAA1.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="../../assets/examples/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a></div>
+        <h2 id="case-1">Case 1 &mdash; The basic input: parameterizing the Fe&ndash;heme site</h2>
+        <p><strong>Goal.</strong> Parameterize the Fe site with the metal ion and its heme cofactor declared explicitly and every cutoff left at its default: donor detection at 2.7&nbsp;&Aring;, environment at 3.0&nbsp;&Aring;. Charges come from RESP (restrained electrostatic potential) at <code>PBE1PBE/def2SV</code> with the default <code>chgmod=1</code>, and bonded terms from <code>seminario</code> rather than the default <code>mseminario</code>. The split-valence <code>def2SV</code> basis is a deliberate step down from the manual's <code>PBE1PBE/def2SVP</code> default &mdash; it keeps the RESP job on the 95-atom large model affordable.</p>
+        <p><strong>Input.</strong> MetalAA configs tend to list many keys, so the example uses a sidecar config file referenced with <code>input=</code> from the very first case; the method itself stays in the inline <code>#parmfit(...)</code> header. <code>ion_resids</code> selects the central ion, and <code>lig_resids</code>/<code>lig_charges</code> declare the heme as a cofactor built as a small molecule.</p>
+        <div class="code-file"><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA1.inp" download><code>MetalAA1.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=metalaa,input=MetalAA1.in)
 #device=gpu0
 
 PDB 4ZF6.pdb</code></pre>
         <div class="parmfit-inputs">
-          <a class="file-dl" href="../../assets/examples/parmfit/metalaa/MetalAA1.in" download aria-label="Download MetalAA1.in" title="Download MetalAA1.in"></a>
+          <a class="file-dl" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA1.in" download aria-label="Download MetalAA1.in" title="Download MetalAA1.in"></a>
           <details class="parmfit-input-item">
             <summary>MetalAA1.in</summary>
             <div class="parmfit-input-body">
@@ -221,7 +215,7 @@ chg_level=PBE1PBE/def2SV</code></pre>
         </div>
         <p><strong>Run.</strong> In the folder that holds <code>MetalAA1.inp</code>, <code>MetalAA1.in</code>, and <code>4ZF6.pdb</code>:</p>
         <pre><code>maple MetalAA1.inp MetalAA1.out    # or simply: maple MetalAA1.inp</code></pre>
-        <p>The second argument names the log; without it, MAPLE names the log after the input, so both forms write <code>MetalAA1.out</code>. The run also writes the resolved configuration <code>MetalAA1.parmfitrun.in</code> and the work directory <code>MetalAA1_work/</code>. A run has finished normally when the result block reads <code>Status: completed</code> and the log ends with a <code>TOTAL RUN TIME</code> line; on the tutorial hardware Case&nbsp;1 takes about 33&nbsp;min.</p>
+        <p>The second argument names the log; without it, MAPLE derives the log name from the input, so both forms write <code>MetalAA1.out</code>. The run also writes the resolved configuration <code>MetalAA1.parmfitrun.in</code> and the work directory <code>MetalAA1_work/</code>. A run has finished normally when the result block reads <code>Status: completed</code> and the log ends with a <code>TOTAL RUN TIME</code> line; on the tutorial hardware Case&nbsp;1 takes about 33&nbsp;min.</p>
         <p><strong>What happens.</strong></p>
         <ol>
           <li><strong>Site recognition.</strong> Template graph-matching flags the heme as the one unmatched residue &mdash; <em>seemingly not protein</em>, with a hint to declare it, which the <code>lig_resids</code> declaration above already handles. Donor atoms are detected among N, O, S, P, Se, and halogens within <code>donor_cutoff</code>: the cysteine SG and the four heme nitrogens. The ion plus donor residues form the core.</li>
@@ -247,9 +241,9 @@ chg_level=PBE1PBE/def2SV</code></pre>
         </div>
         <p>The run also prints a hint about charge elsewhere in the protein:</p>
         <pre><code>Warnings:
-  Environment contains potentially charged standard residues outside the site core: _1:THR, _3:LYS, _4:GLU, _9:LYS, _13:GLU, _15:LYS, _23:ASP, _24:LYS</code></pre>
-        <p>MAPLE scans the whole structure, not the neighborhood of the site, for standard residues outside the core that usually carry a formal charge, and names the first eight in sequence order &mdash; here the N-terminal THR1 through LYS24, far from the iron. Treat it as a reminder to check the charge model; it is not the list of residues that a wider cutoff would add (Case&nbsp;2 shows those).</p>
-        <p><strong>The resolved configuration.</strong> Next to <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1.out" download><code>MetalAA1.out</code></a>, MAPLE writes <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1.parmfitrun.in" download><code>MetalAA1.parmfitrun.in</code></a>:</p>
+  Potentially charged standard residues within 8&nbsp;&Aring; of the metal but outside the large model: _398:ARG</code></pre>
+        <p>The hint is a near-field check: residues within <code>cluster_cutoff</code> are already in the large model with net-charge group constraints, so the reminder names only potentially charged standard residues in the near field &mdash; within 8&nbsp;&Aring; of the metal but outside the large model. Here that is exactly one residue, <code>ARG398</code>. Treat it as a prompt to check the charge model, not as the list of residues that a wider cutoff would add (Case&nbsp;2 shows those).</p>
+        <p><strong>The resolved configuration.</strong> Next to <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA1.out" download><code>MetalAA1.out</code></a>, MAPLE writes <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA1.parmfitrun.in" download><code>MetalAA1.parmfitrun.in</code></a>:</p>
         <pre><code># parmfitrun.in - resolved parmfit configuration for method=metalaa
 # Generated by MAPLE parmfit; values are the user config entries with defaults filled in.
 # This file is itself a valid parmfit config and can be referenced via input=.
@@ -330,6 +324,7 @@ Stage timing:
   Hessian + Seminario       59s
   model optimization        29s
   tleap validation           5s
+  ...
 
 Next step:
   cd MetalAA1_work
@@ -343,10 +338,10 @@ Tleap status:
           <img src="../../assets/images/parmfit/metalaa/metalaa_site_closeup.png" alt="Render of the MetalAA1 site: the heme and cysteine stick model with pill labels and arrows marking the five donor atoms Z1 through Z5 around the iron sphere">
           <figcaption>Fig. 2 &mdash; The Case-1 site in the processed tleap PDB: the five donors typed <code>Z1</code>&ndash;<code>Z5</code> coordinate the Fe (<code>M1</code>).</figcaption>
         </figure>
-        <p><strong>Metal-site parameters.</strong> <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1_metal.frcmod" download><code>MetalAA1_metal.frcmod</code></a> holds the fitted terms of the site. Every Fe term is new: no Fe&ndash;donor parameters exist before the fit, so there is no &ldquo;before&rdquo; value. MAPLE fits the force constants from the MLIP Hessian with the Seminario method (<code>bonded=seminario</code>) and takes r<sub>0</sub> and &theta;<sub>0</sub> from the MLIP-optimized model, so r<sub>0</sub> agrees with that model by construction. The distances in the input crystal structure are an independent reference, not a validation of the force constants. Energies follow the Amber convention K(r&minus;r<sub>0</sub>)<sup>2</sup> and K(&theta;&minus;&theta;<sub>0</sub>)<sup>2</sup>.</p>
+        <p><strong>Metal-site parameters.</strong> <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA1_metal.frcmod" download><code>MetalAA1_metal.frcmod</code></a> holds the fitted terms of the site. Every Fe term is new: no Fe&ndash;donor parameters exist before the fit, so there is no &ldquo;before&rdquo; value. MAPLE fits the force constants from the MLIP Hessian with the Seminario method (<code>bonded=seminario</code>) and takes r<sub>0</sub> and &theta;<sub>0</sub> from the MLIP-optimized model, so r<sub>0</sub> agrees with that model by construction. The distances in the input crystal structure are an independent reference, not a validation of the force constants.</p>
         <div class="table-wrapper">
           <table>
-            <thead><tr><th>Bond</th><th>Atoms</th><th>K<sub>b</sub> (kcal&nbsp;mol<sup>&minus;1</sup>&nbsp;&Aring;<sup>&minus;2</sup>)</th><th>r<sub>0</sub> (&Aring;)</th><th>In <code>4ZF6.pdb</code> (&Aring;)</th></tr></thead>
+            <thead><tr><th>Bond</th><th>Atoms</th><th>K<sub>b</sub> (kcal&nbsp;mol<sup>&minus;1</sup>&nbsp;&Aring;<sup>&minus;2</sup>)</th><th>r<sub>0</sub> (&Aring;)</th><th>In <code>4ZF6</code> (&Aring;)</th></tr></thead>
             <tbody>
               <tr><td><code>Z1-M1</code></td><td>SG (CYM400)&ndash;Fe</td><td>80.99</td><td>2.300</td><td>2.30</td></tr>
               <tr><td><code>Z2-M1</code></td><td>NA (HEM)&ndash;Fe</td><td>50.68</td><td>2.071</td><td>2.05</td></tr>
@@ -374,7 +369,7 @@ Tleap status:
           </table>
         </div>
         <p>The file also holds 9 angles of the form X&ndash;Z&ndash;M1 (for example <code>CT-Z1-M1</code>) and the terms that the retyped donor atoms inherit from their original types (for example <code>CT-Z1</code>).</p>
-        <p><strong>The tleap warnings.</strong> <code>Tleap status</code> counts the warnings of the validation run, logged in <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA1_metal_tleap.out" download><code>MetalAA1_metal_tleap.out</code></a>; the count is unrelated to the environment hint above. The 8 warnings and the note are:</p>
+        <p><strong>The tleap warnings.</strong> <code>Tleap status</code> counts the warnings of the validation run, logged in <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA1_metal_tleap.out" download><code>MetalAA1_metal_tleap.out</code></a>; the count is unrelated to the environment hint above. The 8 warnings and the note are:</p>
         <div class="table-wrapper">
           <table>
             <thead><tr><th>tleap message</th><th>Cause</th><th>Action</th></tr></thead>
@@ -383,7 +378,7 @@ Tleap status:
               <tr><td><code>Converting N-terminal residue name to PDB format: NTHR -&gt; THR</code> (twice)</td><td>Saving the dry and the solvated PDB writes the standard terminal names.</td><td>None.</td></tr>
               <tr><td><code>Converting C-terminal residue name to PDB format: CSER -&gt; SER</code> (twice)</td><td>The same for the C terminus.</td><td>None.</td></tr>
               <tr><td><code>The unperturbed charge of the unit (-11.000000) is not zero.</code> and the note <code>Ignoring the warning from Unit Checking.</code></td><td>Net charge of the dry system before ions are added.</td><td>None for tleap, which adds 11&nbsp;Na<sup>+</sup> next.</td></tr>
-              <tr><td><code>addIons: 1st Ion &amp; target unit have charges of the same sign</code></td><td>The script also requests Cl<sup>&minus;</sup> after the Na<sup>+</sup> ions have neutralized the unit.</td><td>None.</td></tr>
+              <tr><td><code>addIons: 1st Ion &amp; target unit have charges of the same sign:</code></td><td>The script also requests Cl<sup>&minus;</sup> after the Na<sup>+</sup> ions have neutralized the unit.</td><td>None.</td></tr>
             </tbody>
           </table>
         </div>
@@ -393,10 +388,10 @@ Tleap status:
         </div>
 
         <h2 id="case-2">Case 2 &mdash; Widening the environment</h2>
-        <p><strong>What changed.</strong> Exactly one key: <code>cluster_cutoff</code> rises from the default 3.0&nbsp;&Aring; to 5.0&nbsp;&Aring;. Charge fitting should see the environment the site lives in. The large model used for the RESP stage keeps every non-water residue within <code>cluster_cutoff</code> of the metal, so the fitted site charges account for the electrostatic influence of those neighbors. The residues that the wider cutoff actually adds are listed below.</p>
-        <p>The two cutoffs answer different questions. <code>donor_cutoff</code> shapes the site: which atoms count as donors, which residues enter the core, which <code>Z</code> types are assigned &mdash; a chemistry fact of the coordination sphere. <code>cluster_cutoff</code> only extends the model beyond that core for the charge-fitting and relaxation stages. Case&nbsp;2 moves only the second dial.</p>
+        <p><strong>What changed.</strong> This case changes exactly one key: <code>cluster_cutoff</code> goes from the default 3.0&nbsp;&Aring; to 5.0&nbsp;&Aring;. Charge fitting should account for the environment around the site. The large model used for the RESP stage keeps every non-water residue within <code>cluster_cutoff</code> of the metal, so the fitted site charges account for the electrostatic influence of those neighbors. The residues that the wider cutoff actually adds are listed below.</p>
+        <p>The two cutoffs answer different questions. The <code>donor_cutoff</code> setting defines the site: which atoms count as donors, which residues enter the core, which <code>Z</code> types are assigned &mdash; that is coordination chemistry. <code>cluster_cutoff</code> only extends the model beyond that core for the charge-fitting and relaxation stages. Case&nbsp;2 changes only the second of these.</p>
         <p><strong>Input.</strong> <code>MetalAA2.inp</code> differs from <code>MetalAA1.inp</code> only in <code>input=MetalAA2.in</code>:</p>
-        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA2.inp" download><code>MetalAA2.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="../../assets/examples/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a></div>
+        <div class="code-file"><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA2.inp" download><code>MetalAA2.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=metalaa,input=MetalAA2.in)
 #device=gpu0
@@ -407,7 +402,7 @@ PDB 4ZF6.pdb</code></pre>
 # join the large model as RESP/MLIP context; core and site model stay unchanged
 cluster_cutoff=5.0</code></pre>
         <div class="parmfit-inputs">
-          <a class="file-dl" href="../../assets/examples/parmfit/metalaa/MetalAA2.in" download aria-label="Download MetalAA2.in" title="Download MetalAA2.in"></a>
+          <a class="file-dl" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA2.in" download aria-label="Download MetalAA2.in" title="Download MetalAA2.in"></a>
           <details class="parmfit-input-item">
             <summary>MetalAA2.in</summary>
             <div class="parmfit-input-body">
@@ -428,8 +423,8 @@ chg_level=PBE1PBE/def2SV
             </div>
           </details>
         </div>
-        <p><strong>Run.</strong> <code>maple MetalAA2.inp MetalAA2.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 2&nbsp;h&nbsp;01&nbsp;min.</p>
-        <p><strong>What happens.</strong> The header of <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA2.out" download><code>MetalAA2.out</code></a> now reads <code>cluster_cutoff: 5.00 A</code> and the large model grows from 95 to 175 atoms; the core, the site model, and the product list are untouched. The site model is just the core with the caps removed &mdash; it exists for export and deployment, while every fitting stage runs in the large model. The cost concentrates in the RESP stage:</p>
+        <p><strong>Run.</strong> <code>maple MetalAA2.inp MetalAA2.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 2&nbsp;h&nbsp;01&nbsp;min, and <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA2.parmfitrun.in" download><code>MetalAA2.parmfitrun.in</code></a> records the one key that separates it from Case&nbsp;1: <code>cluster_cutoff=5.0</code>.</p>
+        <p><strong>What happens.</strong> The header of <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA2.out" download><code>MetalAA2.out</code></a> now reads <code>cluster_cutoff: 5.00 A</code> and the large model grows from 95 to 175 atoms; the core, the site model, and the product list are untouched. The site model is just the core with the caps removed &mdash; it exists for export and deployment, while every fitting stage runs in the large model. The cost concentrates in the RESP stage:</p>
         <pre><code>MetalAA1 (3.0 A)                    MetalAA2 (5.0 A)
 ---------------------------------------------------------------------
 large model:  95 atoms               large model:  175 atoms
@@ -448,7 +443,7 @@ Core residues: CYM, HEM, FE          Core residues: CYM, HEM, FE   (unchanged)</
           <img src="../../assets/images/parmfit/metalaa/metalaa_large_models.png" alt="Four-panel render of the large model at cluster_cutoff 3 versus 5, top-down and flipped side views.">
           <figcaption>Fig. 3 &mdash; The large model at <code>cluster_cutoff</code> 3.0&nbsp;&Aring; (95 atoms) versus 5.0&nbsp;&Aring; (175 atoms), viewed from above and flipped; widening adds the surrounding environment to the model while the core stays unchanged.</figcaption>
         </figure>
-        <p><strong>What the wider cutoff adds.</strong> Comparing the two large models (<code>MetalAA1_work/MetalAA1_metal_large_raw.pdb</code> and <code>MetalAA2_work/MetalAA2_metal_large_raw.pdb</code>), four residues join the model, together with the ACE/NME caps built from their flanking residues 263, 265, 392, 394, and 403:</p>
+        <p><strong>What the wider cutoff adds.</strong> Comparing the two large models (<a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA1_metal_large_raw.pdb" download><code>MetalAA1_work/MetalAA1_metal_large_raw.pdb</code></a> and <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA2_metal_large_raw.pdb" download><code>MetalAA2_work/MetalAA2_metal_large_raw.pdb</code></a>), the wider cutoff adds four residues, together with the ACE/NME caps built from their flanking residues 263, 265, 392, 394, and 403:</p>
         <div class="table-wrapper">
           <table>
             <thead><tr><th>Residue</th><th>Closest atom to Fe (&Aring;)</th><th>Formal charge</th></tr></thead>
@@ -460,7 +455,7 @@ Core residues: CYM, HEM, FE          Core residues: CYM, HEM, FE   (unchanged)</
             </tbody>
           </table>
         </div>
-        <p>All of them are neutral, the large-model charge stays &minus;2, and none of the eight residues named by Case&nbsp;1's environment hint is among them. Even so, the donor charges move by up to 0.06&nbsp;e and the Fe charge by 0.07&nbsp;e: a neutral environment still changes the fit through its local partial charges and polarity. One pair of cutoffs shows how sensitive the charges are; it does not show which set is better.</p>
+        <p>All of them are neutral, the large-model charge stays &minus;2, and the residue flagged in Case&nbsp;1 (<code>ARG398</code>) remains outside the model. The fitted charges barely move: at most 0.06&nbsp;e for the donors and 0.07&nbsp;e for Fe. Widening the environment thus has only a small effect on the fit &mdash; when you want the environment accounted for, choose <code>cluster_cutoff</code> as your case requires.</p>
         <p>The options that change the model act differently:</p>
         <div class="table-wrapper">
           <table>
@@ -468,21 +463,21 @@ Core residues: CYM, HEM, FE          Core residues: CYM, HEM, FE   (unchanged)</
             <tbody>
               <tr><td><code>cluster_cutoff</code></td><td>Extends the large model by distance: residues with any atom within the cutoff of the metal join the RESP/MLIP context. The core and the site model do not change.</td></tr>
               <tr><td><code>add_resid</code></td><td>Forces residues into the core, with or without donor atoms. This changes what is fitted and what is deployed.</td></tr>
-              <tr><td>Environment hint (Case&nbsp;1)</td><td>Names up to eight standard residues anywhere in the structure that usually carry a formal charge, in sequence order. It is not filtered by distance.</td></tr>
+              <tr><td>Environment hint (Case&nbsp;1)</td><td>Names potentially charged standard residues within 8&nbsp;&Aring; of the metal but outside the large model.</td></tr>
               <tr><td>3&nbsp;&Aring; vs 5&nbsp;&Aring; comparison</td><td>Lists the residues actually added and how the site charges respond, so you can weigh sensitivity against cost.</td></tr>
             </tbody>
           </table>
         </div>
         <div class="admonition tip">
           <p class="admonition-title">Checkpoint</p>
-          <p><code>cluster_cutoff</code> controls context only. With automatic selection, a residue that appears in the core donated an atom within <code>donor_cutoff</code> &mdash; that is coordination chemistry, not something the cluster cutoff controls; <code>add_resid</code> can also put residues without donors into the core. Weigh the near-quadrupled RESP cost against how much the site charges actually moved &mdash; here up to 0.07&nbsp;e, although every added residue is neutral.</p>
+          <p><code>cluster_cutoff</code> controls context only. With automatic selection, a residue in the core has donated an atom within <code>donor_cutoff</code> &mdash; that is coordination chemistry, not something the cluster cutoff controls; <code>add_resid</code> can also put residues without donors into the core. Weigh the near-quadrupled RESP cost against how little the site charges actually moved &mdash; here at most 0.07&nbsp;e, although every added residue is neutral.</p>
         </div>
 
-        <h2 id="case-3">Case 3 &mdash; Rebuilding a standard residue into the deployment (advanced, optional)</h2>
-        <p>This case is optional. ILE401 is a standard residue with an Amber template; it is rebuilt here only to show how an NCAA declaration feeds the deployment, and real inputs normally declare only residues that need it.</p>
-        <p><strong>What changed.</strong> The addition on top of Case 2 is an NCAA declaration: <code>ncaa_resids=ILE401</code> declares a standard amino acid &mdash; ILE, renamed ILE&rarr;<code>ILM</code> on export &mdash; to be rebuilt with the residue-build components of the NCAA route; its fitted charges freeze into the site RESP. <strong>Bold</strong> lines are new in this case.</p>
-        <p><strong>Input.</strong> <code>MetalAA3.inp</code> differs from <code>MetalAA1.inp</code> only in <code>input=MetalAA3.in</code>:</p>
-        <div class="code-file"><a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA3.inp" download><code>MetalAA3.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="../../assets/examples/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a></div>
+        <h2 id="case-3">Case 3 &mdash; Rebuilding an NCAA into the deployment</h2>
+        <p>This case is optional. ILE401 is a standard residue with an Amber template; it is rebuilt here only to show how an NCAA declaration reaches the deployment, and in real work you normally declare only residues that need it.</p>
+        <p><strong>What changed.</strong> The addition on top of Case 2 is an NCAA declaration: with <code>ncaa_resids=ILE401</code>, a standard amino acid &mdash; ILE, renamed ILE&rarr;<code>ILM</code> on export &mdash; is rebuilt with the residue-build components of the NCAA route, and its fitted charges freeze into the site RESP. <strong>Bold</strong> lines are new in this case.</p>
+        <p><strong>Input.</strong> <code>MetalAA3.inp</code> differs from <code>MetalAA2.inp</code> only in <code>input=MetalAA3.in</code>:</p>
+        <div class="code-file"><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3.inp" download><code>MetalAA3.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a></div>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=metalaa,input=MetalAA3.in)
 #device=gpu0
@@ -496,7 +491,7 @@ ncaa_charges=0
 ncaa_resnames=ILM
 ncaa_mults=1</strong></code></pre>
         <div class="parmfit-inputs">
-          <a class="file-dl" href="../../assets/examples/parmfit/metalaa/MetalAA3.in" download aria-label="Download MetalAA3.in" title="Download MetalAA3.in"></a>
+          <a class="file-dl" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3.in" download aria-label="Download MetalAA3.in" title="Download MetalAA3.in"></a>
           <details class="parmfit-input-item">
             <summary>MetalAA3.in</summary>
             <div class="parmfit-input-body">
@@ -524,9 +519,9 @@ ncaa_mults=1</strong></code></pre>
             </div>
           </details>
         </div>
-        <p><strong>Run.</strong> <code>maple MetalAA3.inp MetalAA3.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 1&nbsp;h&nbsp;04&nbsp;min.</p>
+        <p><strong>Run.</strong> <code>maple MetalAA3.inp MetalAA3.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 1&nbsp;h&nbsp;04&nbsp;min, and <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3.parmfitrun.in" download><code>MetalAA3.parmfitrun.in</code></a> resolves the NCAA declaration into its full block: <code>ncaa_resids=ILE401</code>, charge 0, exported name <code>ILM</code>, and the charge-route keys.</p>
         <p><strong>What happens.</strong> The NCAA declaration tells MetalAA to build a fresh reference template for a site-adjacent residue: a capped model of ILE401 is optimized, Gaussian evaluates its ESP, AmberTools runs the two-stage RESP, and the fitted charges are frozen into the site charge problem. This build reuses the residue-build components of the NCAA route but is lighter than the standalone NCAA route: it optimizes one capped conformer instead of the &alpha;/&beta; pair, fits RESP on that single conformer, and builds the template with antechamber and parmchk2 only &mdash; with no Hessian/mSeminario refinement and no TorsionFit. The intermediates land in <code>MetalAA3_work/ncaa/ILE401/</code> (<code>MetalAA3_capped.mol2</code>, the ESP job, <code>resp1/resp2</code> outputs, <code>ILM.mol2</code>, <code>ILM.frcmod</code>), and the banner gains the declaration: <code>ncaa_resids: ['ILE401']</code>. Because ILE401 does not coordinate the metal, it does <em>not</em> enter the core &mdash; the result block still reports <code>Core residues: _400:CYM, A461:HEM, A462:FE</code>. The template surfaces in the deployment instead: the tleap input now loads <code>ILM.mol2</code> and <code>ILM.frcmod</code> alongside the site files, and the processed PDB carries <code>ILM</code> at residue 401.</p>
-        <p>In <a class="file-link" href="../../assets/examples/parmfit/metalaa/MetalAA3.out" download><code>MetalAA3.out</code></a>, the banner registers the declaration, the stage timing gives the build its own entry, and the tleap status comes back clean:</p>
+        <p>In <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3.out" download><code>MetalAA3.out</code></a>, the banner registers the declaration, the stage timing gives the build its own entry, and the tleap status comes back clean:</p>
         <pre><code>  ncaa_resids: ['ILE401']
   ...
   ncaa building               7s
@@ -563,11 +558,12 @@ solvatebox mol TIP3PBOX 10.0
         </div>
 
         <h2 id="where-next">Where to Go Next</h2>
+        <p>The deployment is validated for you: the route ran tleap itself and reported <code>Errors: 0</code>, and the charge ledger above closes to &minus;2. Take the solvated topology into your simulation after reading its warnings; the <a href="parmfit_metalaa.html">manual</a> has the charge-convention details.</p>
         <ul>
           <li><a href="parmfit_metalaa.html">MetalAA manual</a> &mdash; parameter reference, charge convention, <code>chgmod</code> table, and limits.</li>
           <li><a href="parmfit.html#chargefit">ChargeFit</a> and the <a href="parmfit.html#iqm">QM (quantum-mechanical) reference</a> on the ParmFit hub &mdash; the stages these routes share, documented once on the hub.</li>
-          <li><a href="parmfit_ncaa_tutorial.html">NCAA tutorial</a> &mdash; the standalone NCAA route; this tutorial&rsquo;s Case 3 rebuilds ILE401 into ILM with the NCAA route&rsquo;s residue-build components, a lighter build than the standalone route. <a href="parmfit_correction_tutorial.html">CORR tutorial</a> &mdash; the small-molecule route.</li>
-          <li><strong>Example files and run archive.</strong> Download links for every input and output, and the Zenodo archive, are under <a href="#example-files">Example Files</a>.</li>
+          <li><a href="parmfit_ncaa_tutorial.html">NCAA tutorial</a> &mdash; the standalone NCAA route; this tutorial&rsquo;s Case 3 rebuilds ILE401 into ILM with the NCAA route&rsquo;s residue-build components, a lighter build than the standalone route. <a href="parmfit_refinement_tutorial.html">Refinement tutorial</a> &mdash; the small-molecule route.</li>
+          <li><strong>Example files and run archive.</strong> See <a href="#example-files">Example Files</a> for the hosted files and the complete Zenodo archive.</li>
         </ul>
 
         <nav class="page-nav">

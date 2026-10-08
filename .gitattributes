@@ -1,3 +1,0 @@
-# Tutorial example files are verbatim copies from the Zenodo run archives:
-# keep their bytes (no EOL conversion) and their original trailing spaces.
-assets/examples/** -text -whitespace

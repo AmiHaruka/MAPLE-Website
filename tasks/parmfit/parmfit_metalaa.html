@@ -118,7 +118,7 @@
                 <li class="open">
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit.html" class="active">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction.html">CORR</a></li>
+                    <li><a href="parmfit_refinement.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa.html" class="active">MetalAA</a></li>
                   </ul>
@@ -131,7 +131,7 @@
                 <li>
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit_tutorial.html">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction_tutorial.html">CORR</a></li>
+                    <li><a href="parmfit_refinement_tutorial.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa_tutorial.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa_tutorial.html">MetalAA</a></li>
                   </ul>
@@ -165,8 +165,8 @@
         <h1>ParmFit MetalAA</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>MetalAA is the <code>parmfit(method=metalaa)</code> route for a PDB target ion selected with <code>ion_resids</code>. It locates the target ion and identifies its coordination environment: donor atoms are detected among <strong>N, O, S, P, Se, F, Cl, Br, I</strong> within <code>donor_cutoff</code> (default 2.7&nbsp;&Aring;). The target ion together with donor residues and any <code>add_resid</code> entries form the <strong>core</strong>. Explicit metal-donor SERIAL pairs can be provided via <code>set_bonded</code> to override automatic recognition.</p>
-        <p>MetalAA then constructs two models. A <strong>large model</strong> (core + environment residues within <code>cluster_cutoff</code>) is built for MLIP optimization, RESP charge fitting, and Hessian-based bonded parameterization. Broken peptide boundaries are sealed with <strong>ACE/NME caps</strong>, and sequence gaps of up to five missing residues between selected peptide residues on one chain are replaced with <strong>Gly bridges</strong> to maintain backbone connectivity. A <strong>site model</strong> (target metal + final core residues only) is the deployable output; RESP charges from the large model are projected onto the site model. In the deployable site model, residue names are renamed to compact export codes (e.g. <code>CYM</code> becomes <code>CM1</code>, <code>HID</code> becomes <code>HD1</code>) and atom types are renamed locally: the metal receives <code>M1</code>/<code>M2</code>/..., each direct donor atom receives <code>Z1</code>/<code>Z2</code>/..., while other atoms retain their original forcefield types.</p>
+        <p>MetalAA is the <code>parmfit(method=metalaa)</code> route for a PDB target ion selected with <code>ion_resids</code>. It locates the target ion and identifies its coordination environment: donor atoms are detected among <strong>N, O, S, P, Se, F, Cl, Br, I</strong> within <code>donor_cutoff</code> (default 2.7&nbsp;&Aring;). The target ion, its donor residues, and any <code>add_resid</code> entries together form the <strong>core</strong>. Explicit metal-donor SERIAL pairs can be provided via <code>set_bonded</code> to override automatic recognition.</p>
+        <p>MetalAA then constructs two models. A <strong>large model</strong> (core + environment residues within <code>cluster_cutoff</code>) is built for MLIP optimization, RESP charge fitting, and Hessian-based bonded parameterization. Broken peptide boundaries are sealed with <strong>ACE/NME caps</strong>, and when two selected peptide residues on one chain are at most five sequence positions apart, the intervening residues between them are rewritten as <strong>Gly bridges</strong> to maintain backbone connectivity. A <strong>site model</strong> (target metal + final core residues only) is the deployable output; declared NCAA residues outside the site model are folded into the tleap deployment alongside it. RESP charges from the large model are projected onto the site model. In the deployable site model, residue names are changed to compact export codes (e.g. <code>CYM</code> becomes <code>CM1</code>, <code>HID</code> becomes <code>HD1</code>) and atom types are renamed locally: the metal receives <code>M1</code>/<code>M2</code>/..., each direct donor atom receives <code>Z1</code>/<code>Z2</code>/..., while other atoms retain their original forcefield types.</p>
 
 <p>For a worked walkthrough, see the <a href="parmfit_metalaa_tutorial.html">MetalAA tutorial</a>.</p>
 
@@ -182,16 +182,16 @@
         <div class="admonition note">
           <p class="admonition-title">Charge convention (ion_charges / ion_mults)</p>
           <p><code>ion_charges</code> is the formal charge carried by the target metal ion; it drives metal typing and ion frcmod selection. The large-model net charge is computed as <code>Q_large = ion_charges + &Sigma; net_charge(other residues)</code>: every other residue contributes its declared charge (<code>lig_charges</code>, <code>ncaa_charges</code>) or the net charge of its Amber graph template. <code>ion_mults</code> is the spin multiplicity of the QM cluster (large model).</p>
-          <p>Residues without a complete Amber template contribute a provisional zero. Declare unmatched nonprotein residues via <code>lig_resids</code> (or <code>ncaa_resids</code>) so they are parameterized and charged explicitly instead.</p>
+          <p>Residues without a complete Amber template are counted as zero for the time being. Declare unmatched nonprotein residues via <code>lig_resids</code> (or <code>ncaa_resids</code>) so they are parameterized and charged explicitly rather than left at zero.</p>
         </div>
 
         <div class="admonition note">
           <p class="admonition-title">Site charges are RESP-only</p>
-          <p>MetalAA does not expose <code>chg_fit</code>. Site charges are always derived at runtime &mdash; Gaussian evaluates the large-model ESP and AmberTools performs the two-stage RESP fitting. <code>chg_level</code> and <code>chg_route</code> control that calculation, while <code>chgmod</code> and <code>fixchg_resids</code> retain their standard-residue fixed-charge semantics.</p>
+          <p>MetalAA does not expose <code>chg_fit</code>. Site charges are always derived at runtime &mdash; Gaussian evaluates the large-model ESP and AmberTools performs the two-stage RESP fitting. <code>chg_level</code> and <code>chg_route</code> control that calculation, while <code>chgmod</code> and <code>fixchg_resids</code> keep their standard fixed-charge behavior. The projected site charges must close to the integer site charge &mdash; a run that finishes has passed that check.</p>
         </div>
 
         <h2 id="workflow">Workflow</h2>
-        <p>The formal statement of the route:</p>
+        <p>The route in outline:</p>
         <figure class="pseudo">
           <figcaption>Algorithm 3 &mdash; MetalAA: parameterizing a metal site</figcaption>
           <ol class="pseudo-body">
@@ -210,11 +210,11 @@
         <ol>
           <li><strong>Metal-site recognition.</strong> Locate the target ion, donor atoms, core residues, and optional user-added residues.</li>
           <li><strong>Ligand building.</strong> For each declared ligand (<code>lig_resids</code>): copy the residue, fit its charges, type it with AmberTools, and register the cofactor frcmod.</li>
-          <li><strong>NCAA building.</strong> Declared residues (<code>ncaa_resids</code>) are built with the residue-build components of the NCAA route: one optimized capped conformer, RESP on that conformer, and an antechamber/parmchk2 template &mdash; without the &alpha;/&beta; pair, Hessian refinement, or TorsionFit of the standalone NCAA route. Their fitted charges are frozen into the site RESP.</li>
+          <li><strong>NCAA building.</strong> Declared residues (<code>ncaa_resids</code>) are built with the residue-build components of the NCAA route: one optimized capped conformer, RESP on that conformer, and an antechamber/parmchk2 template &mdash; without the &alpha;/&beta; pair, Hessian refinement, or TorsionFit of the standalone NCAA route. How the fitted charges enter the deployment depends on placement: a residue that coordinates the metal is fitted freely with the site; a non-coordinating residue inside the large model has its fitted charges frozen into the site RESP; a residue outside the large model keeps its independent charges and is folded into the tleap export.</li>
           <li><strong>Large model.</strong> Build and optimize a large metal-site model for RESP, Hessian, and parameter fitting.</li>
           <li><strong>RESP charges.</strong> Gaussian evaluates the ESP of the optimized large model and AmberTools performs the two-stage RESP fit; the charges are then projected onto the deployable site model.</li>
           <li><strong>Bonded fitting.</strong> Use Seminario or modified Seminario to fit metal-related bond and angle terms.</li>
-          <li><strong>Deployment files.</strong> Write site mol2, final metal frcmod, tleap PDB/input, and dry/solvated tleap outputs.</li>
+          <li><strong>Deployment files.</strong> Write site mol2, final metal frcmod, tleap PDB/input, and dry/solvated tleap outputs. MetalAA runs tleap itself; the result block prints the command under <code>Next step</code>.</li>
         </ol>
 
         <h2 id="parameters">Core Parameters</h2>
@@ -226,9 +226,9 @@
               <tr><td><code>ion_charges</code></td><td><code>0</code></td><td>Formal charge of the target metal ion, used for ion typing and frcmod selection; see the charge convention above.</td></tr>
               <tr><td><code>ion_mults</code></td><td><code>1</code></td><td>Spin multiplicity of the QM cluster (large model).</td></tr>
               <tr><td><code>lig_resids</code>, <code>lig_charges</code>, <code>lig_mults</code></td><td>None</td><td>Coordinating ligand/cofactor residue selectors, their 1:1 formal charges, and their spin multiplicities (default 1); ligands are parameterized as small molecules in <code>lig/&lt;tag&gt;/</code>.</td></tr>
-              <tr><td><code>lig_chgfit</code></td><td><code>abcg2</code></td><td>Charge method for declared ligands (<code>lig_chglevel</code>/<code>lig_chgroute</code> control RESP-style settings).</td></tr>
-              <tr><td><code>ncaa_resids</code>, <code>ncaa_charges</code></td><td>None</td><td>Noncanonical residues &mdash; or standard residues deliberately rebuilt &mdash; in the site, built with the NCAA residue-build components; pair <code>ncaa_charges</code> 1:1, optionally <code>ncaa_resnames</code>/<code>ncaa_mults</code>. Their charges are frozen into the site RESP.</td></tr>
-              <tr><td><code>ncaa_chgfit</code>, <code>ncaa_chglevel</code>, <code>ncaa_chgroute</code></td><td><code>resp</code>, <code>HF/6-31G(d)</code>, empty</td><td>Charge route for NCAA-built residues and its Gaussian level/route; the fitted charges are frozen into the site RESP.</td></tr>
+              <tr><td><code>lig_chgfit</code></td><td><code>abcg2</code></td><td>Charge method for declared ligands (<code>lig_chglevel</code> defaults to <code>HF/6-31G(d)</code>; <code>lig_chgroute</code> is empty).</td></tr>
+              <tr><td><code>ncaa_resids</code>, <code>ncaa_charges</code></td><td>None</td><td>Noncanonical residues &mdash; or standard residues deliberately rebuilt &mdash; in the site, built with the NCAA residue-build components; pair <code>ncaa_charges</code> 1:1, optionally <code>ncaa_resnames</code>/<code>ncaa_mults</code>. A coordinating residue is fitted freely with the site; a non-coordinating one inside the large model has its charges frozen into the site RESP, and one outside the large model is folded into the tleap export.</td></tr>
+              <tr><td><code>ncaa_chgfit</code>, <code>ncaa_chglevel</code>, <code>ncaa_chgroute</code></td><td><code>resp</code>, <code>HF/6-31G(d)</code>, empty</td><td>Charge route for NCAA-built residues and its Gaussian level/route; the fitted charges follow the placement rules under <code>ncaa_resids</code>.</td></tr>
               <tr><td><code>add_resid</code></td><td>None</td><td>Additional residues to force into the metal-site core; core membership puts a residue into the RESP charge fit, the Hessian-bonded fitting, and the deployed site model.</td></tr>
               <tr><td><code>set_bonded</code></td><td>Auto</td><td>Explicit metal-donor serial pairs, written as <code>SERIAL-SERIAL</code> tokens.</td></tr>
               <tr><td><code>keep</code></td><td>None</td><td>Chooses which alternate conformation to build when the PDB lists several for a residue: append the altloc letter to the selector (<code>A181B</code>) to build that residue from its altloc-B atoms; an entry without a letter keeps the default resolution (altloc A, else the highest-occupancy set).</td></tr>
@@ -238,9 +238,10 @@
               <tr><td><code>fixchg_resids</code></td><td>None</td><td>Residues whose charges should be fixed to standard Amber references during RESP.</td></tr>
               <tr><td><code>iqm</code></td><td><code>false</code></td><td>QM reference for geometry optimization and Hessian work. See the <a href="parmfit.html#iqm">main ParmFit page</a> for details.</td></tr>
               <tr><td><code>chg_level</code></td><td><code>PBE1PBE/def2SVP</code></td><td>Gaussian level for RESP ESP generation. Always active regardless of <code>iqm</code>.</td></tr>
+              <tr><td><code>chg_route</code></td><td>Empty</td><td>Additional Gaussian route text for RESP ESP jobs.</td></tr>
               <tr><td><code>pro_ff</code>, <code>wat_ff</code>, <code>ion_ff</code></td><td><code>ff14SB</code>, <code>tip3p</code>, <code>12_6</code></td><td>Protein, water, and ion parameter models for tleap deployment. MetalAA validates <code>ion_ff</code> against <code>hfe</code>, <code>cm</code>, <code>iod</code>, <code>12_6</code>, and <code>12_6_4</code>.</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Metal-related bond/angle fitting: <code>mseminario</code> or <code>seminario</code>.</td></tr>
-              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor <em>s</em> for Seminario/mSeminario Hessian-based fitting: the fitted bond and angle force constants are multiplied by <em>s</em><sup>2</sup> (0.95 gives &times;0.9025).</td></tr>
+              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor for Hessian-based fitting.</td></tr>
             </tbody>
           </table>
         </div>
@@ -264,12 +265,12 @@
           </table>
         </div>
 
-        <p>Use <code>fixchg_resids</code> to lock entire residues to standard Amber reference charges regardless of the <code>chgmod</code> policy. Specifying a non-standard residue that lacks a reference charge entry will cause a startup error.</p>
+        <p>Use <code>fixchg_resids</code> to lock entire residues to standard Amber reference charges regardless of the <code>chgmod</code> policy. A listed residue outside the large model is skipped with a warning. Specifying a non-standard residue that lacks a reference charge entry stops the run with an error at the RESP stage.</p>
 
         <h2 id="parmfit-input">Input Files</h2>
 
         <h3 id="simple-input">Simple Input</h3>
-        <p>A simple MetalAA job declares <code>method=metalaa</code> inline and keeps its commonly used ParmFit options in a sidecar config. The target selects the metal ion; <code>ion_charges</code>/<code>ion_mults</code> give the metal formal charge and the cluster multiplicity, and <code>lig_resids</code>/<code>lig_charges</code> declare the cofactor. The example is Case&nbsp;1 of the <a href="parmfit_metalaa_tutorial.html">MetalAA tutorial</a>, which provides both files and <code>4ZF6.pdb</code>. There the heme carries &minus;4 &mdash; the porphyrin dianion (&minus;2) plus two deprotonated propionates &mdash; and Fe(III) +3 with the thiolate &minus;1 gives the large-model charge &minus;2; use the charge that matches the protonation state of your own cofactor.</p>
+        <p>A simple MetalAA job declares <code>method=metalaa</code> inline and lists its ParmFit options in a sidecar config. The <code>ion_resids</code> selector picks the metal ion; <code>ion_charges</code>/<code>ion_mults</code> give the metal formal charge and the cluster multiplicity, and <code>lig_resids</code>/<code>lig_charges</code> declare the cofactor. The example is Case&nbsp;1 of the <a href="parmfit_metalaa_tutorial.html">MetalAA tutorial</a>, which provides the input files and <code>4ZF6.pdb</code>. There the heme carries &minus;4 &mdash; the porphyrin dianion (&minus;2) plus two deprotonated propionates &mdash; and Fe(III) +3 with the thiolate &minus;1 gives the large-model charge &minus;2; use the charge that matches the protonation state of your own cofactor.</p>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=metalaa,input=MetalAA1.in)
 #device=gpu0
@@ -294,7 +295,7 @@ chg_level=PBE1PBE/def2SV</code></pre>
         </div>
 
         <h3 id="full-external-input">Full External Input</h3>
-        <p>For a longer setup, keep the MAPLE launcher short and move ParmFit parameters into an external <code>.parmfit</code> file. Declare <code>method=metalaa</code> inline together with <code>input=</code>; the external config must not set <code>method=</code>. The PDB remains in the MAPLE input.</p>
+        <p>For a more complex setup, keep the MAPLE launcher short and move ParmFit parameters into an external <code>.parmfit</code> file. Declare <code>method=metalaa</code> inline together with <code>input=</code>; the external config must not set <code>method=</code>. The PDB remains in the MAPLE input.</p>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=metalaa,input=MetalAA.parmfit)
 #device=gpu0
@@ -376,7 +377,7 @@ ncaa_chgroute=</code></pre>
 
         <h2 id="requirements">Requirements and Limits</h2>
         <ul>
-          <li>Current MetalAA is intended for a single metal center. Another ion inside the donor cutoff is treated as an unsupported case.</li>
+          <li>Current MetalAA is intended for a single metal center; a second ion inside the donor cutoff is not supported.</li>
           <li>Ligand or cofactor residues without reliable atom types should be declared through <code>lig_resids</code> (small-molecule build) or <code>ncaa_resids</code> (NCAA residue build: one conformer, RESP, AmberTools template).</li>
           <li>When automatic donor detection is not sufficient, use <code>set_bonded</code> to provide explicit metal-donor serial pairs.</li>
         </ul>

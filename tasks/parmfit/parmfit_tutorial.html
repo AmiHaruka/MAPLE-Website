@@ -66,8 +66,8 @@
       padding: 0.18rem 0.6rem;
     }
 
-    .card-corr .tut-card-route,
-    .card-corr .tut-card-cta { color: #2563eb; }
+    .card-refinement .tut-card-route,
+    .card-refinement .tut-card-cta { color: #2563eb; }
     .card-ncaa .tut-card-route,
     .card-ncaa .tut-card-cta { color: #15803d; }
     .card-metal .tut-card-route,
@@ -214,7 +214,7 @@
                 <li class="open">
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit.html">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction.html">CORR</a></li>
+                    <li><a href="parmfit_refinement.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa.html">MetalAA</a></li>
                   </ul>
@@ -227,7 +227,7 @@
                 <li class="open">
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit_tutorial.html" class="active">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction_tutorial.html">CORR</a></li>
+                    <li><a href="parmfit_refinement_tutorial.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa_tutorial.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa_tutorial.html">MetalAA</a></li>
                   </ul>
@@ -264,10 +264,10 @@
 
         <h2 id="systems">The Systems</h2>
         <div class="tut-cards">
-          <a class="tut-card card-corr" href="parmfit_correction_tutorial.html">
+          <a class="tut-card card-refinement" href="parmfit_refinement_tutorial.html">
             <div class="tut-card-img">
-              <span class="tut-card-route">CORR</span>
-              <img src="../../assets/images/parmfit/correction/choi001.png" alt="Ball-and-stick render of o-iodophenol: a benzene ring bearing a large iodine ball and a hydroxyl group">
+              <span class="tut-card-route">Refinement</span>
+              <img src="../../assets/images/parmfit/refinement/choi001.png" alt="Ball-and-stick render of o-iodophenol: a benzene ring bearing a large iodine ball and a hydroxyl group">
             </div>
             <div class="tut-card-body">
               <h3>o-Iodophenol</h3>
@@ -301,15 +301,15 @@
 
         <h2 id="before">Before You Start</h2>
         <ul>
-          <li><strong>Requirements.</strong> Software and input needs are summarized in the <a href="parmfit.html#requirements">ParmFit hub&rsquo;s Requirements section</a>. Only CORR Case&nbsp;1 runs without Gaussian; every other case needs it for its RESP charges.</li>
-          <li><strong>Model.</strong> Every run in these tutorials uses the same checkpoint &mdash; UMA-S-1.1, selected with <code>#model=uma(size=uma-s-1p1)</code>.</li>
+          <li><strong>Requirements.</strong> Software and input needs are summarized in the <a href="parmfit.html#requirements">ParmFit hub&rsquo;s Requirements section</a>. Only Refinement Case&nbsp;1 runs without Gaussian; every other case needs it for its RESP charges &mdash; the Refinement cases also for their QM reference.</li>
+          <li><strong>Model.</strong> Every run in these tutorials uses the same checkpoint &mdash; UMA-S-1.1, selected with <code>#model=uma(size=uma-s-1p1)</code> (the Refinement launchers add <code>task=omol</code>).</li>
           <li><strong>Hardware.</strong> Every excerpt and timing in these tutorials comes from runs on an RTX 3060 Laptop GPU and an 8-core AMD CPU &mdash; sufficient for every run shown here. Every Gaussian job used the defaults <code>qm_nproc=8</code> and <code>qm_mem=24</code>&nbsp;(GB); set lower values in the sidecar config on a smaller machine (see <a href="parmfit.html#general-settings">General Settings</a>).</li>
-          <li><strong>Example files.</strong> Right after its Overview, each tutorial lists every input and output file as a download link, followed by its complete Zenodo run archive.</li>
+          <li><strong>Example files.</strong> Right after its Overview, each tutorial links every input and output file where it is used, followed by its complete Zenodo run archive.</li>
         </ul>
 
         <nav class="page-nav">
           <a href="parmfit_metalaa.html">&larr; Previous: MetalAA</a>
-          <a class="next" href="parmfit_correction_tutorial.html">Next: CORR Tutorial &rarr;</a>
+          <a class="next" href="parmfit_refinement_tutorial.html">Next: Refinement Tutorial &rarr;</a>
         </nav>
       </article>
     </main>

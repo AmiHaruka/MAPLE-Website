@@ -118,7 +118,7 @@
                 <li class="open">
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit.html" class="active">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction.html">CORR</a></li>
+                    <li><a href="parmfit_refinement.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa.html">MetalAA</a></li>
                   </ul>
@@ -131,7 +131,7 @@
                 <li>
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit_tutorial.html">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction_tutorial.html">CORR</a></li>
+                    <li><a href="parmfit_refinement_tutorial.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa_tutorial.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa_tutorial.html">MetalAA</a></li>
                   </ul>
@@ -164,11 +164,11 @@
 
         <h2 id="overview">Overview</h2>
         <p>ParmFit is the MAPLE force-field parameterization task. It turns MAPLE calculator results, existing topology files, and optional external QM references into Amber-style parameters for ligand/cofactor correction, noncanonical amino-acid templates, and metal-site parameterization.</p>
-        <p>ParmFit has three public method keywords. <code>method=corr</code> refines parameters for an existing <code>mol2</code> topology. <code>method=ncaa</code> parameterizes noncanonical amino-acid residues and <code>method=metalaa</code> parameterizes a metal site; both read a hydrogenated PDB block, and the route is selected explicitly with the method keyword.</p>
-        <p>ParmFit calls AmberTools utilities to handle parameter assignment and template generation; the required tools are listed under <a href="#requirements">Requirements</a>. Before running MD with a ParmFit topology, follow the checks in <a href="#using-results">Using the Results</a>.</p>
+        <p>ParmFit has three public method keywords. <code>method=refinement</code> refines parameters for an existing <code>mol2</code> topology. <code>method=ncaa</code> parameterizes noncanonical amino-acid residues and <code>method=metalaa</code> parameterizes a metal site; both read a hydrogenated PDB block.</p>
+        <p>ParmFit calls AmberTools utilities to handle parameter assignment and template generation; the required tools are listed under <a href="#requirements">Requirements</a>. Before running MD with a ParmFit topology, follow each route&rsquo;s deployment checks &mdash; the tleap validation must report <code>Errors: 0</code>, the fitted charges must match their targets, and MAPLE-typed topologies go through a ParmEd pass before SHAKE.</p>
 
         <figure class="doc-figure" style="max-width:880px;">
-          <img src="../../assets/images/parmfit/parmfit_routes.svg" alt="Flowcharts of the three ParmFit routes: CORR from a typed mol2, NCAA from a protein PDB with declared residues, and MetalAA from a protein PDB with metal, ligand, and NCAA declarations; dashed boxes mark optional stages and each column lists the engines the route calls" onerror="this.onerror=null;this.src=this.src.replace('.svg','.png');">
+          <img src="../../assets/images/parmfit/parmfit_routes.svg" alt="Flowcharts of the three ParmFit routes: Refinement from a typed mol2, NCAA from a protein PDB with declared residues, and MetalAA from a protein PDB with metal, ligand, and NCAA declarations; dashed boxes mark optional stages and each column lists the engines the route calls" onerror="this.onerror=null;this.src=this.src.replace('.svg','.png');">
           <figcaption>Fig. 1 &mdash; The three ParmFit routes. Dashed boxes are optional stages (config switches). Each column lists the engines that route actually calls.</figcaption>
         </figure>
 
@@ -185,8 +185,8 @@
             </thead>
             <tbody>
               <tr>
-                <td><a href="parmfit_correction.html">CORR</a></td>
-                <td><code>corr</code></td>
+                <td><a href="parmfit_refinement.html">Refinement</a></td>
+                <td><code>refinement</code></td>
                 <td>Ligand, cofactor, or small molecule with existing mol2 topology</td>
                 <td>Refined Amber mol2/frcmod and GROMACS top/gro</td>
               </tr>
@@ -206,15 +206,17 @@
           </table>
         </div>
 
-        <p><code>correction</code> is accepted as a synonym of the <code>corr</code> keyword. The input for each route &mdash; its header keys and the required structure block (a coordinate block for CORR, a PDB block for NCAA and MetalAA) &mdash; is specified in that route&rsquo;s manual. The <a href="parmfit_tutorial.html">ParmFit Tutorials</a> work through each route on a real system.</p>
+        <p>The <code>method</code> keyword selects the route; without an explicit <code>method</code> (and without <code>input=</code>), ParmFit defaults to <code>refinement</code>. The input for each route &mdash; its header keys and the required structure block (a coordinate block for Refinement, a PDB block for NCAA and MetalAA) &mdash; is specified in that route&rsquo;s manual. The <a href="parmfit_tutorial.html">ParmFit Tutorials</a> work through each route on a real system.</p>
 
         <h2 id="requirements">Requirements</h2>
 
-        <p>All routes need a working MAPLE installation and AmberTools on <code>PATH</code> &mdash; a run invokes whichever utilities it needs: <code>parmchk2</code>, <code>antechamber</code>, <code>prepgen</code>, <code>espgen</code>, <code>resp</code>, and <code>tleap</code>. CORR additionally requires an input <code>mol2</code> that already carries GAFF2 atom types &mdash; pre-generate it with <code>antechamber -at gaff2 ...</code> &mdash; and lists its atoms in the same order as the coordinate block, hydrogens included: MAPLE checks only that the atom counts match and then pairs atoms by position. NCAA and MetalAA read exactly one PDB block. NCAA and MetalAA do not require a separate atomic-charge input. CORR may preserve the charges already stored in the input mol2 when <code>chg_fit=none</code>; the other charge routes derive charges at runtime (see <a href="#chargefit">ChargeFit</a> below).</p>
+        <p>All routes need a working MAPLE installation and AmberTools on <code>PATH</code> &mdash; a run invokes whichever utilities it needs: <code>parmchk2</code>, <code>antechamber</code>, <code>prepgen</code>, <code>espgen</code>, <code>resp</code>, and <code>tleap</code>. Refinement additionally requires a GAFF2-typed input <code>mol2</code> &mdash; pre-generate it with <code>antechamber -at gaff2 ...</code> &mdash; whose atoms appear in the same order as the coordinate block, hydrogens included: MAPLE checks only that the atom counts match and then pairs atoms by position. NCAA and MetalAA read exactly one PDB block and need no separate atomic-charge input. Refinement may preserve the charges already stored in the input mol2 when <code>chg_fit=none</code>; the other charge routes derive charges at runtime (see <a href="#chargefit">ChargeFit</a> below).</p>
 
-        <p><strong>When Gaussian is needed.</strong> RESP always takes its ESP from Gaussian, so <code>g16</code> or <code>g09</code> must be on <code>PATH</code> for CORR and NCAA with <code>chg_fit=resp</code> &mdash; the NCAA default &mdash; and for every MetalAA run. QM reference jobs (<code>iqm=true</code>) run on <code>qm_engine</code>, which defaults to <code>g16</code>; <code>qm_engine=orca</code> runs them with ORCA instead. A CORR or NCAA run needs no Gaussian when it uses a non-RESP <code>chg_fit</code> and either keeps <code>iqm=false</code> or sets <code>qm_engine=orca</code>; MetalAA always needs it.</p>
+        <p><strong>When RESP charges are needed.</strong> They always take their ESP from Gaussian: <code>g16</code> or <code>g09</code> must be on <code>PATH</code> for Refinement and NCAA runs with <code>chg_fit=resp</code> (the NCAA default) and for every MetalAA run. QM reference jobs (<code>iqm=true</code>) use <code>qm_engine</code>, which defaults to <code>g16</code>; set <code>qm_engine=orca</code> to run them with ORCA instead. A Refinement or NCAA run therefore needs no Gaussian when <code>chg_fit</code> is not <code>resp</code> and the run keeps <code>iqm=false</code> or sets <code>qm_engine=orca</code>; MetalAA always needs Gaussian.</p>
 
-        <p><strong>How MAPLE reads PDB structures.</strong> The PDB must be explicitly hydrogenated; MAPLE neither adds nor removes hydrogens. During reading, MAPLE builds a connectivity graph and matches standard protein residues against the active <code>pro_ff</code> Amber templates using element composition, topology, explicit hydrogens, and chirality. Matched residues receive canonical atom names, atom types, partial charges, residue net charges, and Amber connectivity, so standard input atom names are not required; atom names are rewritten to the canonical template names before tleap export. Cysteine states are resolved in two steps: explicit SG&ndash;H connectivity distinguishes protonated <code>CYS</code> from the deprotonated <code>CYM</code>/<code>CYX</code> candidates, and for the graph-equivalent <code>CYM</code>/<code>CYX</code> pair disulfide-bond detection decides &mdash; a cysteine participating in an S&ndash;S bond is assigned <code>CYX</code> (net charge 0), otherwise <code>CYM</code> (net charge &minus;1). Alternate conformations resolve by default to the altloc&nbsp;A set, or to the highest-occupancy set when A is absent; <code>keep</code> chooses among them when a listed residue carries several &mdash; append the altloc letter (<code>A181B</code>) to build that residue from its altloc-B atoms, while a letterless entry (<code>A181</code>) keeps the default choice. Residues without a complete standard template are reported instead of guessed: backbone-only matches (NCAA candidates) and unmatched nonprotein residues, which should be declared via <code>lig_resids</code>/<code>ncaa_resids</code> in MetalAA or parameterized in separate NCAA runs.</p>
+        <p><strong>How MAPLE reads PDB structures.</strong> The PDB must be explicitly hydrogenated; MAPLE neither adds nor removes hydrogens. While reading the PDB, MAPLE builds a connectivity graph and matches standard protein residues against the active <code>pro_ff</code> Amber templates using element composition, topology, explicit hydrogens, and chirality. Matched residues receive canonical atom names, atom types, partial charges, residue net charges, and Amber connectivity &mdash; the atom names are rewritten to the canonical template names before tleap export &mdash; so standard input atom names are not required. Cysteine states are resolved in two steps: explicit SG&ndash;H connectivity distinguishes protonated <code>CYS</code> from the deprotonated <code>CYM</code>/<code>CYX</code> candidates, and the graph-equivalent <code>CYM</code>/<code>CYX</code> pair is decided by disulfide-bond detection &mdash; a cysteine participating in an S&ndash;S bond is assigned <code>CYX</code> (net charge 0), otherwise <code>CYM</code> (net charge &minus;1). Alternate conformations resolve by default to the altloc&nbsp;A set, or to the highest-occupancy set when A is absent; <code>keep</code> chooses among them when a listed residue carries several alternate conformations &mdash; append the altloc letter (<code>A181B</code>) to build that residue from its altloc-B atoms, while a letterless entry (<code>A181</code>) keeps the default choice. Residues without a complete standard template are reported, not guessed: backbone-only matches (NCAA candidates) and unmatched nonprotein residues, which should be declared via <code>lig_resids</code>/<code>ncaa_resids</code> in MetalAA or parameterized in separate NCAA runs.</p>
+
+        <p><strong>Read the tleap validation warnings.</strong> <code>Errors: 0</code> is the gate; the warnings decide whether the topology is safe to use. Most are routine &mdash; terminal-name conversions (<code>NTHR -&gt; THR</code>) and an <code>addIons</code> request after neutralization. The tutorials list and explain the warnings of their verified runs.</p>
 
         <h2 id="general-settings">General Settings</h2>
 
@@ -227,55 +229,39 @@
               <tr><td><code>qm_engine</code></td><td><code>g16</code></td><td>External QM engine: <code>g16</code>, <code>g09</code>, <code>gaussian</code>, or <code>orca</code></td></tr>
               <tr><td><code>qm_nproc</code></td><td><code>8</code></td><td>Number of processors for QM jobs</td></tr>
               <tr><td><code>qm_mem</code></td><td><code>24</code></td><td>Memory in GB for QM jobs; adjust this according to the available memory and the size of the selected QM reference model.</td></tr>
-              <tr><td><code>opt_max_iter</code></td><td><code>256</code></td><td>Maximum LBFGS iterations for MLIP geometry optimization. In CORR, use <code>max_iter</code></td></tr>
-              <tr><td><code>opt_max_step</code></td><td><code>0.2</code></td><td>Maximum LBFGS step size in &Aring; for MLIP geometry optimization. In CORR, use <code>max_step</code></td></tr>
+              <tr><td><code>opt_max_iter</code></td><td><code>256</code></td><td>Maximum LBFGS iterations for MLIP geometry optimization. In Refinement, use <code>max_iter</code> instead.</td></tr>
+              <tr><td><code>opt_max_step</code></td><td><code>0.2</code></td><td>Maximum LBFGS step size in &Aring; for MLIP geometry optimization. In Refinement, use <code>max_step</code> instead.</td></tr>
             </tbody>
           </table>
         </div>
 
         <h2 id="chargefit">ChargeFit</h2>
 
-        <p><code>chg_fit</code> selects the atomic-charge source independently of <code>iqm</code> and <code>qm_compare</code>. CORR defaults to <code>none</code>, which preserves the charges from the input mol2. NCAA defaults to <code>resp</code>; <code>none</code> is invalid because the PDB route has no reusable input charges. MetalAA derives site charges through a fixed RESP-only workflow and does not expose <code>chg_fit</code>.</p>
+        <p><code>chg_fit</code> selects the atomic-charge source independently of <code>iqm</code> and <code>qm_compare</code>. Refinement defaults to <code>none</code>; the input mol2 charges are kept as they are. NCAA defaults to <code>resp</code>; <code>none</code> is invalid because the PDB route has no reusable input charges. MetalAA derives site charges through a fixed RESP-only workflow and does not expose <code>chg_fit</code>.</p>
 
         <div class="table-wrapper">
           <table>
             <thead><tr><th><code>chg_fit</code></th><th>Behavior</th></tr></thead>
             <tbody>
-              <tr><td><code>none</code></td><td>CORR only. Preserve the input mol2 charges without creating a charge-fitting work directory.</td></tr>
-              <tr><td><code>resp</code></td><td>Derive charges at runtime: Gaussian evaluates the ESP, AmberTools (<code>espgen</code> + <code>resp</code>) performs the two-stage RESP fitting. <code>chg_level</code> defaults to <code>HF/6-31G(d)</code> for CORR and NCAA.</td></tr>
+              <tr><td><code>none</code></td><td>Refinement only. Preserve the input mol2 charges without creating a charge-fitting work directory.</td></tr>
+              <tr><td><code>resp</code></td><td>Derive charges at runtime: Gaussian evaluates the ESP, AmberTools (<code>espgen</code> + <code>resp</code>) performs the two-stage RESP fitting. <code>chg_level</code> defaults to <code>HF/6-31G(d)</code> for Refinement and NCAA, and the <code>resp_backend</code> key accepts only its default, <code>gaussian</code>.</td></tr>
               <tr><td>Charge-capable MLIP</td><td>Use AIMNet2 (<code>aimnet2</code>), AIMNet2-NSE (<code>aimnet2nse</code>), or MACE-POLAR (<code>macepols</code>, <code>macepolm</code>, or <code>macepoll</code>). A recognized MLIP must provide atomic charges; otherwise ParmFit reports a capability error.</td></tr>
               <tr><td>Unrecognized value</td><td>Pass the value verbatim to <code>antechamber -c</code>, for example <code>abcg2</code>, <code>bcc</code>, or <code>gas</code>. ParmFit does not maintain an Antechamber charge-method whitelist.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <p>RESP derivation always runs the same two-party pipeline &mdash; Gaussian for the ESP, AmberTools for the RESP stages &mdash; and runs whether <code>iqm</code> is enabled or disabled; its Gaussian jobs reuse the configured <code>qm_nproc</code> and <code>qm_mem</code>. The charge-capable MLIP may differ from the main <code>#model</code>. If it matches the main model, ParmFit reuses the active calculator and its configured options. A different charge-capable MLIP is initialized once on the active device with its default options.</p>
-
-        <h3 id="net-charge">Checking the Net Charge</h3>
-        <p>Each route treats the net charge differently, so read the check that matches your route:</p>
-        <div class="table-wrapper">
-          <table>
-            <thead><tr><th>Route and charge source</th><th>What MAPLE does</th><th>Where to check</th></tr></thead>
-            <tbody>
-              <tr><td>CORR, <code>chg_fit=none</code></td><td>Keeps the input mol2 charges as they are; nothing is rescaled.</td><td>The charge column of the input mol2.</td></tr>
-              <tr><td>CORR, fitted charges</td><td>Checks only that every atom has a finite charge and reports the sum over the whole molecule. There is no net-charge gate.</td><td><code>target charge</code> and <code>actual charge</code> in the result block.</td></tr>
-              <tr><td>NCAA, <code>chg_fit=resp</code></td><td>The RESP fit constrains the atoms of each target residue to its <code>ncaa_charges</code> value.</td><td><code>Target charge</code> and <code>Actual charge</code> in the result block. With several residues the block shows only the last one; sum the charge column of each <code>&lt;RES&gt;_maple.prepin</code>.</td></tr>
-              <tr><td>NCAA, other charge sources</td><td>Averages the conformers; if a residue misses its target by more than 1&times;10<sup>&minus;4</sup>&nbsp;e, spreads the difference over its backbone N, CA, and C (over all its atoms when it has no backbone).</td><td>As for RESP.</td></tr>
-              <tr><td>MetalAA</td><td>Projects the large-model RESP charges onto the site model and stops with an error if their sum misses the integer site charge by more than 1&times;10<sup>&minus;4</sup>&nbsp;e.</td><td>The banner's <code>large model charge/mult</code>; a run that finishes has passed the check.</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p>The 1&times;10<sup>&minus;4</sup>&nbsp;e threshold triggers an adjustment in NCAA and an error in MetalAA; it is not a measure of physical quality. A correct total does not make each atomic charge reasonable, and normalizing a mismatched total by hand hides its cause.</p>
+        <p>RESP derivation always runs the same two-tool pipeline &mdash; Gaussian for the ESP, AmberTools for the RESP stages &mdash; whether <code>iqm</code> is enabled or disabled; its Gaussian jobs reuse the configured <code>qm_nproc</code> and <code>qm_mem</code>. The charge-capable MLIP may differ from the main <code>#model</code>. If it matches the main model, ParmFit reuses the active calculator and its configured options. A different charge-capable MLIP is initialized once on the active device with its default options.</p>
 
         <h2 id="torsionfit">TorsionFit</h2>
 
         <p>TorsionFit refines proper torsion parameters in two stages. <strong>Stage&nbsp;1</strong> uses a spectral shared-group restrained linear least-squares solver: torsion instances that share the same chemical environment (atom types plus one-hop neighbors) are grouped and fitted together, with a spectral helper providing phase seeds. <strong>Stage&nbsp;2</strong> takes the Stage&nbsp;1 parameters and performs direct global <code>kPhi</code>/<code>phase</code> optimization against the scan reference profile.</p>
 
-        <p><code>torsion_refine_rounds</code> controls how many Stage&nbsp;1&rarr;Stage&nbsp;2 fast-MM cycles are attempted. Each cycle refreshes the MM reference profiles &mdash; the first from the Stage&nbsp;0 parameters (the mSeminario-refined starting point), later ones from the previous round&rsquo;s accepted parameters &mdash; and re-runs Stage&nbsp;1 and Stage&nbsp;2. A cycle is accepted only if total loss improves; otherwise the workflow rolls back and stops. Setting <code>torsion_refine_rounds=0</code> runs Stage&nbsp;1 only.</p>
+        <p><code>torsion_refine_rounds</code> controls how many Stage&nbsp;1&rarr;Stage&nbsp;2 fast-MM cycles are attempted. Each cycle refreshes the MM reference profiles &mdash; the first from the Stage&nbsp;0 parameters (the mSeminario-refined starting point), later ones from the previous round&rsquo;s accepted parameters &mdash; and re-runs Stage&nbsp;1 and Stage&nbsp;2. A cycle is accepted only if total loss improves; otherwise the workflow rolls back and stops. With <code>torsion_refine_rounds=0</code>, only Stage&nbsp;1 runs.</p>
 
-        <p>TorsionFit applies to CORR and NCAA routes. Which dihedrals are fitted is route-specific: CORR auto-selects rotatable single bonds from the mol2 topology; NCAA restricts fitting to sidechain dihedrals and disables torsion ensemble terms internally.</p>
+        <p>TorsionFit applies to Refinement and NCAA routes. The fitted dihedrals differ by route: Refinement auto-selects rotatable single bonds from the mol2 topology; NCAA restricts fitting to sidechain dihedrals and disables torsion ensemble terms internally.</p>
 
-        <p>Improper refit is still experimental. Improper terms flagged as unreliable by <code>parmchk2</code> (an <code>ATTN</code> mark or a penalty score above <code>p_thresh</code>) are seeded with a zero prior and refitted together with the proper torsions; <code>radical_center</code> declares radical centers whose improper terms additionally fit the n=1 Fourier component, with values as mol2 serials in CORR and residue-local 1-based indices in NCAA. With <code>torsionfit=false</code>, the parmchk2 improper estimates are kept as-is.</p>
+        <p>Improper refit is still experimental. Improper terms flagged as unreliable by <code>parmchk2</code> (an <code>ATTN</code> mark or a penalty score above <code>p_thresh</code>) are refitted together with the proper torsions: ATTN-marked terms are seeded with a zero prior, while penalty-flagged terms start from the parmchk2 estimate.</p>
 
         <div class="table-wrapper">
           <table>
@@ -283,32 +269,32 @@
             <tbody>
               <tr><td><code>torsionfit</code></td><td><code>true</code></td><td>Enable proper torsion fitting after the bond/angle stage</td></tr>
               <tr><td><code>torsion_bonds</code></td><td>Auto</td><td>Explicit rotatable bonds as atom pairs, order-insensitive (<code>6-10</code> = <code>10-6</code>; e.g. <code>6-8,12-14</code>); otherwise auto-selected from mol2 topology. In NCAA, entries are residue-local 1-based atom indices within the target residue (ACE/NME caps not counted) and per-residue groups are separated with <code>;</code></td></tr>
-              <tr><td><code>torsion_steps</code></td><td><code>36</code></td><td>Number of scan increments per torsion</td></tr>
+              <tr><td><code>torsion_steps</code></td><td><code>36</code></td><td>Scan steps for a full 360&deg; rotation of a torsion; the step size is 360&deg; divided by this value</td></tr>
               <tr><td><code>stage1_weights</code></td><td><code>true</code></td><td>Weight scan frames by reference energy in the Stage 1 least-squares fit; <code>false</code> gives all frames equal weight</td></tr>
               <tr><td><code>torsion_refine_rounds</code></td><td><code>3</code></td><td>Maximum Stage&nbsp;1&rarr;Stage&nbsp;2 fast-MM cycles</td></tr>
               <tr><td><code>torsion_refine_max_iter</code></td><td><code>256</code></td><td>Maximum iterations for the Stage&nbsp;2 global optimizer</td></tr>
               <tr><td><code>torsion_refine_tol</code></td><td><code>1.0e-6</code></td><td>Convergence tolerance for Stage&nbsp;2</td></tr>
-              <tr><td><code>torsion_ensemble</code></td><td><code>false</code></td><td>Add rigid rotor ensemble frames as extra Stage&nbsp;2 constraints in CORR; NCAA disables this internally</td></tr>
-              <tr><td><code>torsion_ensemble_ratio</code></td><td><code>0.3</code></td><td>Target ensemble frame ratio relative to rotatable bonds &times; steps in CORR</td></tr>
-              <tr><td><code>torsion_ensemble_weight</code></td><td><code>0.5</code></td><td>Weight of ensemble loss relative to scan loss in CORR Stage&nbsp;2</td></tr>
+              <tr><td><code>torsion_ensemble</code></td><td><code>false</code></td><td>Add rigid rotor ensemble frames as extra Stage&nbsp;2 constraints in Refinement; NCAA disables this internally</td></tr>
+              <tr><td><code>torsion_ensemble_ratio</code></td><td><code>0.3</code></td><td>Target ensemble frame ratio relative to rotatable bonds &times; steps in Refinement</td></tr>
+              <tr><td><code>torsion_ensemble_weight</code></td><td><code>0.5</code></td><td>Weight of ensemble loss relative to scan loss in Refinement Stage&nbsp;2</td></tr>
               <tr><td><code>backend</code></td><td><code>cgbs</code></td><td>TorsionFit scan optimizer backend: <code>cgbs</code>, <code>cgws</code>, or <code>lbfgs</code></td></tr>
               <tr><td><code>constraint_mode</code></td><td><code>projected</code></td><td>Scan constraint mode: <code>projected</code> or <code>fixinternals</code> (not recommended to change)</td></tr>
               <tr><td><code>p_thresh</code></td><td><code>30.0</code></td><td>Improper refit threshold (experimental): parmchk2 penalty scores above this value (or any <code>ATTN</code> mark) trigger an improper refit</td></tr>
-              <tr><td><code>radical_center</code></td><td>None</td><td>Radical centers for improper fitting (experimental); mol2 serials in CORR, residue-local 1-based indices in NCAA</td></tr>
+              <tr><td><code>radical_center</code></td><td>None</td><td>Radical centers for improper fitting (experimental); mol2 serials in Refinement, residue-local 1-based indices in NCAA</td></tr>
             </tbody>
           </table>
         </div>
 
         <h3 id="scan-reuse">Scan Reuse</h3>
-        <p>Before each scan, TorsionFit looks under <code>&lt;base&gt;_work/torsionfit/</code> for the scan file that an earlier run wrote for the same target. If that file has the expected number of frames, the same elements, and the scan angles that the current starting geometry gives, TorsionFit reads it instead of scanning, and the log does not report the reuse. The check ignores the model, <code>level</code>, the scan <code>backend</code>, and the QM level of theory, so delete <code>&lt;base&gt;_work/torsionfit/</code> before you rerun with any of them changed.</p>
+        <p>Before each scan, TorsionFit looks under <code>&lt;base&gt;_work/torsionfit/</code> for the scan file that an earlier run wrote for the same target. If that file has the expected number of frames and the same elements, and its scan angles match those of the current starting geometry, TorsionFit reads and reuses it, and the log does not report the reuse. The check ignores the model and the QM level of theory, so delete <code>&lt;base&gt;_work/torsionfit/</code> before you rerun with either of them changed.</p>
 
         <h2 id="iqm">QM Reference (iqm)</h2>
 
-        <p><code>iqm</code> controls whether external QM jobs provide reference-quality geometry and Hessian data. When <code>iqm=false</code>, all optimization, Hessian evaluation, and torsion reference work use the MAPLE MLIP calculator exclusively. When <code>iqm=true</code>, MAPLE runs QM reference jobs whose scope depends on the route.</p>
+        <p><code>iqm</code> controls whether external QM jobs provide reference-quality geometry, Hessian, and torsion data. When <code>iqm=false</code>, all optimization, Hessian evaluation, and torsion reference work use the MAPLE MLIP calculator exclusively. When <code>iqm=true</code>, MAPLE runs QM reference jobs whose scope depends on the route.</p>
 
         <div class="admonition note">
           <p class="admonition-title">QM RESP does not require iqm</p>
-          <p>Setting <code>iqm=false</code> does not disable QM charge derivation. CORR and NCAA still derive charges through Gaussian ESP and AmberTools RESP when <code>chg_fit=resp</code>, and MetalAA always runs its fixed RESP workflow. <code>iqm</code> controls only whether external QM supplies reference geometry, Hessian, and torsion data.</p>
+          <p>Setting <code>iqm=false</code> does not disable QM charge derivation. Refinement and NCAA still derive charges through Gaussian ESP and AmberTools RESP when <code>chg_fit=resp</code>, and MetalAA always runs its fixed RESP workflow. <code>iqm</code> controls only whether external QM supplies reference geometry, Hessian, and torsion data.</p>
         </div>
 
         <div class="table-wrapper">
@@ -316,7 +302,7 @@
             <thead><tr><th>Route</th><th><code>iqm=false</code></th><th><code>iqm=true</code></th></tr></thead>
             <tbody>
               <tr>
-                <td><strong>CORR</strong></td>
+                <td><strong>Refinement</strong></td>
                 <td>MLIP opt + MLIP Hessian (+ MLIP TorsionFit if enabled)</td>
                 <td>QM opt_frequency &rarr; QM geometry + QM Hessian (+ QM-referenced TorsionFit via <code>qm_mode</code>). If <code>bonded=none</code> but <code>torsionfit=true</code>, only a QM geometry optimization is run&mdash;no Hessian is computed.</td>
               </tr>
@@ -338,7 +324,7 @@
 
         <div class="table-wrapper">
           <table>
-            <thead><tr><th>Parameter</th><th>CORR</th><th>NCAA</th><th>MetalAA</th></tr></thead>
+            <thead><tr><th>Parameter</th><th>Refinement</th><th>NCAA</th><th>MetalAA</th></tr></thead>
             <tbody>
               <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code>; RESP ESP when <code>chg_fit=resp</code></td><td><code>HF/6-31G(d)</code>; RESP ESP when <code>chg_fit=resp</code></td><td><code>PBE1PBE/def2SVP</code>; RESP ESP in the fixed workflow</td></tr>
               <tr><td><code>opt_level</code></td><td>QM opt/opt_freq/constrained_opt when <code>iqm=true</code></td><td>QM opt/opt_freq when <code>iqm=true</code></td><td>QM opt_freq when <code>iqm=true</code></td></tr>
@@ -347,29 +333,29 @@
           </table>
         </div>
 
-        <p>Level strings are passed to the QM engine verbatim, so write them the way the selected engine expects: Gaussian wants <code>B3LYP/def2SVP</code>, while ORCA wants <code>B3LYP/def2-SVP</code>. A mismatched spelling &mdash; for example the hyphenated form with <code>qm_engine=g16</code> &mdash; fails at the first QM job with a route syntax error. RESP <code>chg_level</code> values always follow Gaussian syntax. Note that the built-in defaults of <code>opt_level</code> and <code>sp_level</code> are written <code>B3LYP/def2-SVP</code>, the ORCA spelling, while the default engine is <code>g16</code>: set <code>opt_level</code> explicitly &mdash; for example <code>B3LYP/def2SVP</code> &mdash; before enabling <code>iqm</code> with Gaussian.</p>
+        <p>Level strings are passed to the QM engine verbatim, so write them the way the selected engine expects: <code>B3LYP/def2SVP</code> for Gaussian, <code>B3LYP/def2-SVP</code> for ORCA. A mismatched spelling &mdash; for example the hyphenated form with <code>qm_engine=g16</code> &mdash; fails at the first QM job with a route syntax error. RESP <code>chg_level</code> values always follow Gaussian syntax. The built-in defaults of <code>opt_level</code> and <code>sp_level</code> are written <code>B3LYP/def2-SVP</code>, the ORCA spelling, while the default engine is <code>g16</code>. Set <code>opt_level</code> explicitly (for example <code>B3LYP/def2SVP</code>) before enabling <code>iqm</code> with Gaussian.</p>
 
         <h3 id="qm-mode">TorsionFit qm_mode</h3>
 
-        <p><code>qm_mode</code> controls how QM reference data is used inside TorsionFit (CORR and NCAA; mode 1 is the default). It has no effect on MetalAA.</p>
+        <p><code>qm_mode</code> controls how QM reference data is used inside TorsionFit (Refinement and NCAA; mode 1 is the default). It has no effect on MetalAA.</p>
 
         <div class="table-wrapper">
           <table>
             <thead><tr><th>Mode</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>MLIP drives the torsion scan, then QM single-point energy and forces are calculated at each frame</td></tr>
+              <tr><td>1</td><td>MLIP drives the torsion scan, then QM single-point energies are calculated at each frame</td></tr>
               <tr><td>2</td><td>MLIP pre-optimization, then QM constrained torsion optimization at each frame</td></tr>
               <tr><td>3</td><td>QM engine evaluates energy and forces at each scan step; the built-in optimizer of MAPLE drives the scan</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h3 id="qm-compare">qm_compare (CORR only)</h3>
+        <h3 id="qm-compare">qm_compare (Refinement only)</h3>
 
-        <p>When <code>iqm=true</code>, <code>qm_compare=true</code>, and refinement is enabled, CORR runs an additional MLIP-only comparison branch alongside the QM path. This produces <code>_mlip</code>-suffixed output files that let users compare MLIP-driven parameters against QM-referenced ones without re-running the workflow. Charge fitting uses the same configured <code>chg_fit</code> method independently on the QM and MLIP branch geometries, so each branch reports its own charged work mol2.</p>
+        <p>When <code>iqm=true</code>, <code>qm_compare=true</code>, and refinement is enabled, Refinement runs an additional MLIP-only comparison branch alongside the QM path. The MLIP branch produces <code>_mlip</code>-suffixed output files, so its parameters can be compared against the QM-referenced ones without re-running the workflow. Charge fitting uses the same configured <code>chg_fit</code> method independently on the QM and MLIP branch geometries, so each branch reports its own charged work mol2.</p>
 
         <h2 id="external-config">External ParmFit Config</h2>
-        <p>For longer jobs, use a separate key-value text file and reference it from the input header. Any plain text file with <code>key=value</code> lines and optional <code>#</code> comments is accepted. The config file accepts parmfit parameters only; do not place global MAPLE keys in it. Declare the method inline together with the reference, for example <code>#parmfit(method=ncaa,input=...)</code>.</p>
+        <p>For more complex jobs, use a separate key-value text file and reference it from the input header. Any plain text file with <code>key=value</code> lines and optional <code>#</code> comments is accepted. The config file accepts parmfit parameters only; do not place global MAPLE keys in it. Declare the method inline together with the <code>input=</code> reference, for example <code>#parmfit(method=ncaa,input=...)</code>.</p>
         <pre><code>#model=uma(size=uma-s-1p1)
 #parmfit(method=ncaa,input=NCAA.parmfit)
 
@@ -380,7 +366,7 @@ PDB MaDA.pdb</code></pre>
             Note
           </div>
           <div class="admonition-body">
-            <p>An external config must not set <code>method=</code>, <code>pdb=</code>, <code>input=</code>, or <code>frcmod=</code>; declare <code>method</code> in the inline <code>#parmfit(...)</code> header and provide PDB structures through the <code>PDB &lt;path&gt;</code> block of the input file. CORR frcmod files are generated automatically.</p>
+            <p>An external config must not set <code>method=</code>, <code>pdb=</code>, <code>input=</code>, or <code>frcmod=</code>; declare <code>method</code> in the inline <code>#parmfit(...)</code> header and provide PDB structures through the <code>PDB &lt;path&gt;</code> block of the input file. Refinement frcmod files are generated automatically.</p>
           </div>
         </div>
 
@@ -388,11 +374,11 @@ PDB MaDA.pdb</code></pre>
 
         <p>ParmFit writes a main <code>.out</code> file and a <code>&lt;base&gt;_work/</code> directory. Next to the <code>.out</code> file, every route also writes a <code>&lt;base&gt;.parmfitrun.in</code> snapshot of the resolved configuration (user entries with defaults filled in); unrecognized keys are reported as warnings in the log. The excerpts below illustrate key sections of the <code>.out</code> file for each route.</p>
 
-        <h3>CORR</h3>
+        <h3>Refinement</h3>
 
         <p>The setup header echoes the input mol2, bonded refinement method, QM reference state, and TorsionFit configuration:</p>
         <pre><code>======================================================================
-                       Parmfit Correction Setup
+                       Parmfit Refinement Setup
 ======================================================================
 Input mol2:        toluene_ff.mol2
 Initial frcmod:    Toluene_work/Toluene_original.frcmod
@@ -432,7 +418,7 @@ Torsion bonds:      auto-select non-ring torsion bonds with proper torsions</cod
   ...
 MLIP_ref vs stage1_final: MAE = ... kcal/mol, RMSE = ... kcal/mol</code></pre>
 
-        <p>The final <code>PARMFIT CORRECTION RESULT</code> block lists the products, charge provenance, stage timing, and parameter-change counts:</p>
+        <p>The final <code>PARMFIT REFINEMENT RESULT</code> block lists the products, charge provenance, stage timing, and parameter-change counts:</p>
         <pre><code>Main products:
   Amber mol2:   Toluene_work/Toluene_maple.mol2
   Amber frcmod: Toluene_work/Toluene_maple.frcmod
@@ -556,26 +542,8 @@ Tleap status:
   Warnings: 8
   Notes: 1
 
-Warnings:
-  Environment contains potentially charged standard residues
-  outside the site core: _3:LYS, _4:GLU, ...</code></pre>
-
-        <h2 id="using-results">Using the Results</h2>
-        <p>Every route ends with Amber files and a tleap input; NCAA and MetalAA also run that input once to validate the deployment. To use the parameters:</p>
-        <ol>
-          <li><strong>Run tleap in the work directory.</strong> The NCAA and MetalAA result blocks print the command under <code>Next step</code>, and the reminder at the end of a CORR log prints it too. CORR writes <code>&lt;base&gt;_maple_tleap.in</code>, which builds the gas-phase <code>&lt;base&gt;_maple_gas.prmtop</code> and <code>.inpcrd</code> of the molecule; NCAA and MetalAA build dry and solvated protein topologies.</li>
-          <li><strong>Read the tleap log.</strong> <code>Errors</code> must be 0. Read every warning: missing parameters, unexpected residue names, and a net charge other than the one you intended are problems, while terminal-name conversions and an <code>addIons</code> request after neutralization are not. The tutorials list and explain the warnings of each verified run.</li>
-          <li><strong>Check the hydrogen-bond list</strong> as described in the note below, and rebuild the topology with ParmEd if it is incomplete.</li>
-          <li><strong>Run MD with the checked topology.</strong> After a ParmEd rebuild, use the ParmEd output (<code>&lt;base&gt;_maple_gas_parmed.prmtop</code> in the example below), not the tleap original.</li>
-        </ol>
-        <div class="admonition important" id="parmed-note">
-          <p class="admonition-title">Check the hydrogen-bond list before SHAKE</p>
-          <p>SHAKE (<code>ntc=2</code>) constrains the bonds listed in <code>%FLAG BONDS_INC_HYDROGEN</code>. Their number, <code>NBONH</code>, is the third value under <code>%FLAG POINTERS</code>; for a system without water it should equal the number of hydrogen atoms:</p>
-          <pre><code>awk '/%FLAG POINTERS/{getline; getline; print "NBONH =", $3; exit}' &lt;base&gt;_maple_gas.prmtop</code></pre>
-          <p>Topologies with MAPLE atom types are not always complete. In the tutorials, tleap (AmberTools&nbsp;26) writes <code>NBONH = 0</code> for the CORR molecule loaded from its mol2, which is what the reminder at the end of every CORR log warns about; the NCAA and MetalAA validation topologies (tleap of AMBER24) list every bond to hydrogen. If the number is short, rebuild the topology with ParmEd, which sorts the bonds by element &mdash; it reads <code>ATOMIC_NUMBER</code> and falls back to atomic masses only when that section is missing:</p>
-          <pre><code>parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple_gas_parmed.prmtop\nquit'</code></pre>
-          <p>For the CORR tutorial molecule this restores <code>NBONH = 5</code>.</p>
-        </div>
+  Warnings:
+  Potentially charged standard residues within 8&nbsp;&Aring; of the metal but outside the large model: _398:ARG</code></pre>
 
         <h2 id="troubleshooting">Troubleshooting</h2>
         <div class="table-wrapper">
@@ -585,7 +553,8 @@ Warnings:
               <tr><td><code>Gaussian executable &hellip; was not found</code></td><td>The run derives RESP charges or runs a QM reference job, and MAPLE cannot find the Gaussian executable (<code>g16</code> or <code>g09</code>) on <code>PATH</code>.</td><td>Put Gaussian on <code>PATH</code>, or run without it as described in <a href="#requirements">Requirements</a>.</td></tr>
               <tr><td>The first Gaussian job stops with a route syntax error.</td><td>A hyphenated level such as <code>B3LYP/def2-SVP</code> reached Gaussian; the built-in <code>opt_level</code> default is written this way.</td><td>Write <code>B3LYP/def2SVP</code> for Gaussian; see <a href="#levels-of-theory">Levels of Theory</a>.</td></tr>
               <tr><td><code>Duplicate parmfit config key '&lt;key&gt;' at &lt;file&gt;:&lt;line&gt;.</code></td><td>The sidecar config sets one key twice, for example after lines were appended to a copied config.</td><td>Keep one line per key: edit the existing line instead of adding another.</td></tr>
-              <tr><td><code>Unknown left-hand '&lt;key&gt;' in parmfit config</code> (warning)</td><td>No builder used the key: a misspelling, a key of another route, or <code>level</code> placed in the sidecar. The run continues without it.</td><td>Correct the key; <code>level</code> belongs in the <code>#parmfit(...)</code> header.</td></tr>
+              <tr><td><code>Unknown left-hand '&lt;key&gt;' in parmfit config</code> (warning)</td><td>No builder used the key: a misspelling, a key of another route, or <code>level</code> placed in the sidecar, where it has no effect and the run continues without it.</td><td>Correct the key. <code>level</code> belongs in the <code>#parmfit(...)</code> header, where its convergence thresholds take effect; the warning line prints either way. A run without <code>input=</code> also reports the four <code>*_th</code> thresholds that MAPLE applies to the atoms &mdash; those lines are expected.</td></tr>
+              <tr><td><code>Invalid parmfit config line &lt;file&gt;:&lt;lineno&gt;; expected key=value.</code></td><td>A line in the sidecar config contains no <code>=</code> &mdash; often text pasted into the file.</td><td>Delete the line or turn it into a <code>#</code> comment.</td></tr>
               <tr><td><code>Invalid residue selector '&hellip;'</code> or <code>Selector &hellip; matched multiple residues</code></td><td>The selector is malformed, or a residue name and number fit several residues.</td><td>Use a chain and number (<code>A462</code>) or a name and number (<code>HIF89</code>); when a name and number fit several residues, switch to the chain form. See Target in the <a href="parmfit_ncaa.html#target">NCAA</a> and <a href="parmfit_metalaa.html#target">MetalAA</a> manuals.</td></tr>
             </tbody>
           </table>
@@ -593,7 +562,7 @@ Warnings:
 
         <nav class="page-nav">
           <a href="../irc/irc_eulerpc.html">&larr; Previous: EulerPC</a>
-          <a class="next" href="parmfit_correction.html">Next: CORR &rarr;</a>
+          <a class="next" href="parmfit_refinement.html">Next: Refinement &rarr;</a>
         </nav>
       </article>
     </main>

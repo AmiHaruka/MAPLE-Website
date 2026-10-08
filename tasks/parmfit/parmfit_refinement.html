@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ParmFit CORR - MAPLE</title>
+  <title>ParmFit Refinement - MAPLE</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="../../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
@@ -118,7 +118,7 @@
                 <li class="open">
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit.html" class="active">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction.html" class="active">CORR</a></li>
+                    <li><a href="parmfit_refinement.html" class="active">Refinement</a></li>
                     <li><a href="parmfit_ncaa.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa.html">MetalAA</a></li>
                   </ul>
@@ -131,7 +131,7 @@
                 <li>
                   <span class="tree-label"><span class="chevron"></span> <a href="parmfit_tutorial.html">ParmFit</a></span>
                   <ul class="children">
-                    <li><a href="parmfit_correction_tutorial.html">CORR</a></li>
+                    <li><a href="parmfit_refinement_tutorial.html">Refinement</a></li>
                     <li><a href="parmfit_ncaa_tutorial.html">NCAA</a></li>
                     <li><a href="parmfit_metalaa_tutorial.html">MetalAA</a></li>
                   </ul>
@@ -158,26 +158,33 @@
         <span class="separator">/</span>
         <a href="parmfit.html">ParmFit</a>
         <span class="separator">/</span>
-        <span class="current">CORR</span>
+        <span class="current">Refinement</span>
       </nav>
 
       <article>
-        <h1>ParmFit CORR</h1>
+        <h1>ParmFit Refinement</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>CORR refines parameters for a molecule that already has a <code>mol2</code> topology. MAPLE starts from GAFF2 parameters, optionally optimizes the structure and updates bonded terms from a Cartesian Hessian, applies the selected atomic-charge source, optionally refits proper torsions, and exports Amber and GROMACS files. The default <code>chg_fit=none</code> preserves the input mol2 charges; charge fitting replaces them at runtime (see <a href="#chargefit">ChargeFit</a>).</p>
+        <p>Refinement refines the parameters of a molecule supplied as a <code>mol2</code> topology. MAPLE starts from GAFF2 parameters, optionally optimizes the structure and updates bonded terms from a Cartesian Hessian, applies the selected atomic-charge source, optionally refits proper torsions, and exports Amber and GROMACS files. With the default <code>chg_fit=none</code>, the charges of the input mol2 are kept; charge fitting replaces them at runtime (see <a href="#chargefit">ChargeFit</a>).</p>
 
-        <p>For a worked walkthrough, see the <a href="parmfit_correction_tutorial.html">CORR tutorial</a>.</p>
+        <p>For a worked walkthrough, see the <a href="parmfit_refinement_tutorial.html">Refinement tutorial</a>.</p>
+
+        <div class="admonition important" id="parmed-note">
+          <p class="admonition-title">Rebuild the topology with ParmEd before SHAKE</p>
+          <p>tleap identifies hydrogen atoms by the leading character of their atom type, which MAPLE types do not carry, so tleap writes an empty <code>%FLAG BONDS_INC_HYDROGEN</code> section and SHAKE (<code>ntc=2</code>) would constrain nothing. Run the exported tleap input, then normalize the topology with ParmEd and use its output:</p>
+          <pre><code>tleap -f &lt;base&gt;_maple_tleap.in
+parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple_gas_parmed.prmtop\nquit'</code></pre>
+        </div>
 
         <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
-          <p>The input <code>mol2</code> must already carry GAFF2 atom types. Users should pre-generate it with a tool such as <code>antechamber -at gaff2 -fi &lt;fmt&gt; -fo mol2 -i &lt;input&gt; -o &lt;output&gt;</code> before running CORR.</p>
+          <p>The input <code>mol2</code> must already carry GAFF2 atom types. Users should pre-generate it with a tool such as <code>antechamber -at gaff2 -fi &lt;fmt&gt; -fo mol2 -i &lt;input&gt; -o &lt;output&gt;</code> before running Refinement.</p>
         </div>
 
         <h2 id="workflow">Workflow</h2>
-        <p>The formal statement of the route:</p>
+        <p>The route in outline:</p>
         <figure class="pseudo">
-          <figcaption>Algorithm 1 &mdash; CORR: small-molecule GAFF2 correction (bond/angle/proper)</figcaption>
+          <figcaption>Algorithm 1 &mdash; Refinement: small-molecule GAFF2 correction (bond/angle/proper)</figcaption>
           <ol class="pseudo-body">
             <li class="req"><b>Require:</b> typed mol2 (GAFF2); config</li>
             <li class="req"><b>Ensure:</b> corrected parameters (amber topology files, gromacs topology files)</li>
@@ -202,7 +209,7 @@
 
         <div class="admonition note">
           <p class="admonition-title">Charge-only operation</p>
-          <p>If <code>bonded=none</code> and <code>torsionfit=false</code>, MAPLE skips geometry optimization and Hessian evaluation. Charge fitting still runs on the supplied coordinates. <code>chg_fit=none</code> preserves the input mol2 charges and original frcmod; another charge method updates the final mol2 charges while retaining the original atom types and frcmod.</p>
+          <p>If <code>bonded=none</code> and <code>torsionfit=false</code>, MAPLE skips geometry optimization and Hessian evaluation. Charge fitting still runs on the supplied coordinates. With <code>chg_fit=none</code>, the input mol2 charges and the original frcmod are kept unchanged; any other charge method updates the final mol2 charges and keeps the original atom types and frcmod.</p>
         </div>
 
         <h2 id="parameters">Core Parameters</h2>
@@ -210,9 +217,9 @@
           <table>
             <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>mol2</code></td><td>Required</td><td>Input topology and atom typing for <code>method=corr</code>.</td></tr>
+              <tr><td><code>mol2</code></td><td>Required</td><td>Input topology and atom typing for <code>method=refinement</code>.</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Bond/angle update method: <code>mseminario</code>, <code>seminario</code>, or <code>none</code>.</td></tr>
-              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor <em>s</em> for Seminario/mSeminario Hessian-based fitting: the fitted bond and angle force constants are multiplied by <em>s</em><sup>2</sup> (0.95 gives &times;0.9025).</td></tr>
+              <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor for Hessian-based fitting.</td></tr>
               <tr><td><code>chg_fit</code></td><td><code>none</code></td><td>Charge source: input mol2 charges, <code>resp</code>, a <a href="parmfit.html#chargefit">charge-capable MLIP</a>, or a value passed to <code>antechamber -c</code>.</td></tr>
               <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code></td><td>Gaussian ESP level used only when <code>chg_fit=resp</code>.</td></tr>
               <tr><td><code>chg_route</code></td><td>Empty</td><td>Additional Gaussian route text for RESP ESP jobs.</td></tr>
@@ -225,25 +232,25 @@
 
         <div class="admonition tip">
           <p class="admonition-title">Preserving original GAFF2 parameters</p>
-          <p>Bond/angle and torsion refinement are controlled separately. Setting <code>bonded=none</code> preserves the original BOND/ANGLE terms; setting <code>torsionfit=false</code> preserves the original DIHE terms. With both disabled, CORR exports the parmchk2/GAFF2 parameters without refinement. When either refinement is enabled, atom types are automatically reassigned (MAPLE Z0/Z1, etc.).</p>
+          <p>Bond/angle and torsion refinement are controlled separately. Setting <code>bonded=none</code> preserves the original BOND/ANGLE terms; setting <code>torsionfit=false</code> preserves the original DIHE terms. With both disabled, Refinement exports the parmchk2/GAFF2 parameters without refinement. When either refinement is enabled, atom types are automatically reassigned (MAPLE Z0/Z1, etc.).</p>
         </div>
 
         <h2 id="chargefit">ChargeFit</h2>
 
-        <p><code>chg_fit</code> is independent of <code>iqm</code>. RESP derivation always runs Gaussian for the ESP and AmberTools for the RESP stages, reusing <code>qm_nproc</code> and <code>qm_mem</code>. CORR reads the target charge and multiplicity from the input structure (inline <code>charge mult</code> line, e.g. <code>charge 0 1</code>, or <code>XYZ &lt;charge&gt; &lt;mult&gt; &lt;path&gt;</code> block); the report prints both the integer target from the input structure and the actual sum in the charged mol2 so that any mismatch is visible.</p>
+        <p><code>chg_fit</code> is independent of <code>iqm</code>. RESP derivation always uses Gaussian for the ESP and AmberTools for the RESP stages, reusing <code>qm_nproc</code> and <code>qm_mem</code>. Refinement reads the target charge and multiplicity from the input structure (an inline <code>&lt;charge&gt; &lt;mult&gt;</code> line, e.g. <code>0 1</code>, or an <code>XYZ &lt;charge&gt; &lt;mult&gt; &lt;path&gt;</code> block); the report prints both the integer target from the input structure and the actual sum in the charged mol2 so that any mismatch is visible.</p>
 
-        <p><code>qm_compare</code> (default <code>false</code>, CORR only) repeats the charge and torsion branches against MLIP references: with <code>iqm=true</code>, <code>qm_compare=true</code>, and parameter refinement enabled, charge fitting follows both branch geometries. The primary result uses <code>chargefit/qm_route_charged.mol2</code>, while the MLIP comparison uses <code>chargefit/mlip_route_charged.mol2</code>. For <code>chg_fit=none</code>, ParmFit uses the charges recorded in the input mol2.</p>
+        <p><code>qm_compare</code> (default <code>false</code>, Refinement only) repeats the charge and torsion branches against MLIP references: with <code>iqm=true</code>, <code>qm_compare=true</code>, and parameter refinement enabled, charge fitting follows both branch geometries. The primary result uses <code>chargefit/qm_route_charged.mol2</code>, while the MLIP comparison uses <code>chargefit/mlip_route_charged.mol2</code>. For <code>chg_fit=none</code>, ParmFit uses the charges recorded in the input mol2.</p>
 
         <h2 id="torsionfit">TorsionFit</h2>
 
-        <p>CORR auto-selects rotatable dihedrals from the mol2 topology: proper-torsion terms whose central bond is a single bond outside a ring. Use <code>torsion_bonds</code> to provide explicit overrides (e.g. <code>6-8,12-14</code>). See the <a href="parmfit.html#torsionfit">main ParmFit page</a> for the two-stage fitting architecture, improper refitting, and parameter details.</p>
+        <p>Refinement auto-selects rotatable dihedrals from the mol2 topology: proper-torsion terms whose central bond is a single bond outside a ring. Use <code>torsion_bonds</code> to provide explicit overrides (e.g. <code>6-8,12-14</code>). See the <a href="parmfit.html#torsionfit">main ParmFit page</a> for the two-stage fitting architecture, improper refitting, and parameter details.</p>
 
         <h2 id="parmfit-input">Input Files</h2>
 
         <h3 id="simple-input">Simple Input</h3>
-        <p>A simple CORR job declares <code>method=corr</code> inline and keeps its commonly used ParmFit options in a sidecar config. The inline coordinates provide the working geometry, while the mol2 file supplies topology, atom types, and starting charges.</p>
+        <p>A simple Refinement job declares <code>method=refinement</code> inline and lists its ParmFit options in a sidecar config. The inline coordinates provide the working geometry, while the mol2 file supplies topology, atom types, and starting charges.</p>
         <pre><code>#model=uma(size=uma-s-1p1,task=omol)
-#parmfit(method=corr,input=CORR.in)
+#parmfit(method=refinement,input=Refinement.in)
 #device=gpu0
 
 C   0.000000  1.520000  0.000000
@@ -261,9 +268,9 @@ torsionfit=true</code></pre>
         </div>
 
         <h3 id="full-external-input">Full External Input</h3>
-        <p>For a longer setup, keep the MAPLE launcher short and move ParmFit parameters into an external <code>.parmfit</code> file. Declare <code>method=corr</code> inline together with <code>input=</code>; the external config must not set <code>method=</code>. File paths such as <code>mol2</code> are resolved relative to the <code>.parmfit</code> file.</p>
+        <p>For a more complex setup, keep the MAPLE launcher short and move ParmFit parameters into an external <code>.parmfit</code> file. Declare <code>method=refinement</code> inline together with <code>input=</code>; the external config must not set <code>method=</code>. File paths such as <code>mol2</code> are resolved relative to the <code>.parmfit</code> file.</p>
         <pre><code>#model=uma(size=uma-s-1p1,task=omol)
-#parmfit(method=corr,input=CORR.parmfit)
+#parmfit(method=refinement,input=Refinement.parmfit)
 #device=gpu0
 
 C   0.000000  1.520000  0.000000
@@ -272,7 +279,7 @@ C   0.000000  1.520000  0.000000
         <p><strong>Full ParmFit config</strong></p>
         <div class="parmfit-inputs">
           <details class="parmfit-input-item">
-            <summary>CORR.parmfit</summary>
+            <summary>Refinement.parmfit</summary>
             <div class="parmfit-input-body">
               <pre><code>mol2=toluene_ff.mol2
 
@@ -339,7 +346,7 @@ torsion_ensemble_weight=0.5</code></pre>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_maple.top</code> and <code>&lt;base&gt;_work/&lt;base&gt;_maple.gro</code>: GROMACS export for inspection and deployment.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_maple_tleap.in</code>: exported tleap input; running it produces the gas-phase topology <code>&lt;base&gt;_maple_gas.prmtop</code>/<code>.inpcrd</code>.</li>
           <li><code>&lt;base&gt;_work/chargefit/{qm_route|mlip_route}_charged.mol2</code>: Route-specific charged mol2 for RESP or charge-capable-MLIP fitting.</li>
-          <li><code>chg_fit=none</code> runs no charge pipeline, so no <code>chargefit/</code> directory is created; the final mol2 keeps the input charges. Antechamber methods write <code>&lt;base&gt;_work/chargefit/antechamber_charged.mol2</code>.</li>
+          <li>With <code>chg_fit=none</code>, no charge pipeline runs, so no <code>chargefit/</code> directory is created; the input charges are carried into the final mol2. Antechamber methods write <code>&lt;base&gt;_work/chargefit/antechamber_charged.mol2</code>.</li>
           <li><code>&lt;base&gt;_work/torsionfit/</code>: Torsion scan outputs and fit diagnostics.</li>
         </ul>
 
