@@ -473,8 +473,8 @@ Core residues: CYM, HEM, FE          Core residues: CYM, HEM, FE   (unchanged)</
           <p><code>cluster_cutoff</code> controls context only. With automatic selection, a residue in the core has donated an atom within <code>donor_cutoff</code> &mdash; that is coordination chemistry, not something the cluster cutoff controls; <code>add_resid</code> can also put residues without donors into the core. Weigh the near-quadrupled RESP cost against how little the site charges actually moved &mdash; here at most 0.07&nbsp;e, although every added residue is neutral.</p>
         </div>
 
-        <h2 id="case-3">Case 3 &mdash; Rebuilding an NCAA into the deployment</h2>
-        <p>This case is optional. ILE401 is a standard residue with an Amber template; it is rebuilt here only to show how an NCAA declaration reaches the deployment, and in real work you normally declare only residues that need it.</p>
+        <h2 id="case-3">Case 3 &mdash; Handling an NCAA in the metalloprotein</h2>
+        <p>ILE401 is a standard residue with an Amber template; it is rebuilt here only to show how an NCAA declaration reaches the deployment, and in real work you normally declare only residues that need it.</p>
         <p><strong>What changed.</strong> The addition on top of Case 2 is an NCAA declaration: with <code>ncaa_resids=ILE401</code>, a standard amino acid &mdash; ILE, renamed ILE&rarr;<code>ILM</code> on export &mdash; is rebuilt with the residue-build components of the NCAA route, and its fitted charges freeze into the site RESP. <strong>Bold</strong> lines are new in this case.</p>
         <p><strong>Input.</strong> <code>MetalAA3.inp</code> differs from <code>MetalAA2.inp</code> only in <code>input=MetalAA3.in</code>:</p>
         <div class="code-file"><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3.inp" download><code>MetalAA3.inp</code></a><span class="code-file-note">reads the structure from</span><a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/4ZF6.pdb" download><code>4ZF6.pdb</code></a></div>
@@ -520,7 +520,7 @@ ncaa_mults=1</strong></code></pre>
           </details>
         </div>
         <p><strong>Run.</strong> <code>maple MetalAA3.inp MetalAA3.out</code>, as in Case&nbsp;1; on the tutorial hardware it takes about 1&nbsp;h&nbsp;04&nbsp;min, and <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3.parmfitrun.in" download><code>MetalAA3.parmfitrun.in</code></a> resolves the NCAA declaration into its full block: <code>ncaa_resids=ILE401</code>, charge 0, exported name <code>ILM</code>, and the charge-route keys.</p>
-        <p><strong>What happens.</strong> The NCAA declaration tells MetalAA to build a fresh reference template for a site-adjacent residue: a capped model of ILE401 is optimized, Gaussian evaluates its ESP, AmberTools runs the two-stage RESP, and the fitted charges are frozen into the site charge problem. This build reuses the residue-build components of the NCAA route but is lighter than the standalone NCAA route: it optimizes one capped conformer instead of the &alpha;/&beta; pair, fits RESP on that single conformer, and builds the template with antechamber and parmchk2 only &mdash; with no Hessian/mSeminario refinement and no TorsionFit. The intermediates land in <code>MetalAA3_work/ncaa/ILE401/</code> (<code>MetalAA3_capped.mol2</code>, the ESP job, <code>resp1/resp2</code> outputs, <code>ILM.mol2</code>, <code>ILM.frcmod</code>), and the banner gains the declaration: <code>ncaa_resids: ['ILE401']</code>. Because ILE401 does not coordinate the metal, it does <em>not</em> enter the core &mdash; the result block still reports <code>Core residues: _400:CYM, A461:HEM, A462:FE</code>. The template surfaces in the deployment instead: the tleap input now loads <code>ILM.mol2</code> and <code>ILM.frcmod</code> alongside the site files, and the processed PDB carries <code>ILM</code> at residue 401.</p>
+        <p><strong>What happens.</strong> The NCAA declaration tells MetalAA to build a fresh reference template for a site-adjacent residue: a capped model of ILE401 is optimized, Gaussian evaluates its ESP, AmberTools runs the two-stage RESP, and the fitted charges are frozen into the site charge problem. This build reuses the residue-build components of the NCAA route but is lighter than the standalone NCAA route: it optimizes one capped conformer instead of the &alpha;/&beta; pair, fits RESP on that single conformer, and builds the template with antechamber and parmchk2 only &mdash; with no Hessian/mSeminario refinement and no TorsionFit. The intermediates land in <code>MetalAA3_work/ncaa/ILE401/</code> (<code>MetalAA3_capped.mol2</code>, the ESP job, <code>resp1/resp2</code> outputs, <code>ILM.mol2</code>, <code>ILM.frcmod</code>), and the banner gains the declaration: <code>ncaa_resids: ['ILE401']</code>. Because ILE401 does not coordinate the metal, it does <em>not</em> enter the core &mdash; the result block still reports <code>Core residues: _400:CYM, A461:HEM, A462:FE</code>. The template surfaces in the deployment instead: the tleap input <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3_metal_tleap.in" download><code>MetalAA3_metal_tleap.in</code></a> now loads <code>ILM.mol2</code> and <code>ILM.frcmod</code> alongside the site files, and the processed PDB carries <code>ILM</code> at residue 401.</p>
         <p>In <a class="file-link" href="https://raw.githubusercontent.com/AmiHaruka/MAPLE-Tutorial/main/parmfit/metalaa/MetalAA3.out" download><code>MetalAA3.out</code></a>, the banner registers the declaration, the stage timing gives the build its own entry, and the tleap status comes back clean:</p>
         <pre><code>  ncaa_resids: ['ILE401']
   ...
@@ -530,25 +530,26 @@ ncaa_mults=1</strong></code></pre>
         <pre><code>MetalAA3_work/MetalAA3_metal_tleap.in          MetalAA3_work/MetalAA3_metal_tleap.pdb
 ---------------------------------------       ---------------------------------------
 addAtomTypes {                                 ATOM   6405    N ILM A 401
-    { "Z1" "S"  "sp3" }                        ATOM   6406   CA ILM A 401
-    { "Z2" "N"  "sp3" }                        ATOM   6407    C ILM A 401
-    { "Z3" "N"  "sp3" }                        ATOM   6408    O ILM A 401
-    { "Z4" "N"  "sp3" }                        ATOM   6409   CB ILM A 401
-    { "Z5" "N"  "sp3" }                        ATOM   6410  CG1 ILM A 401
+    { "Z1" "S" "sp3" }                         ATOM   6406   CA ILM A 401
+    { "Z2" "N" "sp3" }                         ATOM   6407    C ILM A 401
+    { "Z3" "N" "sp3" }                         ATOM   6408    O ILM A 401
+    { "Z4" "N" "sp3" }                         ATOM   6409   CB ILM A 401
+    { "Z5" "N" "sp3" }                         ATOM   6410  CG1 ILM A 401
     { "M1" "Fe" "sp3" }                             ...
 }                                                   ...
-ILM = loadmol2 ILM.mol2
 CM1 = loadmol2 CM1.mol2
 HM1 = loadmol2 HM1.mol2
 FE1 = loadmol2 FE1.mol2
+ILM = loadmol2 ILM.mol2
 loadamberparams frcmod.ions234lm_126_tip3p
-loadamberparams .../ncaa/ILE401/ILM.frcmod
 loadamberparams MetalAA3_metal.frcmod
+loadamberparams ILM.frcmod
 mol = loadpdb MetalAA3_metal_tleap.pdb
 bond mol.461.NA mol.462.FE
     ... (4 more coordination bonds)
 bond mol.399.C mol.400.N      # backbone repair
 bond mol.400.C mol.401.N      # backbone repair
+bond mol.401.C mol.402.N      # backbone repair
 savepdb mol MetalAA3_metal_tleap_dry.pdb
 solvatebox mol TIP3PBOX 10.0
     ...</code></pre>

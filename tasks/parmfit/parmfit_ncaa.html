@@ -245,7 +245,7 @@
 
         <h2 id="torsionfit">TorsionFit</h2>
 
-        <p>NCAA restricts torsion fitting to rotatable dihedrals in the target residue's sidechain; backbone&ndash;backbone and cap dihedrals are excluded. <code>torsion_bonds</code> uses residue-local 1-based indices (ACE/NME caps not counted) and separates per-residue groups with <code>;</code>, in the same order as <code>ncaa_resids</code>. For a complex sidechain, set <code>torsionfit=false</code> and rely on the original GAFF2 torsion and parmchk2 improper parameters, or use <code>torsion_bonds</code> to refine selected dihedrals. NCAA disables torsion ensemble targets internally; see the <a href="parmfit.html#torsionfit">main ParmFit page</a> for scan, improper-refit, and refinement parameter details.</p>
+        <p>NCAA restricts torsion fitting to rotatable dihedrals in the target residue's sidechain; backbone&ndash;backbone and cap dihedrals are excluded. <code>torsion_bonds</code> uses residue-local 1-based indices (ACE/NME caps not counted) and separates per-residue groups with <code>;</code>, in the same order as <code>ncaa_resids</code>. For a complex sidechain, set <code>torsionfit=false</code> and rely on the original GAFF2 torsion<!-- and parmchk2 improper parameters-->, or use <code>torsion_bonds</code> to refine selected dihedrals. NCAA disables torsion ensemble targets internally; see the <a href="parmfit.html#torsionfit">main ParmFit page</a> for scan<!--, improper-refit,--> and refinement parameter details.</p>
 
         <h2 id="peptide-boundary">Peptide Boundary Terms</h2>
 
@@ -325,8 +325,6 @@ opt_max_step=0.2
 # TorsionFit
 torsionfit=false
 torsion_bonds=
-p_thresh=30.0
-radical_center=
 torsion_steps=36
 backend=cgbs
 constraint_mode=projected
@@ -348,7 +346,7 @@ torsion_ensemble_weight=0.5</code></pre>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_ncaa_tleap.pdb</code>, <code>&lt;base&gt;_work/&lt;base&gt;_ncaa_tleap.in</code>, and <code>&lt;base&gt;_work/&lt;base&gt;_ncaa_tleap.out</code>: Processed protein PDB, tleap input, and the tleap validation log.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_ncaa.prmtop</code>, <code>&lt;base&gt;_work/&lt;base&gt;_ncaa.inpcrd</code>, and solvated PDB outputs: tleap validation products.</li>
           <li><code>&lt;base&gt;_work/ncaa/&lt;RESNAME&gt;&lt;RESSEQ&gt;/</code> &mdash; the source residue name and number (<code>HIF89</code> style, not the exported <code>&lt;rn&gt;</code> name used by the template files above): per-residue optimized conformers, charge-route files, charged capped mol2, <code>target.chg</code>, and AmberTools template intermediates.</li>
-          <li><code>&lt;base&gt;_work/torsionfit/&lt;RESNAME&gt;&lt;RESSEQ&gt;/</code>: TorsionFit scans of the declared torsion bonds and of the improper refits (scan xyz files and per-bond logs), named with capped-model atom serials.</li>
+          <li><code>&lt;base&gt;_work/torsionfit/&lt;RESNAME&gt;&lt;RESSEQ&gt;/</code>: TorsionFit scans of the declared torsion bonds <!--and of the improper refits--> (scan xyz files and per-bond logs), named with capped-model atom serials.</li>
         </ul>
 
         <h2 id="requirements">Requirements and Limits</h2>

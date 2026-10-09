@@ -178,7 +178,7 @@ parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple
 
         <div class="admonition tip">
           <p class="admonition-title">Initial Prepare</p>
-          <p>The input <code>mol2</code> must already carry GAFF2 atom types. Users should pre-generate it with a tool such as <code>antechamber -at gaff2 -fi &lt;fmt&gt; -fo mol2 -i &lt;input&gt; -o &lt;output&gt;</code> before running Refinement.</p>
+          <p>The input <code>mol2</code> must carry GAFF2 atom types. Pre-generate it with <code>antechamber -at gaff2 -fi &lt;fmt&gt; -fo mol2 -i &lt;input&gt; -o &lt;output&gt;</code>, or omit <code>mol2=</code> entirely: MAPLE then writes the inline coordinates to <code>&lt;base&gt;_work/ante.pdb</code> and types them into <code>&lt;base&gt;_work/&lt;base&gt;_ff.mol2</code> (residue <code>LIG</code>). The generated mol2 carries zero placeholder charges, so <code>chg_fit</code> then defaults to <code>abcg2</code> &mdash; an explicit <code>resp</code>, MLIP, or Antechamber method is honored unchanged.</p>
         </div>
 
         <h2 id="workflow">Workflow</h2>
@@ -186,7 +186,7 @@ parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple
         <figure class="pseudo">
           <figcaption>Algorithm 1 &mdash; Refinement: small-molecule GAFF2 correction (bond/angle/proper)</figcaption>
           <ol class="pseudo-body">
-            <li class="req"><b>Require:</b> typed mol2 (GAFF2); config</li>
+            <li class="req"><b>Require:</b> typed mol2 (GAFF2; auto-generated when omitted); config</li>
             <li class="req"><b>Ensure:</b> corrected parameters (amber topology files, gromacs topology files)</li>
             <li>Load the mol2 as the initial parameter set.</li>
             <li>Optimize the geometry with the MLIP.</li>
@@ -203,7 +203,7 @@ parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple
           <li><strong>Optimization and reference.</strong> Optimize the structure and prepare the MLIP or optional QM reference geometry required by the enabled refinement stages.</li>
           <li><strong>Bonded correction or skip.</strong> Use Seminario or modified Seminario to update bond and angle terms, or retain the original terms when <code>bonded=none</code>.</li>
           <li><strong>Atomic charges.</strong> Preserve the input charges or calculate new charges with RESP, a charge-capable MLIP, or an Antechamber method.</li>
-          <li><strong>TorsionFit.</strong> Scan selected proper torsions and refit parmchk2-flagged impropers; fit the relative profile without changing nonbonded or topology terms.</li>
+          <li><strong>TorsionFit.</strong> Scan selected proper torsions<!-- and refit parmchk2-flagged impropers-->; fit the relative profile without changing nonbonded or topology terms.</li>
           <li><strong>Export.</strong> Write refined Amber mol2/frcmod and GROMACS top/gro files.</li>
         </ol>
 
@@ -217,10 +217,10 @@ parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple
           <table>
             <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>mol2</code></td><td>Required</td><td>Input topology and atom typing for <code>method=refinement</code>.</td></tr>
+              <tr><td><code>mol2</code></td><td>Optional</td><td>Input topology and atom typing. When omitted, MAPLE auto-generates <code>&lt;base&gt;_work/&lt;base&gt;_ff.mol2</code> from the inline coordinates via antechamber (GAFF2 typing, zero placeholder charges); <code>chg_fit</code> then defaults to <code>abcg2</code>.</td></tr>
               <tr><td><code>bonded</code></td><td><code>mseminario</code></td><td>Bond/angle update method: <code>mseminario</code>, <code>seminario</code>, or <code>none</code>.</td></tr>
               <tr><td><code>vib_scale</code></td><td><code>1.0</code></td><td>Vibrational frequency scale factor for Hessian-based fitting.</td></tr>
-              <tr><td><code>chg_fit</code></td><td><code>none</code></td><td>Charge source: input mol2 charges, <code>resp</code>, a <a href="parmfit.html#chargefit">charge-capable MLIP</a>, or a value passed to <code>antechamber -c</code>.</td></tr>
+              <tr><td><code>chg_fit</code></td><td><code>none</code></td><td>Charge source: input mol2 charges, <code>resp</code>, a <a href="parmfit.html#chargefit">charge-capable MLIP</a>, or a value passed to <code>antechamber -c</code>; defaults to <code>abcg2</code> when the mol2 is auto-generated.</td></tr>
               <tr><td><code>chg_level</code></td><td><code>HF/6-31G(d)</code></td><td>Gaussian ESP level used only when <code>chg_fit=resp</code>.</td></tr>
               <tr><td><code>chg_route</code></td><td>Empty</td><td>Additional Gaussian route text for RESP ESP jobs.</td></tr>
               <tr><td><code>iqm</code></td><td><code>false</code></td><td>Use external QM reference optimization/Hessian and torsion references when enabled. See the <a href="parmfit.html#iqm">main ParmFit page</a> for details.</td></tr>
@@ -243,7 +243,7 @@ parmed -p &lt;base&gt;_maple_gas.prmtop &lt;&lt;&lt;$'outparm &lt;base&gt;_maple
 
         <h2 id="torsionfit">TorsionFit</h2>
 
-        <p>Refinement auto-selects rotatable dihedrals from the mol2 topology: proper-torsion terms whose central bond is a single bond outside a ring. Use <code>torsion_bonds</code> to provide explicit overrides (e.g. <code>6-8,12-14</code>). See the <a href="parmfit.html#torsionfit">main ParmFit page</a> for the two-stage fitting architecture, improper refitting, and parameter details.</p>
+        <p>Refinement auto-selects rotatable dihedrals from the mol2 topology: proper-torsion terms whose central bond is a single bond outside a ring. Use <code>torsion_bonds</code> to provide explicit overrides (e.g. <code>6-8,12-14</code>). See the <a href="parmfit.html#torsionfit">main ParmFit page</a> for the two-stage fitting architecture<!--, improper refitting,--> and parameter details.</p>
 
         <h2 id="parmfit-input">Input Files</h2>
 
@@ -321,8 +321,6 @@ torsion_constraints=
 # TorsionFit
 torsionfit=true
 torsion_bonds=
-p_thresh=30.0
-radical_center=
 torsion_steps=36
 backend=cgbs
 constraint_mode=projected
@@ -339,6 +337,7 @@ torsion_ensemble_weight=0.5</code></pre>
 
         <h2 id="output-files">Output Files</h2>
         <ul>
+          <li>When <code>mol2=</code> is omitted: <code>&lt;base&gt;_work/ante.pdb</code> and the antechamber-generated <code>&lt;base&gt;_work/&lt;base&gt;_ff.mol2</code> (zero placeholder charges; <code>chg_fit</code> defaults to <code>abcg2</code>).</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_original.frcmod</code>: Initial AmberTools/GAFF2 frcmod from <code>parmchk2</code>.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_maple.mol2</code>: Primary final mol2 with the selected charges; refined workflows use MAPLE atom type naming.</li>
           <li><code>&lt;base&gt;_work/&lt;base&gt;_mlip_maple.mol2</code>: Optional MLIP-comparison mol2 when <code>qm_compare</code> is active.</li>
@@ -353,7 +352,7 @@ torsion_ensemble_weight=0.5</code></pre>
         <h2 id="requirements">Requirements and Limits</h2>
         <ul>
           <li>mSeminario and Seminario update BOND and ANGLE terms only.</li>
-          <li>TorsionFit refits selected proper torsions and parmchk2-flagged impropers; it does not rewrite topology or nonbonded terms.</li>
+          <li>TorsionFit refits selected proper torsions<!-- and parmchk2-flagged impropers-->; it does not rewrite topology or nonbonded terms.</li>
           <li>Automatic rotatable-bond selection follows the input mol2 bond typing. Fix incorrect aromatic, amide, or double-bond labels in the mol2 before fitting.</li>
           <li>The inline coordinates and the mol2 must list the same atoms in the same order, hydrogens included. MAPLE checks only that the atom counts match and then pairs atoms by position; it does not remap two files that were ordered independently. The coordinate values themselves need not match the mol2.</li>
         </ul>

@@ -210,7 +210,7 @@
 
         <h2 id="requirements">Requirements</h2>
 
-        <p>All routes need a working MAPLE installation and AmberTools on <code>PATH</code> &mdash; a run invokes whichever utilities it needs: <code>parmchk2</code>, <code>antechamber</code>, <code>prepgen</code>, <code>espgen</code>, <code>resp</code>, and <code>tleap</code>. Refinement additionally requires a GAFF2-typed input <code>mol2</code> &mdash; pre-generate it with <code>antechamber -at gaff2 ...</code> &mdash; whose atoms appear in the same order as the coordinate block, hydrogens included: MAPLE checks only that the atom counts match and then pairs atoms by position. NCAA and MetalAA read exactly one PDB block and need no separate atomic-charge input. Refinement may preserve the charges already stored in the input mol2 when <code>chg_fit=none</code>; the other charge routes derive charges at runtime (see <a href="#chargefit">ChargeFit</a> below).</p>
+        <p>All routes need a working MAPLE installation and AmberTools on <code>PATH</code> &mdash; a run invokes whichever utilities it needs: <code>parmchk2</code>, <code>antechamber</code>, <code>prepgen</code>, <code>espgen</code>, <code>resp</code>, and <code>tleap</code>. Refinement relies on GAFF2 atom typing: supply a pre-generated <code>mol2</code> (<code>antechamber -at gaff2 ...</code>), or omit <code>mol2=</code> and ParmFit does the typing itself at runtime, building the mol2 from the molecule recorded in the input file. That generated mol2 exists only to carry the GAFF2 types &mdash; its charge column holds zero placeholders, and <code>chg_fit</code> therefore defaults to <code>abcg2</code> (see the <a href="parmfit_refinement.html">Refinement page</a>). In both cases the mol2 atoms must appear in the same order as the coordinate block, hydrogens included &mdash; the auto-generated mol2 satisfies this by construction; MAPLE checks only that the atom counts match and then pairs atoms by position. NCAA and MetalAA read exactly one PDB block and need no separate atomic-charge input. Refinement may preserve the charges already stored in the input mol2 when <code>chg_fit=none</code>; the other charge routes derive charges at runtime (see <a href="#chargefit">ChargeFit</a> below).</p>
 
         <p><strong>When RESP charges are needed.</strong> They always take their ESP from Gaussian: <code>g16</code> or <code>g09</code> must be on <code>PATH</code> for Refinement and NCAA runs with <code>chg_fit=resp</code> (the NCAA default) and for every MetalAA run. QM reference jobs (<code>iqm=true</code>) use <code>qm_engine</code>, which defaults to <code>g16</code>; set <code>qm_engine=orca</code> to run them with ORCA instead. A Refinement or NCAA run therefore needs no Gaussian when <code>chg_fit</code> is not <code>resp</code> and the run keeps <code>iqm=false</code> or sets <code>qm_engine=orca</code>; MetalAA always needs Gaussian.</p>
 
@@ -261,7 +261,7 @@
 
         <p>TorsionFit applies to Refinement and NCAA routes. The fitted dihedrals differ by route: Refinement auto-selects rotatable single bonds from the mol2 topology; NCAA restricts fitting to sidechain dihedrals and disables torsion ensemble terms internally.</p>
 
-        <p>Improper refit is still experimental. Improper terms flagged as unreliable by <code>parmchk2</code> (an <code>ATTN</code> mark or a penalty score above <code>p_thresh</code>) are refitted together with the proper torsions: ATTN-marked terms are seeded with a zero prior, while penalty-flagged terms start from the parmchk2 estimate.</p>
+        <!-- <p>Improper refit is still experimental. Improper terms flagged as unreliable by <code>parmchk2</code> (an <code>ATTN</code> mark or a penalty score above <code>p_thresh</code>) are refitted together with the proper torsions: ATTN-marked terms are seeded with a zero prior, while penalty-flagged terms start from the parmchk2 estimate.</p> -->
 
         <div class="table-wrapper">
           <table>
@@ -279,8 +279,8 @@
               <tr><td><code>torsion_ensemble_weight</code></td><td><code>0.5</code></td><td>Weight of ensemble loss relative to scan loss in Refinement Stage&nbsp;2</td></tr>
               <tr><td><code>backend</code></td><td><code>cgbs</code></td><td>TorsionFit scan optimizer backend: <code>cgbs</code>, <code>cgws</code>, or <code>lbfgs</code></td></tr>
               <tr><td><code>constraint_mode</code></td><td><code>projected</code></td><td>Scan constraint mode: <code>projected</code> or <code>fixinternals</code> (not recommended to change)</td></tr>
-              <tr><td><code>p_thresh</code></td><td><code>30.0</code></td><td>Improper refit threshold (experimental): parmchk2 penalty scores above this value (or any <code>ATTN</code> mark) trigger an improper refit</td></tr>
-              <tr><td><code>radical_center</code></td><td>None</td><td>Radical centers for improper fitting (experimental); mol2 serials in Refinement, residue-local 1-based indices in NCAA</td></tr>
+              <!-- <tr><td><code>p_thresh</code></td><td><code>30.0</code></td><td>Improper refit threshold (experimental): parmchk2 penalty scores above this value (or any <code>ATTN</code> mark) trigger an improper refit</td></tr> -->
+              <!-- <tr><td><code>radical_center</code></td><td>None</td><td>Radical centers for improper fitting (experimental); mol2 serials in Refinement, residue-local 1-based indices in NCAA</td></tr> -->
             </tbody>
           </table>
         </div>
