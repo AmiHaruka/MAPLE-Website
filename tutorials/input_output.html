@@ -67,7 +67,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
                         <li>
@@ -174,7 +176,7 @@
 
                 <p>Here is an example input file showing both sections, adapted from the checked-in Dimer TS example <code>examples/ts/dimer/inp1.inp</code>:</p>
 
-                <pre><code>#model=ANI-1xnr
+                <pre><code>#model=ani1xnr
 #ts(method=dimer)
 #device=gpu0
 
@@ -185,6 +187,8 @@ C   1.3488671845 -0.5563869274 -0.1923254310
 H   0.7828987178 -0.2429788233  1.0663324170
 H   1.0764966981 -1.2943318365 -0.9583627957
 H   2.2951253096 -0.7293808119  0.3397718379</code></pre>
+
+                <p>Optional <a href="../setup/coordinates.html#post-processing">post-processing commands</a>, such as constraints and scan coordinates, follow the coordinate section.</p>
 
                 <h2 id="header-commands">Header Commands</h2>
 
@@ -269,22 +273,60 @@ H   2.2951253096 -0.7293808119  0.3397718379</code></pre>
 
                 <h2 id="supported-models">Supported Models</h2>
 
-                <p>MAPLE supports the following machine learning potential models, specified via the <code>#model</code> header command:</p>
+                <p>Select a model with the <code>#model</code> header. The available keywords are:</p>
 
                 <ul>
                     <li><code>ani2x</code></li>
                     <li><code>ani1x</code></li>
                     <li><code>ani1ccx</code></li>
                     <li><code>ani1xnr</code></li>
-                    <li><code>maceoff23s</code></li>
-                    <li><code>maceoff23m</code></li>
-                    <li><code>maceoff23l</code></li>
-                    <li><code>egret</code></li>
+                    <li><code>mace-off-23s</code></li>
+                    <li><code>mace-off-23m</code></li>
+                    <li><code>mace-off-23l</code></li>
+                    <li><code>egret-1</code></li>
                     <li><code>aimnet2</code></li>
                     <li><code>uma</code></li>
-                    <li><code>maceomol</code></li>
-                    <li><code>aimnet2nse</code></li>
+                    <li><code>mace-omol-0</code></li>
+                    <li><code>aimnet2-nse</code></li>
+                    <li><code>ani2xr</code></li>
+                    <li><code>ani2dr</code></li>
+                    <li><code>snn-ani2xr</code></li>
+                    <li><code>ani-mbis</code></li>
+                    <li><code>aimnet2-rxn</code></li>
+                    <li><code>aimnet2-pd</code></li>
+                    <li><code>aimnet2-b973c</code></li>
+                    <li><code>aimnet2-2025</code></li>
+                    <li><code>mace-off-23bm</code></li>
+                    <li><code>mace-off-24m</code></li>
+                    <li><code>mace-les-off</code></li>
+                    <li><code>egret-1e</code></li>
+                    <li><code>egret-1m</code></li>
+                    <li><code>egret-1s</code></li>
+                    <li><code>egret-1t</code></li>
+                    <li><code>mace-polar-1s</code></li>
+                    <li><code>mace-polar-1m</code></li>
+                    <li><code>mace-polar-1l</code></li>
+                    <li><code>fennix-bio-1s</code></li>
+                    <li><code>fennix-bio-1m</code></li>
+                    <li><code>grace-off-1s</code></li>
+                    <li><code>grace-off-1m</code></li>
+                    <li><code>grace-off-1l</code></li>
+                    <li><code>grace-off-2s</code></li>
+                    <li><code>grace-off-2m</code></li>
+                    <li><code>grace-off-2l</code></li>
+                    <li><code>so3lr</code></li>
+                    <li><code>so3lr-tauri-s</code></li>
+                    <li><code>so3lr-tauri-m</code></li>
+                    <li><code>so3lr-tauri-l</code></li>
+                    <li><code>allegro-fm-256</code></li>
+                    <li><code>allegro-fm-512</code></li>
+                    <li><code>nequip-t3-cosmo</code></li>
+                    <li><code>nequip-t123-cosmo</code></li>
+                    <li><code>nequip-t3-gas</code></li>
                 </ul>
+
+                <p>The <a href="../setup/models.html">model catalogue</a> gives the element coverage, reference data and detailed model guides.</p>
+
 
                 <h2 id="convergence-levels">Convergence Levels</h2>
 
@@ -308,7 +350,7 @@ H   2.2951253096 -0.7293808119  0.3397718379</code></pre>
 
                 <h2 id="coordinate-formats">Coordinate Formats</h2>
 
-                <p>MAPLE supports two ways to specify molecular coordinates.</p>
+                <p>MAPLE supports two ways to specify molecular coordinates. For charge, multiplicity and periodic cells in multiple-structure inputs, see <a href="../setup/coordinates.html#xyz-metadata">Electronic State and Periodic Cells</a> for the syntax, defaults and override rules.</p>
 
                 <h3>Inline Coordinates</h3>
 
@@ -331,7 +373,7 @@ H    0.629118   -0.629118   -0.629118</code></pre>
 
 XYZ methane.xyz</code></pre>
 
-                <p>Where <code>methane.xyz</code> contains:</p>
+                <p>Relative paths are resolved from the input file's directory. The file <code>methane.xyz</code> contains:</p>
 
                 <pre><code>5
 Methane molecule
@@ -345,11 +387,28 @@ H    0.629118   -0.629118   -0.629118</code></pre>
 
                 <p>For methods that require two endpoint structures (e.g., NEB), provide two <code>XYZ</code> references for the reactant and product geometries. Relative <code>XYZ</code> paths are resolved from the input file location; the example below assumes the input file is saved in the MAPLE repository root.</p>
 
-                <pre><code>#model=ANI-1xnr
+                <pre><code>#model=ani1xnr
 #ts(method=neb,refine=nebts)
 
 XYZ examples/ts/neb/react.xyz
 XYZ examples/ts/neb/prod.xyz</code></pre>
+
+                <p>Each endpoint file can also contain several frames. MAPLE pairs frame 1 of the first file with frame 1 of the second, and so on. Both files must contain the same number of frames; each pair must have matching atoms in the same order, charge, multiplicity and periodic cell. A single <code>XYZ</code> or <code>XYZTRAJ</code> file containing path images supplies one initial path.</p>
+
+                <h2 id="batch-input">Batch Input</h2>
+                <p>Supply multiple structures in one multi-frame XYZ file, through several <code>XYZ</code> references, or as <a href="../setup/coordinates.html#multiple-structures">separate inline groups</a>. For example, evaluate every frame in a file:</p>
+                <pre><code>#model=ani2x
+#sp(batch_size=32)
+
+XYZ structures.xyz</code></pre>
+                <p>For independent optimizations from two files:</p>
+                <pre><code>#model=ani2x
+#opt(batch_size=32)
+
+XYZ first.xyz
+XYZ second.xyz</code></pre>
+                <p><code>batch_size</code> is an optional positive integer that caps the number of structures in each model evaluation. All supplied structures are processed. Omit it to let MAPLE group compatible structures and manage evaluation sizes automatically.</p>
+                <p>Single-point, optimization and frequency jobs process the supplied structures independently. For path methods, use the endpoint or path-image input described above. Scan and ParmFit jobs currently accept one structure.</p>
 
                 <h2 id="output-files">Output Files</h2>
 
@@ -414,6 +473,8 @@ XYZ examples/ts/neb/prod.xyz</code></pre>
                 </table>
                 </div>
 
+                <p>For multiple structures, result numbering follows the order of file references and frames within each file. Single-point results are listed as <code>Frame 1</code>, <code>Frame 2</code>, etc. in the main output. Independent optimization and frequency jobs use numbered names such as <code>job_0001.out</code>, <code>job_0002.out</code> and their associated result files.</p>
+
                 <p>In the table above, <code>*</code> represents the input file name without the <code>.inp</code> extension. For example, a NEBTS job named <code>inp1.inp</code> writes files such as <code>inp1_nebts_ts.xyz</code> and <code>inp1_nebts_mep.xyz</code>.</p>
 
                 <div class="admonition important">
@@ -437,13 +498,14 @@ XYZ examples/ts/neb/prod.xyz</code></pre>
             <div class="toc-sticky">
                 <h3>On this page</h3>
                 <ul>
-                    <li><a href="#input-file-structure">Input File Structure</a></li>
-                    <li><a href="#header-commands">Header Commands</a></li>
-                    <li><a href="#supported-models">Supported Models</a></li>
-                    <li><a href="#convergence-levels">Convergence Levels</a></li>
-                    <li><a href="#coordinate-formats">Coordinate Formats</a></li>
-                    <li><a href="#output-files">Output Files</a></li>
-                </ul>
+          <li><a href="#input-file-structure">Input File Structure</a></li>
+          <li><a href="#header-commands">Header Commands</a></li>
+          <li><a href="#supported-models">Supported Models</a></li>
+          <li><a href="#convergence-levels">Convergence Levels</a></li>
+          <li><a href="#coordinate-formats">Coordinate Formats</a></li>
+          <li><a href="#batch-input">Batch Input</a></li>
+          <li><a href="#output-files">Output Files</a></li>
+        </ul>
             </div>
         </aside>
     </div>

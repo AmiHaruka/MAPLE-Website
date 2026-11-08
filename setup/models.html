@@ -68,7 +68,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -161,11 +163,11 @@
       <article>
         <h1>Machine Learning Potentials</h1>
 
-        <p>MAPLE uses machine learning interatomic potentials (MLIPs) to compute energies and forces instead of traditional quantum mechanical methods. This approach provides near-DFT accuracy at a fraction of the computational cost, enabling rapid geometry optimizations, frequency calculations, and molecular dynamics simulations. The <code>#model</code> command in the settings block selects which potential to use.</p>
+        <p>MAPLE uses machine learning interatomic potentials (MLIPs) to compute energies and forces for its calculation workflows. The <code>#model</code> command selects a pretrained model. Its training data, reference level and chemical coverage determine which systems it can describe.</p>
 
         <h2 id="available-models">Available Models</h2>
 
-        <p>The table below lists the primary user-facing machine learning potentials in MAPLE, along with their keyword, element coverage, and accuracy characteristics. For periodic, charge/spin, Hessian, solvent, D4, HVP, and development backends such as MACE-Polar, see the <a href="../setup/calculators.html">calculator backend capability matrix</a>.</p>
+        <p>The table lists MAPLE's pretrained models, their selection keywords, element coverage and accuracy characteristics. The <a href="calculators.html">calculator capability matrix</a> describes supported calculations.</p>
 
         <div class="table-wrapper">
         <table>
@@ -179,126 +181,314 @@
           </thead>
           <tbody>
             <tr>
-              <td><a href="../setup/model_ani.html">ANI-2x</a></td>
+              <td><a href="model_ani.html">ANI-2x</a></td>
               <td><code>ani2x</code></td>
               <td>H, C, N, O, F, S, Cl</td>
-              <td>Trained on wB97X/6-31G(d); good general-purpose accuracy for organic molecules. <a href="../setup/model_ani.html">Details &rarr;</a></td>
+              <td>Trained on &omega;B97X/6-31G(d); good general-purpose accuracy for organic molecules.</td>
             </tr>
             <tr>
-              <td>ANI-1x</td>
+              <td><a href="model_ani.html">ANI-1x</a></td>
               <td><code>ani1x</code></td>
               <td>H, C, N, O</td>
-              <td>Trained on wB97X/6-31G(d); limited to four elements but well-validated</td>
+              <td>Trained on &omega;B97X/6-31G(d); limited to H, C, N and O.</td>
             </tr>
             <tr>
-              <td>ANI-1ccx</td>
+              <td><a href="model_ani.html">ANI-1ccx</a></td>
               <td><code>ani1ccx</code></td>
               <td>H, C, N, O</td>
-              <td>Transfer-learned to CCSD(T)/CBS; high accuracy for small organic molecules</td>
+              <td>Transfer-learned to CCSD(T)*/CBS for small organic-molecule energetics.</td>
             </tr>
             <tr>
-              <td>ANI-1xnr</td>
+              <td><a href="model_ani.html">ANI-1xnr</a></td>
               <td><code>ani1xnr</code></td>
               <td>H, C, N, O</td>
-              <td>Non-reactive variant of ANI-1x; trained without bond-breaking data</td>
+              <td>Reactive model trained on BLYP/TZV2P molecular and condensed-phase data.</td>
             </tr>
             <tr>
-              <td><a href="../setup/model_aimnet.html">AIMNet2</a></td>
+              <td><a href="model_ani.html">ANI-2xr</a></td>
+              <td><code>ani2xr</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>Trained on &omega;B97X/6-31G(d), with short-range repulsion and a smoother potential-energy surface.</td>
+            </tr>
+            <tr>
+              <td><a href="model_ani.html">ANI-2dr</a></td>
+              <td><code>ani2dr</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>Trained on B97-3c, with short-range repulsion and D3 dispersion.</td>
+            </tr>
+            <tr>
+              <td><a href="model_ani.html">SnnANI-2xr</a></td>
+              <td><code>snn-ani2xr</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>Trained on &omega;B97X/6-31G(d) with a network shared across elements and short-range repulsion.</td>
+            </tr>
+            <tr>
+              <td><a href="model_ani.html">ANI-MBIS</a></td>
+              <td><code>ani-mbis</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>Predicts &omega;B97X/6-31G(d) energies and geometry-dependent MBIS atomic charges.</td>
+            </tr>
+            <tr>
+              <td><a href="model_aimnet.html">AIMNet2</a></td>
               <td><code>aimnet2</code></td>
               <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
-              <td>Broad element coverage with wB97M-D3BJ accuracy; supports charged species. <a href="../setup/model_aimnet.html">Details &rarr;</a></td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPP for neutral and charged organic and main-group molecules.</td>
             </tr>
             <tr>
-              <td>AIMNet2-NSE</td>
-              <td><code>aimnet2nse</code></td>
+              <td><a href="model_aimnet.html">AIMNet2-RXN</a></td>
+              <td><code>aimnet2-rxn</code></td>
+              <td>H, C, N, O</td>
+              <td>Trained on &omega;B97M/def2-TZVPP for closed-shell organic reactions, transition states and reaction pathways.</td>
+            </tr>
+            <tr>
+              <td><a href="model_aimnet.html">AIMNet2-Pd</a></td>
+              <td><code>aimnet2-pd</code></td>
+              <td>H, B, C, N, O, F, Si, P, S, Cl, Se, Br, Pd, I</td>
+              <td>Trained on B97-3c/CPCM(THF) for palladium-catalyzed reactions.</td>
+            </tr>
+            <tr>
+              <td><a href="model_aimnet.html">AIMNet2-B97-3c</a></td>
+              <td><code>aimnet2-b973c</code></td>
               <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
-              <td>Open-shell variant using neural spin-charge equilibration for systems with arbitrary charge and spin multiplicity, including radicals.</td>
+              <td>B97-3c model for molecular conformations and relative energies.</td>
             </tr>
             <tr>
-              <td><a href="../setup/model_fennol.html">FeNNix-Bio1S</a></td>
-              <td><code>fennix-bio1s</code></td>
-              <td>H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I, Zn</td>
-              <td>Small FeNNix-Bio <code>.fnx</code> model for fast biomolecular and molecular-cluster calculations.</td>
+              <td><a href="model_aimnet.html">AIMNet2-2025</a></td>
+              <td><code>aimnet2-2025</code></td>
+              <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
+              <td>Updated B97-3c model with improved intermolecular interactions.</td>
             </tr>
             <tr>
-              <td><a href="../setup/model_fennol.html">FeNNix-Bio1M</a></td>
-              <td><code>fennix-bio1m</code></td>
-              <td>H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I, Zn</td>
-              <td>Medium FeNNix-Bio <code>.fnx</code> model for higher-capacity biomolecular calculations.</td>
+              <td><a href="model_aimnet.html">AIMNet2-NSE</a></td>
+              <td><code>aimnet2-nse</code></td>
+              <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
+              <td>Open-shell model trained on &omega;B97M-D3(BJ)/def2-TZVPP, with charge and spin conditioning.</td>
             </tr>
             <tr>
-              <td><a href="../setup/model_fennol.html">External .fnx</a></td>
-              <td><code>fennol(model_path=...)</code></td>
-              <td>Whatever the supplied <code>.fnx</code> model supports</td>
-              <td>Load another FeNNix <code>.fnx</code> model through MAPLE's JAX/Flax runtime.</td>
+              <td><a href="model_fennol.html">FeNNix-Bio1S</a></td>
+              <td><code>fennix-bio-1s</code></td>
+              <td>H&ndash;Rn (input encoding)</td>
+              <td>Biomolecular model with a &omega;B97M-D3(BJ) reference and AMOEBA03 fine-tuning for solvated ions.</td>
             </tr>
             <tr>
-              <td><a href="../setup/model_mace.html">MACE-OFF23 (Small)</a></td>
-              <td><code>maceoff23s</code></td>
-              <td>H, C, N, O, F, S, Cl</td>
-              <td>Fast equivariant model; suitable for quick screening of organic molecules. <a href="../setup/model_mace.html">Details &rarr;</a></td>
+              <td><a href="model_fennol.html">FeNNix-Bio1M</a></td>
+              <td><code>fennix-bio-1m</code></td>
+              <td>H&ndash;Rn (input encoding)</td>
+              <td>Biomolecular model with a &omega;B97M-D3(BJ) reference and AMOEBA03 fine-tuning for solvated ions.</td>
             </tr>
             <tr>
-              <td>MACE-OFF23 (Medium)</td>
-              <td><code>maceoff23m</code></td>
-              <td>H, C, N, O, F, S, Cl</td>
-              <td>Balanced speed and accuracy for organic chemistry applications</td>
+              <td><a href="model_mace.html">MACE-OFF23 (Small)</a></td>
+              <td><code>mace-off-23s</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters.</td>
             </tr>
             <tr>
-              <td>MACE-OFF23 (Large)</td>
-              <td><code>maceoff23l</code></td>
-              <td>H, C, N, O, F, S, Cl</td>
-              <td>Highest accuracy MACE-OFF variant; recommended for publication-quality results</td>
+              <td><a href="model_mace.html">MACE-OFF23 (Medium)</a></td>
+              <td><code>mace-off-23m</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters.</td>
             </tr>
             <tr>
-              <td>MACE-OMol</td>
-              <td><code>maceomol</code></td>
-              <td>H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I</td>
-              <td>Extended organic-molecular MACE model; broader element support than OFF23</td>
+              <td><a href="model_mace.html">MACE-OFF23 (Large)</a></td>
+              <td><code>mace-off-23l</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters.</td>
             </tr>
             <tr>
-              <td>EGRET</td>
-              <td><code>egret</code></td>
-              <td>H, C, N, O, F, S, Cl</td>
-              <td>Graph-based equivariant model; competitive accuracy for drug-like molecules</td>
+              <td><a href="model_mace.html">MACE-OFF23 (B-Medium)</a></td>
+              <td><code>mace-off-23bm</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters.</td>
             </tr>
             <tr>
-              <td><a href="../setup/model_uma.html">UMA</a></td>
+              <td><a href="model_mace.html">MACE-OFF24 (Medium)</a></td>
+              <td><code>mace-off-24m</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on expanded SPICE v2 data at &omega;B97M-D3(BJ)/def2-TZVPPD for organic molecules and molecular clusters.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">MACE-LES-OFF</a></td>
+              <td><code>mace-les-off</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for organic systems, with learned long-range electrostatics.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">EGRET-1</a></td>
+              <td><code>egret-1</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for bioorganic molecules.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">EGRET-1E</a></td>
+              <td><code>egret-1e</code></td>
+              <td>H, C, N, O, F, Si, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD with additional main-group structures, including silicon compounds.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">EGRET-1M</a></td>
+              <td><code>egret-1m</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for bioorganic molecules.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">EGRET-1S</a></td>
+              <td><code>egret-1s</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD for bioorganic molecules.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">EGRET-1T</a></td>
+              <td><code>egret-1t</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on &omega;B97M-D3(BJ)/def2-TZVPPD with reaction-path and transition-state data.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">MACE-OMol-0</a></td>
+              <td><code>mace-omol-0</code></td>
+              <td>H&ndash;Bi (Z = 1&ndash;83)</td>
+              <td>Trained on OMol25 at &omega;B97M-V/def2-TZVPD for molecules with varying charge and spin.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">MACE-Polar (Small)</a></td>
+              <td><code>mace-polar-1s</code></td>
+              <td>H&ndash;Bi (Z = 1&ndash;83)</td>
+              <td>Trained on &omega;B97M-V/def2-TZVPD, with polarization, long-range electrostatics and atomic charge output.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">MACE-Polar (Medium)</a></td>
+              <td><code>mace-polar-1m</code></td>
+              <td>H&ndash;Bi (Z = 1&ndash;83)</td>
+              <td>Trained on &omega;B97M-V/def2-TZVPD, with polarization, long-range electrostatics and atomic charge output.</td>
+            </tr>
+            <tr>
+              <td><a href="model_mace.html">MACE-Polar (Large)</a></td>
+              <td><code>mace-polar-1l</code></td>
+              <td>H&ndash;Bi (Z = 1&ndash;83)</td>
+              <td>Trained on &omega;B97M-V/def2-TZVPD, with polarization, long-range electrostatics and atomic charge output.</td>
+            </tr>
+            <tr>
+              <td><a href="model_grace.html">GRACE-OFF (1L-S)</a></td>
+              <td><code>grace-off-1s</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on SPICE v2 at &omega;B97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems.</td>
+            </tr>
+            <tr>
+              <td><a href="model_grace.html">GRACE-OFF (1L-M)</a></td>
+              <td><code>grace-off-1m</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on SPICE v2 at &omega;B97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems.</td>
+            </tr>
+            <tr>
+              <td><a href="model_grace.html">GRACE-OFF (1L-L)</a></td>
+              <td><code>grace-off-1l</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on SPICE v2 at &omega;B97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems.</td>
+            </tr>
+            <tr>
+              <td><a href="model_grace.html">GRACE-OFF (2L-S)</a></td>
+              <td><code>grace-off-2s</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on SPICE v2 at &omega;B97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems.</td>
+            </tr>
+            <tr>
+              <td><a href="model_grace.html">GRACE-OFF (2L-M)</a></td>
+              <td><code>grace-off-2m</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on SPICE v2 at &omega;B97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems.</td>
+            </tr>
+            <tr>
+              <td><a href="model_grace.html">GRACE-OFF (2L-L)</a></td>
+              <td><code>grace-off-2l</code></td>
+              <td>H, C, N, O, F, P, S, Cl, Br, I</td>
+              <td>Trained on SPICE v2 at &omega;B97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems.</td>
+            </tr>
+            <tr>
+              <td><a href="model_so3lr.html">SO3LR</a></td>
+              <td><code>so3lr</code></td>
+              <td>H, C, N, O, F, P, S, Cl</td>
+              <td>Trained on PBE0+MBD molecular data, with long-range electrostatics and dispersion.</td>
+            </tr>
+            <tr>
+              <td><a href="model_so3lr.html">SO3LR Tauri (Small)</a></td>
+              <td><code>so3lr-tauri-s</code></td>
+              <td>H&ndash;At (Z = 1&ndash;85)</td>
+              <td>Trained on PBE0+MBD and &omega;B97M-V data for reactive biomolecular systems, including ions and metal complexes.</td>
+            </tr>
+            <tr>
+              <td><a href="model_so3lr.html">SO3LR Tauri (Medium)</a></td>
+              <td><code>so3lr-tauri-m</code></td>
+              <td>H&ndash;At (Z = 1&ndash;85)</td>
+              <td>Trained on PBE0+MBD and &omega;B97M-V data for reactive biomolecular systems, including ions and metal complexes.</td>
+            </tr>
+            <tr>
+              <td><a href="model_so3lr.html">SO3LR Tauri (Large)</a></td>
+              <td><code>so3lr-tauri-l</code></td>
+              <td>H&ndash;At (Z = 1&ndash;85)</td>
+              <td>Trained on PBE0+MBD and &omega;B97M-V data for reactive biomolecular systems, including ions and metal complexes.</td>
+            </tr>
+            <tr>
+              <td><a href="model_nequip.html">NequIP T3 (COSMO-water)</a></td>
+              <td><code>nequip-t3-cosmo</code></td>
+              <td>H, C, N, O, S</td>
+              <td>Trained on PeptideCS2 tripeptides at BP86-D3(BJ)/dgauss-dzvp with COSMO water.</td>
+            </tr>
+            <tr>
+              <td><a href="model_nequip.html">NequIP T123 (COSMO-water)</a></td>
+              <td><code>nequip-t123-cosmo</code></td>
+              <td>H, C, N, O, S</td>
+              <td>Trained on PeptideCS2 mono-, di- and tripeptides at BP86-D3(BJ)/dgauss-dzvp with COSMO water.</td>
+            </tr>
+            <tr>
+              <td><a href="model_nequip.html">NequIP T3 (Gas)</a></td>
+              <td><code>nequip-t3-gas</code></td>
+              <td>H, C, N, O, S</td>
+              <td>Trained on gas-phase PeptideCS2 tripeptides at BP86-D3(BJ)/dgauss-dzvp.</td>
+            </tr>
+            <tr>
+              <td><a href="model_nequip.html">Allegro-FM-256</a></td>
+              <td><code>allegro-fm-256</code></td>
+              <td>89 elements: Z = 1&ndash;83 and 89&ndash;94</td>
+              <td>Trained on PBE inorganic-crystal data and &omega;B97M-D3(BJ)/def2-TZVPPD organic-molecule data.</td>
+            </tr>
+            <tr>
+              <td><a href="model_nequip.html">Allegro-FM-512</a></td>
+              <td><code>allegro-fm-512</code></td>
+              <td>89 elements: Z = 1&ndash;83 and 89&ndash;94</td>
+              <td>Trained on PBE inorganic-crystal data and &omega;B97M-D3(BJ)/def2-TZVPPD organic-molecule data.</td>
+            </tr>
+            <tr>
+              <td><a href="model_uma.html">UMA</a></td>
               <td><code>uma</code></td>
-              <td>Broad periodic table coverage (83+ elements)</td>
-              <td>Universal model from Meta FAIR; supports 7 task domains, 3 model sizes, and <code>inference=default|turbo</code>. <a href="../setup/model_uma.html">Details &rarr;</a></td>
-            </tr>
-            <tr>
-              <td><a href="../setup/model_custom.html">Your own model</a></td>
-              <td><code>module=...</code></td>
-              <td>Whatever your model supports</td>
-              <td>Plug in your own TorchScript or PyTorch checkpoint (<code>.pt</code>/<code>.jpt</code>/<code>.model</code>) with no source edits. <a href="../setup/model_custom.html">Tutorial &rarr;</a></td>
+              <td>Task dependent</td>
+              <td>Universal model from Meta FAIR for molecules, materials, catalysis, molecular crystals and MOFs; the task selects the reference level.</td>
             </tr>
           </tbody>
         </table>
         </div>
+
 
         <h2 id="model-selection">Model Selection Guide</h2>
 
         <p>Choosing the right model depends on your molecular system, required accuracy, and available computational resources. Here are general recommendations:</p>
 
         <ul>
-          <li><strong>Organic molecules (H, C, N, O only):</strong> Start with <code>ani2x</code> for general use or <code>ani1ccx</code> when coupled-cluster accuracy is needed for small molecules.</li>
-          <li><strong>Organic molecules with halogens (F, S, Cl):</strong> Use <code>ani2x</code>, <code>maceoff23m</code>, or <code>egret</code>. For the highest accuracy, try <code>maceoff23l</code>.</li>
-          <li><strong>Systems with heavier elements (Br, I, P, Si, etc.):</strong> Use <code>aimnet2</code> or <code>maceomol</code>, which support a broader range of elements.</li>
-          <li><strong>Diverse or unknown systems:</strong> Use <code>uma</code> as a reliable general-purpose potential with the widest element coverage. Specify a <a href="../setup/model_uma.html">task domain</a> for best accuracy.</li>
-          <li><strong>Periodic materials / catalysis:</strong> Use <code>uma</code> with an explicit periodic-capable task such as <code>omat</code>, <code>oc20</code>, <code>oc22</code>, <code>oc25</code>, <code>omc</code>, or <code>odac</code>. Stress and virial output are not yet validated.</li>
-          <li><strong>Charged or open-shell molecules:</strong> Use <code>aimnet2</code> or <code>uma</code> with the <code>omol</code> task. Molecular wrappers such as ANI and MACE-OFF do not honor charge or multiplicity.</li>
-          <li><strong>Speed-critical workflows:</strong> Use <code>maceoff23s</code> or <code>ani2x</code> for the fastest evaluation times. The ANI models are particularly fast on GPUs.</li>
-          <li><strong>Publication-quality results:</strong> Use <code>maceoff23l</code> or <code>ani1ccx</code> for the highest available accuracy within their element ranges.</li>
+          <li><strong>Organic molecules (H, C, N, O only):</strong> Start with <code>ani2x</code> for general use or <code>ani1ccx</code> when a coupled-cluster reference is needed for small molecules.</li>
+          <li><strong>Organic molecules with S or halogens:</strong> <code>ani2x</code> covers H, C, N, O, F, S and Cl; MACE-OFF and GRACE-OFF also cover P, Br and I.</li>
+          <li><strong>Systems with heavier elements:</strong> Use <code>aimnet2</code> for its main-group element set, or MACE-OMol, MACE-Polar and SO3LR Tauri for wider coverage including metals.</li>
+          <li><strong>Diverse chemical domains:</strong> Use <code>uma</code> with a <a href="../setup/model_uma.html#task-domains">task domain</a> matching molecules, materials or catalysis.</li>
+          <li><strong>Periodic materials / catalysis:</strong> UMA requires an explicit periodic task such as <code>omat</code>, <code>oc20</code> or <code>omc</code>. Other periodic-capable models are listed in the <a href="calculators.html">capability matrix</a>. UMA stress and virial output remain unavailable.</li>
+          <li><strong>Charged or open-shell molecules:</strong> Use <code>aimnet2</code> for charged singlets. AIMNet2-NSE, SO3LR, MACE-OMol, MACE-Polar and UMA with <code>task=omol</code> also accept spin multiplicity; FeNNix requires multiplicity 1.</li>
+          <li><strong>Speed-critical workflows:</strong> Choose a smaller model within a suitable family; <code>mace-off-23s</code> and ANI models are options for organic systems.</li>
+          <li><strong>Reference-level choice:</strong> Use <code>ani1ccx</code> for a CCSD(T)*/CBS reference within H/C/N/O chemistry. For DFT-trained models, select the reference level appropriate to the calculation.</li>
         </ul>
+
 
         <h2 id="physical-corrections">Physical Corrections</h2>
 
         <p>ML potentials can be augmented with physical corrections to improve accuracy for specific interactions that are challenging for neural network models. Support is backend-specific; do not assume a correction is available for every model.</p>
 
         <h3 id="d4-dispersion">DFT-D4 Dispersion Correction</h3>
-        <p>The D4 dispersion correction adds London dispersion interactions (van der Waals forces) to the ML potential energy. In the current MAPLE calculator layer, D4 is supported for ANI backends only.</p>
+        <p>The D4 dispersion correction adds London dispersion interactions (van der Waals forces) to the ML potential energy. MAPLE supports this extra correction for non-periodic ANI calculations, except <code>ani2dr</code>, which already includes D3 dispersion.</p>
         <pre><code>#model = ani2x
 #d4
 #opt</code></pre>
@@ -314,7 +504,7 @@
 
         <div class="admonition important">
           <p class="admonition-title">Important</p>
-          <p>Large models such as <code>maceoff23l</code> and <code>maceomol</code> require significantly more GPU memory than smaller models. If you encounter out-of-memory errors, try switching to a smaller model variant (e.g., <code>maceoff23s</code>) or use <code>#device = cpu</code> for systems that exceed your GPU memory.</p>
+          <p>Large models such as <code>mace-off-23l</code> and <code>mace-omol-0</code> require significantly more GPU memory than smaller models. If you encounter out-of-memory errors, try switching to a smaller model variant (e.g., <code>mace-off-23s</code>) or use <code>#device = cpu</code> for systems that exceed your GPU memory.</p>
         </div>
 
         <h2 id="usage-examples">Usage Examples</h2>
@@ -358,13 +548,13 @@ O   -1.250000    0.000000    0.000000</code></pre>
 
 
         <h3>Frequency calculation with MACE-OFF23</h3>
-        <pre><code>#model = maceoff23m
+        <pre><code>#model = mace-off-23m
 #freq
 
 XYZ /path/to/optimized_geometry.xyz</code></pre>
 
         <h3>CPU-based calculation for large systems</h3>
-        <pre><code>#model = maceoff23s
+        <pre><code>#model = mace-off-23s
 #device = cpu
 #opt(level=loose)
 

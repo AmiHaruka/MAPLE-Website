@@ -68,7 +68,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -161,11 +163,11 @@
       <article>
         <h1>Calculator Backends &amp; Capability Matrix</h1>
 
-        <p>This page summarizes the calculator layer documented for the MAPLE <strong>0.1.4 development</strong> branch. It is a development capability guide, not a public release announcement. Use it to choose a backend and to understand the protocol expected from new calculators.</p>
+        <p>This page summarizes the calculator layer documented for the MAPLE <strong>0.1.4 development</strong> branch. The entries describe the current development implementation. Use it to compare the available models and calculation options.</p>
 
         <div class="admonition note">
           <p class="admonition-title">Development note</p>
-          <p>Backend capability gates are enforced before or during calculator construction: periodic inputs fail fast for molecular wrappers, unsupported Hessian modes are rejected, and typoed backend options fail loudly for shipped calculators.</p>
+          <p>Backend capability gates are enforced before or during calculator construction: electronic-state inputs, periodic cells, Hessian modes and model options are checked against the selected calculator and model.</p>
         </div>
 
         <h2 id="capability-matrix">Backend Capability Matrix</h2>
@@ -174,115 +176,198 @@
           <section class="card capability-card">
             <div class="card-tag">Molecular / HVP</div>
             <h3>ANI</h3>
-            <p class="capability-keywords"><code>ani2x</code> <code>ani1x</code> <code>ani1ccx</code> <code>ani1xnr</code></p>
+            <p class="capability-keywords"><code>ani2x</code> <code>ani1x</code> <code>ani1ccx</code> <code>ani1xnr</code> <code>ani2xr</code> <code>ani2dr</code> <code>snn-ani2xr</code> <code>ani-mbis</code></p>
             <div class="capability-badges" aria-label="ANI quick capabilities">
-              <span class="capability-badge badge-no">PBC no</span>
+              <span class="capability-badge badge-yes">PBC yes</span>
               <span class="capability-badge badge-no">Charge no</span>
-              <span class="capability-badge badge-yes">D4 yes</span>
-              <span class="capability-badge badge-yes">HVP gas-phase</span>
+              <span class="capability-badge badge-partial">D4 partial</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
             </div>
             <dl class="capability-list">
-              <div><dt>PBC</dt><dd>No; periodic atoms fail fast.</dd></div>
-              <div><dt>Charge / mult</dt><dd>No; values are not honored by the backend.</dd></div>
-              <div><dt>Hessian</dt><dd>Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported.</dd></div>
-              <div><dt>Solvent / D4</dt><dd>Experimental GBSA, energy-only; D4 is supported.</dd></div>
-              <div><dt>Model files</dt><dd>MAPLE-hosted checkpoints auto-download; explicit <code>model_path</code> is accepted.</dd></div>
+              <div><dt>PBC</dt><dd>Molecular and periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Charge 0 and multiplicity 1.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>ANI-MBIS provides atomic charges and molecular dipoles.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular batches; periodic members are evaluated individually.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. Optional D4 for non-periodic inputs, except <code>ani2dr</code>.</dd></div>
+              <div><dt>Model files</dt><dd><code>.pt</code></dd></div>
             </dl>
           </section>
 
           <section class="card capability-card">
             <div class="card-tag">Charged molecules</div>
-            <h3>AIMNet2</h3>
-            <p class="capability-keywords"><code>aimnet2</code> <code>aimnet2nse</code></p>
-            <div class="capability-badges" aria-label="AIMNet2 quick capabilities">
-              <span class="capability-badge badge-no">PBC no</span>
-              <span class="capability-badge badge-yes">Charge yes</span>
+            <h3>AIMNet2 / AIMNet2-NSE</h3>
+            <p class="capability-keywords"><code>aimnet2</code> <code>aimnet2-nse</code> <code>aimnet2-rxn</code> <code>aimnet2-pd</code> <code>aimnet2-b973c</code> <code>aimnet2-2025</code></p>
+            <div class="capability-badges" aria-label="AIMNet2 / AIMNet2-NSE quick capabilities">
+              <span class="capability-badge badge-yes">PBC yes</span>
+              <span class="capability-badge badge-partial">Charge variant-specific</span>
               <span class="capability-badge badge-no">D4 no</span>
-              <span class="capability-badge badge-no">HVP no</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
             </div>
             <dl class="capability-list">
-              <div><dt>PBC</dt><dd>No; periodic atoms fail fast. <code>coulomb_method=ewald</code> is disabled.</dd></div>
-              <div><dt>Charge / mult</dt><dd>Yes.</dd></div>
-              <div><dt>Hessian</dt><dd>Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported.</dd></div>
-              <div><dt>Solvent / D4</dt><dd>Experimental GBSA, energy-only; D4 is not supported.</dd></div>
-              <div><dt>Model files</dt><dd>MAPLE-hosted checkpoints auto-download; explicit <code>model_path</code> is accepted.</dd></div>
+              <div><dt>PBC</dt><dd>Molecular and full three-dimensional periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Variant-specific electronic states; AIMNet2-NSE conditions on multiplicity.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>Atomic charges and molecular dipoles are available.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular batches; periodic members are evaluated individually.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. Native dispersion treatment; no separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.pt</code></dd></div>
             </dl>
           </section>
-
 
           <section class="card capability-card">
             <div class="card-tag">FeNNol</div>
             <h3>FeNNol</h3>
-            <p class="capability-keywords"><code>fennix-bio1s</code> <code>fennix-bio1m</code> <code>fennol(model_path=...)</code></p>
+            <p class="capability-keywords"><code>fennix-bio-1s</code> <code>fennix-bio-1m</code></p>
             <div class="capability-badges" aria-label="FeNNol quick capabilities">
-              <span class="capability-badge badge-no">PBC no</span>
+              <span class="capability-badge badge-yes">PBC yes</span>
               <span class="capability-badge badge-partial">Charge singlet</span>
               <span class="capability-badge badge-no">D4 no</span>
               <span class="capability-badge badge-yes">HVP yes</span>
             </div>
             <dl class="capability-list">
-              <div><dt>PBC</dt><dd>No; periodic atoms fail fast.</dd></div>
-              <div><dt>Charge / mult</dt><dd>FeNNix-Bio1 supports total charge from the coordinate block; external models may or may not honor charge. Multiplicity must be <code>1</code>.</dd></div>
-              <div><dt>Hessian</dt><dd>Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported.</dd></div>
-              <div><dt>Solvent / D4</dt><dd>Experimental GBSA, energy-only; D4 is not supported.</dd></div>
-              <div><dt>Model files</dt><dd>Built-in FeNNix-Bio <code>.fnx</code> files are resolved from MAPLE's model directory; generic <code>fennol</code> requires explicit <code>model_path</code>.</dd></div>
+              <div><dt>PBC</dt><dd>Molecular and full three-dimensional periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Total charge is accepted; multiplicity must be 1.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>Internal charge channels do not provide atomic-charge or dipole output.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular and periodic batches.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. No separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.jax</code></dd></div>
             </dl>
           </section>
 
           <section class="card capability-card">
             <div class="card-tag">Molecular MACE</div>
-            <h3>MACE-OFF / EGRET</h3>
-            <p class="capability-keywords"><code>maceoff23s</code> <code>maceoff23m</code> <code>maceoff23l</code> <code>egret</code></p>
-            <div class="capability-badges" aria-label="MACE-OFF and EGRET quick capabilities">
-              <span class="capability-badge badge-no">PBC no</span>
+            <h3>MACE-OFF / MACE-LES / EGRET</h3>
+            <p class="capability-keywords"><code>mace-off-23s</code> <code>mace-off-23m</code> <code>mace-off-23l</code> <code>mace-off-23bm</code> <code>mace-off-24m</code> <code>mace-les-off</code> <code>egret-1</code> <code>egret-1e</code> <code>egret-1m</code> <code>egret-1s</code> <code>egret-1t</code></p>
+            <div class="capability-badges" aria-label="MACE-OFF / MACE-LES / EGRET quick capabilities">
+              <span class="capability-badge badge-yes">PBC yes</span>
               <span class="capability-badge badge-no">Charge no</span>
               <span class="capability-badge badge-no">D4 no</span>
-              <span class="capability-badge badge-no">HVP no</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
             </div>
             <dl class="capability-list">
-              <div><dt>PBC</dt><dd>No; periodic atoms fail fast.</dd></div>
-              <div><dt>Charge / mult</dt><dd>No.</dd></div>
-              <div><dt>Hessian</dt><dd>Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported.</dd></div>
-              <div><dt>Solvent / D4</dt><dd>Experimental GBSA, energy-only; D4 is not supported.</dd></div>
-              <div><dt>Model files</dt><dd><code>maceoff23m</code> and <code>egret</code> can auto-download; <code>maceoff23s</code> and <code>maceoff23l</code> require a local file or <code>model_path</code>.</dd></div>
+              <div><dt>PBC</dt><dd>Molecular and periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Charge 0 and multiplicity 1.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>MACE-LES latent charges remain internal; these series do not provide atomic charges or dipoles.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular and periodic batches.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. Native dispersion treatment; no separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.pt</code></dd></div>
             </dl>
           </section>
 
           <section class="card capability-card">
             <div class="card-tag">MACE-OMol</div>
             <h3>MACE-OMol</h3>
-            <p class="capability-keywords"><code>maceomol</code></p>
+            <p class="capability-keywords"><code>mace-omol-0</code></p>
             <div class="capability-badges" aria-label="MACE-OMol quick capabilities">
-              <span class="capability-badge badge-no">PBC no</span>
-              <span class="capability-badge badge-no">Charge no</span>
+              <span class="capability-badge badge-yes">PBC yes</span>
+              <span class="capability-badge badge-yes">Charge yes</span>
               <span class="capability-badge badge-no">D4 no</span>
-              <span class="capability-badge badge-no">HVP no</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
             </div>
             <dl class="capability-list">
-              <div><dt>PBC</dt><dd>No; periodic atoms fail fast.</dd></div>
-              <div><dt>Charge / mult</dt><dd>No.</dd></div>
-              <div><dt>Hessian</dt><dd>Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported.</dd></div>
-              <div><dt>Solvent / D4</dt><dd>Experimental GBSA, energy-only; D4 is not supported.</dd></div>
-              <div><dt>Model files</dt><dd>Requires a local checkpoint in the model directory or explicit <code>model_path</code>.</dd></div>
+              <div><dt>PBC</dt><dd>Molecular and periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Total charge and multiplicity are accepted.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>Atomic charges and dipoles are not provided.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular and periodic batches.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. Native dispersion treatment; no separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.pt</code></dd></div>
             </dl>
           </section>
 
           <section class="card capability-card">
-            <div class="card-tag">Development backend</div>
+            <div class="card-tag">MACE-Polar</div>
             <h3>MACE-Polar</h3>
-            <p class="capability-keywords"><code>macepols</code> <code>macepolm</code> <code>macepoll</code></p>
+            <p class="capability-keywords"><code>mace-polar-1s</code> <code>mace-polar-1m</code> <code>mace-polar-1l</code></p>
             <div class="capability-badges" aria-label="MACE-Polar quick capabilities">
-              <span class="capability-badge badge-no">PBC no</span>
+              <span class="capability-badge badge-yes">PBC yes</span>
               <span class="capability-badge badge-yes">Charge yes</span>
               <span class="capability-badge badge-no">D4 no</span>
-              <span class="capability-badge badge-no">HVP no</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
             </div>
             <dl class="capability-list">
-              <div><dt>PBC</dt><dd>No; periodic atoms fail fast. No external-field interface is exposed.</dd></div>
-              <div><dt>Charge / mult</dt><dd>Yes; multiplicity is converted to unpaired-electron spin as <code>mult - 1</code>.</dd></div>
-              <div><dt>Hessian</dt><dd>Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported.</dd></div>
-              <div><dt>Solvent / D4</dt><dd>Experimental GBSA, energy-only; D4 is not supported.</dd></div>
-              <div><dt>Model files</dt><dd>Requires a local checkpoint in the model directory or explicit <code>model_path</code>.</dd></div>
+              <div><dt>PBC</dt><dd>Molecular and periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Total charge and multiplicity are accepted.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>Physical atomic charges and molecular dipoles are available.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular and periodic batches.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. Native long-range treatment; no separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.pt</code></dd></div>
+            </dl>
+          </section>
+
+          <section class="card capability-card">
+            <div class="card-tag">GRACE-OFF</div>
+            <h3>GRACE</h3>
+            <p class="capability-keywords"><code>grace-off-1s</code> <code>grace-off-1m</code> <code>grace-off-1l</code> <code>grace-off-2s</code> <code>grace-off-2m</code> <code>grace-off-2l</code></p>
+            <div class="capability-badges" aria-label="GRACE quick capabilities">
+              <span class="capability-badge badge-yes">PBC yes</span>
+              <span class="capability-badge badge-no">Charge no</span>
+              <span class="capability-badge badge-no">D4 no</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
+            </div>
+            <dl class="capability-list">
+              <div><dt>PBC</dt><dd>Molecular and periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Charge 0 and multiplicity 1.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>Atomic charges and dipoles are not provided.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular and periodic batches.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. No separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.pb</code></dd></div>
+            </dl>
+          </section>
+
+          <section class="card capability-card">
+            <div class="card-tag">Long-range / HVP</div>
+            <h3>SO3LR</h3>
+            <p class="capability-keywords"><code>so3lr</code> <code>so3lr-tauri-s</code> <code>so3lr-tauri-m</code> <code>so3lr-tauri-l</code></p>
+            <div class="capability-badges" aria-label="SO3LR quick capabilities">
+              <span class="capability-badge badge-yes">PBC yes</span>
+              <span class="capability-badge badge-yes">Charge yes</span>
+              <span class="capability-badge badge-no">D4 no</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
+            </div>
+            <dl class="capability-list">
+              <div><dt>PBC</dt><dd>Molecular and full three-dimensional periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Total charge and multiplicity are accepted.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>Physical atomic charges and molecular dipoles are available.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular and periodic batches.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. Native electrostatics and dispersion; no separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.jax</code></dd></div>
+            </dl>
+          </section>
+
+          <section class="card capability-card">
+            <div class="card-tag">Equivariant / HVP</div>
+            <h3>NequIP</h3>
+            <p class="capability-keywords"><code>nequip-t3-cosmo</code> <code>nequip-t123-cosmo</code> <code>nequip-t3-gas</code> <code>allegro-fm-256</code> <code>allegro-fm-512</code></p>
+            <div class="capability-badges" aria-label="NequIP quick capabilities">
+              <span class="capability-badge badge-yes">PBC yes</span>
+              <span class="capability-badge badge-no">Charge no</span>
+              <span class="capability-badge badge-no">D4 no</span>
+              <span class="capability-badge badge-yes">HVP yes</span>
+            </div>
+            <dl class="capability-list">
+              <div><dt>PBC</dt><dd>Molecular and periodic; stress and virial are available.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Charge 0 and multiplicity 1.</dd></div>
+              <div><dt>Hessian</dt><dd>Analytic (default) and numerical.</dd></div>
+              <div><dt>HVP</dt><dd>Native Hessian&ndash;vector products are available.</dd></div>
+              <div><dt>Properties</dt><dd>Atomic charges and dipoles are not provided.</dd></div>
+              <div><dt>Batch</dt><dd>Native molecular and periodic batches.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. The selected training reference is retained; no separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd><code>.pt</code></dd></div>
             </dl>
           </section>
 
@@ -294,116 +379,31 @@
               <span class="capability-badge badge-yes">PBC yes</span>
               <span class="capability-badge badge-partial">Charge omol</span>
               <span class="capability-badge badge-no">D4 no</span>
-              <span class="capability-badge badge-no">HVP no</span>
+              <span class="capability-badge badge-partial">HVP numerical</span>
             </div>
             <dl class="capability-list">
-              <div><dt>PBC</dt><dd>Yes through FAIR-Chem. Non-periodic input uses <code>omol</code>; periodic input must specify a non-<code>omol</code> task. Stress / virial requests are rejected until validated.</dd></div>
-              <div><dt>Charge / mult</dt><dd><code>omol</code> only; non-<code>omol</code> tasks reject non-default charge / multiplicity. FAIR-Chem receives spin multiplicity as <code>mult</code>.</dd></div>
-              <div><dt>Hessian</dt><dd>Numerical only (gas phase). Implicit-solvent Hessians are unsupported.</dd></div>
-              <div><dt>Solvent / D4</dt><dd>Experimental GBSA, energy-only; D4 is not supported.</dd></div>
-              <div><dt>Model files</dt><dd>Resolved from <code>checkpoint_path</code>, a local <code>maple/function/calculator/model/uma-*.pt</code> file, or FAIR-Chem's official loading path.</dd></div>
+              <div><dt>PBC</dt><dd>Task-dependent periodic support through FAIR-Chem. Periodic input requires an explicit task; stress and virial remain unavailable in MAPLE.</dd></div>
+              <div><dt>Charge / mult</dt><dd>Charge and multiplicity are accepted for the <code>omol</code> task.</dd></div>
+              <div><dt>Hessian</dt><dd>Numerical only.</dd></div>
+              <div><dt>HVP</dt><dd>The common force-difference route is available.</dd></div>
+              <div><dt>Batch</dt><dd>Common batch interface; members are evaluated sequentially.</dd></div>
+              <div><dt>Solvent / D4</dt><dd>Experimental GB-polar correction: non-periodic single-point energies only. No separate MAPLE D4 correction.</dd></div>
+              <div><dt>Model files</dt><dd>Resolved from <code>checkpoint_path</code>, a local UMA checkpoint, or FAIR-Chem's official loading path.</dd></div>
             </dl>
           </section>
         </div>
 
+
+
+
         <h2 id="selection-rules">Selection Rules</h2>
         <ul>
-          <li><strong>Periodic materials or catalysis:</strong> use <code>uma</code> and set an explicit FAIR-Chem task such as <code>omat</code>, <code>oc20</code>, <code>oc22</code>, <code>oc25</code>, <code>omc</code>, or <code>odac</code>. Do not request stress or virial output yet.</li>
-          <li><strong>Charged or open-shell molecules:</strong> use <code>aimnet2</code> for molecular systems, or <code>uma</code> with the <code>omol</code> task. Treat charged/open-shell UMA chemistry as a result to verify against references.</li>
-          <li><strong>D4 dispersion:</strong> use ANI. Other shipped backends reject or ignore D4 because it is not part of their MAPLE calculator contract.</li>
-          <li><strong>HVP-enabled Dimer:</strong> ANI and FeNNol are the shipped backends with <code>get_hvp()</code>, and both are gas-phase only. If a selected backend lacks HVP support, use a different transition-state method or a future finite-difference Dimer path once validated.</li>
-          <li><strong>Implicit-solvent Hessians:</strong> GBSA Hessians (analytic or numerical) are not supported; Hessians are available only in gas phase.</li>
+          <li><strong>Periodic systems:</strong> AIMNet2, FeNNix and SO3LR require full three-dimensional periodicity. Periodic UMA inputs require an explicit FAIR-Chem task; MAPLE does not yet provide UMA stress or virial output.</li>
+          <li><strong>Electronic state:</strong> ANI, GRACE-OFF, NequIP/Allegro-FM, MACE-OFF, MACE-LES and EGRET require charge 0 and multiplicity 1. Charged and open-shell inputs require the charge/spin conditioning described in the selected model's card; FeNNix requires multiplicity 1.</li>
+          <li><strong>D4 dispersion:</strong> the optional D4 correction is available for non-periodic ANI inputs, except <code>ani2dr</code>. Other model families retain their native treatment.</li>
+          <li><strong>HVP-enabled Dimer:</strong> ANI, AIMNet2, FeNNol, MACE, GRACE, SO3LR and NequIP/Allegro-FM provide native Hessian&ndash;vector products. UMA uses the common force-difference route.</li>
+          <li><strong>Additional implicit solvent:</strong> the experimental GB-polar/QEq correction supports non-periodic single-point energies only. Solvent forces, Hessians and HVPs are unavailable.</li>
         </ul>
-
-        <h2 id="calculator-contract">Developer Backend Contract</h2>
-
-        <p>MAPLE calculators are registered classes that satisfy a small ASE-style protocol. A backend does not have to inherit the shared base class as long as it exposes the same public surface and class attributes.</p>
-
-        <div class="admonition important">
-          <p class="admonition-title">Authoring source of truth</p>
-          <p>This page is a website summary. The full developer checklist and runnable template live in the MAPLE source tree at <code>maple/function/calculator/AUTHORING.md</code>.</p>
-        </div>
-
-        <h3 id="registration-required">Registration is required</h3>
-        <p>A custom calculator is not selectable by <code>#model=...</code> until its class is registered. Define lowercase <code>MODEL_NAMES</code> keys and decorate the class with <code>@register_calculator</code>; plugin loading only imports the module so this registration code can run.</p>
-
-        <pre><code>from maple.function.calculator import CalcABC, register_calculator
-
-@register_calculator
-class MyCalculator(CalcABC):
-    MODEL_NAMES = ("mymodel",)
-    MODEL_ENERGY_UNIT = "eV"
-    SUPPORTED_HESSIAN_MODES = ("numerical",)
-    SUPPORTS_CHARGE_MULT = False
-    SUPPORTS_PBC = False
-    CHECKPOINT_FILENAME = None
-    REQUIRES_LOCAL_MODEL_FILE = True
-    OPTION_KEYS = ()
-    MODEL_PATH_OPTION = "model_path"</code></pre>
-
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Surface</th>
-                <th>Contract</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>calculate(atoms, properties, system_changes)</code></td>
-                <td>ASE entry point. Store energy, free energy, forces, and optional Hessian in <code>results</code> through the shared finalization path where possible.</td>
-              </tr>
-              <tr>
-                <td><code>get_hessian(atoms, delta=0.002)</code></td>
-                <td>Returns a <code>(3N, 3N)</code> array in Hartree / Å². Numerical mode uses the shared finite-difference helper; analytic mode is backend-specific.</td>
-              </tr>
-              <tr>
-                <td><code>get_hvp(atoms, n)</code></td>
-                <td>Optional. Implement only for the HVP-enabled Dimer path and return <code>(Hn, forces, energy)</code> in Hartree units. The default raises <code>NotImplementedError</code>.</td>
-              </tr>
-              <tr>
-                <td><code>MODEL_NAMES</code></td>
-                <td>Lowercase registry keys. Duplicate registration is a real error and raises instead of overwriting.</td>
-              </tr>
-              <tr>
-                <td><code>MODEL_ENERGY_UNIT</code></td>
-                <td>Declare <code>eV</code> or <code>hartree</code> honestly. <code>_finalize_results</code> performs the energy/force conversion; custom calculators should not multiply by <code>EV2HARTREE</code> in the calculate path.</td>
-              </tr>
-              <tr>
-                <td><code>SUPPORTED_HESSIAN_MODES</code></td>
-                <td>Subset of <code>analytic</code> and <code>numerical</code>. Unsupported requested modes fail before production work begins.</td>
-              </tr>
-              <tr>
-                <td><code>SUPPORTS_CHARGE_MULT</code> / <code>SUPPORTS_PBC</code></td>
-                <td>Declare whether the backend honors charge / multiplicity and validated periodic inputs. Do not mark PBC true unless the backend builds a validated periodic graph or neighbor list.</td>
-              </tr>
-              <tr>
-                <td><code>CHECKPOINT_FILENAME</code> / <code>REQUIRES_LOCAL_MODEL_FILE</code></td>
-                <td>Tell the factory whether MAPLE can auto-download a checkpoint or must require a local file.</td>
-              </tr>
-              <tr>
-                <td><code>OPTION_KEYS</code> / <code>MODEL_PATH_OPTION</code></td>
-                <td>Reject misspelled backend options loudly, and route explicit user model paths to the constructor kwarg that actually consumes them.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h2 id="plugin-discovery">Plugin Discovery and Model Paths</h2>
-        <ul>
-          <li><strong>Input header:</strong> <code>#model=mymodel(module=my_lab.maple_plugin, model_path=/tmp/m.pt)</code> imports the plugin module, which must register a calculator class for <code>mymodel</code>, then passes the explicit model path through the backend contract.</li>
-          <li><strong>Environment variable:</strong> <code>MAPLE_CALCULATOR_PLUGINS=my_lab.maple_plugin,other.plugin</code> imports plugin modules once per process before calculator construction; each module must run its own <code>@register_calculator</code> registrations.</li>
-          <li><strong>Python entry points:</strong> <code>[project.entry-points."maple.calculators"]</code> is documented as a preview shape for future packagers, not a current discovery layer.</li>
-        </ul>
-
-        <h2 id="energy-migration">Energy API Migration</h2>
-        <p>The old backend-specific <code>calc.get_energy(...)</code> entry points are not part of the public calculator API. Downstream code should use ASE's standard pattern:</p>
-
-        <pre><code>atoms.calc = calc
-energy = atoms.get_potential_energy()</code></pre>
-
-        <p>This keeps energy access consistent across backends whose legacy <code>get_energy</code> signatures did not agree.</p>
       </article>
       <nav class="page-nav">
         <a class="prev" href="../setup/models.html">&larr; Previous: ML Models</a>
@@ -417,10 +417,6 @@ energy = atoms.get_potential_energy()</code></pre>
         <ul>
           <li><a href="#capability-matrix">Capability Matrix</a></li>
           <li><a href="#selection-rules">Selection Rules</a></li>
-          <li><a href="#calculator-contract">Calculator Contract</a></li>
-          <li><a href="#registration-required">Registration Required</a></li>
-          <li><a href="#plugin-discovery">Plugin Discovery</a></li>
-          <li><a href="#energy-migration">Energy API Migration</a></li>
         </ul>
       </div>
     </aside>

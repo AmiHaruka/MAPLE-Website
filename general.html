@@ -48,7 +48,7 @@
 
       <h2 id="ml-potentials">Supported ML Potentials</h2>
       <p>MAPLE supports a wide range of machine learning interatomic potentials. Each model offers different trade-offs between speed, accuracy, and element coverage.</p>
-      <p>Backend support for periodic cells, charge/multiplicity, Hessians, implicit solvent, D4, HVP, and checkpoint loading is model-specific; see the <a href="setup/calculators.html">calculator backend matrix</a> before choosing a production backend.</p>
+      <p>Each family guide describes its models and reference data. The <a href="setup/calculators.html">calculator capability matrix</a> summarizes the available calculation options.</p>
 
       <section class="ml-family-section" id="uma-family">
         <h3>UMA &mdash; Universal Model</h3>
@@ -82,7 +82,17 @@
           <a class="card" href="setup/model_ani.html">
             <div class="card-tag">ANI Family</div>
             <h3>ANI-1xnr</h3>
-            <p>Non-reactive variant of ANI-1x optimized for stable molecular geometries and vibrational properties.</p>
+            <p>Reactive ANI model for molecular and condensed-phase HCNO chemistry.</p>
+          </a>
+          <a class="card" href="setup/model_ani.html">
+            <div class="card-tag">ANI Family</div>
+            <h3>ANI-2xr / ANI-2dr</h3>
+            <p>Repulsion-enhanced ANI models; ANI-2dr includes native D3 dispersion.</p>
+          </a>
+          <a class="card" href="setup/model_ani.html">
+            <div class="card-tag">ANI Family</div>
+            <h3>ANI-MBIS</h3>
+            <p>Predicts molecular energies and geometry-dependent MBIS atomic charges.</p>
           </a>
         </div>
       </section>
@@ -93,12 +103,12 @@
           <a class="card" href="setup/model_aimnet.html">
             <div class="card-tag">AIMNet</div>
             <h3>AIMNet2</h3>
-            <p>Atoms-in-Molecules network potential with broad element coverage and high accuracy for organic and drug-like molecules.</p>
+            <p>Atoms-in-Molecules network potential for organic and main-group chemistry, including charged molecules.</p>
           </a>
           <a class="card" href="setup/model_aimnet.html">
             <div class="card-tag">AIMNet</div>
             <h3>AIMNet2-NSE</h3>
-            <p>Open-shell variant using neural spin-charge equilibration for systems with arbitrary charge and spin multiplicity, including radicals.</p>
+            <p>Neural spin-charge equilibration for charged and open-shell molecules, including organic radicals.</p>
           </a>
         </div>
       </section>
@@ -110,7 +120,7 @@
           <a class="card" href="setup/model_fennol.html">
             <div class="card-tag">FeNNol</div>
             <h3>FeNNix-Bio1</h3>
-            <p>Ion-aware FeNNix-Bio <code>.fnx</code> model series for biomolecular and molecular-cluster calculations, available in small and medium variants.</p>
+            <p>Ion-aware FeNNix-Bio model series for biomolecular and molecular-cluster calculations, available in small and medium variants.</p>
           </a>
         </div>
       </section>
@@ -120,18 +130,71 @@
         <div class="card-grid">
           <a class="card" href="setup/model_mace.html">
             <div class="card-tag">MACE</div>
-            <h3>MACE-OFF23 (s/m/l)</h3>
-            <p>Equivariant message-passing potentials for organic molecules. Available in small, medium, and large variants balancing speed and accuracy.</p>
+            <h3>MACE-OFF</h3>
+            <p>Equivariant potentials for organic molecules and molecular clusters, available in small, medium and large variants.</p>
+          </a>
+          <a class="card" href="setup/model_mace.html">
+            <div class="card-tag">MACE</div>
+            <h3>MACE-LES</h3>
+            <p>Organic molecular potential with learned long-range electrostatics.</p>
           </a>
           <a class="card" href="setup/model_mace.html">
             <div class="card-tag">MACE</div>
             <h3>MACE-OMol</h3>
-            <p>MACE potential trained on the OMol25 data set for broad organic molecular coverage with high accuracy.</p>
+            <p>Models trained on OMol25, with broad molecular element coverage and charge/spin conditioning.</p>
+          </a>
+          <a class="card" href="setup/model_mace.html">
+            <div class="card-tag">MACE</div>
+            <h3>MACE-Polar</h3>
+            <p>OMol-trained models with explicit electrostatic response, atomic charges and dipoles.</p>
           </a>
           <a class="card" href="setup/model_mace.html">
             <div class="card-tag">MACE</div>
             <h3>EGRET</h3>
-            <p>Equivariant graph neural network potential designed for reactive and non-reactive molecular simulations.</p>
+            <p>MACE-based potentials for bioorganic molecules, with variants for thermochemistry and reaction modeling.</p>
+          </a>
+        </div>
+      </section>
+      <section class="ml-family-section" id="grace-family">
+        <h3>GRACE</h3>
+        <p>GRACE is a graph extension of the atomic cluster expansion, used here by the GRACE-OFF organic force fields.</p>
+        <div class="card-grid">
+          <a class="card" href="setup/model_grace.html">
+            <div class="card-tag">GRACE</div>
+            <h3>GRACE-OFF</h3>
+            <p>SPICE-trained organic force fields whose two-layer variants combine accurate liquid properties with efficient molecular dynamics.</p>
+          </a>
+        </div>
+      </section>
+      <section class="ml-family-section" id="so3lr-family">
+        <h3>SO3LR</h3>
+        <p>SO3LR couples SO3krates to explicit repulsion, electrostatics and dispersion, with charges and dispersion parameters learned from the atomic environment.</p>
+        <div class="card-grid">
+          <a class="card" href="setup/model_so3lr.html">
+            <div class="card-tag">SO3LR</div>
+            <h3>SO3LR</h3>
+            <p>PBE0+MBD force field for organic and biomolecular systems, covering eight elements.</p>
+          </a>
+          <a class="card" href="setup/model_so3lr.html">
+            <div class="card-tag">SO3LR</div>
+            <h3>SO3LR Tauri</h3>
+            <p>A common force field for biomolecular systems, ions and reactive chemistry across 85 elements.</p>
+          </a>
+        </div>
+      </section>
+      <section class="ml-family-section" id="nequip-family">
+        <h3>NequIP</h3>
+        <p>NequIP uses equivariant tensor convolutions for data-efficient fitting. Allegro uses strictly local representations with a fixed spatial cutoff.</p>
+        <div class="card-grid">
+          <a class="card" href="setup/model_nequip.html">
+            <div class="card-tag">NequIP</div>
+            <h3>PeptideCS2 models</h3>
+            <p>NequIP models trained on peptide conformations with gas-phase or COSMO-water references.</p>
+          </a>
+          <a class="card" href="setup/model_nequip.html">
+            <div class="card-tag">NequIP</div>
+            <h3>Allegro-FM</h3>
+            <p>Pretrained Allegro potentials for inorganic crystals and organic molecules.</p>
           </a>
         </div>
       </section>

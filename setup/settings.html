@@ -67,7 +67,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -176,7 +178,7 @@
         <pre><code>#model = ani2x
 #model = uma
 #model = aimnet2
-#model = maceoff23m</code></pre>
+#model = mace-off-23m</code></pre>
 
         <h3 id="opt">#opt</h3>
         <p>Requests a geometry optimization. Parameters such as the optimization method and convergence level can be supplied in parentheses.</p>
@@ -245,7 +247,7 @@
               <td>Frequency</td>
               <td><code>#freq</code></td>
               <td>Computes vibrational frequencies and thermochemistry</td>
-              <td>Numerical Hessian</td>
+              <td>Analytic; numerical for UMA</td>
             </tr>
             <tr>
               <td>Transition State</td>
@@ -273,6 +275,8 @@
           <p class="admonition-title">Tip</p>
           <p>Task commands accept parameters in parentheses using the format <code>#taskname(param1=value1, param2=value2)</code>. If no parameters are given, MAPLE uses the default settings for that job type.</p>
         </div>
+
+        <p>For multiple structures and the optional task parameter <code>batch_size</code>, see <a href="../tutorials/input_output.html#batch-input">Batch Input</a>.</p>
 
         <h2 id="device-selection">Device Selection</h2>
 

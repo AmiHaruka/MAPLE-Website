@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIMNet2 - MAPLE Documentation</title>
+  <title>AIMNet2 and AIMNet2-NSE - MAPLE Documentation</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
@@ -68,7 +68,9 @@
                 <li><a href="../setup/model_aimnet.html" class="active">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -159,42 +161,86 @@
         <span class="current">AIMNet2</span>
       </nav>
       <article>
-        <h1>AIMNet2</h1>
+        <h1>AIMNet2 and AIMNet2-NSE</h1>
 
-        <p><strong>AIMNet2</strong> is a neural network potential that provides broad element coverage (14 elements) with &omega;B97M-D3BJ accuracy. It is a molecular, no-PBC backend that supports charge and multiplicity for charged or open-shell molecules.</p>
+        <p>The AIMNet family uses local atomic environment features and iterative message passing to predict energies and charges. MAPLE includes two architectures: <strong>AIMNet2</strong>, with one charge channel and neural charge equilibration, and <strong>AIMNet2-NSE</strong>, with two spin-dependent charge channels. Their pretrained models differ in reference data, chemical coverage and electronic-state conditions.</p>
 
-        <h2 id="variants">Variants</h2>
+        <h2 id="variants">Models by Architecture</h2>
 
+        <h3 id="aimnet2-models">AIMNet2</h3>
+        <p>These models use a single charge channel. The current RXN model is restricted to neutral systems; the other listed models accept total charge. All require multiplicity 1.</p>
         <div class="table-wrapper">
-        <table>
+          <table>
           <thead>
             <tr>
-              <th>Model</th>
               <th>Keyword</th>
               <th>Elements</th>
-              <th>Description</th>
+              <th>Reference / Model Focus</th>
+              <th>Electronic State</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>AIMNet2</td>
               <td><code>aimnet2</code></td>
               <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
-              <td>Standard variant with &omega;B97M-D3BJ accuracy</td>
+              <td>&omega;B97M-D3(BJ)/def2-TZVPP; neutral and charged organic and main-group molecules</td>
+              <td>Charge; multiplicity 1</td>
             </tr>
             <tr>
-              <td>AIMNet2-NSE</td>
-              <td><code>aimnet2nse</code></td>
+              <td><code>aimnet2-rxn</code></td>
+              <td>H, C, N, O</td>
+              <td>&omega;B97M/def2-TZVPP; closed-shell organic reactions, transition states and reaction pathways</td>
+              <td>Neutral; multiplicity 1</td>
+            </tr>
+            <tr>
+              <td><code>aimnet2-pd</code></td>
+              <td>H, B, C, N, O, F, Si, P, S, Cl, Se, Br, Pd, I</td>
+              <td>B97-3c/CPCM(THF); palladium-catalyzed reactions</td>
+              <td>Charge input; multiplicity 1</td>
+            </tr>
+            <tr>
+              <td><code>aimnet2-b973c</code></td>
               <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
-              <td>Open-shell variant using neural spin-charge equilibration for systems with arbitrary charge and spin multiplicity, including radicals.</td>
+              <td>B97-3c; molecular conformations and energetics</td>
+              <td>Charge; multiplicity 1</td>
+            </tr>
+            <tr>
+              <td><code>aimnet2-2025</code></td>
+              <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
+              <td>B97-3c; improved intermolecular interactions</td>
+              <td>Charge; multiplicity 1</td>
             </tr>
           </tbody>
         </table>
         </div>
 
+        <h3 id="nse-models">AIMNet2-NSE</h3>
+        <p>The NSE architecture uses two charge channels to condition on total charge and spin multiplicity.</p>
+        <div class="table-wrapper">
+          <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Elements</th>
+              <th>Reference / Model Focus</th>
+              <th>Electronic State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>aimnet2-nse</code></td>
+              <td>H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I</td>
+              <td>&omega;B97M-D3(BJ)/def2-TZVPP; open-shell molecules and radical reactions</td>
+              <td>Charge and multiplicity</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+
         <h2 id="charge-spin">Charge and Spin Support</h2>
 
-        <p>AIMNet2 natively handles charged species and different spin multiplicities. Specify charge and multiplicity in the coordinate block:</p>
+        <p>Use <code>aimnet2-nse</code> when the input requires spin-multiplicity conditioning. The listed AIMNet2 models require multiplicity 1, and <code>aimnet2-rxn</code> additionally requires charge 0. Specify the electronic state in the coordinate block:</p>
 
         <pre><code><span class="keyword">#model</span>=<span class="value">aimnet2</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>)
@@ -204,7 +250,7 @@ C    0.000000    0.000000    0.000000
 O    1.250000    0.000000    0.000000
 O   -1.250000    0.000000    0.000000</code></pre>
 
-        <p>The first line specifies <code>charge multiplicity</code> (here: charge = &minus;1, multiplicity = 1 for a formate anion).</p>
+        <p>The first line specifies <code>charge multiplicity</code> (here: charge = &minus;1, multiplicity = 1 for an anion).</p>
 
         <h2 id="solvation">Energy-only Implicit Solvation</h2>
 
@@ -220,12 +266,47 @@ O    1.250000    0.000000    0.000000
 O   -1.250000    0.000000    0.000000</code></pre>
 
         <h2 id="calculator-capabilities">Calculator Capabilities</h2>
+
         <ul>
-          <li><strong>Hessian:</strong> analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians (analytic or numerical) are not supported.</li>
-          <li><strong>PBC:</strong> AIMNet2 is a no-PBC wrapper in MAPLE. Periodic atoms fail fast, and <code>coulomb_method=ewald</code> is disabled until validated cell/PBC/MIC support exists.</li>
-          <li><strong>HVP:</strong> AIMNet2 does not implement <code>get_hvp()</code>; use non-HVP transition-state workflows such as P-RFO, NEB, or String instead.</li>
-          <li><strong>Model files:</strong> MAPLE can auto-download AIMNet2 checkpoints from the MAPLE model repository, or you can provide an explicit <code>model_path</code>. Supported Coulomb options are <code>simple</code> and <code>dsf</code>.</li>
+          <li><strong>Hessian:</strong> analytic Hessians are used by default; numerical Hessians are also available.</li>
+          <li><strong>HVP:</strong> all six AIMNet2 and AIMNet2-NSE models provide Hessian&ndash;vector products.</li>
+          <li><strong>Periodic systems:</strong> periodic inputs require full three-dimensional periodicity; stress and virial output are available.</li>
+          <li><strong>Atomic charges and dipoles:</strong> both properties are available from the native charge output.</li>
+          <li><strong>Implicit solvent:</strong> the experimental GB-polar/QEq correction supports non-periodic single-point energies only (<code>#sp</code> with <code>experimental=true</code>); solvent forces, Hessians and HVPs are unavailable.</li>
         </ul>
+
+        <h3>Long-Range Options</h3>
+        <p>Periodic inputs require a full three-dimensional cell. <code>lr=auto</code> selects the native molecular or periodic long-range route. The <code>lr</code> choices are <code>auto</code>, <code>simple</code>, <code>dsf</code>, <code>ewald</code> and <code>pme</code>; availability follows the boundary conditions and the selected model's Coulomb term.</p>
+
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>lr</code></td>
+              <td><code>auto</code></td>
+              <td>Native long-range selection.</td>
+            </tr>
+            <tr>
+              <td><code>lr_cutoff</code></td>
+              <td><code>15.0</code></td>
+              <td>DSF cutoff in Angstroms.</td>
+            </tr>
+            <tr>
+              <td><code>dtype</code></td>
+              <td><code>float32</code></td>
+              <td>Supported value: <code>float32</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
 
         <h2 id="examples">Usage Examples</h2>
 
@@ -241,8 +322,8 @@ H   -0.390000    0.000000    1.028000
 H   -0.390000    0.890000   -0.514000
 H   -0.390000   -0.890000   -0.514000</code></pre>
 
-        <h3>NSE variant using neural spin-charge equilibration</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">aimnet2nse</span>
+        <h3>AIMNet2-NSE with neural spin-charge equilibration</h3>
+        <pre><code><span class="keyword">#model</span>=<span class="value">aimnet2-nse</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>)
 
@@ -254,11 +335,13 @@ H   -0.390000    0.890000   -0.514000
 H   -0.390000   -0.890000   -0.514000</code></pre>
 
         <h2 id="limitations">Limitations</h2>
+
         <ul>
-          <li><strong>No D4 dispersion.</strong> The &omega;B97M-D3BJ training already includes dispersion corrections.</li>
-          <li><strong>No periodic systems.</strong> AIMNet2 does not support periodic boundary conditions.</li>
-          <li><strong>14 elements only.</strong> Systems with elements outside the supported set (e.g., transition metals) require <code>uma</code> instead.</li>
+          <li><strong>Electronic state:</strong> use the conditions in the variant table; spin conditioning is provided by NSE.</li>
+          <li><strong>Elements:</strong> RXN is limited to H, C, N, O; the Pd variant substitutes Pd for As in the standard element set.</li>
+          <li><strong>No D4 dispersion.</strong> MAPLE's separate D4 correction is not supported by AIMNet2 or AIMNet2-NSE.</li>
         </ul>
+
 
       </article>
       <nav class="page-nav">
@@ -271,8 +354,8 @@ H   -0.390000   -0.890000   -0.514000</code></pre>
       <div class="toc-sticky">
         <h3>On this page</h3>
         <ul>
-          <li><a href="#variants">Variants</a></li>
-          <li><a href="#charge-spin">Charge and Spin</a></li>
+          <li><a href="#variants">Models by Architecture</a></li>
+          <li><a href="#charge-spin">Charge and Spin Support</a></li>
           <li><a href="#solvation">Energy-only Implicit Solvation</a></li>
           <li><a href="#calculator-capabilities">Calculator Capabilities</a></li>
           <li><a href="#examples">Usage Examples</a></li>

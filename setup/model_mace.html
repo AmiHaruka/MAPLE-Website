@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MACE &amp; EGRET - MAPLE Documentation</title>
+  <title>MACE - MAPLE Documentation</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="../assets/css/home-fonts.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
@@ -68,7 +68,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html" class="active">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -156,16 +158,16 @@
         <span class="separator">/</span>
         <a href="../setup/models.html">ML Models</a>
         <span class="separator">/</span>
-        <span class="current">MACE &amp; EGRET</span>
+        <span class="current">MACE</span>
       </nav>
       <article>
-        <h1>MACE &amp; EGRET Models</h1>
+        <h1>MACE</h1>
 
-        <p><strong>MACE</strong> (Multi-ACE) is a family of equivariant message-passing neural network potentials that achieves excellent accuracy through higher-order many-body interactions. <strong>EGRET</strong> is a related graph-based equivariant model with competitive accuracy for drug-like molecules. The MAPLE hand-wrapped MACE and EGRET backends are molecular no-PBC calculators.</p>
+        <p><strong>MACE</strong> is an equivariant message-passing architecture that uses higher-order atomic cluster expansion features to describe many-body interactions. MAPLE provides MACE-OFF, MACE-LES, EGRET, MACE-OMol and MACE-Polar models within this family.</p>
 
-        <h2 id="mace-off23">MACE-OFF23 Family</h2>
+        <h2 id="mace-off23">MACE-OFF and MACE-LES</h2>
 
-        <p>The MACE-OFF23 models are trained on the SPICE dataset for organic molecules containing H, C, N, O, F, S, Cl. Three sizes are available with increasing accuracy and cost:</p>
+        <p>MACE-OFF23 and MACE-OFF24 use &omega;B97M-D3(BJ)/def2-TZVPPD energy and force references. OFF23 uses SPICE v1 with additional molecular conformations and water clusters; OFF24 includes the expanded SPICE v2 data. MACE-LES-OFF uses the OFF23 training/validation split and adds latent Ewald summation for long-range electrostatics; its latent charges are internal model variables. The OFF and LES models listed below cover H, C, N, O, F, P, S, Cl, Br and I.</p>
 
         <div class="table-wrapper">
         <table>
@@ -180,21 +182,39 @@
           <tbody>
             <tr>
               <td>MACE-OFF23 (Small)</td>
-              <td><code>maceoff23s</code></td>
-              <td>~0.5M</td>
+              <td><code>mace-off-23s</code></td>
+              <td>~0.69M</td>
               <td>Fast screening, large systems, speed-critical workflows</td>
             </tr>
             <tr>
               <td>MACE-OFF23 (Medium)</td>
-              <td><code>maceoff23m</code></td>
-              <td>~2M</td>
-              <td>Balanced speed/accuracy for production calculations</td>
+              <td><code>mace-off-23m</code></td>
+              <td>~1.43M</td>
+              <td>Routine organic-molecule and condensed-phase calculations</td>
             </tr>
             <tr>
               <td>MACE-OFF23 (Large)</td>
-              <td><code>maceoff23l</code></td>
-              <td>~8M</td>
-              <td>Publication-quality results, final geometries</td>
+              <td><code>mace-off-23l</code></td>
+              <td>~4.71M</td>
+              <td>Accuracy-focused organic-molecule calculations</td>
+            </tr>
+            <tr>
+              <td>MACE-OFF23 (B-Medium)</td>
+              <td><code>mace-off-23bm</code></td>
+              <td>~1.43M</td>
+              <td>Organic molecules and molecular clusters with a 6 &Aring; local cutoff</td>
+            </tr>
+            <tr>
+              <td>MACE-OFF24 (Medium)</td>
+              <td><code>mace-off-24m</code></td>
+              <td>~1.43M</td>
+              <td>Organic molecules and clusters with expanded SPICE v2 coverage</td>
+            </tr>
+            <tr>
+              <td>MACE-LES-OFF</td>
+              <td><code>mace-les-off</code></td>
+              <td>~1.89M</td>
+              <td>Organic systems with long-range electrostatic interactions</td>
             </tr>
           </tbody>
         </table>
@@ -202,16 +222,14 @@
 
         <div class="admonition important">
           <p class="admonition-title">Important</p>
-          <p><code>maceoff23l</code> requires significantly more GPU memory than the smaller variants. If you encounter out-of-memory errors, switch to <code>maceoff23m</code> or <code>maceoff23s</code>, or use <code>#device=cpu</code>.</p>
+          <p><code>mace-off-23l</code> requires significantly more GPU memory than the smaller variants. If you encounter out-of-memory errors, switch to <code>mace-off-23m</code> or <code>mace-off-23s</code>, or use <code>#device=cpu</code>.</p>
         </div>
 
         <h2 id="mace-omol">MACE-OMol</h2>
 
-        <p>MACE-OMol extends element coverage beyond OFF23, supporting 17 elements including alkali and alkaline earth metals:</p>
+        <p><code>mace-omol-0</code> uses the OMol25 molecular reference at &omega;B97M-V/def2-TZVPD. It covers H through Bi (Z = 1–83), accepts charge and multiplicity from the coordinate block, and supports periodic cells.</p>
 
-        <p><strong>Elements:</strong> H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I</p>
-
-        <pre><code><span class="keyword">#model</span>=<span class="value">maceomol</span>
+        <pre><code><span class="keyword">#model</span>=<span class="value">mace-omol-0</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>)
 
@@ -219,53 +237,100 @@
 Li   0.000000    0.000000    0.000000
 F    1.570000    0.000000    0.000000</code></pre>
 
+
         <h2 id="egret">EGRET</h2>
 
-        <p>EGRET is a graph-based equivariant model with competitive accuracy for drug-like molecules. It covers the same elements as MACE-OFF23 (H, C, N, O, F, S, Cl).</p>
+        <p>EGRET models use the MACE architecture with &omega;B97M-D3(BJ)/def2-TZVPPD reference data. EGRET-1 uses the MACE-OFF23 training set; EGRET-1E adds VectorQM24 main-group structures, and EGRET-1T adds Transition1x and Coley3+2 reaction data. EGRET-1M and EGRET-1S are smaller versions of EGRET-1. EGRET-1, EGRET-1M, EGRET-1S and EGRET-1T cover H, C, N, O, F, P, S, Cl, Br and I; EGRET-1E also covers Si.</p>
 
-        <pre><code><span class="keyword">#model</span>=<span class="value">egret</span>
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Variant</th>
+              <th>Cutoff (Å)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>egret-1</code></td>
+              <td>MACE-OFF23 training data</td>
+              <td>6.0</td>
+            </tr>
+            <tr>
+              <td><code>egret-1e</code></td>
+              <td>Additional VectorQM24 data (+Si)</td>
+              <td>6.0</td>
+            </tr>
+            <tr>
+              <td><code>egret-1m</code></td>
+              <td>Medium</td>
+              <td>5.0</td>
+            </tr>
+            <tr>
+              <td><code>egret-1s</code></td>
+              <td>Small</td>
+              <td>4.5</td>
+            </tr>
+            <tr>
+              <td><code>egret-1t</code></td>
+              <td>Additional reaction and transition-state data</td>
+              <td>6.0</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <pre><code><span class="keyword">#model</span>=<span class="value">egret-1s</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>)
 
 XYZ /path/to/drug_molecule.xyz</code></pre>
+        <h2 id="mace-polar">MACE-Polar</h2>
+        <p>The <code>mace-polar-1s</code>, <code>mace-polar-1m</code> and <code>mace-polar-1l</code> models add explicit electrostatic response to the MACE family. Their OMol25 energy and force reference is &omega;B97M-V/def2-TZVPD. These models cover H through Bi (Z = 1–83), accept charge and multiplicity, and provide physical atomic charges and dipoles.</p>
 
-        <h2 id="model-files">Model Files</h2>
-        <p>MAPLE can auto-download <code>maceoff23m</code> and <code>egret</code> checkpoints from the MAPLE model repository. <code>maceoff23s</code>, <code>maceoff23l</code>, <code>maceomol</code>, and the MACE-Polar development backends require a local checkpoint in <code>maple/function/calculator/model/</code> or an explicit <code>model_path</code>.</p>
+        <pre><code>#model=mace-polar-1s
+#sp
+
+XYZ structure.xyz</code></pre>
+
 
         <h2 id="calculator-capabilities">Calculator Capabilities</h2>
+
         <ul>
-          <li><strong>Hessian:</strong> analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians (analytic or numerical) are not supported.</li>
-          <li><strong>Implicit solvent:</strong> MAPLE's experimental GB-polar/QEq correction is energy-only (<code>#sp</code> with <code>experimental=true</code>); solvent forces and Hessians are not supported.</li>
-          <li><strong>PBC and stress:</strong> the MAPLE MACE wrappers build no-PBC molecular graphs and do not provide validated stress or virial output.</li>
-          <li><strong>HVP:</strong> MACE and EGRET do not implement <code>get_hvp()</code>.</li>
-          <li><strong>MACE-Polar:</strong> development keywords <code>macepols</code>, <code>macepolm</code>, and <code>macepoll</code> support charge/multiplicity through <code>spin = mult - 1</code>, but remain no-PBC and local-checkpoint backends.</li>
+          <li><strong>Hessian and HVP:</strong> all MACE-OFF, MACE-LES, EGRET, MACE-OMol and MACE-Polar models provide analytic Hessians by default, numerical Hessians, and Hessian&ndash;vector products.</li>
+          <li><strong>Periodic systems:</strong> all five model series support periodic cells, with stress and virial output.</li>
+          <li><strong>Charge and multiplicity:</strong> MACE-OFF, MACE-LES and EGRET require charge 0 and multiplicity 1. MACE-OMol and MACE-Polar accept the charge and multiplicity specified in the coordinate block.</li>
+          <li><strong>Atomic charges and dipoles:</strong> MACE-Polar provides both properties. MACE-LES latent charges are internal model variables.</li>
+          <li><strong>Implicit solvent:</strong> the experimental GB-polar/QEq correction supports non-periodic single-point energies only (<code>#sp</code> with <code>experimental=true</code>); solvent forces, Hessians and HVPs are unavailable.</li>
         </ul>
+
 
         <h2 id="examples">Usage Examples</h2>
 
         <h3>Quick screening with MACE-OFF23 Small</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">maceoff23s</span>
+        <pre><code><span class="keyword">#model</span>=<span class="value">mace-off-23s</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">level</span>=<span class="value">loose</span>)
 
 XYZ /path/to/molecule.xyz</code></pre>
 
-        <h3>Publication-quality optimization with MACE-OFF23 Large</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">maceoff23l</span>
+        <h3>Optimization with MACE-OFF23 Large</h3>
+        <pre><code><span class="keyword">#model</span>=<span class="value">mace-off-23l</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>, <span class="param">level</span>=<span class="value">tight</span>)
 
 XYZ /path/to/optimized_guess.xyz</code></pre>
 
         <h3>Frequency calculation</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">maceoff23m</span>
+        <pre><code><span class="keyword">#model</span>=<span class="value">mace-off-23m</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#freq</span>
 
 XYZ /path/to/optimized_geometry.xyz</code></pre>
 
         <h3>CPU fallback for large systems</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">maceoff23s</span>
+        <pre><code><span class="keyword">#model</span>=<span class="value">mace-off-23s</span>
 <span class="keyword">#device</span>=<span class="value">cpu</span>
 <span class="keyword">#opt</span>(<span class="param">level</span>=<span class="value">loose</span>)
 
@@ -273,16 +338,17 @@ XYZ /path/to/large_system.xyz</code></pre>
 
         <h2 id="limitations">Limitations</h2>
         <ul>
-          <li><strong>No charge/multiplicity support for MACE-OFF, MACE-OMol, or EGRET.</strong> Use AIMNet2, UMA <code>omol</code>, or a validated MACE-Polar checkpoint for charged/open-shell molecular inputs.</li>
-          <li><strong>No D4 dispersion.</strong> D4 correction is not available for MACE or EGRET models.</li>
-          <li><strong>No periodic systems.</strong> These wrappers do not support periodic boundary conditions; periodic atoms fail fast.</li>
-          <li><strong>Limited elements.</strong> MACE-OFF23 and EGRET cover 7 elements; MACE-OMol covers 17 elements. For broader coverage, use <code>uma</code>.</li>
+          <li><strong>Electronic state:</strong> MACE-OFF, MACE-LES and EGRET require charge 0 and multiplicity 1.</li>
+          <li><strong>Elements:</strong> MACE-OFF, MACE-LES and EGRET cover H, C, N, O, F, P, S, Cl, Br and I; EGRET-1E also supports Si. MACE-OMol and MACE-Polar cover H&ndash;Bi (Z = 1&ndash;83).</li>
+          <li><strong>No D4 dispersion.</strong> MAPLE's separate D4 correction is not supported by these model series.</li>
+          <li><strong>Implicit solvent:</strong> the experimental correction is limited to non-periodic single-point energies.</li>
         </ul>
+
 
       </article>
       <nav class="page-nav">
         <a class="prev" href="../setup/model_fennol.html">&larr; Previous: FeNNol</a>
-        <a class="next" href="../setup/model_custom.html">Next: Custom Model &rarr;</a>
+        <a class="next" href="../setup/model_grace.html">Next: GRACE &rarr;</a>
       </nav>
     </main>
 
@@ -290,10 +356,10 @@ XYZ /path/to/large_system.xyz</code></pre>
       <div class="toc-sticky">
         <h3>On this page</h3>
         <ul>
-          <li><a href="#mace-off23">MACE-OFF23 Family</a></li>
+          <li><a href="#mace-off23">MACE-OFF and MACE-LES</a></li>
           <li><a href="#mace-omol">MACE-OMol</a></li>
           <li><a href="#egret">EGRET</a></li>
-          <li><a href="#model-files">Model Files</a></li>
+          <li><a href="#mace-polar">MACE-Polar</a></li>
           <li><a href="#calculator-capabilities">Calculator Capabilities</a></li>
           <li><a href="#examples">Usage Examples</a></li>
           <li><a href="#limitations">Limitations</a></li>

@@ -67,7 +67,9 @@
                 <li><a href="../../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../../setup/model_mace.html">MACE</a></li>
-                <li><a href="../../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li class="open">
@@ -245,7 +247,7 @@
             <tbody>
               <tr><td><code>none</code></td><td>Refinement only. Preserve the input mol2 charges without creating a charge-fitting work directory.</td></tr>
               <tr><td><code>resp</code></td><td>Derive charges at runtime: Gaussian evaluates the ESP, AmberTools (<code>espgen</code> + <code>resp</code>) performs the two-stage RESP fitting. <code>chg_level</code> defaults to <code>HF/6-31G(d)</code> for Refinement and NCAA, and the <code>resp_backend</code> key accepts only its default, <code>gaussian</code>.</td></tr>
-              <tr><td>Charge-capable MLIP</td><td>Use AIMNet2 (<code>aimnet2</code>), AIMNet2-NSE (<code>aimnet2nse</code>), or MACE-POLAR (<code>macepols</code>, <code>macepolm</code>, or <code>macepoll</code>). A recognized MLIP must provide atomic charges; otherwise ParmFit reports a capability error.</td></tr>
+              <tr><td>Charge-capable MLIP</td><td>Use AIMNet2 (<code>aimnet2</code>), AIMNet2-NSE (<code>aimnet2-nse</code>), or MACE-POLAR (<code>mace-polar-1s</code>, <code>mace-polar-1m</code>, or <code>mace-polar-1l</code>). A recognized MLIP must provide atomic charges; otherwise ParmFit reports a capability error.</td></tr>
               <tr><td>Unrecognized value</td><td>Pass the value verbatim to <code>antechamber -c</code>, for example <code>abcg2</code>, <code>bcc</code>, or <code>gas</code>. ParmFit does not maintain an Antechamber charge-method whitelist.</td></tr>
             </tbody>
           </table>

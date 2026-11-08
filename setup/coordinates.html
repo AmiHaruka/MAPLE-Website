@@ -67,7 +67,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -204,17 +206,94 @@ H    1.932000   -1.011000    0.000000</code></pre>
 
 XYZ /path/to/molecule.xyz</code></pre>
 
-        <p>You can also specify the charge and multiplicity before the <code>XYZ</code> line:</p>
+        <p>To apply one charge and multiplicity to every structure in an XYZ file, append them to the <code>XYZ</code> reference:</p>
 
         <pre><code>#model = uma
 #freq
 
--1 1
-XYZ /path/to/anion.xyz</code></pre>
+XYZ /path/to/anion.xyz -1 1</code></pre>
 
         <p>The external XYZ file should follow the standard XYZ format:</p>
         <pre><code>3
 Water molecule
+O    0.000000    0.000000    0.117300
+H    0.000000    0.757160   -0.469200
+H    0.000000   -0.757160   -0.469200</code></pre>
+
+        <h2 id="multiple-structures">Multiple Structures</h2>
+        <p><code>XYZ</code> reads every frame of a multi-frame XYZ file in file order. You can also provide multiple <code>XYZ</code> references, or separate inline coordinate groups with a blank line or <code>&amp;</code>. The task determines how these structures are used. For batch input and <code>batch_size</code>, see <a href="../tutorials/input_output.html#batch-input">Batch Input</a>.</p>
+
+        <p>Each inline group can begin with its own charge and multiplicity. Keep that line and its atom records together. For example, the following input evaluates water and hydroxide separately:</p>
+        <pre><code>#model=aimnet2
+#sp
+
+0 1
+O    0.000000    0.000000    0.000000
+H    0.000000    0.000000    0.960000
+H    0.929422    0.000000   -0.240364
+&amp;
+-1 1
+O    0.000000    0.000000    0.000000
+H    0.000000    0.000000    0.960000</code></pre>
+        <p>A blank line can replace the <code>&amp;</code> separator. Inline coordinates and file references can be combined in one input by placing them in separate groups.</p>
+
+        <h2 id="xyz-metadata">Electronic State and Periodic Cells</h2>
+        <p>For independent calculations, each structure can have its own charge, multiplicity, cell and periodic directions, as supported by the selected <a href="calculators.html">model</a>. The scope of each input setting is:</p>
+
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Scope</th>
+              <th>Charge / multiplicity</th>
+              <th>Cell / periodicity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Each structure</td>
+              <td>An inline group's initial <code>charge mult</code> line, or <code>charge=...</code> and <code>mult=...</code> in each XYZ frame's comment line.</td>
+              <td><code>Lattice="..."</code> and <code>pbc="..."</code> in each XYZ frame's comment line.</td>
+            </tr>
+            <tr>
+              <td>All frames in one file</td>
+              <td><code>XYZ structures.xyz -1 1</code> overrides the charge and multiplicity in every frame read from that file.</td>
+              <td>Each frame retains its own settings.</td>
+            </tr>
+            <tr>
+              <td>Entire input</td>
+              <td>Uses the structure or file settings above.</td>
+              <td><code>#pbc(12,12,12)</code> sets a common cell with full three-dimensional periodicity, overriding all imported cells and PBC flags.</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>Charge defaults to 0 and multiplicity to 1. A frame without cell or periodic metadata is non-periodic. When <code>Lattice</code> is present and <code>pbc</code> is omitted, all three directions are periodic. <code>Lattice</code> contains nine cell-vector components in Angstroms; the three <code>pbc</code> flags specify the periodic directions.</p>
+        <p>Inline groups use the global <code>#pbc</code> cell. Use per-frame XYZ metadata for independent structures with different cells, leaving <code>#pbc</code> unset. Within one fixed-cell reaction path, charge, multiplicity, periodic directions and cell must remain consistent.</p>
+
+        <h3>Different electronic states in separate files</h3>
+        <p>The charge and multiplicity on each <code>XYZ</code> reference apply to every frame read from that file:</p>
+        <pre><code>#model=so3lr
+#sp
+
+XYZ ammonium.xyz 1 1
+XYZ hydroxyl.xyz 0 2</code></pre>
+
+        <h3>Different cells in one XYZ file</h3>
+        <p>Read both frames with the following input:</p>
+        <pre><code>#model=grace-off-1m
+#sp
+
+XYZ water_cells.xyz</code></pre>
+        <p>The file <code>water_cells.xyz</code> supplies a separate cell for each frame:</p>
+        <pre><code>3
+Lattice="12 0 0 0 12 0 0 0 12" pbc="T T T" charge=0 mult=1
+O    0.000000    0.000000    0.117300
+H    0.000000    0.757160   -0.469200
+H    0.000000   -0.757160   -0.469200
+3
+Lattice="14 0 0 0 14 0 0 0 14" pbc="T T T" charge=0 mult=1
 O    0.000000    0.000000    0.117300
 H    0.000000    0.757160   -0.469200
 H    0.000000   -0.757160   -0.469200</code></pre>
@@ -303,7 +382,7 @@ B 1 2</code></pre>
 
         <h3>Example with scan coordinate</h3>
         <p>Checked-in MAPLE example: <code>examples/scan/C18.inp</code>. The full C18 coordinates are in that file; the scan coordinate is a post-processing line after the coordinates:</p>
-        <pre><code>#model=aimnet2nse
+        <pre><code>#model=aimnet2-nse
 #scan(mode=rigid)
 #device=gpu0
 
@@ -326,6 +405,8 @@ S 1 36 0.1 50</code></pre>
         <ul>
           <li><a href="#inline-coordinates">Inline Coordinates</a></li>
           <li><a href="#external-xyz">External XYZ Files</a></li>
+          <li><a href="#multiple-structures">Multiple Structures</a></li>
+          <li><a href="#xyz-metadata">Electronic State and Periodic Cells</a></li>
           <li><a href="#trajectory-files">Trajectory Files</a></li>
           <li><a href="#post-processing">Post-Processing Commands</a></li>
         </ul>

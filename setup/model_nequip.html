@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NequIP - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
+</head>
+<body>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
+        <a href="../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../general.html">About</a></li>
+          <li><a href="../tutorials/installation.html">Documentation</a></li>
+          <li><a href="../articles.html">Articles &amp; News</a></li>
+          <li><a href="../downloads.html">Downloads</a></li>
+          <li><a href="../development.html">Development</a></li>
+          <li><a href="../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
+          <span>MAPLE Docs</span>
+        </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../tutorials/installation.html">Installation</a></li>
+                <li><a href="../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../setup/settings.html">Settings</a></li>
+                <li><a href="../setup/coordinates.html">Coordinates</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> ML Models</span>
+              <ul class="children">
+                <li><a href="../setup/models.html">Overview</a></li>
+                <li><a href="../setup/calculators.html">Calculator Backends</a></li>
+                <li><a href="../setup/model_uma.html">UMA</a></li>
+                <li><a href="../setup/model_ani.html">ANI</a></li>
+                <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
+                <li><a href="../setup/model_fennol.html">FeNNol</a></li>
+                <li><a href="../setup/model_mace.html">MACE</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html" class="active">NequIP</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../tasks/opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../tasks/opt/opt_sd.html">SD</a></li>
+                    <li><a href="../tasks/opt/opt_cg.html">CG</a></li>
+                    <li><a href="../tasks/opt/opt_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/ts/ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/ts/ts_prfo.html">P-RFO</a></li>
+                    <li><a href="../tasks/ts/ts_neb.html">NEB</a></li>
+                    <li><a href="../tasks/ts/ts_dimmer.html">Dimer</a></li>
+                    <li><a href="../tasks/ts/ts_string.html">String/GSM</a></li>
+                    <li><a href="../tasks/ts/ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../tasks/scan/scan_rfo.html">RFO</a></li>
+                    <li><a href="../tasks/scan/scan_sd.html">SD</a></li>
+                    <li><a href="../tasks/scan/scan_cg.html">CG</a></li>
+                    <li><a href="../tasks/scan/scan_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/irc/irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/irc/irc_gs.html">GS</a></li>
+                    <li><a href="../tasks/irc/irc_lqa.html">LQA</a></li>
+                    <li><a href="../tasks/irc/irc_hpc.html">HPC</a></li>
+                    <li><a href="../tasks/irc/irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/parmfit/parmfit_refinement.html">Refinement</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_ncaa.html">NCAA</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_metalaa.html">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Tutorials</span>
+              <ul class="children">
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit_tutorial.html">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/parmfit/parmfit_refinement_tutorial.html">Refinement</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_ncaa_tutorial.html">NCAA</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_metalaa_tutorial.html">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../functions/solvent.html">Solvation</a></li>
+                <li><a href="../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../setup/models.html">ML Models</a>
+        <span class="separator">/</span>
+        <span class="current">NequIP</span>
+      </nav>
+      <article>
+        <h1>NequIP</h1>
+
+        <p><strong>NequIP</strong> uses E(3)-equivariant tensor convolutions to carry directional information between atomic environments. In the original study, these tensor channels improved accuracy and data efficiency compared with scalar-only control networks.</p>
+
+
+        <h2 id="variants">NequIP Pretrained Models</h2>
+        <p>The three NequIP models available in MAPLE were trained on PeptideCS2 energy and force data. Their names identify the peptide training subset and the gas-phase or COSMO-water reference environment.</p>
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Training / Reference</th>
+              <th>Chemical Coverage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>nequip-t3-cosmo</code></td>
+              <td>PeptideCS2 tripeptides; BP86/dgauss-dzvp + D3(BJ), COSMO water (&epsilon; = 80)</td>
+              <td>H, C, N, O, S</td>
+            </tr>
+            <tr>
+              <td><code>nequip-t123-cosmo</code></td>
+              <td>PeptideCS2 mono-, di- and tripeptides; BP86/dgauss-dzvp + D3(BJ), COSMO water (&epsilon; = 80)</td>
+              <td>H, C, N, O, S</td>
+            </tr>
+            <tr>
+              <td><code>nequip-t3-gas</code></td>
+              <td>PeptideCS2 tripeptides; BP86/dgauss-dzvp + D3(BJ), gas phase</td>
+              <td>H, C, N, O, S</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <h2 id="allegro">Allegro and Allegro-FM</h2>
+        <p><strong>Allegro</strong> builds many-body correlations through successive equivariant tensor products within a fixed atomic neighbourhood. Increasing network depth leaves the spatial cutoff unchanged, allowing independent evaluation of neighbourhoods and efficient spatial parallelisation.</p>
+        <p><strong>Allegro-FM</strong> is a pretrained model series built with Allegro. The two available models combine MPtrj inorganic data at the PBE/plane-wave level and OFF23 molecular data at &omega;B97M-D3(BJ)/def2-TZVPPD.</p>
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Training / Reference</th>
+              <th>Chemical Coverage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>allegro-fm-256</code></td>
+              <td>Inorganic crystals at PBE; organic molecules at &omega;B97M-D3(BJ)/def2-TZVPPD</td>
+              <td>89 elements: Z = 1&ndash;83 and 89&ndash;94</td>
+            </tr>
+            <tr>
+              <td><code>allegro-fm-512</code></td>
+              <td>Inorganic crystals at PBE; organic molecules at &omega;B97M-D3(BJ)/def2-TZVPPD</td>
+              <td>89 elements: Z = 1&ndash;83 and 89&ndash;94</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2 id="model-scope">Choosing the Reference Environment</h2>
+        <p>The COSMO-water models learn the solvent contribution already included in the PeptideCS2 reference calculations.</p>
+        <p>All five models require charge 0 and multiplicity 1.</p>
+
+        <h2 id="calculator-capabilities">Calculator Capabilities</h2>
+        <ul>
+          <li><strong>Hessian and HVP:</strong> the three NequIP and two Allegro-FM models provide analytic Hessians by default, numerical Hessians, and Hessian&ndash;vector products.</li>
+          <li><strong>Periodic systems:</strong> NequIP and Allegro-FM support periodic cells, with stress and virial output.</li>
+        </ul>
+
+        <h2 id="usage">Usage</h2>
+
+        <pre><code>#model=allegro-fm-256
+#sp
+
+XYZ structure.xyz</code></pre>
+
+        <pre><code>#model=nequip-t3-gas
+#opt(method=lbfgs)
+
+XYZ structure.xyz</code></pre>
+        <h2 id="options">Model Options</h2>
+
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>dtype</code></td>
+              <td><code>float32</code></td>
+              <td>The current exports accept FP32 inputs only; native internal precision is retained.</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2 id="limitations">Limitations</h2>
+        <ul>
+          <li><strong>Electronic state:</strong> all five NequIP and Allegro-FM models require charge 0 and multiplicity 1.</li>
+          <li><strong>Chemical coverage:</strong> the PeptideCS2 NequIP models cover peptides containing H, C, N, O and S. Allegro-FM covers 89 elements (Z = 1&ndash;83 and 89&ndash;94).</li>
+          <li><strong>Atomic charges and dipoles:</strong> neither property is provided by the NequIP or Allegro-FM calculator.</li>
+          <li><strong>Reference environment:</strong> the PeptideCS2 NequIP models retain their gas-phase or COSMO-water training reference. The COSMO contribution is already part of the COSMO-water models and their energy derivatives.</li>
+          <li><strong>Additional implicit solvent:</strong> MAPLE's experimental GB-polar/QEq correction supports non-periodic single-point energies only (<code>#sp</code> with <code>experimental=true</code>); solvent forces, Hessians and HVPs are unavailable.</li>
+        </ul>
+
+      </article>
+      <nav class="page-nav"><a class="prev" href="model_so3lr.html">&larr; Previous: SO3LR</a><a class="next" href="../tasks/singlepoint.html">Next: Single Point &rarr;</a></nav>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-sticky">
+        <h3>On this page</h3>
+        <ul>
+          <li><a href="#variants">NequIP Pretrained Models</a></li>
+          <li><a href="#allegro">Allegro and Allegro-FM</a></li>
+          <li><a href="#model-scope">Choosing the Reference Environment</a></li>
+          <li><a href="#calculator-capabilities">Calculator Capabilities</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#options">Model Options</a></li>
+          <li><a href="#limitations">Limitations</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <div class="sidebar-overlay"></div>
+  <footer>
+    <p>&copy; 2026, MAPLE development team.</p>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
+</body>
+</html>

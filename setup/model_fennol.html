@@ -68,7 +68,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html" class="active">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -161,16 +163,12 @@
       <article>
         <h1>FeNNol Models</h1>
 
-        <p><strong>FeNNol</strong> (Force-field-enhanced Neural Networks optimized library) is MAPLE's framework for FENNIX-format <code>.fnx</code> machine-learning potential files. MAPLE ships the <strong>FeNNix-Bio1</strong> family of foundation models for condensed-phase biomolecular simulations, and also supports loading external <code>.fnx</code> models through <code>model_path</code>.</p>
-
-        <div class="admonition note">
-          <p class="admonition-title">Runtime note</p>
-          <p>FeNNol uses a JAX/Flax runtime for <code>.fnx</code> programs and does not use the PyTorch calculator runtime. GPU execution, when available, is controlled by the installed JAX runtime and its platform configuration.</p>
-        </div>
+        <p><strong>FeNNol</strong> is a JAX-based framework for building force-field-enhanced neural network potentials. MAPLE includes the FeNNix-Bio1 model series built with this framework.</p>
 
         <h2 id="fennix-bio1">FeNNix-Bio1 Family</h2>
 
-        <p>FeNNix-Bio1 is a family of scalable foundation models for reactive condensed-phase molecular dynamics, built on the FeNNol library within the Jax framework. Two sizes are available with different accuracy and throughput trade-offs:</p>
+        <p><strong>FeNNix-Bio1</strong> targets molecular and condensed-phase biomolecular systems. Its training data extend SPICE2 with additional molecular conformations, solvated ions and dissociation configurations. The quantum-chemical reference uses <strong>&omega;B97M-D3(BJ)</strong> with <strong>ccECP</strong> effective core potentials and their <strong>aug-cc-pVTZ</strong> basis sets.</p>
+        <p>Both models use <code>v1.0-finetuneIons</code>, which additionally fine-tunes solvated Na, K and Cl ions against AMOEBA03 data.</p>
 
         <div class="table-wrapper">
         <table>
@@ -184,43 +182,27 @@
           <tbody>
             <tr>
               <td>FeNNix-Bio1S</td>
-              <td><code>fennix-bio1s</code></td>
-              <td>Light-weight high-throughput model for rapid screening</td>
+              <td><code>fennix-bio-1s</code></td>
+              <td>High-throughput molecular and biomolecular simulations</td>
             </tr>
             <tr>
               <td>FeNNix-Bio1M</td>
-              <td><code>fennix-bio1m</code></td>
-              <td>Higher-accuracy model for production-quality condensed-phase simulations</td>
+              <td><code>fennix-bio-1m</code></td>
+              <td>Biomolecular and molecular-cluster simulations</td>
             </tr>
           </tbody>
         </table>
         </div>
-
         <div class="admonition important">
           <p class="admonition-title">Important</p>
-          <p>The medium variant (<code>fennix-bio1m</code>) requires more computational resources than the small variant. Start with <code>fennix-bio1s</code> for high-throughput screening and switch to <code>fennix-bio1m</code> for production-quality simulations.</p>
+          <p>The medium variant (<code>fennix-bio-1m</code>) requires more computational resources than the small variant (<code>fennix-bio-1s</code>).</p>
         </div>
 
-        <h2 id="external-fnx">External .fnx Models</h2>
+        <p><strong>Element input range:</strong> the current MAPLE exports encode H&ndash;Rn (Z = 1&ndash;86). The training and application scope is molecular and biomolecular chemistry, including solvated ions.</p>
 
-        <p>Use the generic <code>fennol</code> keyword to load an external <code>.fnx</code> model file. This works with any valid <code>.fnx</code> program.</p>
-
-        <pre><code><span class="keyword">#model</span>=<span class="value">fennol</span>(<span class="param">model_path</span>=<span class="value">/path/to/model.fnx</span>)
-<span class="keyword">#sp</span>
-
-XYZ /path/to/structure.xyz</code></pre>
-
-        <p>The generic <code>fennol</code> keyword always requires <code>model_path</code>. The element coverage, cutoff, and energy terms are determined by the supplied <code>.fnx</code> program.</p>
-
-        <h2 id="model-files">Model Files</h2>
-        <p>The built-in FeNNix-Bio1 checkpoints are resolved from MAPLE's model directory:</p>
-        <ul>
-          <li><code>fennix-bio1s</code> &rarr; <code>fennix-bio1S-finetuneIons.fnx</code></li>
-          <li><code>fennix-bio1m</code> &rarr; <code>fennix-bio1M-finetuneIons.fnx</code></li>
-        </ul>
-        <p>The generic <code>fennol</code> keyword requires an explicit <code>model_path</code> pointing to a valid <code>.fnx</code> file.</p>
 
         <h2 id="parameters">Model Options</h2>
+
         <div class="table-wrapper">
         <table>
           <thead>
@@ -232,26 +214,20 @@ XYZ /path/to/structure.xyz</code></pre>
           </thead>
           <tbody>
             <tr>
-              <td><code>model_path</code></td>
-              <td>built-in for <code>fennix-bio1s</code>/<code>fennix-bio1m</code></td>
-              <td>Path to an external <code>.fnx</code> file. Required for <code>#model=fennol</code>.</td>
-            </tr>
-            <tr>
-              <td><code>use_float64</code></td>
-              <td><code>false</code></td>
-              <td>Enable JAX float64 execution when tighter numerical precision is needed.</td>
+              <td><code>dtype</code></td>
+              <td><code>float32</code></td>
+              <td>Supported value: <code>float32</code>.</td>
             </tr>
           </tbody>
         </table>
         </div>
 
+
         <h2 id="charge-spin">Charge and Multiplicity</h2>
 
-        <p>Charge support in FeNNol depends on the loaded <code>.fnx</code> model architecture. The <strong>FeNNix-Bio1</strong> family supports total molecular charge from the coordinate block and passes it to the FENNIX charge model. External <code>.fnx</code> models may or may not support charge &mdash; consult the model's documentation.</p>
+        <p>Both ion-finetuned models accept total molecular charge and require multiplicity 1. Internal charge-hypothesis channels remain model features and are not exposed as physical atomic charges or dipoles.</p>
 
-        <p>The current MAPLE runtime has no spin/multiplicity input, so multiplicity must always be <code>1</code> regardless of the model.</p>
-
-        <pre><code><span class="keyword">#model</span>=<span class="value">fennix-bio1s</span>
+        <pre><code><span class="keyword">#model</span>=<span class="value">fennix-bio-1s</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>)
 
 0 1
@@ -260,44 +236,43 @@ O    1.230000    0.000000    0.000000
 H   -0.540000    0.940000    0.000000
 H   -0.540000   -0.940000    0.000000</code></pre>
 
+
         <h2 id="calculator-capabilities">Calculator Capabilities</h2>
         <ul>
-          <li><strong>Units:</strong> FeNNol models commonly report energies in eV internally; MAPLE converts final energies and forces to Hartree and Hartree per Angstrom.</li>
-          <li><strong>Hessian:</strong> analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians are not supported.</li>
-          <li><strong>HVP:</strong> FeNNol implements <code>get_hvp()</code> in gas phase, which can be used by HVP-enabled workflows.</li>
-          <li><strong>PBC:</strong> FeNNol is exposed as a no-PBC molecular calculator in MAPLE. Periodic atoms fail fast.</li>
-          <li><strong>Solvent / D4:</strong> MAPLE's experimental GB-polar/QEq correction is energy-only (<code>#sp</code> with <code>experimental=true</code>); D4 is not supported for FeNNol.</li>
+          <li><strong>Units:</strong> MAPLE reports energies in Hartree and forces in Hartree per Angstrom.</li>
+          <li><strong>Hessian:</strong> analytic Hessians are used by default; numerical Hessians are also available.</li>
+          <li><strong>HVP:</strong> FeNNix-Bio1S and FeNNix-Bio1M provide Hessian&ndash;vector products.</li>
+          <li><strong>Periodic systems:</strong> both models support full three-dimensional periodic cells, with stress and virial output.</li>
+          <li><strong>Solvent / D4:</strong> the experimental GB-polar/QEq correction supports non-periodic single-point energies only (<code>#sp</code> with <code>experimental=true</code>); solvent forces, Hessians and HVPs are unavailable. D4 is not supported.</li>
         </ul>
 
         <h2 id="examples">Usage Examples</h2>
 
-        <h3>High-throughput screening with FeNNix-Bio1S</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">fennix-bio1s</span>
+        <h3>Geometry optimization with FeNNix-Bio1S</h3>
+
+        <pre><code><span class="keyword">#model</span>=<span class="value">fennix-bio-1s</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">level</span>=<span class="value">loose</span>)
 
 XYZ /path/to/structure.xyz</code></pre>
 
-        <h3>Production-quality simulation with FeNNix-Bio1M</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">fennix-bio1m</span>
+        <h3>Tight geometry optimization with FeNNix-Bio1M</h3>
+
+        <pre><code><span class="keyword">#model</span>=<span class="value">fennix-bio-1m</span>
 <span class="keyword">#device</span>=<span class="value">gpu0</span>
 <span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>, <span class="param">level</span>=<span class="value">tight</span>)
 
 XYZ /path/to/structure.xyz</code></pre>
 
-        <h3>Load an external .fnx model</h3>
-        <pre><code><span class="keyword">#model</span>=<span class="value">fennol</span>(<span class="param">model_path</span>=<span class="value">/path/to/custom_model.fnx</span>, <span class="param">use_float64</span>=<span class="value">true</span>)
-<span class="keyword">#sp</span>
-
-XYZ /path/to/structure.xyz</code></pre>
 
         <h2 id="limitations">Limitations</h2>
+
         <ul>
-          <li><strong>No periodic systems.</strong> The FeNNol wrapper rejects PBC inputs.</li>
-          <li><strong>Singlet multiplicity only.</strong> Total charge may be supported depending on the model, but multiplicity must always be <code>1</code>.</li>
-          <li><strong>Runtime-specific GPU behavior.</strong> FeNNol GPU execution depends on the installed JAX build and platform configuration.</li>
-          <li><strong>External model coverage is model-defined.</strong> MAPLE can load a valid <code>.fnx</code> file, but the chemistry supported by that file is determined by its training and program contents.</li>
+          <li><strong>Spin:</strong> the current Bio1 models require multiplicity 1.</li>
+          <li><strong>Atomic charges and dipoles:</strong> these outputs are not available for FeNNix-Bio1 in MAPLE.</li>
+          <li><strong>Model scope:</strong> the built-in models use the ion-finetuned Bio1 release for molecular and biomolecular systems.</li>
         </ul>
+
       </article>
       <nav class="page-nav">
         <a class="prev" href="../setup/model_aimnet.html">&larr; Previous: AIMNet2</a>
@@ -310,8 +285,6 @@ XYZ /path/to/structure.xyz</code></pre>
         <h3>On this page</h3>
         <ul>
           <li><a href="#fennix-bio1">FeNNix-Bio1 Family</a></li>
-          <li><a href="#external-fnx">External .fnx Models</a></li>
-          <li><a href="#model-files">Model Files</a></li>
           <li><a href="#parameters">Model Options</a></li>
           <li><a href="#charge-spin">Charge and Multiplicity</a></li>
           <li><a href="#calculator-capabilities">Calculator Capabilities</a></li>

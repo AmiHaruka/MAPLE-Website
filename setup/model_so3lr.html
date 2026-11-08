@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SO3LR - MAPLE Documentation</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/home-fonts.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/search.css">
+  <link rel="icon" href="../assets/images/home/maple-logo.png" type="image/png">
+</head>
+<body>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../index.html"><img src="../assets/images/home/maple-logo.png" alt="MAPLE Logo" width="480" height="502"></a>
+        <a href="../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../general.html">About</a></li>
+          <li><a href="../tutorials/installation.html">Documentation</a></li>
+          <li><a href="../articles.html">Articles &amp; News</a></li>
+          <li><a href="../downloads.html">Downloads</a></li>
+          <li><a href="../development.html">Development</a></li>
+          <li><a href="../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../assets/images/home/maple-logo.png" alt="MAPLE" width="480" height="502">
+          <span>MAPLE Docs</span>
+        </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../tutorials/installation.html">Installation</a></li>
+                <li><a href="../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../setup/settings.html">Settings</a></li>
+                <li><a href="../setup/coordinates.html">Coordinates</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> ML Models</span>
+              <ul class="children">
+                <li><a href="../setup/models.html">Overview</a></li>
+                <li><a href="../setup/calculators.html">Calculator Backends</a></li>
+                <li><a href="../setup/model_uma.html">UMA</a></li>
+                <li><a href="../setup/model_ani.html">ANI</a></li>
+                <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
+                <li><a href="../setup/model_fennol.html">FeNNol</a></li>
+                <li><a href="../setup/model_mace.html">MACE</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html" class="active">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../tasks/opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../tasks/opt/opt_sd.html">SD</a></li>
+                    <li><a href="../tasks/opt/opt_cg.html">CG</a></li>
+                    <li><a href="../tasks/opt/opt_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/ts/ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/ts/ts_prfo.html">P-RFO</a></li>
+                    <li><a href="../tasks/ts/ts_neb.html">NEB</a></li>
+                    <li><a href="../tasks/ts/ts_dimmer.html">Dimer</a></li>
+                    <li><a href="../tasks/ts/ts_string.html">String/GSM</a></li>
+                    <li><a href="../tasks/ts/ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../tasks/scan/scan_rfo.html">RFO</a></li>
+                    <li><a href="../tasks/scan/scan_sd.html">SD</a></li>
+                    <li><a href="../tasks/scan/scan_cg.html">CG</a></li>
+                    <li><a href="../tasks/scan/scan_sdcg.html">SD/CG</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/irc/irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/irc/irc_gs.html">GS</a></li>
+                    <li><a href="../tasks/irc/irc_lqa.html">LQA</a></li>
+                    <li><a href="../tasks/irc/irc_hpc.html">HPC</a></li>
+                    <li><a href="../tasks/irc/irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit.html">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/parmfit/parmfit_refinement.html">Refinement</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_ncaa.html">NCAA</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_metalaa.html">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Tutorials</span>
+              <ul class="children">
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../tasks/parmfit/parmfit_tutorial.html">ParmFit</a></span>
+                  <ul class="children">
+                    <li><a href="../tasks/parmfit/parmfit_refinement_tutorial.html">Refinement</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_ncaa_tutorial.html">NCAA</a></li>
+                    <li><a href="../tasks/parmfit/parmfit_metalaa_tutorial.html">MetalAA</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../functions/solvent.html">Solvation</a></li>
+                <li><a href="../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../setup/models.html">ML Models</a>
+        <span class="separator">/</span>
+        <span class="current">SO3LR</span>
+      </nav>
+      <article>
+        <h1>SO3LR</h1>
+
+        <p><strong>SO3LR</strong> is a pretrained force-field family for molecular and biomolecular simulations. It couples SO3krates to explicit repulsion, electrostatics and dispersion, with environment-dependent charges and dispersion parameters describing noncovalent interactions.</p>
+
+
+        <h2 id="variants">Pretrained Model Series</h2>
+        <p>MAPLE provides the original SO3LR model and three <strong>SO3LR Tauri</strong> models from release 2606.</p>
+        <p><strong>SO3LR Tauri</strong> aims to describe proteins, nucleic acids, lipids and carbohydrates with a common potential. Its scope extends to ionic environments, metal-containing systems and reactive chemistry, without fitting a separate force field for each system.</p>
+        <p>The original model uses ZBL-inspired repulsion and a single Hirshfeld volume ratio per atom for dispersion. Tauri uses fixed, pair-specific Nordlund&ndash;Lehtola&ndash;Hobler (NLH) repulsion and separately learned polarizability and <i>C</i><sub>6</sub> ratios for quantum Drude oscillator (QDO) dispersion.</p>
+
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Model</th>
+              <th>Elements</th>
+              <th>Cutoff (Å)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>so3lr</code></td>
+              <td>Original SO3LR</td>
+              <td>H, C, N, O, F, P, S, Cl</td>
+              <td>4.5</td>
+            </tr>
+            <tr>
+              <td><code>so3lr-tauri-s</code></td>
+              <td>Tauri small, 2606</td>
+              <td>H–At (Z = 1–85)</td>
+              <td>4.5</td>
+            </tr>
+            <tr>
+              <td><code>so3lr-tauri-m</code></td>
+              <td>Tauri medium, 2606</td>
+              <td>H–At (Z = 1–85)</td>
+              <td>4.5</td>
+            </tr>
+            <tr>
+              <td><code>so3lr-tauri-l</code></td>
+              <td>Tauri large, 2606</td>
+              <td>H–At (Z = 1–85)</td>
+              <td>5.0</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <h2 id="reference-data">Training Reference and Chemical Space</h2>
+        <p>The original SO3LR uses PBE0+MBD references for about four million neutral and charged molecular structures. Tauri combines roughly 148 million structures across 85 elements, including ions, metal-containing systems, polymers and biomolecular fragments.</p>
+        <p>The supplied Tauri models use the production head, fine-tuned with PBE0+MBD(-NL) energies and forces together with &omega;B97M-V forces from OMol25 and OPoly26.</p>
+        <h2 id="electronic-state">Charge and Multiplicity</h2>
+
+        <p>The models accept total charge and spin multiplicity through the coordinate block. Atomic charges and molecular dipoles are available.</p>
+        <h2 id="calculator-capabilities">Calculator Capabilities</h2>
+        <ul>
+          <li><strong>Hessian and HVP:</strong> the original SO3LR and SO3LR Tauri models provide analytic Hessians by default, numerical Hessians, and Hessian&ndash;vector products.</li>
+          <li><strong>Charge and multiplicity:</strong> both model generations accept the total charge and spin multiplicity specified in the coordinate block.</li>
+          <li><strong>Atomic charges and dipoles:</strong> both model generations provide atomic partial charges and molecular dipoles.</li>
+          <li><strong>Periodic systems:</strong> SO3LR and SO3LR Tauri support periodic cells, with stress and virial output.</li>
+        </ul>
+
+        <h2 id="usage">Usage</h2>
+
+        <pre><code>#model=so3lr-tauri-m
+#opt(method=lbfgs)
+
+XYZ structure.xyz</code></pre>
+        <h2 id="options">Model Options</h2>
+
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>lr</code></td>
+              <td><code>auto</code></td>
+              <td>auto, cutoff, ewald or pme. Auto uses the molecular route for isolated systems and PME for full three-dimensional periodic cells.</td>
+            </tr>
+            <tr>
+              <td><code>dtype</code></td>
+              <td><code>float32</code></td>
+              <td>Supported value: <code>float32</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2 id="limitations">Limitations</h2>
+        <ul>
+          <li><strong>Chemical coverage:</strong> the original SO3LR was trained on H, C, N, O, F, P, S and Cl. SO3LR Tauri extends the training coverage to H&ndash;At (Z = 1&ndash;85).</li>
+          <li><strong>Boundary conditions:</strong> periodic calculations require full three-dimensional periodicity. The <code>ewald</code> and <code>pme</code> options cannot be used for isolated molecules.</li>
+          <li><strong>Additional implicit solvent:</strong> MAPLE's experimental GB-polar/QEq correction supports non-periodic single-point energies only (<code>#sp</code> with <code>experimental=true</code>); solvent forces, Hessians and HVPs are unavailable.</li>
+        </ul>
+
+      </article>
+      <nav class="page-nav"><a class="prev" href="model_grace.html">&larr; Previous: GRACE</a><a class="next" href="model_nequip.html">Next: NequIP &rarr;</a></nav>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-sticky">
+        <h3>On this page</h3>
+        <ul>
+          <li><a href="#variants">Pretrained Model Series</a></li>
+          <li><a href="#reference-data">Training Reference and Chemical Space</a></li>
+          <li><a href="#electronic-state">Charge and Multiplicity</a></li>
+          <li><a href="#calculator-capabilities">Calculator Capabilities</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#options">Model Options</a></li>
+          <li><a href="#limitations">Limitations</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <div class="sidebar-overlay"></div>
+  <footer>
+    <p>&copy; 2026, MAPLE development team.</p>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+<script src="../assets/js/search.js"></script>
+</body>
+</html>

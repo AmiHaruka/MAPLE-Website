@@ -68,7 +68,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
             <li>
@@ -161,7 +163,7 @@
       <article>
         <h1>ANI Models</h1>
 
-        <p>The <strong>ANI</strong> (Accurate NeurAl networK engINe for Molecular Energies) family is a set of neural network potentials developed by the Roitberg group. ANI models are among the fastest ML potentials available, making them ideal for high-throughput screening and rapid prototyping of neutral organic molecular systems.</p>
+        <p><strong>ANI</strong> uses radial and angular atomic environment vectors (AEVs) as inputs to atomic neural networks. MAPLE provides the pretrained variants below for neutral singlet systems.</p>
 
         <h2 id="variants">Available Variants</h2>
 
@@ -181,37 +183,66 @@
               <td>ANI-2x</td>
               <td><code>ani2x</code></td>
               <td>H, C, N, O, F, S, Cl</td>
-              <td>&omega;B97X / 6-31G(d)</td>
-              <td>General organic chemistry with halogens</td>
+              <td>&omega;B97X/6-31G(d)</td>
+              <td>General organic chemistry</td>
             </tr>
             <tr>
               <td>ANI-1x</td>
               <td><code>ani1x</code></td>
               <td>H, C, N, O</td>
-              <td>&omega;B97X / 6-31G(d)</td>
-              <td>Fast calculations on HCNO-only systems</td>
+              <td>&omega;B97X/6-31G(d)</td>
+              <td>HCNO molecular systems</td>
             </tr>
             <tr>
               <td>ANI-1ccx</td>
               <td><code>ani1ccx</code></td>
               <td>H, C, N, O</td>
-              <td>CCSD(T)/CBS (transfer-learned)</td>
-              <td>Publication-quality accuracy for small molecules</td>
+              <td>CCSD(T)*/CBS transfer learning</td>
+              <td>Small-molecule energetics</td>
             </tr>
             <tr>
               <td>ANI-1xnr</td>
               <td><code>ani1xnr</code></td>
               <td>H, C, N, O</td>
-              <td>&omega;B97X / 6-31G(d) (non-reactive)</td>
-              <td>Equilibrium geometries without bond-breaking</td>
+              <td>BLYP/TZV2P</td>
+              <td>Reactive molecular and condensed-phase chemistry</td>
+            </tr>
+            <tr>
+              <td>ANI-2xr</td>
+              <td><code>ani2xr</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>&omega;B97X/6-31G(d)</td>
+              <td>Molecular dynamics and geometry optimization of organic molecules</td>
+            </tr>
+            <tr>
+              <td>ANI-2dr</td>
+              <td><code>ani2dr</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>B97-3c</td>
+              <td>Organic molecules and clusters with native dispersion</td>
+            </tr>
+            <tr>
+              <td>SnnANI-2xr</td>
+              <td><code>snn-ani2xr</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>&omega;B97X/6-31G(d)</td>
+              <td>Neutral organic-molecule energies and forces</td>
+            </tr>
+            <tr>
+              <td>ANI-MBIS</td>
+              <td><code>ani-mbis</code></td>
+              <td>H, C, N, O, F, S, Cl</td>
+              <td>Energies: &omega;B97X/6-31G(d)</td>
+              <td>Molecular energies, atomic charges and dipoles</td>
             </tr>
           </tbody>
         </table>
         </div>
 
+
         <h2 id="d4-dispersion">DFT-D4 Dispersion Correction</h2>
 
-        <p>ANI models are the only models in MAPLE that support the DFT-D4 dispersion correction. D4 adds London dispersion (van der Waals) interactions, which is critical for non-covalent binding, molecular stacking, and conformational energetics.</p>
+        <p>MAPLE provides an optional DFT-D4 correction for non-periodic ANI calculations. It adds a dispersion energy to the selected ANI model. Periodic inputs and <code>ani2dr</code> reject this extra correction.</p>
 
         <pre><code><span class="keyword">#model</span>=<span class="value">ani2x</span>
 <span class="keyword">#d4</span>
@@ -219,16 +250,19 @@
 
         <div class="admonition tip">
           <p class="admonition-title">Tip</p>
-          <p>Always enable <code>#d4</code> when studying systems with significant non-covalent interactions (hydrogen bonds, pi-stacking, host-guest complexes). The computational overhead is minimal.</p>
+          <p><code>ani2dr</code> includes short-range repulsion and D3 dispersion in its model energy. Use it without <code>#d4</code>.</p>
         </div>
 
         <h2 id="calculator-capabilities">Calculator Capabilities</h2>
+
         <ul>
-          <li><strong>Hessian:</strong> analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians (analytic or numerical) are not supported.</li>
-          <li><strong>HVP:</strong> ANI is the only shipped backend that implements <code>get_hvp()</code> for the HVP-enabled Dimer path. ANI HVP is gas-phase only.</li>
-          <li><strong>Implicit solvent:</strong> MAPLE's experimental GB-polar/QEq correction is energy-only (<code>#sp</code> with <code>experimental=true</code>); solvent forces, HVP, and Hessians are not supported.</li>
-          <li><strong>Model files:</strong> MAPLE can auto-download ANI checkpoints from the MAPLE model repository, or you can provide an explicit <code>model_path</code>.</li>
+          <li><strong>Hessian:</strong> analytic Hessians are used by default; numerical Hessians are also available.</li>
+          <li><strong>HVP:</strong> ANI provides Hessian&ndash;vector products for HVP-enabled workflows.</li>
+          <li><strong>Periodic systems:</strong> ANI supports periodic cells, with stress and virial output.</li>
+          <li><strong>Atomic charges and dipoles:</strong> <code>ani-mbis</code> provides both properties. All eight ANI models require charge 0 and multiplicity 1.</li>
+          <li><strong>Implicit solvent:</strong> the experimental GB-polar/QEq correction supports non-periodic single-point energies only (<code>#sp</code> with <code>experimental=true</code>); solvent forces, Hessians and HVPs are unavailable.</li>
         </ul>
+
 
         <h2 id="examples">Usage Examples</h2>
 
@@ -263,9 +297,9 @@ XYZ /path/to/dimer_complex.xyz</code></pre>
 
         <h2 id="limitations">Limitations</h2>
         <ul>
-          <li><strong>No charge/multiplicity support.</strong> ANI models assume neutral, singlet ground state; use AIMNet2 or UMA <code>omol</code> for charged/open-shell inputs.</li>
-          <li><strong>Limited elements.</strong> ANI-2x covers 7 elements; ANI-1x/1ccx/1xnr cover only H, C, N, O.</li>
-          <li><strong>No periodic systems.</strong> ANI models do not support periodic boundary conditions.</li>
+          <li><strong>No charge/multiplicity support.</strong> ANI models assume neutral, singlet ground state; use AIMNet2-NSE or UMA <code>omol</code> for charged/open-shell inputs.</li>
+          <li><strong>Elements:</strong> the 1x family covers H, C, N, O; the 2x family and ANI-MBIS cover the seven elements listed above.</li>
+          <li><strong>Atomic charges:</strong> charge and dipole output is available for <code>ani-mbis</code>; ordinary ANI models provide energies and forces without that charge model.</li>
           <li><strong>Implicit solvation is energy-only.</strong> MAPLE's experimental GB-polar/QEq correction can be requested for <code>#sp</code> with <code>experimental=true</code>; solvent forces, optimization, MD, TS, scan, and frequency workflows remain unsupported for that correction.</li>
         </ul>
 
@@ -281,7 +315,7 @@ XYZ /path/to/dimer_complex.xyz</code></pre>
         <h3>On this page</h3>
         <ul>
           <li><a href="#variants">Available Variants</a></li>
-          <li><a href="#d4-dispersion">DFT-D4 Dispersion</a></li>
+          <li><a href="#d4-dispersion">DFT-D4 Dispersion Correction</a></li>
           <li><a href="#calculator-capabilities">Calculator Capabilities</a></li>
           <li><a href="#examples">Usage Examples</a></li>
           <li><a href="#limitations">Limitations</a></li>

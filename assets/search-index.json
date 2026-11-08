@@ -471,7 +471,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 10,
-      "text": "Checked-in MAPLE example: examples/scan/C18.inp . The full coordinate block is kept in the source example; the scan command belongs after that coordinate block: #model=aimnet2nse #scan(mode=rigid) #device=gpu0 [XYZ coordinates from examples/scan/C18.inp] S 1 36 0.1 50 Scans the atom 1–36 distance over 51 points: the initial geometry plus 50 increments of 0.1 Angstroms.",
+      "text": "Checked-in MAPLE example: examples/scan/C18.inp . The full coordinate block is kept in the source example; the scan command belongs after that coordinate block: #model=aimnet2-nse #scan(mode=rigid) #device=gpu0 [XYZ coordinates from examples/scan/C18.inp] S 1 36 0.1 50 Scans the atom 1–36 distance over 51 points: the initial geometry plus 50 increments of 0.1 Angstroms.",
       "title": "Constraints - MAPLE Documentation",
       "trail": [
         "Functions",
@@ -487,7 +487,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 11,
-      "text": "Checked-in MAPLE example: examples/scan/da.inp . It defines a two-coordinate relaxed scan with the default L-BFGS method. The long coordinate block is omitted here, but the S commands must remain after it: #model=ANI-1xnr #scan #device=gpu0 [XYZ coordinates from examples/scan/da.inp] S 11 52 -0.1 15 S 14 51 -0.1 15 Each coordinate gives 16 values, producing a 256-point 2D potential energy surface.",
+      "text": "Checked-in MAPLE example: examples/scan/da.inp . It defines a two-coordinate relaxed scan with the default L-BFGS method. The long coordinate block is omitted here, but the S commands must remain after it: #model=ani1xnr #scan #device=gpu0 [XYZ coordinates from examples/scan/da.inp] S 11 52 -0.1 15 S 14 51 -0.1 15 Each coordinate gives 16 values, producing a 256-point 2D potential energy surface.",
       "title": "Constraints - MAPLE Documentation",
       "trail": [
         "Functions",
@@ -823,7 +823,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
-      "text": "MAPLE supports a wide range of machine learning interatomic potentials. Each model offers different trade-offs between speed, accuracy, and element coverage. Backend support for periodic cells, charge/multiplicity, Hessians, implicit solvent, D4, HVP, and checkpoint loading is model-specific; see the calculator backend matrix before choosing a production backend.",
+      "text": "MAPLE supports a wide range of machine learning interatomic potentials. Each model offers different trade-offs between speed, accuracy, and element coverage. Each family guide describes its models and reference data. The calculator capability matrix summarizes the available calculation options.",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
@@ -935,7 +935,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 8,
-      "text": "Non-reactive variant of ANI-1x optimized for stable molecular geometries and vibrational properties.",
+      "text": "Reactive ANI model for molecular and condensed-phase HCNO chemistry. ANI Family",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
@@ -945,12 +945,44 @@
       "url": "general.html#ani-1xnr"
     },
     {
-      "heading": "AIMNet Family",
+      "heading": "ANI-2xr / ANI-2dr",
       "level": 3,
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 9,
+      "text": "Repulsion-enhanced ANI models; ANI-2dr includes native D3 dispersion. ANI Family",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#ani-2xr-ani-2dr"
+    },
+    {
+      "heading": "ANI-MBIS",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 10,
+      "text": "Predicts molecular energies and geometry-dependent MBIS atomic charges.",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#ani-mbis"
+    },
+    {
+      "heading": "AIMNet Family",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 11,
       "text": "AIMNet",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -966,8 +998,8 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 10,
-      "text": "Atoms-in-Molecules network potential with broad element coverage and high accuracy for organic and drug-like molecules. AIMNet",
+      "section_order": 12,
+      "text": "Atoms-in-Molecules network potential for organic and main-group chemistry, including charged molecules. AIMNet",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
@@ -982,8 +1014,8 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 11,
-      "text": "Open-shell variant using neural spin-charge equilibration for systems with arbitrary charge and spin multiplicity, including radicals.",
+      "section_order": 13,
+      "text": "Neural spin-charge equilibration for charged and open-shell molecules, including organic radicals.",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
@@ -998,7 +1030,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 12,
+      "section_order": 14,
       "text": "FeNNol",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1014,8 +1046,8 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 13,
-      "text": "Ion-aware FeNNix-Bio .fnx model series for biomolecular and molecular-cluster calculations, available in small and medium variants.",
+      "section_order": 15,
+      "text": "Ion-aware FeNNix-Bio model series for biomolecular and molecular-cluster calculations, available in small and medium variants.",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
@@ -1030,7 +1062,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 14,
+      "section_order": 16,
       "text": "MACE",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1041,20 +1073,36 @@
       "url": "general.html#mace-family-2"
     },
     {
-      "heading": "MACE-OFF23 (s/m/l)",
+      "heading": "MACE-OFF",
       "level": 3,
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 15,
-      "text": "Equivariant message-passing potentials for organic molecules. Available in small, medium, and large variants balancing speed and accuracy. MACE",
+      "section_order": 17,
+      "text": "Equivariant potentials for organic molecules and molecular clusters, available in small, medium and large variants. MACE",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
         "About MAPLE"
       ],
       "type": "Guide",
-      "url": "general.html#mace-off23-s-m-l"
+      "url": "general.html#mace-off"
+    },
+    {
+      "heading": "MACE-LES",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 18,
+      "text": "Organic molecular potential with learned long-range electrostatics. MACE",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#mace-les"
     },
     {
       "heading": "MACE-OMol",
@@ -1062,8 +1110,8 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 16,
-      "text": "MACE potential trained on the OMol25 data set for broad organic molecular coverage with high accuracy. MACE",
+      "section_order": 19,
+      "text": "Models trained on OMol25, with broad molecular element coverage and charge/spin conditioning. MACE",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
@@ -1073,13 +1121,29 @@
       "url": "general.html#mace-omol"
     },
     {
+      "heading": "MACE-Polar",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 20,
+      "text": "OMol-trained models with explicit electrostatic response, atomic charges and dipoles. MACE",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#mace-polar"
+    },
+    {
       "heading": "EGRET",
       "level": 3,
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 17,
-      "text": "Equivariant graph neural network potential designed for reactive and non-reactive molecular simulations.",
+      "section_order": 21,
+      "text": "MACE-based potentials for bioorganic molecules, with variants for thermochemistry and reaction modeling.",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE",
@@ -1089,12 +1153,140 @@
       "url": "general.html#egret"
     },
     {
+      "heading": "GRACE",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 22,
+      "text": "GRACE is a graph extension of the atomic cluster expansion, used here by the GRACE-OFF organic force fields. GRACE",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#grace"
+    },
+    {
+      "heading": "GRACE-OFF",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 23,
+      "text": "SPICE-trained organic force fields whose two-layer variants combine accurate liquid properties with efficient molecular dynamics.",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#grace-off"
+    },
+    {
+      "heading": "SO3LR",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 24,
+      "text": "SO3LR couples SO3krates to explicit repulsion, electrostatics and dispersion, with charges and dispersion parameters learned from the atomic environment. SO3LR",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#so3lr"
+    },
+    {
+      "heading": "SO3LR",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 25,
+      "text": "PBE0+MBD force field for organic and biomolecular systems, covering eight elements. SO3LR",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#so3lr-2"
+    },
+    {
+      "heading": "SO3LR Tauri",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 26,
+      "text": "A common force field for biomolecular systems, ions and reactive chemistry across 85 elements.",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#so3lr-tauri"
+    },
+    {
+      "heading": "NequIP",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 27,
+      "text": "NequIP uses equivariant tensor convolutions for data-efficient fitting. Allegro uses strictly local representations with a fixed spatial cutoff. NequIP",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#nequip"
+    },
+    {
+      "heading": "PeptideCS2 models",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 28,
+      "text": "NequIP models trained on peptide conformations with gas-phase or COSMO-water references. NequIP",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#peptidecs2-models"
+    },
+    {
+      "heading": "Allegro-FM",
+      "level": 3,
+      "page": "general.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 29,
+      "text": "Pretrained Allegro potentials for inorganic crystals and organic molecules.",
+      "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
+      "trail": [
+        "MAPLE",
+        "About MAPLE"
+      ],
+      "type": "Guide",
+      "url": "general.html#allegro-fm"
+    },
+    {
       "heading": "Computational Capabilities",
       "level": 2,
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 18,
+      "section_order": 30,
       "text": "MAPLE provides a comprehensive suite of computational chemistry methods, all driven by machine learning potentials for fast evaluation on GPU hardware.",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1110,7 +1302,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 19,
+      "section_order": 31,
       "text": "sp",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1126,7 +1318,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 20,
+      "section_order": 32,
       "text": "Compute molecular energies and properties at fixed geometries. freq",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1142,7 +1334,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 21,
+      "section_order": 33,
       "text": "Normal mode analysis, RRHO thermochemistry, and IR spectra via mass-weighted Hessian diagonalization. opt",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1158,7 +1350,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 22,
+      "section_order": 34,
       "text": "Locate equilibrium geometries with L-BFGS, RFO, steepest descent, conjugate gradient, DIIS, or bracketing L-BFGS. ts",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1174,7 +1366,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 23,
+      "section_order": 35,
       "text": "Saddle point search via NEB, CI-NEB, P-RFO, Dimer, Growing String, or AutoNEB methods. scan",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1190,7 +1382,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 24,
+      "section_order": 36,
       "text": "1D, 2D, or 3D relaxed or rigid scans along chosen internal coordinates. irc",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1206,7 +1398,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 25,
+      "section_order": 37,
       "text": "Intrinsic reaction coordinate with GS, LQA, HPC, and EulerPC integrators. parmfit",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1222,7 +1414,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 26,
+      "section_order": 38,
       "text": "Force-field parameterization for ligand/cofactor refinement, noncanonical amino-acid templates, and metal-site parameters.",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1238,7 +1430,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 27,
+      "section_order": 39,
       "text": "Function",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1254,7 +1446,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 28,
+      "section_order": 40,
       "text": "Experimental implicit solvent single-point energies and non-periodic explicit solvent clusters. Function",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1270,7 +1462,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 29,
+      "section_order": 41,
       "text": "Fix atoms, bonds, angles, and dihedral angles during optimization and scanning. Runtime",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1286,7 +1478,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 30,
+      "section_order": 42,
       "text": "CUDA acceleration for ML potential evaluation when the selected backend and runtime support GPU execution. Correction",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1302,7 +1494,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 31,
+      "section_order": 43,
       "text": "DFT-D4 dispersion correction for ANI-backed calculations where the calculator supports the D4 option. Reference",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1318,7 +1510,7 @@
       "page": "general.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 32,
+      "section_order": 44,
       "text": "Compare PBC, charge/spin, Hessian, solvent, D4, HVP, and model-file support across MAPLE backends.",
       "title": "About MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
@@ -1515,7 +1707,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 12,
-      "text": "MAPLE integrates leading machine learning potentials to cover a broad range of systems. UMA — Universal UMA ANI ANI-2x ANI-1x ANI-1ccx ANI-1xnr AIMNet AIMNet2 AIMNet2-NSE FeNNol FeNNix-Bio1 MACE MACE-OFF23 MACE-OMol EGRET",
+      "text": "MAPLE integrates leading machine learning potentials to cover a broad range of systems. UMA — Universal UMA ANI ANI-2x ANI-1x ANI-1ccx ANI-1xnr ANI-2xr / ANI-2dr ANI-MBIS AIMNet AIMNet2 AIMNet2-NSE FeNNol FeNNix-Bio1 MACE MACE-OFF MACE-LES MACE-OMol MACE-Polar EGRET GRACE GRACE-OFF SO3LR SO3LR SO3LR Tauri NequIP PeptideCS2 models Allegro-FM",
       "title": "MAPLE — Machine-learning Potential for Landscape Exploration",
       "trail": [
         "MAPLE"
@@ -1639,7 +1831,7 @@
       "page_entry": true,
       "page_role": "content",
       "section_order": 0,
-      "text": "This page summarizes the calculator layer documented for the MAPLE 0.1.4 development branch. It is a development capability guide, not a public release announcement. Use it to choose a backend and to understand the protocol expected from new calculators. Development note Backend capability gates are enforced before or during calculator construction: periodic inputs fail fast for molecular wrappers, unsupported Hessian modes are rejected, and typoed backend options fail loudly for shipped calculators.",
+      "text": "This page summarizes the calculator layer documented for the MAPLE 0.1.4 development branch. The entries describe the current development implementation. Use it to compare the available models and calculation options. Development note Backend capability gates are enforced before or during calculator construction: electronic-state inputs, periodic cells, Hessian modes and model options are checked against the selected calculator and model.",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -1671,7 +1863,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 2,
-      "text": "ani2x ani1x ani1ccx ani1xnr PBC no Charge no D4 yes HVP gas-phase PBC No; periodic atoms fail fast. Charge / mult No; values are not honored by the backend. Hessian Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported. Solvent / D4 Experimental GBSA, energy-only; D4 is supported. Model files MAPLE-hosted checkpoints auto-download; explicit model_path is accepted. Charged molecules",
+      "text": "ani2x ani1x ani1ccx ani1xnr ani2xr ani2dr snn-ani2xr ani-mbis PBC yes Charge no D4 partial HVP yes PBC Molecular and periodic; stress and virial are available. Charge / mult Charge 0 and multiplicity 1. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties ANI-MBIS provides atomic charges and molecular dipoles. Batch Native molecular batches; periodic members are evaluated individually. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. Optional D4 for non-periodic inputs, except ani2dr . Model files .pt Charged molecules",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -1681,20 +1873,20 @@
       "url": "setup/calculators.html#ani"
     },
     {
-      "heading": "AIMNet2",
+      "heading": "AIMNet2 / AIMNet2-NSE",
       "level": 3,
       "page": "setup/calculators.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "aimnet2 aimnet2nse PBC no Charge yes D4 no HVP no PBC No; periodic atoms fail fast. coulomb_method=ewald is disabled. Charge / mult Yes. Hessian Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported. Solvent / D4 Experimental GBSA, energy-only; D4 is not supported. Model files MAPLE-hosted checkpoints auto-download; explicit model_path is accepted. FeNNol",
+      "text": "aimnet2 aimnet2-nse aimnet2-rxn aimnet2-pd aimnet2-b973c aimnet2-2025 PBC yes Charge variant-specific D4 no HVP yes PBC Molecular and full three-dimensional periodic; stress and virial are available. Charge / mult Variant-specific electronic states; AIMNet2-NSE conditions on multiplicity. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties Atomic charges and molecular dipoles are available. Batch Native molecular batches; periodic members are evaluated individually. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. Native dispersion treatment; no separate MAPLE D4 correction. Model files .pt FeNNol",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
         "Calculator Backends"
       ],
       "type": "Setup",
-      "url": "setup/calculators.html#aimnet2"
+      "url": "setup/calculators.html#aimnet2-aimnet2-nse"
     },
     {
       "heading": "FeNNol",
@@ -1703,7 +1895,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 4,
-      "text": "fennix-bio1s fennix-bio1m fennol(model_path=...) PBC no Charge singlet D4 no HVP yes PBC No; periodic atoms fail fast. Charge / mult FeNNix-Bio1 supports total charge from the coordinate block; external models may or may not honor charge. Multiplicity must be 1 . Hessian Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported. Solvent / D4 Experimental GBSA, energy-only; D4 is not supported. Model files Built-in FeNNix-Bio .fnx files are resolved from MAPLE's model directory; generic fennol requires explicit model_path . Molecular MACE",
+      "text": "fennix-bio-1s fennix-bio-1m PBC yes Charge singlet D4 no HVP yes PBC Molecular and full three-dimensional periodic; stress and virial are available. Charge / mult Total charge is accepted; multiplicity must be 1. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties Internal charge channels do not provide atomic-charge or dipole output. Batch Native molecular and periodic batches. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. No separate MAPLE D4 correction. Model files .jax Molecular MACE",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -1713,20 +1905,20 @@
       "url": "setup/calculators.html#fennol"
     },
     {
-      "heading": "MACE-OFF / EGRET",
+      "heading": "MACE-OFF / MACE-LES / EGRET",
       "level": 3,
       "page": "setup/calculators.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 5,
-      "text": "maceoff23s maceoff23m maceoff23l egret PBC no Charge no D4 no HVP no PBC No; periodic atoms fail fast. Charge / mult No. Hessian Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported. Solvent / D4 Experimental GBSA, energy-only; D4 is not supported. Model files maceoff23m and egret can auto-download; maceoff23s and maceoff23l require a local file or model_path . MACE-OMol",
+      "text": "mace-off-23s mace-off-23m mace-off-23l mace-off-23bm mace-off-24m mace-les-off egret-1 egret-1e egret-1m egret-1s egret-1t PBC yes Charge no D4 no HVP yes PBC Molecular and periodic; stress and virial are available. Charge / mult Charge 0 and multiplicity 1. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties MACE-LES latent charges remain internal; these series do not provide atomic charges or dipoles. Batch Native molecular and periodic batches. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. Native dispersion treatment; no separate MAPLE D4 correction. Model files .pt MACE-OMol",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
         "Calculator Backends"
       ],
       "type": "Setup",
-      "url": "setup/calculators.html#mace-off-egret"
+      "url": "setup/calculators.html#mace-off-mace-les-egret"
     },
     {
       "heading": "MACE-OMol",
@@ -1735,7 +1927,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 6,
-      "text": "maceomol PBC no Charge no D4 no HVP no PBC No; periodic atoms fail fast. Charge / mult No. Hessian Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported. Solvent / D4 Experimental GBSA, energy-only; D4 is not supported. Model files Requires a local checkpoint in the model directory or explicit model_path . Development backend",
+      "text": "mace-omol-0 PBC yes Charge yes D4 no HVP yes PBC Molecular and periodic; stress and virial are available. Charge / mult Total charge and multiplicity are accepted. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties Atomic charges and dipoles are not provided. Batch Native molecular and periodic batches. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. Native dispersion treatment; no separate MAPLE D4 correction. Model files .pt MACE-Polar",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -1751,7 +1943,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 7,
-      "text": "macepols macepolm macepoll PBC no Charge yes D4 no HVP no PBC No; periodic atoms fail fast. No external-field interface is exposed. Charge / mult Yes; multiplicity is converted to unpaired-electron spin as mult - 1 . Hessian Analytic and numerical (gas phase). Implicit-solvent Hessians are unsupported. Solvent / D4 Experimental GBSA, energy-only; D4 is not supported. Model files Requires a local checkpoint in the model directory or explicit model_path . Periodic / FAIR-Chem",
+      "text": "mace-polar-1s mace-polar-1m mace-polar-1l PBC yes Charge yes D4 no HVP yes PBC Molecular and periodic; stress and virial are available. Charge / mult Total charge and multiplicity are accepted. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties Physical atomic charges and molecular dipoles are available. Batch Native molecular and periodic batches. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. Native long-range treatment; no separate MAPLE D4 correction. Model files .pt GRACE-OFF",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -1761,13 +1953,61 @@
       "url": "setup/calculators.html#mace-polar"
     },
     {
-      "heading": "UMA",
+      "heading": "GRACE",
       "level": 3,
       "page": "setup/calculators.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 8,
-      "text": "uma PBC yes Charge omol D4 no HVP no PBC Yes through FAIR-Chem. Non-periodic input uses omol ; periodic input must specify a non- omol task. Stress / virial requests are rejected until validated. Charge / mult omol only; non- omol tasks reject non-default charge / multiplicity. FAIR-Chem receives spin multiplicity as mult . Hessian Numerical only (gas phase). Implicit-solvent Hessians are unsupported. Solvent / D4 Experimental GBSA, energy-only; D4 is not supported. Model files Resolved from checkpoint_path , a local maple/function/calculator/model/uma-*.pt file, or FAIR-Chem's official loading path.",
+      "text": "grace-off-1s grace-off-1m grace-off-1l grace-off-2s grace-off-2m grace-off-2l PBC yes Charge no D4 no HVP yes PBC Molecular and periodic; stress and virial are available. Charge / mult Charge 0 and multiplicity 1. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties Atomic charges and dipoles are not provided. Batch Native molecular and periodic batches. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. No separate MAPLE D4 correction. Model files .pb Long-range / HVP",
+      "title": "Calculator Backends - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "Calculator Backends"
+      ],
+      "type": "Setup",
+      "url": "setup/calculators.html#grace"
+    },
+    {
+      "heading": "SO3LR",
+      "level": 3,
+      "page": "setup/calculators.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 9,
+      "text": "so3lr so3lr-tauri-s so3lr-tauri-m so3lr-tauri-l PBC yes Charge yes D4 no HVP yes PBC Molecular and full three-dimensional periodic; stress and virial are available. Charge / mult Total charge and multiplicity are accepted. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties Physical atomic charges and molecular dipoles are available. Batch Native molecular and periodic batches. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. Native electrostatics and dispersion; no separate MAPLE D4 correction. Model files .jax Equivariant / HVP",
+      "title": "Calculator Backends - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "Calculator Backends"
+      ],
+      "type": "Setup",
+      "url": "setup/calculators.html#so3lr"
+    },
+    {
+      "heading": "NequIP",
+      "level": 3,
+      "page": "setup/calculators.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 10,
+      "text": "nequip-t3-cosmo nequip-t123-cosmo nequip-t3-gas allegro-fm-256 allegro-fm-512 PBC yes Charge no D4 no HVP yes PBC Molecular and periodic; stress and virial are available. Charge / mult Charge 0 and multiplicity 1. Hessian Analytic (default) and numerical. HVP Native Hessian–vector products are available. Properties Atomic charges and dipoles are not provided. Batch Native molecular and periodic batches. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. The selected training reference is retained; no separate MAPLE D4 correction. Model files .pt Periodic / FAIR-Chem",
+      "title": "Calculator Backends - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "Calculator Backends"
+      ],
+      "type": "Setup",
+      "url": "setup/calculators.html#nequip"
+    },
+    {
+      "heading": "UMA",
+      "level": 3,
+      "page": "setup/calculators.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 11,
+      "text": "uma PBC yes Charge omol D4 no HVP numerical PBC Task-dependent periodic support through FAIR-Chem. Periodic input requires an explicit task; stress and virial remain unavailable in MAPLE. Charge / mult Charge and multiplicity are accepted for the omol task. Hessian Numerical only. HVP The common force-difference route is available. Batch Common batch interface; members are evaluated sequentially. Solvent / D4 Experimental GB-polar correction: non-periodic single-point energies only. No separate MAPLE D4 correction. Model files Resolved from checkpoint_path , a local UMA checkpoint, or FAIR-Chem's official loading path.",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -1782,8 +2022,8 @@
       "page": "setup/calculators.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 9,
-      "text": "Periodic materials or catalysis: use uma and set an explicit FAIR-Chem task such as omat , oc20 , oc22 , oc25 , omc , or odac . Do not request stress or virial output yet. Charged or open-shell molecules: use aimnet2 for molecular systems, or uma with the omol task. Treat charged/open-shell UMA chemistry as a result to verify against references. D4 dispersion: use ANI. Other shipped backends reject or ignore D4 because it is not part of their MAPLE calculator contract. HVP-enabled Dimer: ANI and FeNNol are the shipped backends with get_hvp() , and both are gas-phase only. If a selected backend lacks HVP support, use a different transition-state method or a future finite-difference Dimer path once validated. Implicit-solvent Hessians: GBSA Hessians (analytic or numerical) are not supported; Hessians are available only in gas phase.",
+      "section_order": 12,
+      "text": "Periodic systems: AIMNet2, FeNNix and SO3LR require full three-dimensional periodicity. Periodic UMA inputs require an explicit FAIR-Chem task; MAPLE does not yet provide UMA stress or virial output. Electronic state: ANI, GRACE-OFF, NequIP/Allegro-FM, MACE-OFF, MACE-LES and EGRET require charge 0 and multiplicity 1. Charged and open-shell inputs require the charge/spin conditioning described in the selected model's card; FeNNix requires multiplicity 1. D4 dispersion: the optional D4 correction is available for non-periodic ANI inputs, except ani2dr . Other model families retain their native treatment. HVP-enabled Dimer: ANI, AIMNet2, FeNNol, MACE, GRACE, SO3LR and NequIP/Allegro-FM provide native Hessian–vector products. UMA uses the common force-difference route. Additional implicit solvent: the experimental GB-polar/QEq correction supports non-periodic single-point energies only. Solvent forces, Hessians and HVPs are unavailable.",
       "title": "Calculator Backends - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -1791,70 +2031,6 @@
       ],
       "type": "Setup",
       "url": "setup/calculators.html#selection-rules"
-    },
-    {
-      "heading": "Developer Backend Contract",
-      "level": 2,
-      "page": "setup/calculators.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 10,
-      "text": "MAPLE calculators are registered classes that satisfy a small ASE-style protocol. A backend does not have to inherit the shared base class as long as it exposes the same public surface and class attributes. Authoring source of truth This page is a website summary. The full developer checklist and runnable template live in the MAPLE source tree at maple/function/calculator/AUTHORING.md .",
-      "title": "Calculator Backends - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Calculator Backends"
-      ],
-      "type": "Setup",
-      "url": "setup/calculators.html#calculator-contract"
-    },
-    {
-      "heading": "Registration is required",
-      "level": 3,
-      "page": "setup/calculators.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 11,
-      "text": "A custom calculator is not selectable by #model=... until its class is registered. Define lowercase MODEL_NAMES keys and decorate the class with @register_calculator ; plugin loading only imports the module so this registration code can run. from maple.function.calculator import CalcABC, register_calculator @register_calculator class MyCalculator(CalcABC): MODEL_NAMES = (\"mymodel\",) MODEL_ENERGY_UNIT = \"eV\" SUPPORTED_HESSIAN_MODES = (\"numerical\",) SUPPORTS_CHARGE_MULT = False SUPPORTS_PBC = False CHECKPOINT_FILENAME = None REQUIRES_LOCAL_MODEL_FILE = True OPTION_KEYS = () MODEL_PATH_OPTION = \"model_path\" Surface Contract calculate(atoms, properties, system_changes) ASE entry point. Store energy, free energy, forces, and optional Hessian in results through the shared finalization path where possible. get_hessian(atoms, delta=0.002) Returns a (3N, 3N) array in Hartree / Å². Numerical mode uses the shared finite-difference helper; analytic mode is backend-specific. get_hvp(atoms, n) Optional. Implement only for the HVP-enabled Dimer path and return (Hn, forces, energy) in Hartree units. The default raises NotImplementedError . MODEL_NAMES Lowercase registry keys. Duplicate registration is a real error and raises instead of overwriting. MODEL_ENERGY_UNIT Declare eV or hartree honestly. _finalize_results performs the energy/force conversion; custom calculators should not multiply by EV2HARTREE in the calculate path. SUPPORTED_HESSIAN_MODES Subset of analytic and numerical . Unsupported requested modes fail before production work begins. SUPPORTS_CHARGE_MULT / SUPPORTS_PBC Declare whether the backend honors charge / multiplicity and validated periodic inputs. Do not mark PBC true unless the backend builds a validated periodic graph or neighbor list. CHECKPOINT_FILENAME / REQUIRES_LOCAL_MODEL_FILE Tell the factory whether MAPLE can auto-download a checkpoint or must require a local file. OPTION_KEYS / MODEL_PATH_OPTION Reject misspelled backend options loudly, and route explicit user model paths to the constructor kwarg that actually consumes them.",
-      "title": "Calculator Backends - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Calculator Backends"
-      ],
-      "type": "Setup",
-      "url": "setup/calculators.html#registration-required"
-    },
-    {
-      "heading": "Plugin Discovery and Model Paths",
-      "level": 2,
-      "page": "setup/calculators.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 12,
-      "text": "Input header: #model=mymodel(module=my_lab.maple_plugin, model_path=/tmp/m.pt) imports the plugin module, which must register a calculator class for mymodel , then passes the explicit model path through the backend contract. Environment variable: MAPLE_CALCULATOR_PLUGINS=my_lab.maple_plugin,other.plugin imports plugin modules once per process before calculator construction; each module must run its own @register_calculator registrations. Python entry points: [project.entry-points.\"maple.calculators\"] is documented as a preview shape for future packagers, not a current discovery layer.",
-      "title": "Calculator Backends - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Calculator Backends"
-      ],
-      "type": "Setup",
-      "url": "setup/calculators.html#plugin-discovery"
-    },
-    {
-      "heading": "Energy API Migration",
-      "level": 2,
-      "page": "setup/calculators.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 13,
-      "text": "The old backend-specific calc.get_energy(...) entry points are not part of the public calculator API. Downstream code should use ASE's standard pattern: atoms.calc = calc energy = atoms.get_potential_energy() This keeps energy access consistent across backends whose legacy get_energy signatures did not agree.",
-      "title": "Calculator Backends - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Calculator Backends"
-      ],
-      "type": "Setup",
-      "url": "setup/calculators.html#energy-migration"
     },
     {
       "heading": "Part II: Coordinate Input",
@@ -1927,7 +2103,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 4,
-      "text": "For larger molecules or when reusing geometries across calculations, you can load coordinates from an external XYZ file using the XYZ keyword followed by the file path. #model = aimnet2 #opt(method=lbfgs, level=tight) XYZ /path/to/molecule.xyz You can also specify the charge and multiplicity before the XYZ line: #model = uma #freq -1 1 XYZ /path/to/anion.xyz The external XYZ file should follow the standard XYZ format: 3 Water molecule O 0.000000 0.000000 0.117300 H 0.000000 0.757160 -0.469200 H 0.000000 -0.757160 -0.469200",
+      "text": "For larger molecules or when reusing geometries across calculations, you can load coordinates from an external XYZ file using the XYZ keyword followed by the file path. #model = aimnet2 #opt(method=lbfgs, level=tight) XYZ /path/to/molecule.xyz To apply one charge and multiplicity to every structure in an XYZ file, append them to the XYZ reference: #model = uma #freq XYZ /path/to/anion.xyz -1 1 The external XYZ file should follow the standard XYZ format: 3 Water molecule O 0.000000 0.000000 0.117300 H 0.000000 0.757160 -0.469200 H 0.000000 -0.757160 -0.469200",
       "title": "Coordinates - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -1937,12 +2113,76 @@
       "url": "setup/coordinates.html#external-xyz"
     },
     {
-      "heading": "Trajectory Files",
+      "heading": "Multiple Structures",
       "level": 2,
       "page": "setup/coordinates.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 5,
+      "text": "XYZ reads every frame of a multi-frame XYZ file in file order. You can also provide multiple XYZ references, or separate inline coordinate groups with a blank line or & . The task determines how these structures are used. For batch input and batch_size , see Batch Input . Each inline group can begin with its own charge and multiplicity. Keep that line and its atom records together. For example, the following input evaluates water and hydroxide separately: #model=aimnet2 #sp 0 1 O 0.000000 0.000000 0.000000 H 0.000000 0.000000 0.960000 H 0.929422 0.000000 -0.240364 & -1 1 O 0.000000 0.000000 0.000000 H 0.000000 0.000000 0.960000 A blank line can replace the & separator. Inline coordinates and file references can be combined in one input by placing them in separate groups.",
+      "title": "Coordinates - MAPLE Documentation",
+      "trail": [
+        "Input Setup",
+        "Coordinates"
+      ],
+      "type": "Setup",
+      "url": "setup/coordinates.html#multiple-structures"
+    },
+    {
+      "heading": "Electronic State and Periodic Cells",
+      "level": 2,
+      "page": "setup/coordinates.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 6,
+      "text": "For independent calculations, each structure can have its own charge, multiplicity, cell and periodic directions, as supported by the selected model . The scope of each input setting is: Scope Charge / multiplicity Cell / periodicity Each structure An inline group's initial charge mult line, or charge=... and mult=... in each XYZ frame's comment line. Lattice=\"...\" and pbc=\"...\" in each XYZ frame's comment line. All frames in one file XYZ structures.xyz -1 1 overrides the charge and multiplicity in every frame read from that file. Each frame retains its own settings. Entire input Uses the structure or file settings above. #pbc(12,12,12) sets a common cell with full three-dimensional periodicity, overriding all imported cells and PBC flags. Charge defaults to 0 and multiplicity to 1. A frame without cell or periodic metadata is non-periodic. When Lattice is present and pbc is omitted, all three directions are periodic. Lattice contains nine cell-vector components in Angstroms; the three pbc flags specify the periodic directions. Inline groups use the global #pbc cell. Use per-frame XYZ metadata for independent structures with different cells, leaving #pbc unset. Within one fixed-cell reaction path, charge, multiplicity, periodic directions and cell must remain consistent.",
+      "title": "Coordinates - MAPLE Documentation",
+      "trail": [
+        "Input Setup",
+        "Coordinates"
+      ],
+      "type": "Setup",
+      "url": "setup/coordinates.html#xyz-metadata"
+    },
+    {
+      "heading": "Different electronic states in separate files",
+      "level": 3,
+      "page": "setup/coordinates.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 7,
+      "text": "The charge and multiplicity on each XYZ reference apply to every frame read from that file: #model=so3lr #sp XYZ ammonium.xyz 1 1 XYZ hydroxyl.xyz 0 2",
+      "title": "Coordinates - MAPLE Documentation",
+      "trail": [
+        "Input Setup",
+        "Coordinates"
+      ],
+      "type": "Setup",
+      "url": "setup/coordinates.html#different-electronic-states-in-separate-files"
+    },
+    {
+      "heading": "Different cells in one XYZ file",
+      "level": 3,
+      "page": "setup/coordinates.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 8,
+      "text": "Read both frames with the following input: #model=grace-off-1m #sp XYZ water_cells.xyz The file water_cells.xyz supplies a separate cell for each frame: 3 Lattice=\"12 0 0 0 12 0 0 0 12\" pbc=\"T T T\" charge=0 mult=1 O 0.000000 0.000000 0.117300 H 0.000000 0.757160 -0.469200 H 0.000000 -0.757160 -0.469200 3 Lattice=\"14 0 0 0 14 0 0 0 14\" pbc=\"T T T\" charge=0 mult=1 O 0.000000 0.000000 0.117300 H 0.000000 0.757160 -0.469200 H 0.000000 -0.757160 -0.469200",
+      "title": "Coordinates - MAPLE Documentation",
+      "trail": [
+        "Input Setup",
+        "Coordinates"
+      ],
+      "type": "Setup",
+      "url": "setup/coordinates.html#different-cells-in-one-xyz-file"
+    },
+    {
+      "heading": "Trajectory Files",
+      "level": 2,
+      "page": "setup/coordinates.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 9,
       "text": "For tasks that require multiple geometries (such as NEB or string methods for transition state searches), you can provide a trajectory file containing a sequence of structures using the XYZTRAJ keyword. #model = uma #ts(method=neb) XYZTRAJ /path/to/trajectory.xyz The trajectory file is a concatenation of standard XYZ frames. Each frame begins with the atom count, followed by a comment line and then the coordinate block: 3 Frame 1 - Reactant O 0.000000 0.000000 0.117300 H 0.000000 0.757160 -0.469200 H 0.000000 -0.757160 -0.469200 3 Frame 2 - Product O 0.000000 0.000000 0.117300 H 0.000000 0.900000 -0.350000 H 0.000000 -0.900000 -0.350000",
       "title": "Coordinates - MAPLE Documentation",
       "trail": [
@@ -1958,7 +2198,7 @@
       "page": "setup/coordinates.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 6,
+      "section_order": 10,
       "text": "After the coordinate block, you can add post-processing commands to apply constraints or define scan coordinates. These commands modify how specific internal coordinates are treated during the calculation. See the Constraints page for full details. Command Format Description C C i Fix the position of atom i (freeze in place) B B i j Fix the bond distance between atoms i and j A A i j k Fix the bond angle formed by atoms i , j , k D D i j k l Fix the dihedral angle formed by atoms i , j , k , l S S i j step nsteps Define a scan coordinate along atoms i , j (bond), i j k (angle), or i j k l (dihedral)",
       "title": "Coordinates - MAPLE Documentation",
       "trail": [
@@ -1974,7 +2214,7 @@
       "page": "setup/coordinates.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 7,
+      "section_order": 11,
       "text": "#model = uma #opt(method=lbfgs) 0 1 C 0.000000 0.000000 0.000000 C 1.540000 0.000000 0.000000 O 2.340000 1.100000 0.000000 H -0.392000 1.011000 0.000000 H -0.392000 -0.506000 0.875000 H 1.932000 -0.506000 0.875000 C 3 B 1 2 In this example, atom 3 (oxygen) is frozen in place and the bond between atoms 1 and 2 (C-C) is constrained at its initial distance during optimization.",
       "title": "Coordinates - MAPLE Documentation",
       "trail": [
@@ -1990,8 +2230,8 @@
       "page": "setup/coordinates.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 8,
-      "text": "Checked-in MAPLE example: examples/scan/C18.inp . The full C18 coordinates are in that file; the scan coordinate is a post-processing line after the coordinates: #model=aimnet2nse #scan(mode=rigid) #device=gpu0 [XYZ coordinates from examples/scan/C18.inp] S 1 36 0.1 50 This scans the distance between atoms 1 and 36 over 51 points: the initial geometry plus 50 increments of 0.1 Angstroms.",
+      "section_order": 12,
+      "text": "Checked-in MAPLE example: examples/scan/C18.inp . The full C18 coordinates are in that file; the scan coordinate is a post-processing line after the coordinates: #model=aimnet2-nse #scan(mode=rigid) #device=gpu0 [XYZ coordinates from examples/scan/C18.inp] S 1 36 0.1 50 This scans the distance between atoms 1 and 36 over 51 points: the initial geometry plus 50 increments of 0.1 Angstroms.",
       "title": "Coordinates - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -2001,30 +2241,30 @@
       "url": "setup/coordinates.html#example-with-scan-coordinate"
     },
     {
-      "heading": "AIMNet2",
+      "heading": "AIMNet2 and AIMNet2-NSE",
       "level": 1,
       "page": "setup/model_aimnet.html",
       "page_entry": true,
       "page_role": "content",
       "section_order": 0,
-      "text": "AIMNet2 is a neural network potential that provides broad element coverage (14 elements) with ωB97M-D3BJ accuracy. It is a molecular, no-PBC backend that supports charge and multiplicity for charged or open-shell molecules.",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "text": "The AIMNet family uses local atomic environment features and iterative message passing to predict energies and charges. MAPLE includes two architectures: AIMNet2 , with one charge channel and neural charge equilibration, and AIMNet2-NSE , with two spin-dependent charge channels. Their pretrained models differ in reference data, chemical coverage and electronic-state conditions.",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
       ],
       "type": "Setup",
-      "url": "setup/model_aimnet.html#aimnet2"
+      "url": "setup/model_aimnet.html#aimnet2-and-aimnet2-nse"
     },
     {
-      "heading": "Variants",
+      "heading": "Models by Architecture",
       "level": 2,
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
-      "text": "Model Keyword Elements Description AIMNet2 aimnet2 H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I Standard variant with ωB97M-D3BJ accuracy AIMNet2-NSE aimnet2nse H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I Open-shell variant using neural spin-charge equilibration for systems with arbitrary charge and spin multiplicity, including radicals.",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "text": "",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
@@ -2033,14 +2273,46 @@
       "url": "setup/model_aimnet.html#variants"
     },
     {
+      "heading": "AIMNet2",
+      "level": 3,
+      "page": "setup/model_aimnet.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 2,
+      "text": "These models use a single charge channel. The current RXN model is restricted to neutral systems; the other listed models accept total charge. All require multiplicity 1. Keyword Elements Reference / Model Focus Electronic State aimnet2 H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I ωB97M-D3(BJ)/def2-TZVPP; neutral and charged organic and main-group molecules Charge; multiplicity 1 aimnet2-rxn H, C, N, O ωB97M/def2-TZVPP; closed-shell organic reactions, transition states and reaction pathways Neutral; multiplicity 1 aimnet2-pd H, B, C, N, O, F, Si, P, S, Cl, Se, Br, Pd, I B97-3c/CPCM(THF); palladium-catalyzed reactions Charge input; multiplicity 1 aimnet2-b973c H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I B97-3c; molecular conformations and energetics Charge; multiplicity 1 aimnet2-2025 H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I B97-3c; improved intermolecular interactions Charge; multiplicity 1",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "AIMNet2"
+      ],
+      "type": "Setup",
+      "url": "setup/model_aimnet.html#aimnet2-models"
+    },
+    {
+      "heading": "AIMNet2-NSE",
+      "level": 3,
+      "page": "setup/model_aimnet.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 3,
+      "text": "The NSE architecture uses two charge channels to condition on total charge and spin multiplicity. Keyword Elements Reference / Model Focus Electronic State aimnet2-nse H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I ωB97M-D3(BJ)/def2-TZVPP; open-shell molecules and radical reactions Charge and multiplicity",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "AIMNet2"
+      ],
+      "type": "Setup",
+      "url": "setup/model_aimnet.html#nse-models"
+    },
+    {
       "heading": "Charge and Spin Support",
       "level": 2,
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 2,
-      "text": "AIMNet2 natively handles charged species and different spin multiplicities. Specify charge and multiplicity in the coordinate block: #model = aimnet2 #opt ( method = lbfgs ) -1 1 C 0.000000 0.000000 0.000000 O 1.250000 0.000000 0.000000 O -1.250000 0.000000 0.000000 The first line specifies charge multiplicity (here: charge = −1, multiplicity = 1 for a formate anion).",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "section_order": 4,
+      "text": "Use aimnet2-nse when the input requires spin-multiplicity conditioning. The listed AIMNet2 models require multiplicity 1, and aimnet2-rxn additionally requires charge 0. Specify the electronic state in the coordinate block: #model = aimnet2 #opt ( method = lbfgs ) -1 1 C 0.000000 0.000000 0.000000 O 1.250000 0.000000 0.000000 O -1.250000 0.000000 0.000000 The first line specifies charge multiplicity (here: charge = −1, multiplicity = 1 for an anion).",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
@@ -2054,9 +2326,9 @@
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 3,
+      "section_order": 5,
       "text": "AIMNet2 can use MAPLE's experimental implicit GB-polar/QEq correction for single-point energies. Add experimental=true and use #sp ; solvent forces, optimizations, Hessians, and frequency workflows are not supported for this correction. #model = aimnet2 #solv ( method = gbsa , implicit = water , experimental = true ) #sp -1 1 C 0.000000 0.000000 0.000000 O 1.250000 0.000000 0.000000 O -1.250000 0.000000 0.000000",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
@@ -2070,9 +2342,9 @@
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 4,
-      "text": "Hessian: analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians (analytic or numerical) are not supported. PBC: AIMNet2 is a no-PBC wrapper in MAPLE. Periodic atoms fail fast, and coulomb_method=ewald is disabled until validated cell/PBC/MIC support exists. HVP: AIMNet2 does not implement get_hvp() ; use non-HVP transition-state workflows such as P-RFO, NEB, or String instead. Model files: MAPLE can auto-download AIMNet2 checkpoints from the MAPLE model repository, or you can provide an explicit model_path . Supported Coulomb options are simple and dsf .",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "section_order": 6,
+      "text": "Hessian: analytic Hessians are used by default; numerical Hessians are also available. HVP: all six AIMNet2 and AIMNet2-NSE models provide Hessian–vector products. Periodic systems: periodic inputs require full three-dimensional periodicity; stress and virial output are available. Atomic charges and dipoles: both properties are available from the native charge output. Implicit solvent: the experimental GB-polar/QEq correction supports non-periodic single-point energies only ( #sp with experimental=true ); solvent forces, Hessians and HVPs are unavailable.",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
@@ -2081,14 +2353,30 @@
       "url": "setup/model_aimnet.html#calculator-capabilities"
     },
     {
+      "heading": "Long-Range Options",
+      "level": 3,
+      "page": "setup/model_aimnet.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 7,
+      "text": "Periodic inputs require a full three-dimensional cell. lr=auto selects the native molecular or periodic long-range route. The lr choices are auto , simple , dsf , ewald and pme ; availability follows the boundary conditions and the selected model's Coulomb term. Option Default Description lr auto Native long-range selection. lr_cutoff 15.0 DSF cutoff in Angstroms. dtype float32 Supported value: float32 .",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "AIMNet2"
+      ],
+      "type": "Setup",
+      "url": "setup/model_aimnet.html#long-range-options"
+    },
+    {
       "heading": "Usage Examples",
       "level": 2,
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 5,
+      "section_order": 8,
       "text": "",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
@@ -2102,9 +2390,9 @@
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 6,
+      "section_order": 9,
       "text": "#model = aimnet2 #device = gpu0 #opt ( method = lbfgs ) 0 1 C 0.000000 0.000000 0.000000 Br 1.940000 0.000000 0.000000 H -0.390000 0.000000 1.028000 H -0.390000 0.890000 -0.514000 H -0.390000 -0.890000 -0.514000",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
@@ -2113,20 +2401,20 @@
       "url": "setup/model_aimnet.html#optimization-with-heavy-elements-br-i"
     },
     {
-      "heading": "NSE variant using neural spin-charge equilibration",
+      "heading": "AIMNet2-NSE with neural spin-charge equilibration",
       "level": 3,
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 7,
-      "text": "#model = aimnet2nse #device = gpu0 #opt ( method = lbfgs ) 0 1 C 0.000000 0.000000 0.000000 I 2.140000 0.000000 0.000000 H -0.390000 0.000000 1.028000 H -0.390000 0.890000 -0.514000 H -0.390000 -0.890000 -0.514000",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "section_order": 10,
+      "text": "#model = aimnet2-nse #device = gpu0 #opt ( method = lbfgs ) 0 1 C 0.000000 0.000000 0.000000 I 2.140000 0.000000 0.000000 H -0.390000 0.000000 1.028000 H -0.390000 0.890000 -0.514000 H -0.390000 -0.890000 -0.514000",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
       ],
       "type": "Setup",
-      "url": "setup/model_aimnet.html#nse-variant-using-neural-spin-charge-equilibration"
+      "url": "setup/model_aimnet.html#aimnet2-nse-with-neural-spin-charge-equilibration"
     },
     {
       "heading": "Limitations",
@@ -2134,9 +2422,9 @@
       "page": "setup/model_aimnet.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 8,
-      "text": "No D4 dispersion. The ωB97M-D3BJ training already includes dispersion corrections. No periodic systems. AIMNet2 does not support periodic boundary conditions. 14 elements only. Systems with elements outside the supported set (e.g., transition metals) require uma instead.",
-      "title": "AIMNet2 - MAPLE Documentation",
+      "section_order": 11,
+      "text": "Electronic state: use the conditions in the variant table; spin conditioning is provided by NSE. Elements: RXN is limited to H, C, N, O; the Pd variant substitutes Pd for As in the standard element set. No D4 dispersion. MAPLE's separate D4 correction is not supported by AIMNet2 or AIMNet2-NSE.",
+      "title": "AIMNet2 and AIMNet2-NSE - MAPLE Documentation",
       "trail": [
         "ML Models",
         "AIMNet2"
@@ -2151,7 +2439,7 @@
       "page_entry": true,
       "page_role": "content",
       "section_order": 0,
-      "text": "The ANI (Accurate NeurAl networK engINe for Molecular Energies) family is a set of neural network potentials developed by the Roitberg group. ANI models are among the fastest ML potentials available, making them ideal for high-throughput screening and rapid prototyping of neutral organic molecular systems.",
+      "text": "ANI uses radial and angular atomic environment vectors (AEVs) as inputs to atomic neural networks. MAPLE provides the pretrained variants below for neutral singlet systems.",
       "title": "ANI Models - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2167,7 +2455,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
-      "text": "Model Keyword Elements Training Level Best For ANI-2x ani2x H, C, N, O, F, S, Cl ωB97X / 6-31G(d) General organic chemistry with halogens ANI-1x ani1x H, C, N, O ωB97X / 6-31G(d) Fast calculations on HCNO-only systems ANI-1ccx ani1ccx H, C, N, O CCSD(T)/CBS (transfer-learned) Publication-quality accuracy for small molecules ANI-1xnr ani1xnr H, C, N, O ωB97X / 6-31G(d) (non-reactive) Equilibrium geometries without bond-breaking",
+      "text": "Model Keyword Elements Training Level Best For ANI-2x ani2x H, C, N, O, F, S, Cl ωB97X/6-31G(d) General organic chemistry ANI-1x ani1x H, C, N, O ωB97X/6-31G(d) HCNO molecular systems ANI-1ccx ani1ccx H, C, N, O CCSD(T)*/CBS transfer learning Small-molecule energetics ANI-1xnr ani1xnr H, C, N, O BLYP/TZV2P Reactive molecular and condensed-phase chemistry ANI-2xr ani2xr H, C, N, O, F, S, Cl ωB97X/6-31G(d) Molecular dynamics and geometry optimization of organic molecules ANI-2dr ani2dr H, C, N, O, F, S, Cl B97-3c Organic molecules and clusters with native dispersion SnnANI-2xr snn-ani2xr H, C, N, O, F, S, Cl ωB97X/6-31G(d) Neutral organic-molecule energies and forces ANI-MBIS ani-mbis H, C, N, O, F, S, Cl Energies: ωB97X/6-31G(d) Molecular energies, atomic charges and dipoles",
       "title": "ANI Models - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2183,7 +2471,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 2,
-      "text": "ANI models are the only models in MAPLE that support the DFT-D4 dispersion correction. D4 adds London dispersion (van der Waals) interactions, which is critical for non-covalent binding, molecular stacking, and conformational energetics. #model = ani2x #d4 #opt ( method = lbfgs ) Tip Always enable #d4 when studying systems with significant non-covalent interactions (hydrogen bonds, pi-stacking, host-guest complexes). The computational overhead is minimal.",
+      "text": "MAPLE provides an optional DFT-D4 correction for non-periodic ANI calculations. It adds a dispersion energy to the selected ANI model. Periodic inputs and ani2dr reject this extra correction. #model = ani2x #d4 #opt ( method = lbfgs ) Tip ani2dr includes short-range repulsion and D3 dispersion in its model energy. Use it without #d4 .",
       "title": "ANI Models - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2199,7 +2487,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Hessian: analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians (analytic or numerical) are not supported. HVP: ANI is the only shipped backend that implements get_hvp() for the HVP-enabled Dimer path. ANI HVP is gas-phase only. Implicit solvent: MAPLE's experimental GB-polar/QEq correction is energy-only ( #sp with experimental=true ); solvent forces, HVP, and Hessians are not supported. Model files: MAPLE can auto-download ANI checkpoints from the MAPLE model repository, or you can provide an explicit model_path .",
+      "text": "Hessian: analytic Hessians are used by default; numerical Hessians are also available. HVP: ANI provides Hessian–vector products for HVP-enabled workflows. Periodic systems: ANI supports periodic cells, with stress and virial output. Atomic charges and dipoles: ani-mbis provides both properties. All eight ANI models require charge 0 and multiplicity 1. Implicit solvent: the experimental GB-polar/QEq correction supports non-periodic single-point energies only ( #sp with experimental=true ); solvent forces, Hessians and HVPs are unavailable.",
       "title": "ANI Models - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2279,7 +2567,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 8,
-      "text": "No charge/multiplicity support. ANI models assume neutral, singlet ground state; use AIMNet2 or UMA omol for charged/open-shell inputs. Limited elements. ANI-2x covers 7 elements; ANI-1x/1ccx/1xnr cover only H, C, N, O. No periodic systems. ANI models do not support periodic boundary conditions. Implicit solvation is energy-only. MAPLE's experimental GB-polar/QEq correction can be requested for #sp with experimental=true ; solvent forces, optimization, MD, TS, scan, and frequency workflows remain unsupported for that correction.",
+      "text": "No charge/multiplicity support. ANI models assume neutral, singlet ground state; use AIMNet2-NSE or UMA omol for charged/open-shell inputs. Elements: the 1x family covers H, C, N, O; the 2x family and ANI-MBIS cover the seven elements listed above. Atomic charges: charge and dipole output is available for ani-mbis ; ordinary ANI models provide energies and forces without that charge model. Implicit solvation is energy-only. MAPLE's experimental GB-polar/QEq correction can be requested for #sp with experimental=true ; solvent forces, optimization, MD, TS, scan, and frequency workflows remain unsupported for that correction.",
       "title": "ANI Models - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2289,173 +2577,13 @@
       "url": "setup/model_ani.html#limitations"
     },
     {
-      "heading": "Bring Your Own Model",
-      "level": 1,
-      "page": "setup/model_custom.html",
-      "page_entry": true,
-      "page_role": "content",
-      "section_order": 0,
-      "text": "MAPLE is not limited to its shipped backends. You can plug in your own machine-learning potential — trained in your group, exported as a TorchScript .pt / .jpt or an ordinary PyTorch .pt / .model checkpoint — without editing MAPLE's source code . A custom backend is just a small Python class that exposes a few methods; once registered, it works with every task (single point, optimization, frequency, TS search, IRC, scan, MD). Before you start This is the hands-on tutorial. The reference contract (full capability matrix, every class attribute, plugin-discovery internals) lives on the Calculator Backends page. A complete, copy-runnable example ships in the repository at examples/calculator_plugin/ .",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#bring-your-own-model"
-    },
-    {
-      "heading": "How it works",
-      "level": 2,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 1,
-      "text": "If you already have a FeNNix .fnx file, use the FeNNol model page instead of writing a Python plugin. For Python plugin calculators, two header keys do all the wiring: module= — the import path of your plugin file/package. MAPLE imports it, which runs the @register_calculator decorator and adds your model name to the registry. model_path= — the checkpoint file MAPLE validates (it must exist) and hands to your class. Your code decides how to load it — this is where your .pt / .jpt / .model comes in. #model = mymodel ( module = my_lab.maple_plugin , model_path = /abs/path/model.jpt ) #sp #device = cpu",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#how-it-works"
-    },
-    {
-      "heading": "Step 1 — Write the backend class",
-      "level": 2,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 2,
-      "text": "A backend inherits CalcABC and declares its capabilities as class attributes. You fill in three things: (a) the capability attributes, (b) how to load your model in __init__ , and (c) the forward pass in _forward . Everything else — unit conversion, implicit-solvent hook, results bookkeeping, the analytic-Hessian loop — is handled for you. import numpy as np import torch from ase.calculators.calculator import all_changes from maple.function.calculator.calculator_base import ( CalcABC, EV2HARTREE, hessian_via_double_autograd, register_calculator, ) @register_calculator class MyCalculator(CalcABC): # (a) Capability declaration, read by the factory before construction MODEL_NAMES = ('mymodel',) # input-header routing keys, lowercase MODEL_ENERGY_UNIT = 'eV' # 'eV' or 'hartree' -- declare honestly SUPPORTED_HESSIAN_MODES = ('analytic', 'numerical') SUPPORTS_CHARGE_MULT = False SUPPORTS_PBC = False # fail-fast on periodic atoms CHECKPOINT_FILENAME = None # no HuggingFace auto-download REQUIRES_LOCAL_MODEL_FILE = False OPTION_KEYS = () # extra model_options keys you accept MODEL_PATH_OPTION = 'model_path' # kwarg that consumes model_path implemented_properties = ['energy', 'forces', 'free_energy', 'hessian'] @classmethod def build_kwargs_from_options(cls, model, options, *, resolved_model_path=None): # Route the factory-resolved checkpoint path into __init__ kwargs kwargs = {} if resolved_model_path is not None: kwargs['model_path'] = resolved_model_path return kwargs def __init__(self, device, model='mymodel', *, model_path=None, implicit='none', solvent='none', **_ignored): super().__init__() self.device = device self.dtype = torch.float64 self.hessian = 'analytic' # (b) Load YOUR model here -- see Step 2 self.model = load_my_model(model_path, device) # Keep this hook (no-op unless implicit='gbsa') self.implicit_solv_init(implicit=implicit, solvent=solvent) # (c) Single private forward: atoms -> scalar energy (in MODEL_ENERGY_UNIT) def _forward(self, atoms, *, requires_grad): positions = torch.tensor( atoms.get_positions(), dtype=self.dtype, device=self.device, requires_grad=requires_grad, ) numbers = torch.tensor(atoms.get_atomic_numbers(), dtype=torch.long, device=self.device) energy_eV = self.model(numbers, positions) # YOUR forward signature return energy_eV, positions def calculate(self, atoms=None, properties=['energy'], system_changes=all_changes): properties = self._normalize_properties(properties) atoms = super().calculate(atoms, properties, system_changes) # PBC/solvent guards needs_forces = 'forces' in properties energy_eV, positions = self._forward(atoms, requires_grad=needs_forces) forces_np = None if needs_forces: forces = -torch.autograd.grad(energy_eV, positions)[0] forces_np = forces.detach().cpu().numpy() hessian = None if 'hessian' in properties: hessian = self.get_hessian(atoms) # _finalize_results owns eV->Hartree + solvent + writing self.results. # Do NOT multiply by EV2HARTREE yourself in this path. self._finalize_results(atoms, energy=energy_eV.item(), forces=forces_np, hessian=hessian) def _analytic_hessian(self, atoms) -> np.ndarray: # The Hessian path converts units itself: multiply by EV2HARTREE here. energy_eV, positions = self._forward(atoms, requires_grad=True) return hessian_via_double_autograd(lambda: energy_eV * EV2HARTREE, positions) The unit rule Declare MODEL_ENERGY_UNIT honestly and let _finalize_results convert the calculate() path to Hartree. Never multiply by EV2HARTREE yourself in calculate() . The Hessian path is the one exception — it converts internally, so you multiply by EV2HARTREE inside _analytic_hessian .",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#step1"
-    },
-    {
-      "heading": "Step 2 — Load your model file",
-      "level": 2,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 3,
-      "text": "MAPLE hands you a validated, existing file path; how you turn it into a model object is entirely yours. The two common formats:",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#step2"
-    },
-    {
-      "heading": "TorchScript ( .pt / .jpt )",
-      "level": 3,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 4,
-      "text": "If your model was saved with torch.jit.script / trace , load it directly — this matches MAPLE's shipped ANI/MACE/AIMNet2 backends: def load_my_model(model_path, device): model = torch.jit.load(model_path, map_location=device).eval() for p in model.parameters(): p.requires_grad_(False) return model",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#torchscript-pt-jpt"
-    },
-    {
-      "heading": "Plain checkpoint / state_dict ( .pt / .model )",
-      "level": 3,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 5,
-      "text": "For an ordinary (non-scripted) PyTorch model, rebuild the architecture and load weights: def load_my_model(model_path, device): ckpt = torch.load(model_path, map_location=device, weights_only=False) net = MyNetwork(**ckpt['hparams']) # your nn.Module net.load_state_dict(ckpt['state_dict']) net = net.to(device).double().eval() for p in net.parameters(): p.requires_grad_(False) return net",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#plain-checkpoint-state-dict-pt-model"
-    },
-    {
-      "heading": "Step 3 — Run it",
-      "level": 2,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 6,
-      "text": "Make your plugin importable (put its directory on PYTHONPATH or install it as a package), then point an input file at it. The example below mirrors examples/calculator_plugin/sp_jit.inp : #model = mymodel ( module = my_calculator_plugin , model_path = model.jpt ) #sp #device = cpu 0 1 O 0.000 0.000 0.000 H 0.960 0.000 0.000 H -0.240 0.930 0.000 export PYTHONPATH=\"$PWD:$PYTHONPATH\" maple sp.inp # -> Energy: ... Hartree The same backend now works for any task — just change the task header: #model = mymodel ( module = my_calculator_plugin , model_path = model.jpt ) #opt ( method = lbfgs ) #device = gpu0 XYZ /path/to/molecule.xyz",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#step3"
-    },
-    {
-      "heading": "Alternative: register process-wide",
-      "level": 2,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 7,
-      "text": "Instead of repeating module= in every input, register the plugin once via an environment variable. MAPLE imports each listed module at start-up: export MAPLE_CALCULATOR_PLUGINS=my_calculator_plugin,other_lab.plugin After this, #model=mymodel(model_path=...) resolves without the module= key.",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#registering"
-    },
-    {
-      "heading": "Capability checklist",
-      "level": 2,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 8,
-      "text": "Set each attribute to what your model actually supports — MAPLE enforces them so misuse fails loudly instead of producing wrong numbers: Attribute Set to MODEL_NAMES Your lowercase header keyword(s), e.g. ('mymodel',) MODEL_ENERGY_UNIT 'eV' or 'hartree' — your model's native energy unit SUPPORTS_PBC True only if you build a validated periodic graph; otherwise False (periodic atoms fail fast) SUPPORTS_CHARGE_MULT True if you honor atoms.info['charge'] / ['mult'] SUPPORTED_HESSIAN_MODES ('analytic', 'numerical') , ('numerical',) , etc. MODEL_PATH_OPTION 'model_path' so an explicit checkpoint path is accepted Numerical Hessian for free If your model cannot autodiff a Hessian, set SUPPORTED_HESSIAN_MODES = ('numerical',) and omit _analytic_hessian . CalcABC provides a finite-difference Hessian that only needs your calculate() forces. Frequency and P-RFO still work.",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#checklist"
-    },
-    {
-      "heading": "See also",
-      "level": 2,
-      "page": "setup/model_custom.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 9,
-      "text": "Runnable example: examples/calculator_plugin/ — two complete backends (TorchScript and torch.load ), a toy-model builder, and ready input files. Calculator Backends — the full developer contract, capability matrix, and plugin-discovery layers. maple/function/calculator/AUTHORING.md and CALCULATOR_REVIEW.md in the source tree.",
-      "title": "Custom Model - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "Custom Model"
-      ],
-      "type": "Setup",
-      "url": "setup/model_custom.html#more"
-    },
-    {
       "heading": "FeNNol Models",
       "level": 1,
       "page": "setup/model_fennol.html",
       "page_entry": true,
       "page_role": "content",
       "section_order": 0,
-      "text": "FeNNol (Force-field-enhanced Neural Networks optimized library) is MAPLE's framework for FENNIX-format .fnx machine-learning potential files. MAPLE ships the FeNNix-Bio1 family of foundation models for condensed-phase biomolecular simulations, and also supports loading external .fnx models through model_path . Runtime note FeNNol uses a JAX/Flax runtime for .fnx programs and does not use the PyTorch calculator runtime. GPU execution, when available, is controlled by the installed JAX runtime and its platform configuration.",
+      "text": "FeNNol is a JAX-based framework for building force-field-enhanced neural network potentials. MAPLE includes the FeNNix-Bio1 model series built with this framework.",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2471,7 +2599,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
-      "text": "FeNNix-Bio1 is a family of scalable foundation models for reactive condensed-phase molecular dynamics, built on the FeNNol library within the Jax framework. Two sizes are available with different accuracy and throughput trade-offs: Model Keyword Best For FeNNix-Bio1S fennix-bio1s Light-weight high-throughput model for rapid screening FeNNix-Bio1M fennix-bio1m Higher-accuracy model for production-quality condensed-phase simulations Important The medium variant ( fennix-bio1m ) requires more computational resources than the small variant. Start with fennix-bio1s for high-throughput screening and switch to fennix-bio1m for production-quality simulations.",
+      "text": "FeNNix-Bio1 targets molecular and condensed-phase biomolecular systems. Its training data extend SPICE2 with additional molecular conformations, solvated ions and dissociation configurations. The quantum-chemical reference uses ωB97M-D3(BJ) with ccECP effective core potentials and their aug-cc-pVTZ basis sets. Both models use v1.0-finetuneIons , which additionally fine-tunes solvated Na, K and Cl ions against AMOEBA03 data. Model Keyword Best For FeNNix-Bio1S fennix-bio-1s High-throughput molecular and biomolecular simulations FeNNix-Bio1M fennix-bio-1m Biomolecular and molecular-cluster simulations Important The medium variant ( fennix-bio-1m ) requires more computational resources than the small variant ( fennix-bio-1s ). Element input range: the current MAPLE exports encode H–Rn (Z = 1–86). The training and application scope is molecular and biomolecular chemistry, including solvated ions.",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2481,45 +2609,13 @@
       "url": "setup/model_fennol.html#fennix-bio1"
     },
     {
-      "heading": "External .fnx Models",
-      "level": 2,
-      "page": "setup/model_fennol.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 2,
-      "text": "Use the generic fennol keyword to load an external .fnx model file. This works with any valid .fnx program. #model = fennol ( model_path = /path/to/model.fnx ) #sp XYZ /path/to/structure.xyz The generic fennol keyword always requires model_path . The element coverage, cutoff, and energy terms are determined by the supplied .fnx program.",
-      "title": "FeNNol - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "FeNNol"
-      ],
-      "type": "Setup",
-      "url": "setup/model_fennol.html#external-fnx"
-    },
-    {
-      "heading": "Model Files",
-      "level": 2,
-      "page": "setup/model_fennol.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 3,
-      "text": "The built-in FeNNix-Bio1 checkpoints are resolved from MAPLE's model directory: fennix-bio1s → fennix-bio1S-finetuneIons.fnx fennix-bio1m → fennix-bio1M-finetuneIons.fnx The generic fennol keyword requires an explicit model_path pointing to a valid .fnx file.",
-      "title": "FeNNol - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "FeNNol"
-      ],
-      "type": "Setup",
-      "url": "setup/model_fennol.html#model-files"
-    },
-    {
       "heading": "Model Options",
       "level": 2,
       "page": "setup/model_fennol.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 4,
-      "text": "Option Default Description model_path built-in for fennix-bio1s / fennix-bio1m Path to an external .fnx file. Required for #model=fennol . use_float64 false Enable JAX float64 execution when tighter numerical precision is needed.",
+      "section_order": 2,
+      "text": "Option Default Description dtype float32 Supported value: float32 .",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2534,8 +2630,8 @@
       "page": "setup/model_fennol.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 5,
-      "text": "Charge support in FeNNol depends on the loaded .fnx model architecture. The FeNNix-Bio1 family supports total molecular charge from the coordinate block and passes it to the FENNIX charge model. External .fnx models may or may not support charge — consult the model's documentation. The current MAPLE runtime has no spin/multiplicity input, so multiplicity must always be 1 regardless of the model. #model = fennix-bio1s #opt ( method = lbfgs ) 0 1 C 0.000000 0.000000 0.000000 O 1.230000 0.000000 0.000000 H -0.540000 0.940000 0.000000 H -0.540000 -0.940000 0.000000",
+      "section_order": 3,
+      "text": "Both ion-finetuned models accept total molecular charge and require multiplicity 1. Internal charge-hypothesis channels remain model features and are not exposed as physical atomic charges or dipoles. #model = fennix-bio-1s #opt ( method = lbfgs ) 0 1 C 0.000000 0.000000 0.000000 O 1.230000 0.000000 0.000000 H -0.540000 0.940000 0.000000 H -0.540000 -0.940000 0.000000",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2550,8 +2646,8 @@
       "page": "setup/model_fennol.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 6,
-      "text": "Units: FeNNol models commonly report energies in eV internally; MAPLE converts final energies and forces to Hartree and Hartree per Angstrom. Hessian: analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians are not supported. HVP: FeNNol implements get_hvp() in gas phase, which can be used by HVP-enabled workflows. PBC: FeNNol is exposed as a no-PBC molecular calculator in MAPLE. Periodic atoms fail fast. Solvent / D4: MAPLE's experimental GB-polar/QEq correction is energy-only ( #sp with experimental=true ); D4 is not supported for FeNNol.",
+      "section_order": 4,
+      "text": "Units: MAPLE reports energies in Hartree and forces in Hartree per Angstrom. Hessian: analytic Hessians are used by default; numerical Hessians are also available. HVP: FeNNix-Bio1S and FeNNix-Bio1M provide Hessian–vector products. Periodic systems: both models support full three-dimensional periodic cells, with stress and virial output. Solvent / D4: the experimental GB-polar/QEq correction supports non-periodic single-point energies only ( #sp with experimental=true ); solvent forces, Hessians and HVPs are unavailable. D4 is not supported.",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2566,7 +2662,7 @@
       "page": "setup/model_fennol.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 7,
+      "section_order": 5,
       "text": "",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
@@ -2577,52 +2673,36 @@
       "url": "setup/model_fennol.html#examples"
     },
     {
-      "heading": "High-throughput screening with FeNNix-Bio1S",
+      "heading": "Geometry optimization with FeNNix-Bio1S",
       "level": 3,
       "page": "setup/model_fennol.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 8,
-      "text": "#model = fennix-bio1s #device = gpu0 #opt ( level = loose ) XYZ /path/to/structure.xyz",
+      "section_order": 6,
+      "text": "#model = fennix-bio-1s #device = gpu0 #opt ( level = loose ) XYZ /path/to/structure.xyz",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
         "FeNNol"
       ],
       "type": "Setup",
-      "url": "setup/model_fennol.html#high-throughput-screening-with-fennix-bio1s"
+      "url": "setup/model_fennol.html#geometry-optimization-with-fennix-bio1s"
     },
     {
-      "heading": "Production-quality simulation with FeNNix-Bio1M",
+      "heading": "Tight geometry optimization with FeNNix-Bio1M",
       "level": 3,
       "page": "setup/model_fennol.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 9,
-      "text": "#model = fennix-bio1m #device = gpu0 #opt ( method = lbfgs , level = tight ) XYZ /path/to/structure.xyz",
+      "section_order": 7,
+      "text": "#model = fennix-bio-1m #device = gpu0 #opt ( method = lbfgs , level = tight ) XYZ /path/to/structure.xyz",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
         "FeNNol"
       ],
       "type": "Setup",
-      "url": "setup/model_fennol.html#production-quality-simulation-with-fennix-bio1m"
-    },
-    {
-      "heading": "Load an external .fnx model",
-      "level": 3,
-      "page": "setup/model_fennol.html",
-      "page_entry": false,
-      "page_role": "content",
-      "section_order": 10,
-      "text": "#model = fennol ( model_path = /path/to/custom_model.fnx , use_float64 = true ) #sp XYZ /path/to/structure.xyz",
-      "title": "FeNNol - MAPLE Documentation",
-      "trail": [
-        "ML Models",
-        "FeNNol"
-      ],
-      "type": "Setup",
-      "url": "setup/model_fennol.html#load-an-external-fnx-model"
+      "url": "setup/model_fennol.html#tight-geometry-optimization-with-fennix-bio1m"
     },
     {
       "heading": "Limitations",
@@ -2630,8 +2710,8 @@
       "page": "setup/model_fennol.html",
       "page_entry": false,
       "page_role": "content",
-      "section_order": 11,
-      "text": "No periodic systems. The FeNNol wrapper rejects PBC inputs. Singlet multiplicity only. Total charge may be supported depending on the model, but multiplicity must always be 1 . Runtime-specific GPU behavior. FeNNol GPU execution depends on the installed JAX build and platform configuration. External model coverage is model-defined. MAPLE can load a valid .fnx file, but the chemistry supported by that file is determined by its training and program contents.",
+      "section_order": 8,
+      "text": "Spin: the current Bio1 models require multiplicity 1. Atomic charges and dipoles: these outputs are not available for FeNNix-Bio1 in MAPLE. Model scope: the built-in models use the ion-finetuned Bio1 release for molecular and biomolecular systems.",
       "title": "FeNNol - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -2641,33 +2721,145 @@
       "url": "setup/model_fennol.html#limitations"
     },
     {
-      "heading": "MACE & EGRET Models",
+      "heading": "GRACE",
+      "level": 1,
+      "page": "setup/model_grace.html",
+      "page_entry": true,
+      "page_role": "content",
+      "section_order": 0,
+      "text": "GRACE (Graph Atomic Cluster Expansion) extends atomic cluster expansions with graph-based cluster functions. MAPLE provides its GRACE-OFF organic force fields.",
+      "title": "GRACE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "GRACE"
+      ],
+      "type": "Setup",
+      "url": "setup/model_grace.html#grace"
+    },
+    {
+      "heading": "GRACE-OFF Foundation Models",
+      "level": 2,
+      "page": "setup/model_grace.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 1,
+      "text": "GRACE-OFF is the organic force-field series built with GRACE. It was trained on the neutral, ten-element subset of SPICE v2.0, using energy and force labels at ωB97M-D3(BJ)/def2-TZVPPD . The two-layer GRACE-OFF models combine accurate conformational energetics and liquid properties with efficient molecular dynamics and modest GPU memory requirements. Despite predominantly gas-phase training, they transfer well to organic liquids and water, reproducing liquid thermodynamics and water structure, including water densities close to experiment over 270–330 K. One-layer models: grace-off-1s , grace-off-1m , grace-off-1l . Two-layer models: grace-off-2s , grace-off-2m , grace-off-2l . The suffixes s , m and l denote the small, medium and large models.",
+      "title": "GRACE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "GRACE"
+      ],
+      "type": "Setup",
+      "url": "setup/model_grace.html#variants"
+    },
+    {
+      "heading": "Chemical Coverage and Input Conditions",
+      "level": 2,
+      "page": "setup/model_grace.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 2,
+      "text": "Condition All Six GRACE-OFF Models Elements H, C, N, O, F, P, S, Cl, Br and I Electronic state Charge 0 and multiplicity 1; no charge or spin conditioning Boundary conditions Isolated molecules and periodic cells Neighbor cutoff 6.0 Å",
+      "title": "GRACE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "GRACE"
+      ],
+      "type": "Setup",
+      "url": "setup/model_grace.html#coverage"
+    },
+    {
+      "heading": "Calculator Capabilities",
+      "level": 2,
+      "page": "setup/model_grace.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 3,
+      "text": "Hessian and HVP: all six GRACE-OFF models provide analytic Hessians by default, numerical Hessians, and Hessian–vector products. Periodic systems: GRACE-OFF supports periodic cells, with stress and virial output.",
+      "title": "GRACE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "GRACE"
+      ],
+      "type": "Setup",
+      "url": "setup/model_grace.html#calculator-capabilities"
+    },
+    {
+      "heading": "Usage",
+      "level": 2,
+      "page": "setup/model_grace.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 4,
+      "text": "#model=grace-off-2m #opt(method=lbfgs) XYZ structure.xyz",
+      "title": "GRACE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "GRACE"
+      ],
+      "type": "Setup",
+      "url": "setup/model_grace.html#usage"
+    },
+    {
+      "heading": "Model Options",
+      "level": 2,
+      "page": "setup/model_grace.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 5,
+      "text": "Option Default Description dtype float64 Supported value: float64 .",
+      "title": "GRACE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "GRACE"
+      ],
+      "type": "Setup",
+      "url": "setup/model_grace.html#options"
+    },
+    {
+      "heading": "Limitations",
+      "level": 2,
+      "page": "setup/model_grace.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 6,
+      "text": "Electronic state: GRACE-OFF requires charge 0 and multiplicity 1. Elements: the GRACE-OFF models cover H, C, N, O, F, P, S, Cl, Br and I. Atomic charges and dipoles: neither property is provided by the GRACE-OFF calculator. Additional implicit solvent: MAPLE's experimental GB-polar/QEq correction supports non-periodic single-point energies only ( #sp with experimental=true ); solvent forces, Hessians and HVPs are unavailable.",
+      "title": "GRACE - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "GRACE"
+      ],
+      "type": "Setup",
+      "url": "setup/model_grace.html#limitations"
+    },
+    {
+      "heading": "MACE",
       "level": 1,
       "page": "setup/model_mace.html",
       "page_entry": true,
       "page_role": "content",
       "section_order": 0,
-      "text": "MACE (Multi-ACE) is a family of equivariant message-passing neural network potentials that achieves excellent accuracy through higher-order many-body interactions. EGRET is a related graph-based equivariant model with competitive accuracy for drug-like molecules. The MAPLE hand-wrapped MACE and EGRET backends are molecular no-PBC calculators.",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "MACE is an equivariant message-passing architecture that uses higher-order atomic cluster expansion features to describe many-body interactions. MAPLE provides MACE-OFF, MACE-LES, EGRET, MACE-OMol and MACE-Polar models within this family.",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
-      "url": "setup/model_mace.html#mace-egret-models"
+      "url": "setup/model_mace.html#mace"
     },
     {
-      "heading": "MACE-OFF23 Family",
+      "heading": "MACE-OFF and MACE-LES",
       "level": 2,
       "page": "setup/model_mace.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
-      "text": "The MACE-OFF23 models are trained on the SPICE dataset for organic molecules containing H, C, N, O, F, S, Cl. Three sizes are available with increasing accuracy and cost: Model Keyword Parameters Best For MACE-OFF23 (Small) maceoff23s ~0.5M Fast screening, large systems, speed-critical workflows MACE-OFF23 (Medium) maceoff23m ~2M Balanced speed/accuracy for production calculations MACE-OFF23 (Large) maceoff23l ~8M Publication-quality results, final geometries Important maceoff23l requires significantly more GPU memory than the smaller variants. If you encounter out-of-memory errors, switch to maceoff23m or maceoff23s , or use #device=cpu .",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "MACE-OFF23 and MACE-OFF24 use ωB97M-D3(BJ)/def2-TZVPPD energy and force references. OFF23 uses SPICE v1 with additional molecular conformations and water clusters; OFF24 includes the expanded SPICE v2 data. MACE-LES-OFF uses the OFF23 training/validation split and adds latent Ewald summation for long-range electrostatics; its latent charges are internal model variables. The OFF and LES models listed below cover H, C, N, O, F, P, S, Cl, Br and I. Model Keyword Parameters Best For MACE-OFF23 (Small) mace-off-23s ~0.69M Fast screening, large systems, speed-critical workflows MACE-OFF23 (Medium) mace-off-23m ~1.43M Routine organic-molecule and condensed-phase calculations MACE-OFF23 (Large) mace-off-23l ~4.71M Accuracy-focused organic-molecule calculations MACE-OFF23 (B-Medium) mace-off-23bm ~1.43M Organic molecules and molecular clusters with a 6 Å local cutoff MACE-OFF24 (Medium) mace-off-24m ~1.43M Organic molecules and clusters with expanded SPICE v2 coverage MACE-LES-OFF mace-les-off ~1.89M Organic systems with long-range electrostatic interactions Important mace-off-23l requires significantly more GPU memory than the smaller variants. If you encounter out-of-memory errors, switch to mace-off-23m or mace-off-23s , or use #device=cpu .",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#mace-off23"
@@ -2679,11 +2871,11 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 2,
-      "text": "MACE-OMol extends element coverage beyond OFF23, supporting 17 elements including alkali and alkaline earth metals: Elements: H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I #model = maceomol #device = gpu0 #opt ( method = lbfgs ) 0 1 Li 0.000000 0.000000 0.000000 F 1.570000 0.000000 0.000000",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "mace-omol-0 uses the OMol25 molecular reference at ωB97M-V/def2-TZVPD. It covers H through Bi (Z = 1–83), accepts charge and multiplicity from the coordinate block, and supports periodic cells. #model = mace-omol-0 #device = gpu0 #opt ( method = lbfgs ) 0 1 Li 0.000000 0.000000 0.000000 F 1.570000 0.000000 0.000000",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#mace-omol"
@@ -2695,30 +2887,30 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "EGRET is a graph-based equivariant model with competitive accuracy for drug-like molecules. It covers the same elements as MACE-OFF23 (H, C, N, O, F, S, Cl). #model = egret #device = gpu0 #opt ( method = lbfgs ) XYZ /path/to/drug_molecule.xyz",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "EGRET models use the MACE architecture with ωB97M-D3(BJ)/def2-TZVPPD reference data. EGRET-1 uses the MACE-OFF23 training set; EGRET-1E adds VectorQM24 main-group structures, and EGRET-1T adds Transition1x and Coley3+2 reaction data. EGRET-1M and EGRET-1S are smaller versions of EGRET-1. EGRET-1, EGRET-1M, EGRET-1S and EGRET-1T cover H, C, N, O, F, P, S, Cl, Br and I; EGRET-1E also covers Si. Keyword Variant Cutoff (Å) egret-1 MACE-OFF23 training data 6.0 egret-1e Additional VectorQM24 data (+Si) 6.0 egret-1m Medium 5.0 egret-1s Small 4.5 egret-1t Additional reaction and transition-state data 6.0 #model = egret-1s #device = gpu0 #opt ( method = lbfgs ) XYZ /path/to/drug_molecule.xyz",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#egret"
     },
     {
-      "heading": "Model Files",
+      "heading": "MACE-Polar",
       "level": 2,
       "page": "setup/model_mace.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 4,
-      "text": "MAPLE can auto-download maceoff23m and egret checkpoints from the MAPLE model repository. maceoff23s , maceoff23l , maceomol , and the MACE-Polar development backends require a local checkpoint in maple/function/calculator/model/ or an explicit model_path .",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "The mace-polar-1s , mace-polar-1m and mace-polar-1l models add explicit electrostatic response to the MACE family. Their OMol25 energy and force reference is ωB97M-V/def2-TZVPD. These models cover H through Bi (Z = 1–83), accept charge and multiplicity, and provide physical atomic charges and dipoles. #model=mace-polar-1s #sp XYZ structure.xyz",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
-      "url": "setup/model_mace.html#model-files"
+      "url": "setup/model_mace.html#mace-polar"
     },
     {
       "heading": "Calculator Capabilities",
@@ -2727,11 +2919,11 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 5,
-      "text": "Hessian: analytic and numerical Hessians are available in gas phase. Implicit-solvent Hessians (analytic or numerical) are not supported. Implicit solvent: MAPLE's experimental GB-polar/QEq correction is energy-only ( #sp with experimental=true ); solvent forces and Hessians are not supported. PBC and stress: the MAPLE MACE wrappers build no-PBC molecular graphs and do not provide validated stress or virial output. HVP: MACE and EGRET do not implement get_hvp() . MACE-Polar: development keywords macepols , macepolm , and macepoll support charge/multiplicity through spin = mult - 1 , but remain no-PBC and local-checkpoint backends.",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "Hessian and HVP: all MACE-OFF, MACE-LES, EGRET, MACE-OMol and MACE-Polar models provide analytic Hessians by default, numerical Hessians, and Hessian–vector products. Periodic systems: all five model series support periodic cells, with stress and virial output. Charge and multiplicity: MACE-OFF, MACE-LES and EGRET require charge 0 and multiplicity 1. MACE-OMol and MACE-Polar accept the charge and multiplicity specified in the coordinate block. Atomic charges and dipoles: MACE-Polar provides both properties. MACE-LES latent charges are internal model variables. Implicit solvent: the experimental GB-polar/QEq correction supports non-periodic single-point energies only ( #sp with experimental=true ); solvent forces, Hessians and HVPs are unavailable.",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#calculator-capabilities"
@@ -2744,10 +2936,10 @@
       "page_role": "content",
       "section_order": 6,
       "text": "",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#examples"
@@ -2759,30 +2951,30 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 7,
-      "text": "#model = maceoff23s #device = gpu0 #opt ( level = loose ) XYZ /path/to/molecule.xyz",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "#model = mace-off-23s #device = gpu0 #opt ( level = loose ) XYZ /path/to/molecule.xyz",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#quick-screening-with-mace-off23-small"
     },
     {
-      "heading": "Publication-quality optimization with MACE-OFF23 Large",
+      "heading": "Optimization with MACE-OFF23 Large",
       "level": 3,
       "page": "setup/model_mace.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 8,
-      "text": "#model = maceoff23l #device = gpu0 #opt ( method = lbfgs , level = tight ) XYZ /path/to/optimized_guess.xyz",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "#model = mace-off-23l #device = gpu0 #opt ( method = lbfgs , level = tight ) XYZ /path/to/optimized_guess.xyz",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
-      "url": "setup/model_mace.html#publication-quality-optimization-with-mace-off23-large"
+      "url": "setup/model_mace.html#optimization-with-mace-off23-large"
     },
     {
       "heading": "Frequency calculation",
@@ -2791,11 +2983,11 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 9,
-      "text": "#model = maceoff23m #device = gpu0 #freq XYZ /path/to/optimized_geometry.xyz",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "#model = mace-off-23m #device = gpu0 #freq XYZ /path/to/optimized_geometry.xyz",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#frequency-calculation"
@@ -2807,11 +2999,11 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 10,
-      "text": "#model = maceoff23s #device = cpu #opt ( level = loose ) XYZ /path/to/large_system.xyz",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "#model = mace-off-23s #device = cpu #opt ( level = loose ) XYZ /path/to/large_system.xyz",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#cpu-fallback-for-large-systems"
@@ -2823,14 +3015,270 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 11,
-      "text": "No charge/multiplicity support for MACE-OFF, MACE-OMol, or EGRET. Use AIMNet2, UMA omol , or a validated MACE-Polar checkpoint for charged/open-shell molecular inputs. No D4 dispersion. D4 correction is not available for MACE or EGRET models. No periodic systems. These wrappers do not support periodic boundary conditions; periodic atoms fail fast. Limited elements. MACE-OFF23 and EGRET cover 7 elements; MACE-OMol covers 17 elements. For broader coverage, use uma .",
-      "title": "MACE & EGRET - MAPLE Documentation",
+      "text": "Electronic state: MACE-OFF, MACE-LES and EGRET require charge 0 and multiplicity 1. Elements: MACE-OFF, MACE-LES and EGRET cover H, C, N, O, F, P, S, Cl, Br and I; EGRET-1E also supports Si. MACE-OMol and MACE-Polar cover H–Bi (Z = 1–83). No D4 dispersion. MAPLE's separate D4 correction is not supported by these model series. Implicit solvent: the experimental correction is limited to non-periodic single-point energies.",
+      "title": "MACE - MAPLE Documentation",
       "trail": [
         "ML Models",
-        "MACE & EGRET"
+        "MACE"
       ],
       "type": "Setup",
       "url": "setup/model_mace.html#limitations"
+    },
+    {
+      "heading": "NequIP",
+      "level": 1,
+      "page": "setup/model_nequip.html",
+      "page_entry": true,
+      "page_role": "content",
+      "section_order": 0,
+      "text": "NequIP uses E(3)-equivariant tensor convolutions to carry directional information between atomic environments. In the original study, these tensor channels improved accuracy and data efficiency compared with scalar-only control networks.",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#nequip"
+    },
+    {
+      "heading": "NequIP Pretrained Models",
+      "level": 2,
+      "page": "setup/model_nequip.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 1,
+      "text": "The three NequIP models available in MAPLE were trained on PeptideCS2 energy and force data. Their names identify the peptide training subset and the gas-phase or COSMO-water reference environment. Keyword Training / Reference Chemical Coverage nequip-t3-cosmo PeptideCS2 tripeptides; BP86/dgauss-dzvp + D3(BJ), COSMO water (ε = 80) H, C, N, O, S nequip-t123-cosmo PeptideCS2 mono-, di- and tripeptides; BP86/dgauss-dzvp + D3(BJ), COSMO water (ε = 80) H, C, N, O, S nequip-t3-gas PeptideCS2 tripeptides; BP86/dgauss-dzvp + D3(BJ), gas phase H, C, N, O, S",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#variants"
+    },
+    {
+      "heading": "Allegro and Allegro-FM",
+      "level": 2,
+      "page": "setup/model_nequip.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 2,
+      "text": "Allegro builds many-body correlations through successive equivariant tensor products within a fixed atomic neighbourhood. Increasing network depth leaves the spatial cutoff unchanged, allowing independent evaluation of neighbourhoods and efficient spatial parallelisation. Allegro-FM is a pretrained model series built with Allegro. The two available models combine MPtrj inorganic data at the PBE/plane-wave level and OFF23 molecular data at ωB97M-D3(BJ)/def2-TZVPPD. Keyword Training / Reference Chemical Coverage allegro-fm-256 Inorganic crystals at PBE; organic molecules at ωB97M-D3(BJ)/def2-TZVPPD 89 elements: Z = 1–83 and 89–94 allegro-fm-512 Inorganic crystals at PBE; organic molecules at ωB97M-D3(BJ)/def2-TZVPPD 89 elements: Z = 1–83 and 89–94",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#allegro"
+    },
+    {
+      "heading": "Choosing the Reference Environment",
+      "level": 2,
+      "page": "setup/model_nequip.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 3,
+      "text": "The COSMO-water models learn the solvent contribution already included in the PeptideCS2 reference calculations. All five models require charge 0 and multiplicity 1.",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#model-scope"
+    },
+    {
+      "heading": "Calculator Capabilities",
+      "level": 2,
+      "page": "setup/model_nequip.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 4,
+      "text": "Hessian and HVP: the three NequIP and two Allegro-FM models provide analytic Hessians by default, numerical Hessians, and Hessian–vector products. Periodic systems: NequIP and Allegro-FM support periodic cells, with stress and virial output.",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#calculator-capabilities"
+    },
+    {
+      "heading": "Usage",
+      "level": 2,
+      "page": "setup/model_nequip.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 5,
+      "text": "#model=allegro-fm-256 #sp XYZ structure.xyz #model=nequip-t3-gas #opt(method=lbfgs) XYZ structure.xyz",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#usage"
+    },
+    {
+      "heading": "Model Options",
+      "level": 2,
+      "page": "setup/model_nequip.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 6,
+      "text": "Option Default Description dtype float32 The current exports accept FP32 inputs only; native internal precision is retained.",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#options"
+    },
+    {
+      "heading": "Limitations",
+      "level": 2,
+      "page": "setup/model_nequip.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 7,
+      "text": "Electronic state: all five NequIP and Allegro-FM models require charge 0 and multiplicity 1. Chemical coverage: the PeptideCS2 NequIP models cover peptides containing H, C, N, O and S. Allegro-FM covers 89 elements (Z = 1–83 and 89–94). Atomic charges and dipoles: neither property is provided by the NequIP or Allegro-FM calculator. Reference environment: the PeptideCS2 NequIP models retain their gas-phase or COSMO-water training reference. The COSMO contribution is already part of the COSMO-water models and their energy derivatives. Additional implicit solvent: MAPLE's experimental GB-polar/QEq correction supports non-periodic single-point energies only ( #sp with experimental=true ); solvent forces, Hessians and HVPs are unavailable.",
+      "title": "NequIP - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "NequIP"
+      ],
+      "type": "Setup",
+      "url": "setup/model_nequip.html#limitations"
+    },
+    {
+      "heading": "SO3LR",
+      "level": 1,
+      "page": "setup/model_so3lr.html",
+      "page_entry": true,
+      "page_role": "content",
+      "section_order": 0,
+      "text": "SO3LR is a pretrained force-field family for molecular and biomolecular simulations. It couples SO3krates to explicit repulsion, electrostatics and dispersion, with environment-dependent charges and dispersion parameters describing noncovalent interactions.",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#so3lr"
+    },
+    {
+      "heading": "Pretrained Model Series",
+      "level": 2,
+      "page": "setup/model_so3lr.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 1,
+      "text": "MAPLE provides the original SO3LR model and three SO3LR Tauri models from release 2606. SO3LR Tauri aims to describe proteins, nucleic acids, lipids and carbohydrates with a common potential. Its scope extends to ionic environments, metal-containing systems and reactive chemistry, without fitting a separate force field for each system. The original model uses ZBL-inspired repulsion and a single Hirshfeld volume ratio per atom for dispersion. Tauri uses fixed, pair-specific Nordlund–Lehtola–Hobler (NLH) repulsion and separately learned polarizability and C 6 ratios for quantum Drude oscillator (QDO) dispersion. Keyword Model Elements Cutoff (Å) so3lr Original SO3LR H, C, N, O, F, P, S, Cl 4.5 so3lr-tauri-s Tauri small, 2606 H–At (Z = 1–85) 4.5 so3lr-tauri-m Tauri medium, 2606 H–At (Z = 1–85) 4.5 so3lr-tauri-l Tauri large, 2606 H–At (Z = 1–85) 5.0",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#variants"
+    },
+    {
+      "heading": "Training Reference and Chemical Space",
+      "level": 2,
+      "page": "setup/model_so3lr.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 2,
+      "text": "The original SO3LR uses PBE0+MBD references for about four million neutral and charged molecular structures. Tauri combines roughly 148 million structures across 85 elements, including ions, metal-containing systems, polymers and biomolecular fragments. The supplied Tauri models use the production head, fine-tuned with PBE0+MBD(-NL) energies and forces together with ωB97M-V forces from OMol25 and OPoly26.",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#reference-data"
+    },
+    {
+      "heading": "Charge and Multiplicity",
+      "level": 2,
+      "page": "setup/model_so3lr.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 3,
+      "text": "The models accept total charge and spin multiplicity through the coordinate block. Atomic charges and molecular dipoles are available.",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#electronic-state"
+    },
+    {
+      "heading": "Calculator Capabilities",
+      "level": 2,
+      "page": "setup/model_so3lr.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 4,
+      "text": "Hessian and HVP: the original SO3LR and SO3LR Tauri models provide analytic Hessians by default, numerical Hessians, and Hessian–vector products. Charge and multiplicity: both model generations accept the total charge and spin multiplicity specified in the coordinate block. Atomic charges and dipoles: both model generations provide atomic partial charges and molecular dipoles. Periodic systems: SO3LR and SO3LR Tauri support periodic cells, with stress and virial output.",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#calculator-capabilities"
+    },
+    {
+      "heading": "Usage",
+      "level": 2,
+      "page": "setup/model_so3lr.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 5,
+      "text": "#model=so3lr-tauri-m #opt(method=lbfgs) XYZ structure.xyz",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#usage"
+    },
+    {
+      "heading": "Model Options",
+      "level": 2,
+      "page": "setup/model_so3lr.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 6,
+      "text": "Option Default Description lr auto auto, cutoff, ewald or pme. Auto uses the molecular route for isolated systems and PME for full three-dimensional periodic cells. dtype float32 Supported value: float32 .",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#options"
+    },
+    {
+      "heading": "Limitations",
+      "level": 2,
+      "page": "setup/model_so3lr.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 7,
+      "text": "Chemical coverage: the original SO3LR was trained on H, C, N, O, F, P, S and Cl. SO3LR Tauri extends the training coverage to H–At (Z = 1–85). Boundary conditions: periodic calculations require full three-dimensional periodicity. The ewald and pme options cannot be used for isolated molecules. Additional implicit solvent: MAPLE's experimental GB-polar/QEq correction supports non-periodic single-point energies only ( #sp with experimental=true ); solvent forces, Hessians and HVPs are unavailable.",
+      "title": "SO3LR - MAPLE Documentation",
+      "trail": [
+        "ML Models",
+        "SO3LR"
+      ],
+      "type": "Setup",
+      "url": "setup/model_so3lr.html#limitations"
     },
     {
       "heading": "UMA — Universal Models for Atoms",
@@ -2935,7 +3383,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 6,
-      "text": "UMA is the only shipped MAPLE backend that supports periodic boundary conditions. Non-periodic systems use the molecular omol task by default; periodic systems must select an explicit non- omol task such as omat , oc20 , oc22 , oc25 , omc , or odac . Important MAPLE currently rejects UMA stress and virial requests until stress-unit conversion is validated. Use UMA PBC for energies and forces, not for production stress/NPT claims.",
+      "text": "UMA supports periodic boundary conditions alongside other periodic-capable MAPLE backends. Non-periodic systems use the molecular omol task by default; periodic systems must select an explicit non- omol task such as omat , oc20 , oc22 , oc25 , omc , or odac . Important MAPLE currently rejects UMA stress and virial requests until stress-unit conversion is validated. Use UMA PBC for energies and forces, not for production stress/NPT claims.",
       "title": "UMA - MAPLE Documentation",
       "trail": [
         "ML Models",
@@ -3079,7 +3527,7 @@
       "page_entry": true,
       "page_role": "landing",
       "section_order": 0,
-      "text": "MAPLE uses machine learning interatomic potentials (MLIPs) to compute energies and forces instead of traditional quantum mechanical methods. This approach provides near-DFT accuracy at a fraction of the computational cost, enabling rapid geometry optimizations, frequency calculations, and molecular dynamics simulations. The #model command in the settings block selects which potential to use.",
+      "text": "MAPLE uses machine learning interatomic potentials (MLIPs) to compute energies and forces for its calculation workflows. The #model command selects a pretrained model. Its training data, reference level and chemical coverage determine which systems it can describe.",
       "title": "ML Models - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3095,7 +3543,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 1,
-      "text": "The table below lists the primary user-facing machine learning potentials in MAPLE, along with their keyword, element coverage, and accuracy characteristics. For periodic, charge/spin, Hessian, solvent, D4, HVP, and development backends such as MACE-Polar, see the calculator backend capability matrix . Model Name Keyword Supported Elements Accuracy ANI-2x ani2x H, C, N, O, F, S, Cl Trained on wB97X/6-31G(d); good general-purpose accuracy for organic molecules. Details → ANI-1x ani1x H, C, N, O Trained on wB97X/6-31G(d); limited to four elements but well-validated ANI-1ccx ani1ccx H, C, N, O Transfer-learned to CCSD(T)/CBS; high accuracy for small organic molecules ANI-1xnr ani1xnr H, C, N, O Non-reactive variant of ANI-1x; trained without bond-breaking data AIMNet2 aimnet2 H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I Broad element coverage with wB97M-D3BJ accuracy; supports charged species. Details → AIMNet2-NSE aimnet2nse H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I Open-shell variant using neural spin-charge equilibration for systems with arbitrary charge and spin multiplicity, including radicals. FeNNix-Bio1S fennix-bio1s H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I, Zn Small FeNNix-Bio .fnx model for fast biomolecular and molecular-cluster calculations. FeNNix-Bio1M fennix-bio1m H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I, Zn Medium FeNNix-Bio .fnx model for higher-capacity biomolecular calculations. External .fnx fennol(model_path=...) Whatever the supplied .fnx model supports Load another FeNNix .fnx model through MAPLE's JAX/Flax runtime. MACE-OFF23 (Small) maceoff23s H, C, N, O, F, S, Cl Fast equivariant model; suitable for quick screening of organic molecules. Details → MACE-OFF23 (Medium) maceoff23m H, C, N, O, F, S, Cl Balanced speed and accuracy for organic chemistry applications MACE-OFF23 (Large) maceoff23l H, C, N, O, F, S, Cl Highest accuracy MACE-OFF variant; recommended for publication-quality results MACE-OMol maceomol H, Li, B, C, N, O, F, Na, Mg, Si, P, S, Cl, K, Ca, Br, I Extended organic-molecular MACE model; broader element support than OFF23 EGRET egret H, C, N, O, F, S, Cl Graph-based equivariant model; competitive accuracy for drug-like molecules UMA uma Broad periodic table coverage (83+ elements) Universal model from Meta FAIR; supports 7 task domains, 3 model sizes, and inference=default|turbo . Details → Your own model module=... Whatever your model supports Plug in your own TorchScript or PyTorch checkpoint ( .pt / .jpt / .model ) with no source edits. Tutorial →",
+      "text": "The table lists MAPLE's pretrained models, their selection keywords, element coverage and accuracy characteristics. The calculator capability matrix describes supported calculations. Model Name Keyword Supported Elements Accuracy ANI-2x ani2x H, C, N, O, F, S, Cl Trained on ωB97X/6-31G(d); good general-purpose accuracy for organic molecules. ANI-1x ani1x H, C, N, O Trained on ωB97X/6-31G(d); limited to H, C, N and O. ANI-1ccx ani1ccx H, C, N, O Transfer-learned to CCSD(T)*/CBS for small organic-molecule energetics. ANI-1xnr ani1xnr H, C, N, O Reactive model trained on BLYP/TZV2P molecular and condensed-phase data. ANI-2xr ani2xr H, C, N, O, F, S, Cl Trained on ωB97X/6-31G(d), with short-range repulsion and a smoother potential-energy surface. ANI-2dr ani2dr H, C, N, O, F, S, Cl Trained on B97-3c, with short-range repulsion and D3 dispersion. SnnANI-2xr snn-ani2xr H, C, N, O, F, S, Cl Trained on ωB97X/6-31G(d) with a network shared across elements and short-range repulsion. ANI-MBIS ani-mbis H, C, N, O, F, S, Cl Predicts ωB97X/6-31G(d) energies and geometry-dependent MBIS atomic charges. AIMNet2 aimnet2 H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPP for neutral and charged organic and main-group molecules. AIMNet2-RXN aimnet2-rxn H, C, N, O Trained on ωB97M/def2-TZVPP for closed-shell organic reactions, transition states and reaction pathways. AIMNet2-Pd aimnet2-pd H, B, C, N, O, F, Si, P, S, Cl, Se, Br, Pd, I Trained on B97-3c/CPCM(THF) for palladium-catalyzed reactions. AIMNet2-B97-3c aimnet2-b973c H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I B97-3c model for molecular conformations and relative energies. AIMNet2-2025 aimnet2-2025 H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I Updated B97-3c model with improved intermolecular interactions. AIMNet2-NSE aimnet2-nse H, B, C, N, O, F, Si, P, S, Cl, As, Se, Br, I Open-shell model trained on ωB97M-D3(BJ)/def2-TZVPP, with charge and spin conditioning. FeNNix-Bio1S fennix-bio-1s H–Rn (input encoding) Biomolecular model with a ωB97M-D3(BJ) reference and AMOEBA03 fine-tuning for solvated ions. FeNNix-Bio1M fennix-bio-1m H–Rn (input encoding) Biomolecular model with a ωB97M-D3(BJ) reference and AMOEBA03 fine-tuning for solvated ions. MACE-OFF23 (Small) mace-off-23s H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters. MACE-OFF23 (Medium) mace-off-23m H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters. MACE-OFF23 (Large) mace-off-23l H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters. MACE-OFF23 (B-Medium) mace-off-23bm H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for neutral organic molecules and molecular clusters. MACE-OFF24 (Medium) mace-off-24m H, C, N, O, F, P, S, Cl, Br, I Trained on expanded SPICE v2 data at ωB97M-D3(BJ)/def2-TZVPPD for organic molecules and molecular clusters. MACE-LES-OFF mace-les-off H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for organic systems, with learned long-range electrostatics. EGRET-1 egret-1 H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for bioorganic molecules. EGRET-1E egret-1e H, C, N, O, F, Si, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD with additional main-group structures, including silicon compounds. EGRET-1M egret-1m H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for bioorganic molecules. EGRET-1S egret-1s H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD for bioorganic molecules. EGRET-1T egret-1t H, C, N, O, F, P, S, Cl, Br, I Trained on ωB97M-D3(BJ)/def2-TZVPPD with reaction-path and transition-state data. MACE-OMol-0 mace-omol-0 H–Bi (Z = 1–83) Trained on OMol25 at ωB97M-V/def2-TZVPD for molecules with varying charge and spin. MACE-Polar (Small) mace-polar-1s H–Bi (Z = 1–83) Trained on ωB97M-V/def2-TZVPD, with polarization, long-range electrostatics and atomic charge output. MACE-Polar (Medium) mace-polar-1m H–Bi (Z = 1–83) Trained on ωB97M-V/def2-TZVPD, with polarization, long-range electrostatics and atomic charge output. MACE-Polar (Large) mace-polar-1l H–Bi (Z = 1–83) Trained on ωB97M-V/def2-TZVPD, with polarization, long-range electrostatics and atomic charge output. GRACE-OFF (1L-S) grace-off-1s H, C, N, O, F, P, S, Cl, Br, I Trained on SPICE v2 at ωB97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems. GRACE-OFF (1L-M) grace-off-1m H, C, N, O, F, P, S, Cl, Br, I Trained on SPICE v2 at ωB97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems. GRACE-OFF (1L-L) grace-off-1l H, C, N, O, F, P, S, Cl, Br, I Trained on SPICE v2 at ωB97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems. GRACE-OFF (2L-S) grace-off-2s H, C, N, O, F, P, S, Cl, Br, I Trained on SPICE v2 at ωB97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems. GRACE-OFF (2L-M) grace-off-2m H, C, N, O, F, P, S, Cl, Br, I Trained on SPICE v2 at ωB97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems. GRACE-OFF (2L-L) grace-off-2l H, C, N, O, F, P, S, Cl, Br, I Trained on SPICE v2 at ωB97M-D3(BJ)/def2-TZVPPD for organic and biomolecular systems. SO3LR so3lr H, C, N, O, F, P, S, Cl Trained on PBE0+MBD molecular data, with long-range electrostatics and dispersion. SO3LR Tauri (Small) so3lr-tauri-s H–At (Z = 1–85) Trained on PBE0+MBD and ωB97M-V data for reactive biomolecular systems, including ions and metal complexes. SO3LR Tauri (Medium) so3lr-tauri-m H–At (Z = 1–85) Trained on PBE0+MBD and ωB97M-V data for reactive biomolecular systems, including ions and metal complexes. SO3LR Tauri (Large) so3lr-tauri-l H–At (Z = 1–85) Trained on PBE0+MBD and ωB97M-V data for reactive biomolecular systems, including ions and metal complexes. NequIP T3 (COSMO-water) nequip-t3-cosmo H, C, N, O, S Trained on PeptideCS2 tripeptides at BP86-D3(BJ)/dgauss-dzvp with COSMO water. NequIP T123 (COSMO-water) nequip-t123-cosmo H, C, N, O, S Trained on PeptideCS2 mono-, di- and tripeptides at BP86-D3(BJ)/dgauss-dzvp with COSMO water. NequIP T3 (Gas) nequip-t3-gas H, C, N, O, S Trained on gas-phase PeptideCS2 tripeptides at BP86-D3(BJ)/dgauss-dzvp. Allegro-FM-256 allegro-fm-256 89 elements: Z = 1–83 and 89–94 Trained on PBE inorganic-crystal data and ωB97M-D3(BJ)/def2-TZVPPD organic-molecule data. Allegro-FM-512 allegro-fm-512 89 elements: Z = 1–83 and 89–94 Trained on PBE inorganic-crystal data and ωB97M-D3(BJ)/def2-TZVPPD organic-molecule data. UMA uma Task dependent Universal model from Meta FAIR for molecules, materials, catalysis, molecular crystals and MOFs; the task selects the reference level.",
       "title": "ML Models - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3111,7 +3559,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 2,
-      "text": "Choosing the right model depends on your molecular system, required accuracy, and available computational resources. Here are general recommendations: Organic molecules (H, C, N, O only): Start with ani2x for general use or ani1ccx when coupled-cluster accuracy is needed for small molecules. Organic molecules with halogens (F, S, Cl): Use ani2x , maceoff23m , or egret . For the highest accuracy, try maceoff23l . Systems with heavier elements (Br, I, P, Si, etc.): Use aimnet2 or maceomol , which support a broader range of elements. Diverse or unknown systems: Use uma as a reliable general-purpose potential with the widest element coverage. Specify a task domain for best accuracy. Periodic materials / catalysis: Use uma with an explicit periodic-capable task such as omat , oc20 , oc22 , oc25 , omc , or odac . Stress and virial output are not yet validated. Charged or open-shell molecules: Use aimnet2 or uma with the omol task. Molecular wrappers such as ANI and MACE-OFF do not honor charge or multiplicity. Speed-critical workflows: Use maceoff23s or ani2x for the fastest evaluation times. The ANI models are particularly fast on GPUs. Publication-quality results: Use maceoff23l or ani1ccx for the highest available accuracy within their element ranges.",
+      "text": "Choosing the right model depends on your molecular system, required accuracy, and available computational resources. Here are general recommendations: Organic molecules (H, C, N, O only): Start with ani2x for general use or ani1ccx when a coupled-cluster reference is needed for small molecules. Organic molecules with S or halogens: ani2x covers H, C, N, O, F, S and Cl; MACE-OFF and GRACE-OFF also cover P, Br and I. Systems with heavier elements: Use aimnet2 for its main-group element set, or MACE-OMol, MACE-Polar and SO3LR Tauri for wider coverage including metals. Diverse chemical domains: Use uma with a task domain matching molecules, materials or catalysis. Periodic materials / catalysis: UMA requires an explicit periodic task such as omat , oc20 or omc . Other periodic-capable models are listed in the capability matrix . UMA stress and virial output remain unavailable. Charged or open-shell molecules: Use aimnet2 for charged singlets. AIMNet2-NSE, SO3LR, MACE-OMol, MACE-Polar and UMA with task=omol also accept spin multiplicity; FeNNix requires multiplicity 1. Speed-critical workflows: Choose a smaller model within a suitable family; mace-off-23s and ANI models are options for organic systems. Reference-level choice: Use ani1ccx for a CCSD(T)*/CBS reference within H/C/N/O chemistry. For DFT-trained models, select the reference level appropriate to the calculation.",
       "title": "ML Models - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3143,7 +3591,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 4,
-      "text": "The D4 dispersion correction adds London dispersion interactions (van der Waals forces) to the ML potential energy. In the current MAPLE calculator layer, D4 is supported for ANI backends only. #model = ani2x #d4 #opt",
+      "text": "The D4 dispersion correction adds London dispersion interactions (van der Waals forces) to the ML potential energy. MAPLE supports this extra correction for non-periodic ANI calculations, except ani2dr , which already includes D3 dispersion. #model = ani2x #d4 #opt",
       "title": "ML Models - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3175,7 +3623,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 6,
-      "text": "The charge equilibration (QEq) method computes atomic partial charges used internally by the experimental implicit solvent correction. QEq charges are computed automatically when implicit solvation is enabled and do not require a separate command. Important Large models such as maceoff23l and maceomol require significantly more GPU memory than smaller models. If you encounter out-of-memory errors, try switching to a smaller model variant (e.g., maceoff23s ) or use #device = cpu for systems that exceed your GPU memory.",
+      "text": "The charge equilibration (QEq) method computes atomic partial charges used internally by the experimental implicit solvent correction. QEq charges are computed automatically when implicit solvation is enabled and do not require a separate command. Important Large models such as mace-off-23l and mace-omol-0 require significantly more GPU memory than smaller models. If you encounter out-of-memory errors, try switching to a smaller model variant (e.g., mace-off-23s ) or use #device = cpu for systems that exceed your GPU memory.",
       "title": "ML Models - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3271,7 +3719,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 12,
-      "text": "#model = maceoff23m #freq XYZ /path/to/optimized_geometry.xyz",
+      "text": "#model = mace-off-23m #freq XYZ /path/to/optimized_geometry.xyz",
       "title": "ML Models - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3287,7 +3735,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 13,
-      "text": "#model = maceoff23s #device = cpu #opt(level=loose) XYZ /path/to/large_molecule.xyz",
+      "text": "#model = mace-off-23s #device = cpu #opt(level=loose) XYZ /path/to/large_molecule.xyz",
       "title": "ML Models - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3335,7 +3783,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 2,
-      "text": "Specifies the machine learning potential model used for the calculation. See the ML Models page for a complete list of supported potentials and guidance on choosing one. #model = ani2x #model = uma #model = aimnet2 #model = maceoff23m",
+      "text": "Specifies the machine learning potential model used for the calculation. See the ML Models page for a complete list of supported potentials and guidance on choosing one. #model = ani2x #model = uma #model = aimnet2 #model = mace-off-23m",
       "title": "Settings - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3447,7 +3895,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 9,
-      "text": "The table below summarizes all supported job types, their command syntax, and default methods. Job Type Command Description Default / Required Single Point #sp Computes energy at the current geometry; verbose=1 adds gradients N/A Optimization #opt Minimizes the molecular geometry L-BFGS Frequency #freq Computes vibrational frequencies and thermochemistry Numerical Hessian Transition State #ts Locates first-order saddle points Required via method IRC #irc Traces the minimum energy path from a TS GS PES Scan #scan Scans along internal coordinates L-BFGS Tip Task commands accept parameters in parentheses using the format #taskname(param1=value1, param2=value2) . If no parameters are given, MAPLE uses the default settings for that job type.",
+      "text": "The table below summarizes all supported job types, their command syntax, and default methods. Job Type Command Description Default / Required Single Point #sp Computes energy at the current geometry; verbose=1 adds gradients N/A Optimization #opt Minimizes the molecular geometry L-BFGS Frequency #freq Computes vibrational frequencies and thermochemistry Analytic; numerical for UMA Transition State #ts Locates first-order saddle points Required via method IRC #irc Traces the minimum energy path from a TS GS PES Scan #scan Scans along internal coordinates L-BFGS Tip Task commands accept parameters in parentheses using the format #taskname(param1=value1, param2=value2) . If no parameters are given, MAPLE uses the default settings for that job type. For multiple structures and the optional task parameter batch_size , see Batch Input .",
       "title": "Settings - MAPLE Documentation",
       "trail": [
         "Input Setup",
@@ -3804,7 +4252,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 5,
-      "text": "#model=aimnet2nse #irc(method=eulerpc) #device=gpu0 XYZ 0 2 /path/to/transition_state.xyz",
+      "text": "#model=aimnet2-nse #irc(method=eulerpc) #device=gpu0 XYZ 0 2 /path/to/transition_state.xyz",
       "title": "IRC: Euler Predictor-Corrector (EulerPC) - MAPLE",
       "trail": [
         "Tasks",
@@ -4246,7 +4694,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 5,
-      "text": "#model=aimnet2nse #irc(method=lqa,step_length_bohr=0.15) #device=gpu0 XYZ 0 1 /path/to/transition_state.xyz",
+      "text": "#model=aimnet2-nse #irc(method=lqa,step_length_bohr=0.15) #device=gpu0 XYZ 0 1 /path/to/transition_state.xyz",
       "title": "IRC: Local Quadratic Approximation (LQA) - MAPLE",
       "trail": [
         "Tasks",
@@ -5016,7 +5464,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 5,
-      "text": "chg_fit selects the atomic-charge source independently of iqm and qm_compare . Refinement defaults to none ; the input mol2 charges are kept as they are. NCAA defaults to resp ; none is invalid because the PDB route has no reusable input charges. MetalAA derives site charges through a fixed RESP-only workflow and does not expose chg_fit . chg_fit Behavior none Refinement only. Preserve the input mol2 charges without creating a charge-fitting work directory. resp Derive charges at runtime: Gaussian evaluates the ESP, AmberTools ( espgen + resp ) performs the two-stage RESP fitting. chg_level defaults to HF/6-31G(d) for Refinement and NCAA, and the resp_backend key accepts only its default, gaussian . Charge-capable MLIP Use AIMNet2 ( aimnet2 ), AIMNet2-NSE ( aimnet2nse ), or MACE-POLAR ( macepols , macepolm , or macepoll ). A recognized MLIP must provide atomic charges; otherwise ParmFit reports a capability error. Unrecognized value Pass the value verbatim to antechamber -c , for example abcg2 , bcc , or gas . ParmFit does not maintain an Antechamber charge-method whitelist. RESP derivation always runs the same two-tool pipeline — Gaussian for the ESP, AmberTools for the RESP stages — whether iqm is enabled or disabled; its Gaussian jobs reuse the configured qm_nproc and qm_mem . The charge-capable MLIP may differ from the main #model . If it matches the main model, ParmFit reuses the active calculator and its configured options. A different charge-capable MLIP is initialized once on the active device with its default options.",
+      "text": "chg_fit selects the atomic-charge source independently of iqm and qm_compare . Refinement defaults to none ; the input mol2 charges are kept as they are. NCAA defaults to resp ; none is invalid because the PDB route has no reusable input charges. MetalAA derives site charges through a fixed RESP-only workflow and does not expose chg_fit . chg_fit Behavior none Refinement only. Preserve the input mol2 charges without creating a charge-fitting work directory. resp Derive charges at runtime: Gaussian evaluates the ESP, AmberTools ( espgen + resp ) performs the two-stage RESP fitting. chg_level defaults to HF/6-31G(d) for Refinement and NCAA, and the resp_backend key accepts only its default, gaussian . Charge-capable MLIP Use AIMNet2 ( aimnet2 ), AIMNet2-NSE ( aimnet2-nse ), or MACE-POLAR ( mace-polar-1s , mace-polar-1m , or mace-polar-1l ). A recognized MLIP must provide atomic charges; otherwise ParmFit reports a capability error. Unrecognized value Pass the value verbatim to antechamber -c , for example abcg2 , bcc , or gas . ParmFit does not maintain an Antechamber charge-method whitelist. RESP derivation always runs the same two-tool pipeline — Gaussian for the ESP, AmberTools for the RESP stages — whether iqm is enabled or disabled; its Gaussian jobs reuse the configured qm_nproc and qm_mem . The charge-capable MLIP may differ from the main #model . If it matches the main model, ParmFit reuses the active calculator and its configured options. A different charge-capable MLIP is initialized once on the active device with its default options.",
       "title": "ParmFit - MAPLE",
       "trail": [
         "Tasks",
@@ -6385,7 +6833,7 @@
       "page_entry": false,
       "page_role": "landing",
       "section_order": 6,
-      "text": "The checked-in MAPLE example examples/scan/da.inp is a two-coordinate relaxed scan with the ANI-1xnr model on a GPU. Only the long coordinate block is elided below; in a real input file the S scan commands must come after the molecular coordinates because MAPLE parses them as post-processing commands: #model=ANI-1xnr #scan #device=gpu0 [XYZ coordinates from examples/scan/da.inp] S 11 52 -0.1 15 S 14 51 -0.1 15 The two S lines define scanned distances, each with 15 increments of −0.1 Å, producing a 16 × 16 = 256 point grid. Because #scan defaults to method=lbfgs and mode=relaxed , the header above is equivalent to #scan(method=lbfgs, mode=relaxed) . At each grid point MAPLE constrains both target coordinates and optimizes the remaining degrees of freedom with the selected optimizer.",
+      "text": "The checked-in MAPLE example examples/scan/da.inp is a two-coordinate relaxed scan with the ANI-1xnr model on a GPU. Only the long coordinate block is elided below; in a real input file the S scan commands must come after the molecular coordinates because MAPLE parses them as post-processing commands: #model=ani1xnr #scan #device=gpu0 [XYZ coordinates from examples/scan/da.inp] S 11 52 -0.1 15 S 14 51 -0.1 15 The two S lines define scanned distances, each with 15 increments of −0.1 Å, producing a 16 × 16 = 256 point grid. Because #scan defaults to method=lbfgs and mode=relaxed , the header above is equivalent to #scan(method=lbfgs, mode=relaxed) . At each grid point MAPLE constrains both target coordinates and optimizes the remaining degrees of freedom with the selected optimizer.",
       "title": "PES Scan - MAPLE",
       "trail": [
         "Tasks",
@@ -6484,7 +6932,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/scan/cg/butane_torsion.inp . This is the relaxed butane torsion scan shown in the visualization below: #model=aimnet2nse #scan(method=cg,mode=relaxed) #device=gpu0 C -0.52081539 1.11161504 -0.13989751 C 0.59078300 0.29318923 -0.77842290 C 1.32746823 -0.60957381 0.21152861 C 0.45259197 -1.70775275 0.79614860 H -0.94949784 1.80049876 -0.87488523 H -1.32977057 0.47261032 0.22606643 H -0.14081339 1.70426027 0.69821742 H 1.31638081 0.98145785 -1.22807656 H 0.17655991 -0.30881448 -1.59557540 H 1.74762224 -0.00673639 1.02502995 H 2.17359552 -1.07649793 -0.30658812 H 1.05410451 -2.37229845 1.42471640 H -0.00260239 -2.31098551 0.00433108 H -0.34575942 -1.29510299 1.41986360 S 1 2 3 4 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
+      "text": "Checked-in MAPLE example: examples/scan/cg/butane_torsion.inp . This is the relaxed butane torsion scan shown in the visualization below: #model=aimnet2-nse #scan(method=cg,mode=relaxed) #device=gpu0 C -0.52081539 1.11161504 -0.13989751 C 0.59078300 0.29318923 -0.77842290 C 1.32746823 -0.60957381 0.21152861 C 0.45259197 -1.70775275 0.79614860 H -0.94949784 1.80049876 -0.87488523 H -1.32977057 0.47261032 0.22606643 H -0.14081339 1.70426027 0.69821742 H 1.31638081 0.98145785 -1.22807656 H 0.17655991 -0.30881448 -1.59557540 H 1.74762224 -0.00673639 1.02502995 H 2.17359552 -1.07649793 -0.30658812 H 1.05410451 -2.37229845 1.42471640 H -0.00260239 -2.31098551 0.00433108 H -0.34575942 -1.29510299 1.41986360 S 1 2 3 4 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
       "title": "PES Scan: CG - MAPLE",
       "trail": [
         "Tasks",
@@ -6586,7 +7034,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/scan/lbfgs/ethanol_torsion.inp . This is the relaxed ethanol torsion scan shown in the visualization below: #model=aimnet2nse #scan(method=lbfgs,mode=relaxed) #device=gpu0 C 0.00000000 0.00000000 0.00000000 C 1.52000000 0.00000000 0.00000000 O 2.07000000 1.21000000 0.00000000 H 2.94000000 1.20000000 0.00000000 H -0.54000000 0.94000000 0.00000000 H -0.54000000 -0.47000000 0.81400000 H -0.54000000 -0.47000000 -0.81400000 H 1.92000000 -0.52000000 0.89000000 H 1.92000000 -0.52000000 -0.89000000 S 1 2 3 4 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
+      "text": "Checked-in MAPLE example: examples/scan/lbfgs/ethanol_torsion.inp . This is the relaxed ethanol torsion scan shown in the visualization below: #model=aimnet2-nse #scan(method=lbfgs,mode=relaxed) #device=gpu0 C 0.00000000 0.00000000 0.00000000 C 1.52000000 0.00000000 0.00000000 O 2.07000000 1.21000000 0.00000000 H 2.94000000 1.20000000 0.00000000 H -0.54000000 0.94000000 0.00000000 H -0.54000000 -0.47000000 0.81400000 H -0.54000000 -0.47000000 -0.81400000 H 1.92000000 -0.52000000 0.89000000 H 1.92000000 -0.52000000 -0.89000000 S 1 2 3 4 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
       "title": "PES Scan: L-BFGS - MAPLE",
       "trail": [
         "Tasks",
@@ -6688,7 +7136,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/scan/rfo/methanol_oh_torsion.inp . This is the relaxed methanol O-H torsion scan shown in the visualization below: #model=aimnet2nse #scan(method=rfo,mode=relaxed) #device=gpu0 C -0.46276972 1.15067867 0.42624477 O -0.32124714 -0.24861552 0.26422771 H -1.51133868 1.39211728 0.61684893 H -0.13712321 1.64920740 -0.48974849 H 0.15713375 1.48625319 1.26124710 H -0.61759765 -0.66356677 1.09214997 S 3 1 2 6 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
+      "text": "Checked-in MAPLE example: examples/scan/rfo/methanol_oh_torsion.inp . This is the relaxed methanol O-H torsion scan shown in the visualization below: #model=aimnet2-nse #scan(method=rfo,mode=relaxed) #device=gpu0 C -0.46276972 1.15067867 0.42624477 O -0.32124714 -0.24861552 0.26422771 H -1.51133868 1.39211728 0.61684893 H -0.13712321 1.64920740 -0.48974849 H 0.15713375 1.48625319 1.26124710 H -0.61759765 -0.66356677 1.09214997 S 3 1 2 6 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
       "title": "PES Scan: RFO - MAPLE",
       "trail": [
         "Tasks",
@@ -6790,7 +7238,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/scan/sd/dimethyl_peroxide_torsion.inp . This is the relaxed dimethyl peroxide torsion scan shown in the visualization below: #model=aimnet2nse #scan(method=sd,mode=relaxed) #device=gpu0 C -0.38846526 -0.54120852 0.47889724 O -0.43299775 -0.36385918 -0.93087360 O 0.57946000 0.64373500 -1.22768354 C 1.45974812 0.03203524 -2.16138925 H 0.59947954 -0.89956469 0.78229810 H -1.13763115 -1.28584057 0.75935167 H -0.61851510 0.40189440 0.98297169 H 2.23953829 0.75053877 -2.42607962 H 1.92682619 -0.85102187 -1.71579499 H 0.91182580 -0.24730864 -3.06593618 S 1 2 3 4 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
+      "text": "Checked-in MAPLE example: examples/scan/sd/dimethyl_peroxide_torsion.inp . This is the relaxed dimethyl peroxide torsion scan shown in the visualization below: #model=aimnet2-nse #scan(method=sd,mode=relaxed) #device=gpu0 C -0.38846526 -0.54120852 0.47889724 O -0.43299775 -0.36385918 -0.93087360 O 0.57946000 0.64373500 -1.22768354 C 1.45974812 0.03203524 -2.16138925 H 0.59947954 -0.89956469 0.78229810 H -1.13763115 -1.28584057 0.75935167 H -0.61851510 0.40189440 0.98297169 H 2.23953829 0.75053877 -2.42607962 H 1.92682619 -0.85102187 -1.71579499 H 0.91182580 -0.24730864 -3.06593618 S 1 2 3 4 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
       "title": "PES Scan: SD - MAPLE",
       "trail": [
         "Tasks",
@@ -6892,7 +7340,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/scan/sdcg/glycine_backbone_torsion.inp . This is the relaxed glycine backbone torsion scan shown in the visualization below: #model=aimnet2nse #scan(method=sdcg,mode=relaxed) #device=gpu0 N -1.64695360 -1.29691911 -0.90833498 C -0.45216594 -0.59642464 -1.41625210 C -0.84033589 0.54283507 -2.34787441 O -1.97257790 0.87393427 -2.66478245 O 0.22929521 1.20487418 -2.83060947 H -2.25086549 -0.60633338 -0.45686313 H -2.19402852 -1.61340515 -1.71207045 H 0.17205835 -1.30686984 -1.96558531 H 0.10890908 -0.18794943 -0.57097223 H -0.15752184 1.89889132 -3.40493371 S 6 1 2 3 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
+      "text": "Checked-in MAPLE example: examples/scan/sdcg/glycine_backbone_torsion.inp . This is the relaxed glycine backbone torsion scan shown in the visualization below: #model=aimnet2-nse #scan(method=sdcg,mode=relaxed) #device=gpu0 N -1.64695360 -1.29691911 -0.90833498 C -0.45216594 -0.59642464 -1.41625210 C -0.84033589 0.54283507 -2.34787441 O -1.97257790 0.87393427 -2.66478245 O 0.22929521 1.20487418 -2.83060947 H -2.25086549 -0.60633338 -0.45686313 H -2.19402852 -1.61340515 -1.71207045 H 0.17205835 -1.30686984 -1.96558531 H 0.10890908 -0.18794943 -0.57097223 H -0.15752184 1.89889132 -3.40493371 S 6 1 2 3 5.0 72 The final S line is a dihedral scan: four atom indices followed by a 5.0 degree step and 72 increments, producing 73 scan points including the initial geometry.",
       "title": "PES Scan: SD/CG - MAPLE",
       "trail": [
         "Tasks",
@@ -6991,7 +7439,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/sp/sp3.inp . It requests verbose=1 so the output includes charge/multiplicity, energy, and gradients. #model=ANI-2x #sp(verbose=1) C 0.65365800 1.02013500 0.25040200 C -0.95129600 -1.02931400 0.57474200 C 1.95888600 -0.93622000 0.00515500 N 0.79077500 -0.14946600 -0.38846900 N -0.42242100 1.80163100 0.01564100 O -1.87211100 -0.71447900 -0.39360600 H -1.49152400 -0.99165700 -1.23718800 H 1.93501500 1.43895500 -0.76274600 H 1.14080200 1.20947000 1.20910000 H -1.06000700 1.56870100 -0.72483100 H -0.64277300 2.56184400 0.62878400 H -1.22475800 -0.59467400 1.53295400 H -0.61313000 -2.06366600 0.60833500 H 1.61854500 -1.95264400 0.20633800 H 2.67877500 -0.97401900 -0.81539800 H 2.47397200 -0.55869000 0.89670300 Run it from the MAPLE source tree with maple examples/sp/sp3.inp . The same example has a D4 variant at examples/sp/sp3_d4.inp .",
+      "text": "Checked-in MAPLE example: examples/sp/sp3.inp . It requests verbose=1 so the output includes charge/multiplicity, energy, and gradients. #model=ani2x #sp(verbose=1) C 0.65365800 1.02013500 0.25040200 C -0.95129600 -1.02931400 0.57474200 C 1.95888600 -0.93622000 0.00515500 N 0.79077500 -0.14946600 -0.38846900 N -0.42242100 1.80163100 0.01564100 O -1.87211100 -0.71447900 -0.39360600 H -1.49152400 -0.99165700 -1.23718800 H 1.93501500 1.43895500 -0.76274600 H 1.14080200 1.20947000 1.20910000 H -1.06000700 1.56870100 -0.72483100 H -0.64277300 2.56184400 0.62878400 H -1.22475800 -0.59467400 1.53295400 H -0.61313000 -2.06366600 0.60833500 H 1.61854500 -1.95264400 0.20633800 H 2.67877500 -0.97401900 -0.81539800 H 2.47397200 -0.55869000 0.89670300 Run it from the MAPLE source tree with maple examples/sp/sp3.inp . The same example has a D4 variant at examples/sp/sp3_d4.inp .",
       "title": "Single Point Energy - MAPLE",
       "trail": [
         "Tasks",
@@ -7023,7 +7471,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 5,
-      "text": "The output file from a single point calculation always contains parsed coordinates, charge/multiplicity metadata, and the total energy in Hartree (Eh). Gradients depend on verbose : verbose=0 -- parsed coordinates, charge/multiplicity, and energy. verbose=1 -- verbose=0 output plus per-atom gradients in Hartree/Angstrom. Complete example output from examples/sp/sp3.out : ********************************************************************** * * * M A P L E * * * * MAchine-learning Potential for Landscape Exploration * * * * * * © 2025 University of Pittsburgh. All rights reserved. * * Licensed under CC BY 4.0 for academic use. * * * * Principal Developer: Xujian Wang * * * ********************************************************************** Parsing # commands... Global parameter: model = ANI-2x Task set to 'sp' Parsed configuration: ---------------------------------------- Task: sp model : ani2x verbose : 1 Coordinates ********************************************************************** Group 1 (inline) -------------------- 1 C 0.653658 1.020135 0.250402 2 C -0.951296 -1.029314 0.574742 3 C 1.958886 -0.936220 0.005155 4 N 0.790775 -0.149466 -0.388469 5 N -0.422421 1.801631 0.015641 6 O -1.872111 -0.714479 -0.393606 7 H -1.491524 -0.991657 -1.237188 8 H 1.935015 1.438955 -0.762746 9 H 1.140802 1.209470 1.209100 10 H -1.060007 1.568701 -0.724831 11 H -0.642773 2.561844 0.628784 12 H -1.224758 -0.594674 1.532954 13 H -0.613130 -2.063666 0.608335 14 H 1.618545 -1.952644 0.206338 15 H 2.678775 -0.974019 -0.815398 16 H 2.473972 -0.558690 0.896703 Charge: 0, Multiplicity: 1 Energy: -304.7642932897 Hartree Gradients (Hartree/Angstrom): Gradient = -Force Atom El Gx Gy Gz 1 C -0.10266493 0.02860843 0.11792911 2 C -0.08336351 -0.02371526 0.04541698 3 C 0.03426485 -0.01383988 0.00515845 4 N 0.10547175 0.05071949 -0.09252290 5 N 0.00947110 -0.01377346 0.00264503 6 O 0.02184403 0.00224924 -0.00525583 7 H -0.00991479 -0.00544633 0.00266360 8 H 0.03686071 -0.03305264 -0.05529496 9 H -0.01167883 -0.00082533 -0.01351971 10 H 0.00696653 0.00887080 -0.00033596 11 H 0.00424815 -0.00923034 -0.00473377 12 H -0.00369785 -0.00480554 0.00827175 13 H 0.00377101 0.00490504 -0.00487071 14 H -0.00491144 0.00881686 -0.00243353 15 H -0.00285685 0.00055546 0.00761027 16 H -0.00380990 -0.00003653 -0.01072782 Program started: 2026-05-24 11:56:03 ====================================================================== TIMING SUMMARY ====================================================================== Input Reading....................................... 0.001 s ( 0.2 %) Settings Parsing.................................... 0.000 s ( 16.7 %) Coordinate Section Parsing.......................... 0.000 s ( 22.8 %) Post-Processing Expansion........................... 0.000 s ( 0.3 %) MLP Initialization.................................. 0.119 s ( 25.7 %) Job Dispatching..................................... 0.342 s ( 74.0 %) Single Point Energy Calculation..................... 0.342 s ( 99.8 %) ====================================================================== Total wall time: 0.462 s Total CPU time: 0.729 s ====================================================================== Program ended: 2026-05-24 11:56:03 TOTAL RUN TIME: 0 days 0 hours 0 minutes 0 seconds 462 msec The energy value represents the total electronic energy of the system at the given geometry as predicted by the specified ML potential.",
+      "text": "The output file from a single point calculation always contains parsed coordinates, charge/multiplicity metadata, and the total energy in Hartree (Eh). Gradients depend on verbose : verbose=0 -- parsed coordinates, charge/multiplicity, and energy. verbose=1 -- verbose=0 output plus per-atom gradients in Hartree/Angstrom. Complete example output from examples/sp/sp3.out : ********************************************************************** * * * M A P L E * * * * MAchine-learning Potential for Landscape Exploration * * * * * * © 2025 University of Pittsburgh. All rights reserved. * * Licensed under CC BY 4.0 for academic use. * * * * Principal Developer: Xujian Wang * * * ********************************************************************** Parsing # commands... Global parameter: model = ani2x Task set to 'sp' Parsed configuration: ---------------------------------------- Task: sp model : ani2x verbose : 1 Coordinates ********************************************************************** Group 1 (inline) -------------------- 1 C 0.653658 1.020135 0.250402 2 C -0.951296 -1.029314 0.574742 3 C 1.958886 -0.936220 0.005155 4 N 0.790775 -0.149466 -0.388469 5 N -0.422421 1.801631 0.015641 6 O -1.872111 -0.714479 -0.393606 7 H -1.491524 -0.991657 -1.237188 8 H 1.935015 1.438955 -0.762746 9 H 1.140802 1.209470 1.209100 10 H -1.060007 1.568701 -0.724831 11 H -0.642773 2.561844 0.628784 12 H -1.224758 -0.594674 1.532954 13 H -0.613130 -2.063666 0.608335 14 H 1.618545 -1.952644 0.206338 15 H 2.678775 -0.974019 -0.815398 16 H 2.473972 -0.558690 0.896703 Charge: 0, Multiplicity: 1 Energy: -304.7642932897 Hartree Gradients (Hartree/Angstrom): Gradient = -Force Atom El Gx Gy Gz 1 C -0.10266493 0.02860843 0.11792911 2 C -0.08336351 -0.02371526 0.04541698 3 C 0.03426485 -0.01383988 0.00515845 4 N 0.10547175 0.05071949 -0.09252290 5 N 0.00947110 -0.01377346 0.00264503 6 O 0.02184403 0.00224924 -0.00525583 7 H -0.00991479 -0.00544633 0.00266360 8 H 0.03686071 -0.03305264 -0.05529496 9 H -0.01167883 -0.00082533 -0.01351971 10 H 0.00696653 0.00887080 -0.00033596 11 H 0.00424815 -0.00923034 -0.00473377 12 H -0.00369785 -0.00480554 0.00827175 13 H 0.00377101 0.00490504 -0.00487071 14 H -0.00491144 0.00881686 -0.00243353 15 H -0.00285685 0.00055546 0.00761027 16 H -0.00380990 -0.00003653 -0.01072782 Program started: 2026-05-24 11:56:03 ====================================================================== TIMING SUMMARY ====================================================================== Input Reading....................................... 0.001 s ( 0.2 %) Settings Parsing.................................... 0.000 s ( 16.7 %) Coordinate Section Parsing.......................... 0.000 s ( 22.8 %) Post-Processing Expansion........................... 0.000 s ( 0.3 %) MLP Initialization.................................. 0.119 s ( 25.7 %) Job Dispatching..................................... 0.342 s ( 74.0 %) Single Point Energy Calculation..................... 0.342 s ( 99.8 %) ====================================================================== Total wall time: 0.462 s Total CPU time: 0.729 s ====================================================================== Program ended: 2026-05-24 11:56:03 TOTAL RUN TIME: 0 days 0 hours 0 minutes 0 seconds 462 msec The energy value represents the total electronic energy of the system at the given geometry as predicted by the specified ML potential.",
       "title": "Single Point Energy - MAPLE",
       "trail": [
         "Tasks",
@@ -7235,7 +7683,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 4,
-      "text": "Checked-in MAPLE example: examples/ts/autoneb/inp1.inp . The portable form below is for an input file saved in the MAPLE repository root; if you save the input elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. A larger multi-step aldol example is available under examples/ts/autoneb/aldol/ . #model=aimnet2nse #ts(method=autoneb) #device=gpu0 XYZ 0 1 examples/ts/autoneb/gauopt_opt.xyz XYZ 0 1 examples/ts/autoneb/gauopt2_opt.xyz",
+      "text": "Checked-in MAPLE example: examples/ts/autoneb/inp1.inp . The portable form below is for an input file saved in the MAPLE repository root; if you save the input elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. A larger multi-step aldol example is available under examples/ts/autoneb/aldol/ . #model=aimnet2-nse #ts(method=autoneb) #device=gpu0 XYZ 0 1 examples/ts/autoneb/gauopt_opt.xyz XYZ 0 1 examples/ts/autoneb/gauopt2_opt.xyz",
       "title": "AutoNEB (Automated NEB) - MAPLE",
       "trail": [
         "Tasks",
@@ -7337,7 +7785,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/ts/dimer/inp1.inp . Dimer is single-ended, so the input is one starting geometry rather than reactant/product endpoints. #model=ANI-1xnr #ts(method=dimer) #device=gpu0 C 0.8773307780 0.7831579390 -0.1629806432 H 0.6909163982 1.5540583811 -0.9219751886 O 0.5296065367 0.9762287325 1.1234790578 C 1.3488671845 -0.5563869274 -0.1923254310 H 0.7828987178 -0.2429788233 1.0663324170 H 1.0764966981 -1.2943318365 -0.9583627957 H 2.2951253096 -0.7293808119 0.3397718379 Important Dimer is single-ended, but it is not model-agnostic: the active calculator must implement get_hvp() . If a selected model does not provide Hessian-vector products, choose P-RFO/NEB/String instead or switch to ANI gas phase.",
+      "text": "Checked-in MAPLE example: examples/ts/dimer/inp1.inp . Dimer is single-ended, so the input is one starting geometry rather than reactant/product endpoints. #model=ani1xnr #ts(method=dimer) #device=gpu0 C 0.8773307780 0.7831579390 -0.1629806432 H 0.6909163982 1.5540583811 -0.9219751886 O 0.5296065367 0.9762287325 1.1234790578 C 1.3488671845 -0.5563869274 -0.1923254310 H 0.7828987178 -0.2429788233 1.0663324170 H 1.0764966981 -1.2943318365 -0.9583627957 H 2.2951253096 -0.7293808119 0.3397718379 Important Dimer is single-ended, but it is not model-agnostic: the active calculator must implement get_hvp() . If a selected model does not provide Hessian-vector products, choose P-RFO/NEB/String instead or switch to ANI gas phase.",
       "title": "Dimer Method - MAPLE",
       "trail": [
         "Tasks",
@@ -7473,7 +7921,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 4,
-      "text": "Checked-in MAPLE example: examples/ts/dmf/inp3.inp . The portable form below is for an input file saved in examples/ts/dmf ; if you save it elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. #model=fennix-bio1m #ts(method=dmf,refine=prfo) #device=gpu0 XYZ react.xyz XYZ prod.xyz For larger systems, the tensor backend can be switched while keeping the calculator/device selection in the usual MAPLE input layer: #ts(method=dmf,backend=torch,refine=prfo,nmove=14,nsegs=8)",
+      "text": "Checked-in MAPLE example: examples/ts/dmf/inp3.inp . The portable form below is for an input file saved in examples/ts/dmf ; if you save it elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. #model=fennix-bio-1m #ts(method=dmf,refine=prfo) #device=gpu0 XYZ react.xyz XYZ prod.xyz For larger systems, the tensor backend can be switched while keeping the calculator/device selection in the usual MAPLE input layer: #ts(method=dmf,backend=torch,refine=prfo,nmove=14,nsegs=8)",
       "title": "Direct MaxFlux (DMF) - MAPLE",
       "trail": [
         "Tasks",
@@ -7660,7 +8108,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 6,
-      "text": "Checked-in MAPLE example: examples/ts/neb/inp1.inp . The portable form below is for an input file saved in the MAPLE repository root; if you save the input elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. If you copy the checked-in file verbatim, update its absolute XYZ paths to your local checkout. #model=ANI-1xnr #ts(method=neb,refine=nebts) #device=gpu0 XYZ examples/ts/neb/react.xyz XYZ examples/ts/neb/prod.xyz",
+      "text": "Checked-in MAPLE example: examples/ts/neb/inp1.inp . The portable form below is for an input file saved in the MAPLE repository root; if you save the input elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. If you copy the checked-in file verbatim, update its absolute XYZ paths to your local checkout. #model=ani1xnr #ts(method=neb,refine=nebts) #device=gpu0 XYZ examples/ts/neb/react.xyz XYZ examples/ts/neb/prod.xyz",
       "title": "Nudged Elastic Band (NEB) - MAPLE",
       "trail": [
         "Tasks",
@@ -7762,7 +8210,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/ts/prfo/inp1.inp . It uses an inline TS guess geometry and writes inp1_prfo_ts.xyz plus inp1_prfo_traj.xyz . #model=ANI-1xnr #ts(method=prfo) #device=gpu0 C -0.8675 -1.1212 0.1451 C 1.2063 0.0888 0.0375 C -0.8012 1.8039 0.7777 C 1.9270 -0.5238 1.2299 C 2.1735 0.5194 -1.0520 N 0.2436 -0.9006 -0.5570 N -2.0080 -1.5937 -0.4191 O -1.6073 1.4743 -0.2757 H -1.9698 0.5875 -0.1411 H 0.0290 -0.6370 -1.5287 H -0.8978 -0.8021 1.1842 H 0.5985 0.9809 0.3930 H -2.6675 -1.9721 0.2647 H -1.8829 -2.2545 -1.1927 H -0.4288 2.8210 0.7145 H -1.0181 1.4392 1.7832 H 2.6046 0.2089 1.6809 H 1.6503 1.0084 -1.8818 H 2.5096 -1.3982 0.9217 H 1.2101 -0.8363 1.9937 H 2.9111 1.2261 -0.6587 H 2.7050 -0.3554 -1.4408",
+      "text": "Checked-in MAPLE example: examples/ts/prfo/inp1.inp . It uses an inline TS guess geometry and writes inp1_prfo_ts.xyz plus inp1_prfo_traj.xyz . #model=ani1xnr #ts(method=prfo) #device=gpu0 C -0.8675 -1.1212 0.1451 C 1.2063 0.0888 0.0375 C -0.8012 1.8039 0.7777 C 1.9270 -0.5238 1.2299 C 2.1735 0.5194 -1.0520 N 0.2436 -0.9006 -0.5570 N -2.0080 -1.5937 -0.4191 O -1.6073 1.4743 -0.2757 H -1.9698 0.5875 -0.1411 H 0.0290 -0.6370 -1.5287 H -0.8978 -0.8021 1.1842 H 0.5985 0.9809 0.3930 H -2.6675 -1.9721 0.2647 H -1.8829 -2.2545 -1.1927 H -0.4288 2.8210 0.7145 H -1.0181 1.4392 1.7832 H 2.6046 0.2089 1.6809 H 1.6503 1.0084 -1.8818 H 2.5096 -1.3982 0.9217 H 1.2101 -0.8363 1.9937 H 2.9111 1.2261 -0.6587 H 2.7050 -0.3554 -1.4408",
       "title": "P-RFO (Partitioned Rational Function Optimization) - MAPLE",
       "trail": [
         "Tasks",
@@ -7881,7 +8329,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 3,
-      "text": "Checked-in MAPLE example: examples/ts/string/inp1.inp . It uses the same reactant/product endpoint files as the NEB example. The portable form below is for an input file saved in the MAPLE repository root; if you save the input elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. #model=ANI-1xnr #ts(method=string,refine=stringts) #device=gpu0 XYZ examples/ts/neb/react.xyz XYZ examples/ts/neb/prod.xyz",
+      "text": "Checked-in MAPLE example: examples/ts/string/inp1.inp . It uses the same reactant/product endpoint files as the NEB example. The portable form below is for an input file saved in the MAPLE repository root; if you save the input elsewhere, adjust the XYZ paths because relative paths are resolved from the input file location. #model=ani1xnr #ts(method=string,refine=stringts) #device=gpu0 XYZ examples/ts/neb/react.xyz XYZ examples/ts/neb/prod.xyz",
       "title": "Growing String Method (GSM) - MAPLE",
       "trail": [
         "Tasks",
@@ -7965,7 +8413,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
-      "text": "A MAPLE input file consists of two main sections, processed in order: Header commands -- Lines beginning with # that define the calculation type, model, device, and global options. Coordinates -- Atomic coordinates provided inline or referenced from an external file. Here is an example input file showing both sections, adapted from the checked-in Dimer TS example examples/ts/dimer/inp1.inp : #model=ANI-1xnr #ts(method=dimer) #device=gpu0 C 0.8773307780 0.7831579390 -0.1629806432 H 0.6909163982 1.5540583811 -0.9219751886 O 0.5296065367 0.9762287325 1.1234790578 C 1.3488671845 -0.5563869274 -0.1923254310 H 0.7828987178 -0.2429788233 1.0663324170 H 1.0764966981 -1.2943318365 -0.9583627957 H 2.2951253096 -0.7293808119 0.3397718379",
+      "text": "A MAPLE input file consists of two main sections, processed in order: Header commands -- Lines beginning with # that define the calculation type, model, device, and global options. Coordinates -- Atomic coordinates provided inline or referenced from an external file. Here is an example input file showing both sections, adapted from the checked-in Dimer TS example examples/ts/dimer/inp1.inp : #model=ani1xnr #ts(method=dimer) #device=gpu0 C 0.8773307780 0.7831579390 -0.1629806432 H 0.6909163982 1.5540583811 -0.9219751886 O 0.5296065367 0.9762287325 1.1234790578 C 1.3488671845 -0.5563869274 -0.1923254310 H 0.7828987178 -0.2429788233 1.0663324170 H 1.0764966981 -1.2943318365 -0.9583627957 H 2.2951253096 -0.7293808119 0.3397718379 Optional post-processing commands , such as constraints and scan coordinates, follow the coordinate section.",
       "title": "Input & Output - MAPLE",
       "trail": [
         "Getting Started",
@@ -8013,7 +8461,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 4,
-      "text": "MAPLE supports the following machine learning potential models, specified via the #model header command: ani2x ani1x ani1ccx ani1xnr maceoff23s maceoff23m maceoff23l egret aimnet2 uma maceomol aimnet2nse",
+      "text": "Select a model with the #model header. The available keywords are: ani2x ani1x ani1ccx ani1xnr mace-off-23s mace-off-23m mace-off-23l egret-1 aimnet2 uma mace-omol-0 aimnet2-nse ani2xr ani2dr snn-ani2xr ani-mbis aimnet2-rxn aimnet2-pd aimnet2-b973c aimnet2-2025 mace-off-23bm mace-off-24m mace-les-off egret-1e egret-1m egret-1s egret-1t mace-polar-1s mace-polar-1m mace-polar-1l fennix-bio-1s fennix-bio-1m grace-off-1s grace-off-1m grace-off-1l grace-off-2s grace-off-2m grace-off-2l so3lr so3lr-tauri-s so3lr-tauri-m so3lr-tauri-l allegro-fm-256 allegro-fm-512 nequip-t3-cosmo nequip-t123-cosmo nequip-t3-gas The model catalogue gives the element coverage, reference data and detailed model guides.",
       "title": "Input & Output - MAPLE",
       "trail": [
         "Getting Started",
@@ -8045,7 +8493,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 6,
-      "text": "MAPLE supports two ways to specify molecular coordinates.",
+      "text": "MAPLE supports two ways to specify molecular coordinates. For charge, multiplicity and periodic cells in multiple-structure inputs, see Electronic State and Periodic Cells for the syntax, defaults and override rules.",
       "title": "Input & Output - MAPLE",
       "trail": [
         "Getting Started",
@@ -8077,7 +8525,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 8,
-      "text": "Reference an external .xyz file containing the coordinates. The XYZ file follows the standard format (atom count on line 1, comment on line 2, coordinates from line 3): #model=ani2x #opt XYZ methane.xyz Where methane.xyz contains: 5 Methane molecule C 0.000000 0.000000 0.000000 H 0.629118 0.629118 0.629118 H -0.629118 -0.629118 0.629118 H -0.629118 0.629118 -0.629118 H 0.629118 -0.629118 -0.629118",
+      "text": "Reference an external .xyz file containing the coordinates. The XYZ file follows the standard format (atom count on line 1, comment on line 2, coordinates from line 3): #model=ani2x #opt XYZ methane.xyz Relative paths are resolved from the input file's directory. The file methane.xyz contains: 5 Methane molecule C 0.000000 0.000000 0.000000 H 0.629118 0.629118 0.629118 H -0.629118 -0.629118 0.629118 H -0.629118 0.629118 -0.629118 H 0.629118 -0.629118 -0.629118",
       "title": "Input & Output - MAPLE",
       "trail": [
         "Getting Started",
@@ -8093,7 +8541,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 9,
-      "text": "For methods that require two endpoint structures (e.g., NEB), provide two XYZ references for the reactant and product geometries. Relative XYZ paths are resolved from the input file location; the example below assumes the input file is saved in the MAPLE repository root. #model=ANI-1xnr #ts(method=neb,refine=nebts) XYZ examples/ts/neb/react.xyz XYZ examples/ts/neb/prod.xyz",
+      "text": "For methods that require two endpoint structures (e.g., NEB), provide two XYZ references for the reactant and product geometries. Relative XYZ paths are resolved from the input file location; the example below assumes the input file is saved in the MAPLE repository root. #model=ani1xnr #ts(method=neb,refine=nebts) XYZ examples/ts/neb/react.xyz XYZ examples/ts/neb/prod.xyz Each endpoint file can also contain several frames. MAPLE pairs frame 1 of the first file with frame 1 of the second, and so on. Both files must contain the same number of frames; each pair must have matching atoms in the same order, charge, multiplicity and periodic cell. A single XYZ or XYZTRAJ file containing path images supplies one initial path.",
       "title": "Input & Output - MAPLE",
       "trail": [
         "Getting Started",
@@ -8103,13 +8551,29 @@
       "url": "tutorials/input_output.html#dual-xyz-for-neb"
     },
     {
-      "heading": "Output Files",
+      "heading": "Batch Input",
       "level": 2,
       "page": "tutorials/input_output.html",
       "page_entry": false,
       "page_role": "content",
       "section_order": 10,
-      "text": "MAPLE generates output files whose names and contents depend on the job type. The following table summarizes the primary output files: Job Type Output File Contents Single Point *.out Parsed coordinates, charge/multiplicity, and electronic energy (Eh); gradients with verbose=1 Optimization *_opt.xyz Optimized geometry in XYZ format Optimization *_opt_traj.xyz Full optimization trajectory Frequency *_freq.out Vibrational frequencies, IR intensities, thermochemistry Transition State Method-specific XYZ files Examples include *_prfo_ts.xyz , *_dimer_ts.xyz , *_nebts_ts.xyz , *_stringts_ts.xyz , and MEP/path files for path methods IRC *_irc_forward.xyz Forward IRC path geometries IRC *_irc_reverse.xyz Reverse IRC path geometries PES Scan *_scan_final.xyz Multi-frame geometries for every scan point PES Scan *.out Main scan log with progress, energies, coordinates, and optimizer diagnostics when applicable In the table above, * represents the input file name without the .inp extension. For example, a NEBTS job named inp1.inp writes files such as inp1_nebts_ts.xyz and inp1_nebts_mep.xyz . Important All energies are reported in Hartree (Eh) and all coordinates in Angstroms. Energy differences in iterative output are shown in kcal/mol for convenience.",
+      "text": "Supply multiple structures in one multi-frame XYZ file, through several XYZ references, or as separate inline groups . For example, evaluate every frame in a file: #model=ani2x #sp(batch_size=32) XYZ structures.xyz For independent optimizations from two files: #model=ani2x #opt(batch_size=32) XYZ first.xyz XYZ second.xyz batch_size is an optional positive integer that caps the number of structures in each model evaluation. All supplied structures are processed. Omit it to let MAPLE group compatible structures and manage evaluation sizes automatically. Single-point, optimization and frequency jobs process the supplied structures independently. For path methods, use the endpoint or path-image input described above. Scan and ParmFit jobs currently accept one structure.",
+      "title": "Input & Output - MAPLE",
+      "trail": [
+        "Getting Started",
+        "Input & Output"
+      ],
+      "type": "Tutorial",
+      "url": "tutorials/input_output.html#batch-input"
+    },
+    {
+      "heading": "Output Files",
+      "level": 2,
+      "page": "tutorials/input_output.html",
+      "page_entry": false,
+      "page_role": "content",
+      "section_order": 11,
+      "text": "MAPLE generates output files whose names and contents depend on the job type. The following table summarizes the primary output files: Job Type Output File Contents Single Point *.out Parsed coordinates, charge/multiplicity, and electronic energy (Eh); gradients with verbose=1 Optimization *_opt.xyz Optimized geometry in XYZ format Optimization *_opt_traj.xyz Full optimization trajectory Frequency *_freq.out Vibrational frequencies, IR intensities, thermochemistry Transition State Method-specific XYZ files Examples include *_prfo_ts.xyz , *_dimer_ts.xyz , *_nebts_ts.xyz , *_stringts_ts.xyz , and MEP/path files for path methods IRC *_irc_forward.xyz Forward IRC path geometries IRC *_irc_reverse.xyz Reverse IRC path geometries PES Scan *_scan_final.xyz Multi-frame geometries for every scan point PES Scan *.out Main scan log with progress, energies, coordinates, and optimizer diagnostics when applicable For multiple structures, result numbering follows the order of file references and frames within each file. Single-point results are listed as Frame 1 , Frame 2 , etc. in the main output. Independent optimization and frequency jobs use numbered names such as job_0001.out , job_0002.out and their associated result files. In the table above, * represents the input file name without the .inp extension. For example, a NEBTS job named inp1.inp writes files such as inp1_nebts_ts.xyz and inp1_nebts_mep.xyz . Important All energies are reported in Hartree (Eh) and all coordinates in Angstroms. Energy differences in iterative output are shown in kcal/mol for convenience.",
       "title": "Input & Output - MAPLE",
       "trail": [
         "Getting Started",
@@ -8141,7 +8605,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 1,
-      "text": "Before installing MAPLE, ensure your system meets the following minimum requirements: Requirement Details Python >= 3.10 GPU CUDA-capable GPU recommended (NVIDIA) RAM 4 GB+ (8 GB+ recommended for large systems) Disk Space ~2 GB for MAPLE and model files OS Linux or macOS Tip: GPU Acceleration While MAPLE runs on CPU, a CUDA-capable GPU significantly speeds up ML potential evaluations. If you have an NVIDIA GPU, install PyTorch with CUDA support (see below) for the best performance.",
+      "text": "Before installing MAPLE, ensure your system meets the following minimum requirements: Requirement Details Python >= 3.10 GPU CUDA-capable GPU recommended (NVIDIA) RAM 4 GB+ (8 GB+ recommended for large systems) Disk Space ~2 GB for MAPLE and model files OS Linux or macOS Tip: GPU Acceleration While MAPLE runs on CPU, a CUDA-capable GPU significantly speeds up ML potential evaluations. Install the GPU runtime for the models you plan to use, as described below.",
       "title": "Installation Guide - MAPLE",
       "trail": [
         "Getting Started",
@@ -8205,7 +8669,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 5,
-      "text": "MAPLE requires PyTorch for ML potential inference. Install the version that matches your hardware: With CUDA support (recommended for GPU): pip install torch --index-url https://download.pytorch.org/whl/cu121 CPU only: pip install torch --index-url https://download.pytorch.org/whl/cpu Note Check your CUDA version with nvidia-smi and choose the matching PyTorch CUDA build (e.g., cu118 , cu121 ). Visit pytorch.org for detailed instructions.",
+      "text": "The Torch-backed model families use PyTorch for inference. Install the version that matches your hardware: With CUDA support (recommended for GPU): pip install torch --index-url https://download.pytorch.org/whl/cu121 CPU only: pip install torch --index-url https://download.pytorch.org/whl/cpu Note Check your CUDA version with nvidia-smi and choose the matching PyTorch CUDA build (e.g., cu118 , cu121 ). Visit pytorch.org for detailed instructions.",
       "title": "Installation Guide - MAPLE",
       "trail": [
         "Getting Started",
@@ -8221,7 +8685,7 @@
       "page_entry": false,
       "page_role": "content",
       "section_order": 6,
-      "text": "ANI, AIMNet2, MACE, MACE-Polar, and UMA use torch-backed runtimes, so install PyTorch separately for your hardware before using them. Install fairchem-core only when you need UMA or FAIR-Chem-backed/PBC workflows: pip install fairchem-core Install JAX/Flax only when you use FeNNol .fnx models: # CPU pip install -U jax flax # NVIDIA GPU (CUDA 12) pip install -U \"jax[cuda12]\" flax Checkpoint and runtime boundaries: Core install: pip install -e . installs MAPLE plus ase , numpy , and scipy ; it does not select a PyTorch/CUDA stack for you. MAPLE-hosted checkpoints: ANI, AIMNet2, maceoff23m , and egret can be auto-downloaded from MAPLE_models . Local checkpoints: backend-specific files such as maceoff23s , maceoff23l , maceomol , and MACE-Polar checkpoints must be placed in maple/function/calculator/model/ or supplied through model_path . FeNNol : built-in fennix-bio1s and fennix-bio1m resolve shipped .fnx files; generic fennol requires model_path=/path/to/model.fnx . UMA: UMA checkpoints resolve through checkpoint_path , a local maple/function/calculator/model/uma-*.pt file, or FAIR-Chem's official loading path. See the calculator backend matrix for the exact PBC, charge/multiplicity, Hessian, D4, solvent, HVP, and checkpoint support of each backend.",
+      "text": "ANI, AIMNet2, MACE, NequIP/Allegro, and UMA use torch-backed runtimes, so install PyTorch separately for your hardware before using them. Install fairchem-core when you use UMA: pip install fairchem-core Install JAX when you use the FeNNix-Bio1 or SO3LR .jax models: # CPU pip install -U jax flatbuffers # NVIDIA GPU (CUDA 12) pip install -U \"jax[cuda12]\" flatbuffers Install TensorFlow when you use GRACE-OFF .pb models: # CPU pip install tensorflow # NVIDIA GPU pip install \"tensorflow[and-cuda]\" See the TensorFlow installation guide for platform requirements. Checkpoint and runtime boundaries: Core install: pip install -e . installs MAPLE plus ase , numpy , and scipy ; it does not select a PyTorch/CUDA stack for you. MAPLE-hosted checkpoints: Some registered model files can be downloaded automatically from MAPLE_models . Local checkpoints: place model files under maple/function/calculator/model/ using the registered keyword as the filename. Runtime files: Torch models use .pt , FeNNix-Bio1 and SO3LR use .jax , and GRACE-OFF uses .pb . UMA: UMA checkpoints resolve through checkpoint_path , a local maple/function/calculator/model/uma-*.pt file, or FAIR-Chem's official loading path. See the calculator backend matrix for the exact PBC, charge/multiplicity, Hessian, D4, solvent, HVP, and checkpoint support of each backend.",
       "title": "Installation Guide - MAPLE",
       "trail": [
         "Getting Started",
@@ -8391,6 +8855,6 @@
       "url": "tutorials/quickstart.html#transition-states"
     }
   ],
-  "source_pages": 55,
+  "source_pages": 57,
   "version": 2
 }

@@ -68,7 +68,9 @@
                 <li><a href="../setup/model_aimnet.html">AIMNet2</a></li>
                 <li><a href="../setup/model_fennol.html">FeNNol</a></li>
                 <li><a href="../setup/model_mace.html">MACE</a></li>
-                <li><a href="../setup/model_custom.html">Custom Model</a></li>
+                <li><a href="../setup/model_grace.html">GRACE</a></li>
+                <li><a href="../setup/model_so3lr.html">SO3LR</a></li>
+                <li><a href="../setup/model_nequip.html">NequIP</a></li>
               </ul>
             </li>
                         <li>
@@ -207,7 +209,7 @@
                         Tip: GPU Acceleration
                     </div>
                     <div class="admonition-body">
-                        <p>While MAPLE runs on CPU, a CUDA-capable GPU significantly speeds up ML potential evaluations. If you have an NVIDIA GPU, install PyTorch with CUDA support (see below) for the best performance.</p>
+                        <p>While MAPLE runs on CPU, a CUDA-capable GPU significantly speeds up ML potential evaluations. Install the GPU runtime for the models you plan to use, as described below.</p>
                     </div>
                 </div>
 
@@ -255,7 +257,7 @@ pip install -e . -i https://pypi.tuna.tsinghua.edu.cn/simple</code></pre>
 
                 <h3>PyTorch</h3>
 
-                <p>MAPLE requires PyTorch for ML potential inference. Install the version that matches your hardware:</p>
+                <p>The Torch-backed model families use PyTorch for inference. Install the version that matches your hardware:</p>
 
                 <p><strong>With CUDA support (recommended for GPU):</strong></p>
 
@@ -277,25 +279,32 @@ pip install -e . -i https://pypi.tuna.tsinghua.edu.cn/simple</code></pre>
 
                 <h3>ML Potentials</h3>
 
-                <p>ANI, AIMNet2, MACE, MACE-Polar, and UMA use torch-backed runtimes, so install PyTorch separately for your hardware before using them. Install <code>fairchem-core</code> only when you need UMA or FAIR-Chem-backed/PBC workflows:</p>
+                <p>ANI, AIMNet2, MACE, NequIP/Allegro, and UMA use torch-backed runtimes, so install PyTorch separately for your hardware before using them. Install <code>fairchem-core</code> when you use UMA:</p>
 
                 <pre><code>pip install fairchem-core</code></pre>
 
-                <p>Install JAX/Flax only when you use FeNNol <code>.fnx</code> models:</p>
+                <p>Install JAX when you use the FeNNix-Bio1 or SO3LR <code>.jax</code> models:</p>
 
                 <pre><code># CPU
-pip install -U jax flax
+pip install -U jax flatbuffers
 
 # NVIDIA GPU (CUDA 12)
-pip install -U "jax[cuda12]" flax</code></pre>
+pip install -U "jax[cuda12]" flatbuffers</code></pre>
 
+                <p>Install TensorFlow when you use GRACE-OFF <code>.pb</code> models:</p>
+                <pre><code># CPU
+pip install tensorflow
+
+# NVIDIA GPU
+pip install "tensorflow[and-cuda]"</code></pre>
+                <p>See the <a href="https://www.tensorflow.org/install/pip">TensorFlow installation guide</a> for platform requirements.</p>
                 <p>Checkpoint and runtime boundaries:</p>
 
                 <ul>
                     <li><strong>Core install:</strong> <code>pip install -e .</code> installs MAPLE plus <code>ase</code>, <code>numpy</code>, and <code>scipy</code>; it does not select a PyTorch/CUDA stack for you.</li>
-                    <li><strong>MAPLE-hosted checkpoints:</strong> ANI, AIMNet2, <code>maceoff23m</code>, and <code>egret</code> can be auto-downloaded from <a href="https://huggingface.co/Wayne7815/MAPLE_models" target="_blank" rel="noopener noreferrer">MAPLE_models</a>.</li>
-                    <li><strong>Local checkpoints:</strong> backend-specific files such as <code>maceoff23s</code>, <code>maceoff23l</code>, <code>maceomol</code>, and MACE-Polar checkpoints must be placed in <code>maple/function/calculator/model/</code> or supplied through <code>model_path</code>.</li>
-                    <li><strong>FeNNol :</strong> built-in <code>fennix-bio1s</code> and <code>fennix-bio1m</code> resolve shipped <code>.fnx</code> files; generic <code>fennol</code> requires <code>model_path=/path/to/model.fnx</code>.</li>
+                    <li><strong>MAPLE-hosted checkpoints:</strong> Some registered model files can be downloaded automatically from <a href="https://huggingface.co/Wayne7815/MAPLE_models" target="_blank" rel="noopener noreferrer">MAPLE_models</a>.</li>
+                    <li><strong>Local checkpoints:</strong> place model files under <code>maple/function/calculator/model/</code> using the registered keyword as the filename.</li>
+                    <li><strong>Runtime files:</strong> Torch models use <code>.pt</code>, FeNNix-Bio1 and SO3LR use <code>.jax</code>, and GRACE-OFF uses <code>.pb</code>.</li>
                     <li><strong>UMA:</strong> UMA checkpoints resolve through <code>checkpoint_path</code>, a local <code>maple/function/calculator/model/uma-*.pt</code> file, or FAIR-Chem's official loading path.</li>
                 </ul>
 
